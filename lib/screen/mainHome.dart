@@ -5,6 +5,7 @@ import '../Auth/auth_service.dart';
 import 'Camera/cameraPage.dart';
 import 'HomaPage/HomePage.dart';
 import 'MyPage/MyPage.dart';
+import 'album/albumPage.dart';
 import 'projectPage/progectpage.dart';
 
 
@@ -34,7 +35,7 @@ var my_list2 = ['홈', '커뮤니티', '카메라','앨범','프로필'];
     projectPage(),
     HomePage(),
    CameraPage(),
-   CameraPage(),
+   albumPage(),
     MYPage(),
  ];
 

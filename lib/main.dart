@@ -1,10 +1,7 @@
-import 'package:catch2_0_1/screen/mainHome.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'Auth/auth_service.dart';
-import 'package:provider/provider.dart';
-
 import 'firebase_options.dart';
 
 void main() async {
@@ -30,7 +27,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.lightBlue,
       ),
-      home: MainHomePage()
+      // home: MainHomePage()
+      home : AuthService().handleAuthState()
     );
   }
 }

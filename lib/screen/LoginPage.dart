@@ -1,7 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 import '../Auth/auth_service.dart';
 
@@ -45,23 +42,6 @@ class _LoginPageState extends State<LoginPage> {
         ],
       ),
               ),
-               ElevatedButton(
-              onPressed:() async{
-               FirebaseAuth.instance.signInAnonymously();
-                await Future.delayed(Duration(seconds:10));
-               var doc = FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid,); 
-      doc.set({
-        'status_message' : 'I promise to take the test honestly before GOD.',
-        uid : FirebaseAuth.instance.currentUser!.uid,
-      }).whenComplete(() => print('익명 로그인 성공'));
-              },
-              child: Wrap(
-        crossAxisAlignment: WrapCrossAlignment.center,
-        children: [
-          Text('Guest'),
-        ],
-      ),
-              )
           ],
         ),
       ),
