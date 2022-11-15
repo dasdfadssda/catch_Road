@@ -12,8 +12,6 @@ class MYPage extends StatefulWidget {
 class _MYPageState extends State<MYPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Text('마이 페이지'),
-    );
+    return Scaffold();
   }
 }

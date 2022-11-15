@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-class projectPage extends StatefulWidget {
-  const projectPage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<projectPage> createState() => _projectPageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _projectPageState extends State<projectPage> {
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold();
