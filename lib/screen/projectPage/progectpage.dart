@@ -12,6 +12,8 @@ class projectPage extends StatefulWidget {
 class _projectPageState extends State<projectPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: Text('hello'),
+    );
   }
 }

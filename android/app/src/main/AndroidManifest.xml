@@ -3,7 +3,9 @@
    <application
         android:label="catch2_0_1"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:requestLegacyExternalStorage="true"
+        android:usesClearextTraffic="true">
         <activity
             android:name=".MainActivity"
             android:exported="true"

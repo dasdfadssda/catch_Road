@@ -66,12 +66,10 @@ signInWithGoogle() async {
   }
 
 userstart(){
-
-
   FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get().then((doc) async {
   print('회원 관리');
    if (!doc.exists) {
-     userReference.doc().set({
+     userReference.doc(FirebaseAuth.instance.currentUser!.uid).set({
        'profileName' : FirebaseAuth.instance.currentUser!.displayName!,
        'url' : FirebaseAuth.instance.currentUser!.photoURL!,
        'email' :FirebaseAuth.instance.currentUser!.email,
@@ -92,108 +90,71 @@ Future<void> signOut() async { // logOut 기능
   }
 
 
-contentsFunction(user,_photo,TitleController,contentsController,priceController) async { //파이어 베이스 저장 (유저 이름, 사진, 제목, 글 내용 )
+// contentsFunction(user,_photo,TitleController,contentsController,priceController) async { //파이어 베이스 저장 (유저 이름, 사진, 제목, 글 내용 )
+
+//  // 스토리지에 먼저 사진 업로드 하는 부분.
+//   final firebaseStorageRef = FirebaseStorage.instance; 
+//     List _like =[];
+//      List wish =[];
+//     if(_photo != null) {
+//   TaskSnapshot task = await firebaseStorageRef
+//   .ref() // 시작점
+//   .child('post') // collection 이름
+//   .child('${_photo} + ${FirebaseAuth.instance.currentUser!.displayName!}') // 업로드한 파일의 최종이름
+//   .putFile(_photo!); 
+
+//   if (task != null) {
+//     var downloadUrl = await task.ref.getDownloadURL().whenComplete(() => print('사진 만들기 성공'));  
+//       var doc = FirebaseFirestore.instance.collection('Product').doc(priceController.text); 
+//       doc.set({
+//         'uid' : FirebaseAuth.instance.currentUser!.uid,
+//         'id': doc.id,
+//         'datetime' : DateTime.now().toString(),
+//         'displayName':FirebaseAuth.instance.currentUser!.displayName!,
+//         'title' : TitleController.text,
+//         'content' : contentsController.text,
+//         'imageUrl' : downloadUrl,
+//         'price' : priceController.text,
+//         'like' : _like,
+//          'modify' : ' ',
+//          'wish' : wish
+//       }).whenComplete(() => print('데이터 저장 성공'));
+ 
+ contentsFunction(user,category,_photo,contentsController,post) async {  //파이어 베이스 저장 (유저 이름, 사진, 제목, 글 내용 )
 
  // 스토리지에 먼저 사진 업로드 하는 부분.
   final firebaseStorageRef = FirebaseStorage.instance; 
-    List _like =[];
-     List wish =[];
-    if(_photo != null) {
-  TaskSnapshot task = await firebaseStorageRef
-  .ref() // 시작점
-  .child('post') // collection 이름
-  .child('${_photo} + ${FirebaseAuth.instance.currentUser!.displayName!}') // 업로드한 파일의 최종이름
-  .putFile(_photo!); 
-  //  var doc = FirebaseFirestore.instance.collection('Product').doc(priceController.text); 
-  //     doc.set({
-  //       'id': doc.id,
-  //       'datetime' : DateTime.now().toString(),
-  //       'displayName':FirebaseAuth.instance.currentUser!.displayName!,
-  //       'title' : TitleController.text,
-  //       'content' : contentsController.text,
-  //       'imageUrl' : _photo,
-  //       'price' : priceController.text,
-  //       'like' : _like,
-  //     }).whenComplete(() => print('데이터 저장 성공'));
-  if (task != null) {
-    var downloadUrl = await task.ref.getDownloadURL().whenComplete(() => print('사진 만들기 성공'));  
-      var doc = FirebaseFirestore.instance.collection('Product').doc(priceController.text); 
+  List _like =[];
+  List _comment = [];
+      var doc = FirebaseFirestore.instance.collection('Contents').doc(); 
       doc.set({
-        'uid' : FirebaseAuth.instance.currentUser!.uid,
         'id': doc.id,
         'datetime' : DateTime.now().toString(),
         'displayName':FirebaseAuth.instance.currentUser!.displayName!,
-        'title' : TitleController.text,
-        'content' : contentsController.text,
-        'imageUrl' : downloadUrl,
-        'price' : priceController.text,
+        'contents' : contentsController.text,
+        'imageUrl' : _photo,
+        'adress' : post,
+        'category' : category,
         'like' : _like,
-         'modify' : ' ',
-         'wish' : wish
-      }).whenComplete(() => print('데이터 저장 성공'));
-    } else {
-      
-    } } else {
-       var doc = FirebaseFirestore.instance.collection('Product').doc(priceController.text); 
-      doc.set({
-        
-        'uid' : FirebaseAuth.instance.currentUser!.uid,
-        'id': doc.id,
-        'datetime' : DateTime.now().toString(),
-        'displayName':FirebaseAuth.instance.currentUser!.displayName!,
-        'title' : TitleController.text,
-        'content' : contentsController.text,
-        'imageUrl' : 'https://handong.edu/site/handong/res/img/logo.png',
-        'price' : priceController.text,
-        'like' : _like,
-         'modify' : ' ',
-         'wish' : wish
+        '_comment' : _comment,
+        'modify' : ' ',
+
       }).whenComplete(() => print('데이터 저장 성공'));
     }
-}
-
-contentsUpdate(user,_photo,TitleController,contentsController,priceController,url)async{
-   final firebaseStorageRef = FirebaseStorage.instance; 
-    List _like =[];
-    if(_photo != null) {
-  TaskSnapshot task = await firebaseStorageRef
-  .ref() // 시작점
-  .child('post') // collection 이름
-  .child('${_photo} + ${FirebaseAuth.instance.currentUser!.displayName!}') // 업로드한 파일의 최종이름
-  .putFile(_photo!); 
-
-  if (task != null) {
-    var downloadUrl = await task.ref.getDownloadURL().whenComplete(() => print('사진 만들기 성공'));  
-      var doc = FirebaseFirestore.instance.collection('Product').doc(priceController.text); 
-      doc.update({
-        'id': doc.id,
-        'displayName':FirebaseAuth.instance.currentUser!.displayName!,
-        'title' : TitleController.text,
-        'content' : contentsController.text,
-        'imageUrl' : downloadUrl,
-        'price' : priceController.text,
-        'like' : _like,
-        'modify' : DateTime.now().toString(),
-      }).whenComplete(() => print('데이터 저장 성공'));
-    }
-  } else {
-      var doc = FirebaseFirestore.instance.collection('Product').doc(priceController.text); 
-      doc.update({
-        'id': doc.id,
-        'displayName':FirebaseAuth.instance.currentUser!.displayName!,
-        'title' : TitleController.text,
-        'content' : contentsController.text,
-        'imageUrl' : url,
-        'price' : priceController.text,
-        'like' : _like,
-        'modify' : DateTime.now().toString(),
-  });
-}}
 
    LikeFunction(like,id,user) async {  // 좋아요 기능
         List _likes = like;
      _likes.add(user);
-      var doc = FirebaseFirestore.instance.collection('Product').doc(id); 
+      var doc = FirebaseFirestore.instance.collection('Contents').doc(id); 
+      doc.update({
+        'like' : _likes,
+        '${user}' : user
+      }).whenComplete(() => print('좋아요 업데이트 성공'));
+    }
+       LikeCancelFunction(like,id,user) async {  // 좋아요 삭제 
+        List _likes = like;
+     _likes.remove(user);
+      var doc = FirebaseFirestore.instance.collection('Contents').doc(id); 
       doc.update({
         'like' : _likes,
         '${user}' : user
@@ -215,7 +176,7 @@ contentsUpdate(user,_photo,TitleController,contentsController,priceController,ur
     }
 
     wishupdate(user,priceController,num,list){ //
-      var doc = FirebaseFirestore.instance.collection('Product').doc(priceController.text); 
+      var doc = FirebaseFirestore.instance.collection('Contents').doc(priceController.text); 
       if(num == 0){
         doc.update({
         'wish' : list
@@ -228,7 +189,7 @@ contentsUpdate(user,_photo,TitleController,contentsController,priceController,ur
 }
 
    wishupdateTowish(user,priceController,num,list){ //
-      var doc = FirebaseFirestore.instance.collection('Product').doc(priceController); 
+      var doc = FirebaseFirestore.instance.collection('Contents').doc(priceController); 
       if(num == 0){
         doc.update({
         'wish' : list
