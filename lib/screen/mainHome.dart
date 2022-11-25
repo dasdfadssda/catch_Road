@@ -1,12 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:camera/camera.dart';
 import '../Auth/auth_service.dart';
-import 'Camera/cameraPage.dart';
+
+import 'Camera/camera_load.dart';
+import 'Camera/camera_page.dart';
 import 'HomaPage/HomePage.dart';
 import 'MyPage/MyPage.dart';
 import 'album/albumPage.dart';
 import 'projectPage/progectpage.dart';
+
+
+List<CameraDescription> cameras = [];
 
 class MainHomePage extends StatefulWidget {
   @override
@@ -14,7 +19,21 @@ class MainHomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<MainHomePage> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+final FirebaseAuth _auth = FirebaseAuth.instance;
+
+@override
+void initState() {
+
+  super.initState();
+  initCamera();
+
+}
+
+void initCamera() async{
+  cameras = await availableCameras();
+  print('cameras $cameras');
+}
 
   int _selectedIndex = 0;
   Color? bgColorBottomNavigationBar;
@@ -30,7 +49,8 @@ class _HomePageState extends State<MainHomePage> {
   final List<Widget> _widgetOptions = <Widget>[
     projectPage(),
     HomePage(),
-    CameraPage(),
+
+    CamerLoad(),
     albumPage(),
     MYPage(),
   ];
