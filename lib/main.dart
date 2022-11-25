@@ -10,7 +10,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(MyApp());
-} 
+}
 
 class MyApp extends StatelessWidget {
   //const MyApp({super.key});
@@ -19,16 +19,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-       initialRoute: '/',
-      // routes : {    //route 설정
-      // '/' :(context) => MyApp(),
-      // '/detail' : ((context) => DetailScreen())},
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.lightBlue,
-      ),
-      // home: MainHomePage()
-      home : AuthService().handleAuthState()
-    );
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/',
+        // routes : {    //route 설정
+        // '/' :(context) => MyApp(),
+        // '/detail' : ((context) => DetailScreen())},
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.lightBlue,
+        ),
+        // home: MainHomePage()
+        home: AuthService().handleAuthState());
   }
 }
