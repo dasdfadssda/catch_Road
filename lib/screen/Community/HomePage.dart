@@ -6,6 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'AddPAge.dart';
+
 
 
 class HomePage extends StatefulWidget {
@@ -158,11 +160,11 @@ int _mylike = 0;
         }),
     floatingActionButton: FloatingActionButton( // 플로팅 액션 버튼
         onPressed: () {
-          //  Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //       builder: (context) => AddPage()),
-          // );
+           Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => AddPage()),
+          );
         },
         child: Icon(Icons.edit_outlined),
         backgroundColor: Colors.blueAccent,
