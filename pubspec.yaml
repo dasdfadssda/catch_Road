@@ -44,6 +44,7 @@ dependencies:
   google_fonts: ^3.0.1
   flutter_screenutil: ^5.6.0
   persistent_bottom_nav_bar: ^5.0.2
+  sliding_switch: ^1.1.0
   
 
 dev_dependencies:
@@ -85,6 +86,15 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  fonts:
+      - family: NotoSansKR
+        fonts:
+          - asset: assets/font/NotoSansKR-Black.otf
+          - asset: assets/font/NotoSansKR-Bold.otf
+          - asset: assets/font/NotoSansKR-Light.otf
+          - asset: assets/font/NotoSansKR-Medium.otf
+          - asset: assets/font/NotoSansKR-Regular.otf
+          - asset: assets/font/NotoSansKR-Thin.otf
   # fonts:
   #   - family: Schyler
   #     fonts:

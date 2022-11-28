@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:sliding_switch/sliding_switch.dart';
 import '../Auth/auth_service.dart';
-import 'Camera/cameraPage.dart';
-import 'HomaPage/HomePage.dart';
+// import 'Camera/cameraPage.dart';
+import 'Community/HomePage.dart';
+// import 'HomaPage/HomePage.dart';
 import 'MyPage/MyPage.dart';
 import 'album/albumPage.dart';
 import 'projectPage/progectpage.dart';
@@ -30,7 +31,7 @@ class _HomePageState extends State<MainHomePage> {
   final List<Widget> _widgetOptions = <Widget>[
     projectPage(),
     HomePage(),
-    CameraPage(),
+    HomePage(),
     albumPage(),
     MYPage(),
   ];

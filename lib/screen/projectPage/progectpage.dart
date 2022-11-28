@@ -1,7 +1,11 @@
+
 import 'package:catch2_0_1/utils/app_colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+
+import '../../utils/app_text_styles.dart';
 // import 'package:persistent_bottom_nav_bar/nav_bar_styles/style_12_bottom_nav_bar.widget.dart';
 
 class projectPage extends StatefulWidget {
@@ -28,6 +32,29 @@ class _projectPageState extends State<projectPage> {
                 ),
               ),
             ),
+            Container(
+              child: StreamBuilder<QuerySnapshot>( // stack이라 그런지 안보여ㅜㅜ
+        stream: FirebaseFirestore.instance.collection('project').snapshots(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) return Center(child: Text('  업로드 된\n글이 없어요 :(',style: labelLargeStyle(color: Color(0XFF9FA5B2)),));
+              return ListView.builder(
+                itemCount: snapshot.data!.docs.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: EdgeInsets.fromLTRB(24, 30, 24, 16),
+                    decoration: BoxDecoration(
+                      border: Border.all( 
+                        width: 1,
+                        ),
+                    ),
+                    child: Column(children: [
+                      Text('D - ${snapshot.data!.docs[index]['final_day']}'), // datetime으로 날짜 계산해야할듯 이렇게 '' 사이에 field 이름 넣어서 받아오면 될듯!
+                    ]),
+                  );
+                  }
+                 );
+                }
+              ))
           ]),
           Padding(
             padding: EdgeInsets.only(
