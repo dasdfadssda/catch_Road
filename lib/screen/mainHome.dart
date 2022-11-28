@@ -1,13 +1,15 @@
+import 'package:camera/camera.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../Auth/auth_service.dart';
-import 'Camera/cameraPage.dart';
+
+import 'Camera/camera_load.dart';
+import 'Camera/camera_page.dart';
 import 'Community/HomePage.dart';
 import 'MyPage/MyPage.dart';
 import 'album/albumPage.dart';
 import 'projectPage/progectpage.dart';
-
 
 
 class MainHomePage extends StatefulWidget {
@@ -18,7 +20,6 @@ class MainHomePage extends StatefulWidget {
 
 class _HomePageState extends State<MainHomePage> {
 final FirebaseAuth _auth = FirebaseAuth.instance;
-
 
 int _selectedIndex = 0;
   Color? bgColorBottomNavigationBar;
@@ -34,7 +35,7 @@ var my_list2 = ['홈', '커뮤니티', '카메라','앨범','프로필'];
  final List<Widget> _widgetOptions = <Widget>[
     projectPage(),
     HomePage(),
-   CameraPage(),
+   CamerLoad(),
    albumPage(),
     MYPage(),
  ];
