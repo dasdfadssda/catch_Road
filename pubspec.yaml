@@ -43,8 +43,16 @@ dependencies:
   firebase_storage: ^11.0.5
   google_fonts: ^3.0.1
   flutter_screenutil: ^5.6.0
-  persistent_bottom_nav_bar: ^5.0.2
+
   sliding_switch: ^1.1.0
+
+
+  camera: ^0.10.0+4
+  tflite: ^1.1.2
+  tflite_flutter: ^0.9.0
+  image: ^3.1.0
+
+
   
 
 dev_dependencies:
@@ -72,6 +80,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
       - assets/
+      - assets/model/ssd_mobilenet.tflite
+      - assets/model/ssd_mobilenet.txt
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
@@ -95,6 +105,7 @@ flutter:
           - asset: assets/font/NotoSansKR-Medium.otf
           - asset: assets/font/NotoSansKR-Regular.otf
           - asset: assets/font/NotoSansKR-Thin.otf
+
   # fonts:
   #   - family: Schyler
   #     fonts:
@@ -106,6 +117,7 @@ flutter:
   #       - asset: fonts/TrajanPro.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
+
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
