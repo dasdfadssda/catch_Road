@@ -119,7 +119,7 @@ int _mylike = 0;
                              for(int i=0; i<snapshot.data!.docs[index]['_like'].length; i++) {
                              if(snapshot.data!.docs[index]['_like'][i] == FirebaseAuth.instance.currentUser!.displayName!) {
                                print('있어');
-                               LikeDeleteFunction(snapshot.data!.docs[index]['_like'],snapshot.data!.docs[index]['id'],FirebaseAuth.instance.currentUser!.displayName!,);
+                              LikeDeleteFunction(snapshot.data!.docs[index]['_like'],snapshot.data!.docs[index]['id'],FirebaseAuth.instance.currentUser!.displayName!,);
                                _mylike = 0;
                                break;
                              } else {
