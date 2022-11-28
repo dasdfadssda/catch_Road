@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:sliding_switch/sliding_switch.dart';
 import '../Auth/auth_service.dart';
+
 import 'Camera/camera_load.dart';
 import 'Community/HomePage.dart';
+
 import 'MyPage/MyPage.dart';
 import 'album/albumPage.dart';
 import 'projectPage/progectpage.dart';
@@ -32,8 +34,10 @@ var my_list2 = ['홈', '커뮤니티', '카메라','앨범','프로필'];
  final List<Widget> _widgetOptions = <Widget>[
     projectPage(),
     HomePage(),
+
    CamerLoad(),
    albumPage(),
+
     MYPage(),
  ];
 
