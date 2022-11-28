@@ -42,9 +42,9 @@ class _CamerLoadState extends State<CamerLoad> {
         },
         child: Text(
           "카메라 사용하기",
-          style: titleSmall.copyWith(
-            color: Colors.white,
-          ),
+          // style: titleSmall.copyWith(
+          //   color: Colors.white,
+          // ),
         ),
 
       ),
