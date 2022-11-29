@@ -7,7 +7,8 @@ import 'Camera/camera_load.dart';
 import 'Community/HomePage.dart';
 
 import 'MyPage/MyPage.dart';
-import 'album/albumPage.dart';
+import 'album/CatchBox.dart';
+//import 'album/albumPage.dart';
 import 'projectPage/progectpage.dart';
 
 class MainHomePage extends StatefulWidget {
@@ -36,8 +37,7 @@ var my_list2 = ['홈', '커뮤니티', '카메라','앨범','프로필'];
     HomePage(),
 
    CamerLoad(),
-   albumPage(),
-
+   Catchbox(),
     MYPage(),
  ];
 
