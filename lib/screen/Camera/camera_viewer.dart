@@ -16,7 +16,7 @@ late CameraImage cameraImage2;
 late List<int> pngfile;
 Uint8List list = Uint8List(1000000);
 late String path;
-
+late CameraController controller;
 
 List<Uint8List> imageList = [];
 bool issaving=false;
@@ -39,7 +39,7 @@ class CameraViewer extends StatefulWidget {
 }
 
 class _CameraViewerState extends State<CameraViewer> {
-  late CameraController controller;
+
   bool isDetecting = false;
 
   FirebaseStorage storage = FirebaseStorage.instance;
@@ -56,6 +56,7 @@ class _CameraViewerState extends State<CameraViewer> {
         widget.cameras[0],
         ResolutionPreset.veryHigh,
       );
+      print(controller);
       controller.initialize().then((_) {
         if (!mounted) {
           return;
@@ -63,11 +64,11 @@ class _CameraViewerState extends State<CameraViewer> {
         controller.startImageStream((CameraImage img) async {
           cameraImage2 = img;
           //*원하는 객체 입력
-          if ((object=='car')&&accuracy>40) {
+          if (((object=='car')||(object=='motorcycle')||(object=='truck'))&&accuracy>40) {
             //path = (await NativeScreenshot.takeScreenshot())!;
-            print('car 저장중');
+            print('$object 저장중');
             takepicture();
-            print('car 저장 완료 ');
+            print('$object 저장 완료 ');
             object = '';
           }
           setState(() {});
@@ -89,7 +90,7 @@ class _CameraViewerState extends State<CameraViewer> {
               rotation:90,
 
             ).then((recognitions) {
-             // print("imgggg2 : ${img.width} / ${img.height}");
+              // print("imgggg2 : ${img.width} / ${img.height}");
               int endTime = new DateTime.now().millisecondsSinceEpoch;
               print("Detection took ${endTime - startTime}");
               widget.setRecognitions(recognitions!, img.height, img.width);
@@ -122,21 +123,21 @@ class _CameraViewerState extends State<CameraViewer> {
       print("uvRowStride: " + uvRowStride.toString());
       print("uvPixelStride: " + uvPixelStride.toString());
       var img = imglib.Image(width, height); // Create Image buffer
-     //이미지 형 변환
-     //  for (int x = 0; x < width; x++) {
-     //    for (int y = 0; y < height; y++) {
-     //      final int uvIndex =
-     //          uvPixelStride * (x / 2).floor() + uvRowStride * (y / 2).floor();
-     //      final int index = y * width + x;
-     //      final yp = image.planes[0].bytes[index];
-     //      final up = image.planes[1].bytes[uvIndex];
-     //      final vp = image.planes[2].bytes[uvIndex];
-     //      int r = (yp + vp * 1436 / 1024 - 179).round().clamp(0, 255);
-     //      int g = (yp - up * 46549 / 131072 + 44 -vp * 93604 / 131072 + 91).round().clamp(0, 255);
-     //      int b = (yp + up * 1814 / 1024 - 227).round().clamp(0, 255);
-     //      img.data[index] = (0xFF << 24) | (b << 16) | (g << 8) | r;
-     //    }
-     //  } //너무 오래 걸려서 잠시 생략
+      //이미지 형 변환
+      //  for (int x = 0; x < width; x++) {
+      //    for (int y = 0; y < height; y++) {
+      //      final int uvIndex =
+      //          uvPixelStride * (x / 2).floor() + uvRowStride * (y / 2).floor();
+      //      final int index = y * width + x;
+      //      final yp = image.planes[0].bytes[index];
+      //      final up = image.planes[1].bytes[uvIndex];
+      //      final vp = image.planes[2].bytes[uvIndex];
+      //      int r = (yp + vp * 1436 / 1024 - 179).round().clamp(0, 255);
+      //      int g = (yp - up * 46549 / 131072 + 44 -vp * 93604 / 131072 + 91).round().clamp(0, 255);
+      //      int b = (yp + up * 1814 / 1024 - 227).round().clamp(0, 255);
+      //      img.data[index] = (0xFF << 24) | (b << 16) | (g << 8) | r;
+      //    }
+      //  } //너무 오래 걸려서 잠시 생략
 
 
       imglib.PngEncoder pngEncoder = new imglib.PngEncoder(level: 0, filter: 0);
@@ -177,8 +178,8 @@ class _CameraViewerState extends State<CameraViewer> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                width:100.w,
-                height:100.w,
+                width:100,
+                height:100,
 
                 child: CircularProgressIndicator(
                   color: Colors.white,
@@ -186,7 +187,7 @@ class _CameraViewerState extends State<CameraViewer> {
               ),
 
               SizedBox(
-                height:20.h,
+                height:20,
               ),
               Text('카메라가 켜지고 있습니다\n 잠시만 기다려주세요',
                   textAlign: TextAlign.center,
@@ -215,7 +216,7 @@ class _CameraViewerState extends State<CameraViewer> {
             SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
-              child: CameraPreview(controller),
+              child:  !controller.value.isInitialized?Container(): CameraPreview(controller),
             ),
             issaving?Container(
               color:Colors.black.withOpacity(0.5),
@@ -228,8 +229,8 @@ class _CameraViewerState extends State<CameraViewer> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
-                      width:100.w,
-                      height:100.w,
+                      width:100,
+                      height:100,
 
                       child: CircularProgressIndicator(
                         color: Colors.white,
@@ -237,7 +238,7 @@ class _CameraViewerState extends State<CameraViewer> {
                     ),
 
                     SizedBox(
-                      height:20.h,
+                      height:20,
                     ),
                     Text('인식된 객체가 저장되고 있습니다\n 잠시만 기다려주세요',
                         textAlign: TextAlign.center,

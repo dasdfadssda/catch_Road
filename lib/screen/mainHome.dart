@@ -45,15 +45,13 @@ int _selectedIndex = 0;
     });
   }
 
-var my_list2 = ['홈', '커뮤니티', '카메라','앨범','프로필'];
+var my_list2 = ['홈', '커뮤니티', '앨범','프로필'];
 
  final List<Widget> _widgetOptions = <Widget>[
     projectPage(),
     HomePage(),
-
-  CamerLoad(),
    Catchbox(),
-    MYPage(),
+   MYPage(),
  ];
 
   //String? user = FirebaseAuth.instance.currentUser!.email ?? FirebaseAuth.instance.currentUser!.displayName;
@@ -84,10 +82,10 @@ var my_list2 = ['홈', '커뮤니티', '카메라','앨범','프로필'];
               ),
               label: '커뮤니티',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.add, color: Colors.transparent,),
-              label: '카메라',
-            ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.add, color: Colors.transparent,),
+            //   label: '카메라',
+            // ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.image,
