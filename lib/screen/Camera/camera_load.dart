@@ -17,12 +17,8 @@ class CamerLoad extends StatefulWidget {
 class _CamerLoadState extends State<CamerLoad> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     initCamera();
-    // Navigator.push(context, MaterialPageRoute(builder: (context) {
-    //   return TakePictureScreen2();
-    // }));
   }
 
   void initCamera() async{
@@ -32,22 +28,23 @@ class _CamerLoadState extends State<CamerLoad> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body:  ElevatedButton(
-        onPressed: () async {
-          //Get.back();
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return CameraPage(cameras);
-          }));
-        },
-        child: Text(
-          "카메라 사용하기",
-          // style: titleSmall.copyWith(
-          //   color: Colors.white,
-          // ),
-        ),
-
-      ),
-    );
+    return CameraPage(cameras);
+    //   Scaffold(
+    //   body:  ElevatedButton(
+    //     onPressed: () async {
+    //       //Get.back();
+    //       Navigator.push(context, MaterialPageRoute(builder: (context) {
+    //         return CameraPage(cameras);
+    //       }));
+    //     },
+    //     child: Text(
+    //       "카메라 사용하기",
+    //       // style: titleSmall.copyWith(
+    //       //   color: Colors.white,
+    //       // ),
+    //     ),
+    //
+    //   ),
+    // );
   }
 }

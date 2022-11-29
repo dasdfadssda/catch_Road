@@ -15,8 +15,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'camera_viewer.dart';
 
 var globalKey = new GlobalKey();
-late CameraController controller;
-
 
 class CameraPage extends StatefulWidget {
   final List<CameraDescription> cameras;
@@ -40,15 +38,6 @@ class _CameraPageState extends State<CameraPage> {
   @override
   void initState() {
     super.initState();
-    if (widget.cameras == null || widget.cameras.length < 1) {
-      print('No camera is found');
-    } else {
-      controller = new CameraController(
-        widget.cameras[0],
-        ResolutionPreset.veryHigh,
-      );
-    }
-
     onSelect("SSDMobileNet");
   }
 
@@ -81,499 +70,497 @@ class _CameraPageState extends State<CameraPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:   Stack(
+      body: Stack(
         children: [
-
           CameraViewer(
             widget.cameras,
             _model,
             setRecognitions,
           ),
-
-          BndBox(
+          // Positioned(
+          //   left: math.max(0, 44),
+          //   top: math.max(0, 520),
+          //   width: 174,
+          //   height: 248,
+          //   child: Container(
+          //     padding: EdgeInsets.only(top: 5.0, left: 5.0),
+          //
+          //     child: Container(
+          //       decoration: BoxDecoration(
+          //         border: Border.all(
+          //           color: Colors.blue,
+          //           width:5,
+          //         ),
+          //       ),
+          //
+          //     ),
+          //   ),
+          // ),
+          issaving
+              ? Container()
+              : BndBox(
               _recognitions == null ? [] : _recognitions,
               math.max(_imageHeight, _imageWidth),
               math.min(_imageHeight, _imageWidth),
               MediaQuery.of(context).size.height,
               MediaQuery.of(context).size.width,
               _model),
+          objectSelect
+              ? Container(
+              decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.6),
+                  borderRadius: BorderRadius.circular(30.0)
+              ),
+              //color: Colors.black.withOpacity(0.6),
+              width: MediaQuery.of(context).size.width,
+              height: 390,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 45,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(width: 24),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: SizedBox(
+                          height: 24,
+                          width: 24,
+                          child: Icon(
+                            Icons.clear_rounded,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 269),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            objectSelect = false;
+                          });
+                        },
+                        child: SizedBox(
+                          height: 24,
+                          width: 24,
+                          child: Icon(
+                            Icons.check,
+                            color: Colors.white,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 24,
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(top:17),
+                        decoration: BoxDecoration(
 
+                            color:Colors.white,
+                            borderRadius: BorderRadius.circular(16.0)
+                        ),
+                        width:148,
+                        height: 80,
+                        //   color:Colors.white,
+                        child:Row(
+                          children: [
+                            SizedBox(width: 38,),
+                            Column(
+                              children: [
+                                Icon(
+                                  size:30,
+                                  Icons.person,
+                                  color:Colors.blue,
+                                ),
+                                SizedBox(height: 4,),
+                                Text('사람',
+                                    style:TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color:Colors.black
+
+                                    )),
+                              ],
+
+                            ),
+                            SizedBox(width:30),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              // mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(height:9),
+                                Icon(
+                                  size:24,
+                                  Icons.check,
+                                  color:Colors.blue,
+
+                                ),],
+                            )
+
+
+
+
+                          ],
+                        ),
+
+                      ),
+                      SizedBox(
+                        width: 16,
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(top:17),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16.0)
+                        ),
+                        width:148,
+                        height: 80,
+                        //   color:Colors.white,
+                        child:Row(
+                          children: [
+                            SizedBox(width: 38,),
+                            Column(
+                              children: [
+                                Icon(
+                                  size:30,
+                                  Icons.car_crash_outlined,
+                                  color:Colors.grey,
+                                ),
+                                SizedBox(height: 4,),
+                                Text('자동차',
+                                    style:TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color:Colors.black
+
+                                    )),
+                              ],
+
+                            ),
+                            SizedBox(width:30),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              // mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(height:9),
+                                Icon(
+                                  size:24,
+                                  Icons.check,
+                                  color:Colors.grey,
+
+                                ),],
+                            )
+
+
+
+
+                          ],
+                        ),
+
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16,),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 24,
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(top:17),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10.0)
+                        ),
+                        width:148,
+                        height: 80,
+                        //   color:Colors.white,
+                        child:Row(
+                          children: [
+                            SizedBox(width: 38,),
+                            Column(
+                              children: [
+                                Icon(
+                                  size:30,
+                                  Icons.motorcycle_sharp,
+                                  color:Colors.grey,
+                                ),
+                                SizedBox(height: 4,),
+                                Text('오토바이',
+                                    style:TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color:Colors.black
+
+                                    )),
+                              ],
+
+                            ),
+                            SizedBox(width:30),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              // mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(height:9),
+                                Icon(
+                                  size:24,
+                                  Icons.check,
+                                  color:Colors.grey,
+
+                                ),],
+                            )
+
+
+
+
+                          ],
+                        ),
+
+                      ),
+                      SizedBox(
+                        width: 16,
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(top:17),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16.0)
+                        ),
+                        width:148,
+                        height: 80,
+                        //   color:Colors.white,
+                        child:Row(
+                          children: [
+                            SizedBox(width: 38,),
+                            Column(
+                              children: [
+                                Icon(
+                                  size:30,
+                                  Icons.directions_bus_filled_sharp,
+                                  color:Colors.grey,
+                                ),
+                                SizedBox(height: 4,),
+                                Text('버스',
+                                    style:TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color:Colors.black
+
+                                    )),
+                              ],
+
+                            ),
+                            SizedBox(width:30),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              // mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(height:9),
+                                Icon(
+                                  size:24,
+                                  Icons.check,
+                                  color:Colors.grey,
+
+                                ),],
+                            )
+
+
+
+
+                          ],
+                        ),
+
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16,),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 24,
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(top:17),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16.0)
+                        ),
+                        width:148,
+                        height: 80,
+                        //   color:Colors.white,
+                        child:Row(
+                          children: [
+                            SizedBox(width: 38,),
+                            Column(
+                              children: [
+                                Icon(
+                                  size:30,
+                                  Icons.pedal_bike_outlined,
+                                  color:Colors.grey,
+                                ),
+                                SizedBox(height: 4,),
+                                Text('자전거',
+                                    style:TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color:Colors.black
+
+                                    )),
+                              ],
+
+                            ),
+                            SizedBox(width:30),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              // mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(height:9),
+                                Icon(
+                                  size:24,
+                                  Icons.check,
+                                  color:Colors.grey,
+
+                                ),],
+                            )
+
+
+
+
+                          ],
+                        ),
+
+                      ),
+                      SizedBox(
+                        width: 16,
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(top:17),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16.0)
+                        ),
+                        width:148,
+                        height: 80,
+                        //   color:Colors.white,
+                        child:Row(
+                          children: [
+                            SizedBox(width: 38,),
+                            Column(
+                              children: [
+                                Icon(
+                                  size:30,
+                                  Icons.traffic_rounded,
+                                  color:Colors.grey,
+                                ),
+                                SizedBox(height: 4,),
+                                Text('신호등',
+                                    style:TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color:Colors.black
+
+                                    )),
+                              ],
+
+                            ),
+                            SizedBox(width:30),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              // mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(height:9),
+                                Icon(
+                                  size:24,
+                                  Icons.check,
+                                  color:Colors.grey,
+
+                                ),],
+                            )
+
+
+
+
+                          ],
+                        ),
+
+                      ),
+                    ],
+                  ),
+
+                  // SizedBox(height: 16.h,),
+                ],
+              ))
+              : Container(
+              color: Colors.black.withOpacity(0.6),
+              width: MediaQuery.of(context).size.width,
+              height: 96,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 45,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(width: 24),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: SizedBox(
+                          height: 24,
+                          width: 24,
+                          child: Icon(
+                            Icons.clear_rounded,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 269),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            objectSelect = true;
+                          });
+                        },
+                        child: SizedBox(
+                          height: 24,
+                          width: 24,
+                          child: Icon(
+                            Icons.check_box_outline_blank,
+                            color: Colors.white,
+                          ),
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              )),
+          Positioned(
+            bottom: 0,
+            child: Container(
+                color: Colors.black.withOpacity(0.6),
+                width: MediaQuery.of(context).size.width,
+                height: 58,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '자동인식',
+                      style:TextStyle(
+                        color: Colors.white,
+                      ),
+                      textAlign: TextAlign.start,
+                    )
+                  ],
+                )),
+          ),
         ],
-
       ),
-      // body: Stack(
-      //   children: [
-      //     CameraViewer(
-      //       widget.cameras,
-      //       _model,
-      //       setRecognitions,
-      //     ),
-      //
-      //     issaving
-      //         ? Container()
-      //         : BndBox(
-      //             _recognitions == null ? [] : _recognitions,
-      //             math.max(_imageHeight, _imageWidth),
-      //             math.min(_imageHeight, _imageWidth),
-      //             MediaQuery.of(context).size.height,
-      //             MediaQuery.of(context).size.width,
-      //             _model),
-      //     objectSelect
-      //         ? Container(
-      //        decoration: BoxDecoration(
-      //             color: Colors.black.withOpacity(0.6),
-      //             borderRadius: BorderRadius.circular(30.0)
-      //         ),
-      //             //color: Colors.black.withOpacity(0.6),
-      //             width: MediaQuery.of(context).size.width,
-      //             height: 390.h,
-      //             child: Column(
-      //               children: [
-      //                 SizedBox(
-      //                   height: 45.h,
-      //                 ),
-      //                 Row(
-      //                   mainAxisAlignment: MainAxisAlignment.start,
-      //                   children: [
-      //                     SizedBox(width: 24.w),
-      //                     GestureDetector(
-      //                       onTap: () {
-      //                         Navigator.of(context).pop();
-      //                       },
-      //                       child: SizedBox(
-      //                         height: 24.w,
-      //                         width: 24.h,
-      //                         child: Icon(
-      //                           Icons.clear_rounded,
-      //                           color: Colors.white,
-      //                         ),
-      //                       ),
-      //                     ),
-      //                     SizedBox(width: 269.w),
-      //                     GestureDetector(
-      //                       onTap: () {
-      //                         setState(() {
-      //                           objectSelect = false;
-      //                         });
-      //                       },
-      //                       child: SizedBox(
-      //                         height: 24.w,
-      //                         width: 24.h,
-      //                         child: Icon(
-      //                           Icons.check,
-      //                           color: Colors.white,
-      //                         ),
-      //                       ),
-      //                     )
-      //                   ],
-      //                 ),
-      //                 SizedBox(
-      //                   height: 16.h,
-      //                 ),
-      //                 Row(
-      //                   children: [
-      //                     SizedBox(
-      //                       width: 24.w,
-      //                     ),
-      //                     Container(
-      //                       padding: EdgeInsets.only(top:17.h),
-      //                       decoration: BoxDecoration(
-      //
-      //                         color:Colors.white,
-      //                           borderRadius: BorderRadius.circular(16.0)
-      //                       ),
-      //                         width:148.w,
-      //                         height: 80.h,
-      //                      //   color:Colors.white,
-      //                         child:Row(
-      //                           children: [
-      //                             SizedBox(width: 38.w,),
-      //                             Column(
-      //                               children: [
-      //                                 Icon(
-      //                                   size:30,
-      //                                   Icons.person,
-      //                                   color:Colors.blue,
-      //                                 ),
-      //                                 SizedBox(height: 4.h,),
-      //                                 Text('사람',
-      //                                 style:TextStyle(
-      //                                   fontWeight: FontWeight.bold,
-      //                                     color:Colors.black
-      //
-      //                                 )),
-      //                               ],
-      //
-      //                             ),
-      //                             SizedBox(width:30.w),
-      //                            Column(
-      //                              crossAxisAlignment: CrossAxisAlignment.center,
-      //                             // mainAxisAlignment: MainAxisAlignment.center,
-      //                              children: [
-      //                                SizedBox(height:9.h),
-      //                                Icon(
-      //                                size:24.h,
-      //                                Icons.check,
-      //                                color:Colors.blue,
-      //
-      //                              ),],
-      //                            )
-      //
-      //
-      //
-      //
-      //                           ],
-      //                         ),
-      //
-      //                       ),
-      //                     SizedBox(
-      //                       width: 16.w,
-      //                     ),
-      //                     Container(
-      //                       padding: EdgeInsets.only(top:17.h),
-      //                       decoration: BoxDecoration(
-      //                           color: Colors.white,
-      //                           borderRadius: BorderRadius.circular(16.0)
-      //                       ),
-      //                       width:148.w,
-      //                       height: 80.h,
-      //                       //   color:Colors.white,
-      //                       child:Row(
-      //                         children: [
-      //                           SizedBox(width: 38.w,),
-      //                           Column(
-      //                             children: [
-      //                               Icon(
-      //                                 size:30,
-      //                                 Icons.car_crash_outlined,
-      //                                 color:Colors.grey,
-      //                               ),
-      //                               SizedBox(height: 4.h,),
-      //                               Text('자동차',
-      //                                   style:TextStyle(
-      //                                       fontWeight: FontWeight.bold,
-      //                                       color:Colors.black
-      //
-      //                                   )),
-      //                             ],
-      //
-      //                           ),
-      //                           SizedBox(width:30.w),
-      //                           Column(
-      //                             crossAxisAlignment: CrossAxisAlignment.center,
-      //                             // mainAxisAlignment: MainAxisAlignment.center,
-      //                             children: [
-      //                               SizedBox(height:9.h),
-      //                               Icon(
-      //                                 size:24.h,
-      //                                 Icons.check,
-      //                                 color:Colors.grey,
-      //
-      //                               ),],
-      //                           )
-      //
-      //
-      //
-      //
-      //                         ],
-      //                       ),
-      //
-      //                     ),
-      //                   ],
-      //                 ),
-      //                 SizedBox(height: 16.h,),
-      //                 Row(
-      //                   children: [
-      //                     SizedBox(
-      //                       width: 24.w,
-      //                     ),
-      //                     Container(
-      //                       padding: EdgeInsets.only(top:17.h),
-      //                       decoration: BoxDecoration(
-      //                           color: Colors.white,
-      //                           borderRadius: BorderRadius.circular(10.0)
-      //                       ),
-      //                       width:148.w,
-      //                       height: 80.h,
-      //                       //   color:Colors.white,
-      //                       child:Row(
-      //                         children: [
-      //                           SizedBox(width: 38.w,),
-      //                           Column(
-      //                             children: [
-      //                               Icon(
-      //                                 size:30,
-      //                                 Icons.motorcycle_sharp,
-      //                                 color:Colors.grey,
-      //                               ),
-      //                               SizedBox(height: 4.h,),
-      //                               Text('오토바이',
-      //                                   style:TextStyle(
-      //                                       fontWeight: FontWeight.bold,
-      //                                       color:Colors.black
-      //
-      //                                   )),
-      //                             ],
-      //
-      //                           ),
-      //                           SizedBox(width:30.w),
-      //                           Column(
-      //                             crossAxisAlignment: CrossAxisAlignment.center,
-      //                             // mainAxisAlignment: MainAxisAlignment.center,
-      //                             children: [
-      //                               SizedBox(height:9.h),
-      //                               Icon(
-      //                                 size:24.h,
-      //                                 Icons.check,
-      //                                 color:Colors.grey,
-      //
-      //                               ),],
-      //                           )
-      //
-      //
-      //
-      //
-      //                         ],
-      //                       ),
-      //
-      //                     ),
-      //                     SizedBox(
-      //                       width: 16.w,
-      //                     ),
-      //                     Container(
-      //                       padding: EdgeInsets.only(top:17.h),
-      //                       decoration: BoxDecoration(
-      //                           color: Colors.white,
-      //                           borderRadius: BorderRadius.circular(16.0)
-      //                       ),
-      //                       width:148.w,
-      //                       height: 80.h,
-      //                       //   color:Colors.white,
-      //                       child:Row(
-      //                         children: [
-      //                           SizedBox(width: 38.w,),
-      //                           Column(
-      //                             children: [
-      //                               Icon(
-      //                                 size:30,
-      //                                 Icons.directions_bus_filled_sharp,
-      //                                 color:Colors.grey,
-      //                               ),
-      //                               SizedBox(height: 4.h,),
-      //                               Text('버스',
-      //                                   style:TextStyle(
-      //                                       fontWeight: FontWeight.bold,
-      //                                       color:Colors.black
-      //
-      //                                   )),
-      //                             ],
-      //
-      //                           ),
-      //                           SizedBox(width:30.w),
-      //                           Column(
-      //                             crossAxisAlignment: CrossAxisAlignment.center,
-      //                             // mainAxisAlignment: MainAxisAlignment.center,
-      //                             children: [
-      //                               SizedBox(height:9.h),
-      //                               Icon(
-      //                                 size:24.h,
-      //                                 Icons.check,
-      //                                 color:Colors.grey,
-      //
-      //                               ),],
-      //                           )
-      //
-      //
-      //
-      //
-      //                         ],
-      //                       ),
-      //
-      //                     ),
-      //                   ],
-      //                 ),
-      //                 SizedBox(height: 16.h,),
-      //                 Row(
-      //                   children: [
-      //                     SizedBox(
-      //                       width: 24.w,
-      //                     ),
-      //                     Container(
-      //                       padding: EdgeInsets.only(top:17.h),
-      //                       decoration: BoxDecoration(
-      //                           color: Colors.white,
-      //                           borderRadius: BorderRadius.circular(16.0)
-      //                       ),
-      //                       width:148.w,
-      //                       height: 80.h,
-      //                       //   color:Colors.white,
-      //                       child:Row(
-      //                         children: [
-      //                           SizedBox(width: 38.w,),
-      //                           Column(
-      //                             children: [
-      //                               Icon(
-      //                                 size:30,
-      //                                 Icons.pedal_bike_outlined,
-      //                                 color:Colors.grey,
-      //                               ),
-      //                               SizedBox(height: 4.h,),
-      //                               Text('자전거',
-      //                                   style:TextStyle(
-      //                                       fontWeight: FontWeight.bold,
-      //                                       color:Colors.black
-      //
-      //                                   )),
-      //                             ],
-      //
-      //                           ),
-      //                           SizedBox(width:30.w),
-      //                           Column(
-      //                             crossAxisAlignment: CrossAxisAlignment.center,
-      //                             // mainAxisAlignment: MainAxisAlignment.center,
-      //                             children: [
-      //                               SizedBox(height:9.h),
-      //                               Icon(
-      //                                 size:24.h,
-      //                                 Icons.check,
-      //                                 color:Colors.grey,
-      //
-      //                               ),],
-      //                           )
-      //
-      //
-      //
-      //
-      //                         ],
-      //                       ),
-      //
-      //                     ),
-      //                     SizedBox(
-      //                       width: 16.w,
-      //                     ),
-      //                     Container(
-      //                       padding: EdgeInsets.only(top:17.h),
-      //                       decoration: BoxDecoration(
-      //                           color: Colors.white,
-      //                           borderRadius: BorderRadius.circular(16.0)
-      //                       ),
-      //                       width:148.w,
-      //                       height: 80.h,
-      //                       //   color:Colors.white,
-      //                       child:Row(
-      //                         children: [
-      //                           SizedBox(width: 38.w,),
-      //                           Column(
-      //                             children: [
-      //                               Icon(
-      //                                 size:30,
-      //                                 Icons.traffic_rounded,
-      //                                 color:Colors.grey,
-      //                               ),
-      //                               SizedBox(height: 4.h,),
-      //                               Text('신호등',
-      //                                   style:TextStyle(
-      //                                       fontWeight: FontWeight.bold,
-      //                                       color:Colors.black
-      //
-      //                                   )),
-      //                             ],
-      //
-      //                           ),
-      //                           SizedBox(width:30.w),
-      //                           Column(
-      //                             crossAxisAlignment: CrossAxisAlignment.center,
-      //                             // mainAxisAlignment: MainAxisAlignment.center,
-      //                             children: [
-      //                               SizedBox(height:9.h),
-      //                               Icon(
-      //                                 size:24.h,
-      //                                 Icons.check,
-      //                                 color:Colors.grey,
-      //
-      //                               ),],
-      //                           )
-      //
-      //
-      //
-      //
-      //                         ],
-      //                       ),
-      //
-      //                     ),
-      //                   ],
-      //                 ),
-      //
-      //                // SizedBox(height: 16.h,),
-      //               ],
-      //             ))
-      //         : Container(
-      //             color: Colors.black.withOpacity(0.6),
-      //             width: MediaQuery.of(context).size.width,
-      //             height: 96.h,
-      //             child: Column(
-      //               children: [
-      //                 SizedBox(
-      //                   height: 45.h,
-      //                 ),
-      //                 Row(
-      //                   mainAxisAlignment: MainAxisAlignment.start,
-      //                   children: [
-      //                     SizedBox(width: 24.w),
-      //                     GestureDetector(
-      //                       onTap: () {
-      //                         Navigator.of(context).pop();
-      //                       },
-      //                       child: SizedBox(
-      //                         height: 24.w,
-      //                         width: 24.h,
-      //                         child: Icon(
-      //                           Icons.clear_rounded,
-      //                           color: Colors.white,
-      //                         ),
-      //                       ),
-      //                     ),
-      //                     SizedBox(width: 269.w),
-      //                     GestureDetector(
-      //                       onTap: () {
-      //                         setState(() {
-      //                           objectSelect = true;
-      //                         });
-      //                       },
-      //                       child: SizedBox(
-      //                         height: 24.w,
-      //                         width: 24.h,
-      //                         child: Icon(
-      //                           Icons.check_box_outline_blank,
-      //                           color: Colors.white,
-      //                         ),
-      //                       ),
-      //                     )
-      //                   ],
-      //                 )
-      //               ],
-      //             )),
-      //     Positioned(
-      //       bottom: 0,
-      //       child: Container(
-      //           color: Colors.black.withOpacity(0.6),
-      //           width: MediaQuery.of(context).size.width,
-      //           height: 58.h,
-      //           child: Row(
-      //             mainAxisAlignment: MainAxisAlignment.center,
-      //             children: [
-      //               Text(
-      //                 '자동인식',
-      //                 style: titleMedium.copyWith(
-      //                   color: Colors.white,
-      //                 ),
-      //                 textAlign: TextAlign.start,
-      //               )
-      //             ],
-      //           )),
-      //     ),
-      //   ],
-      // ),
     );
   }
 }

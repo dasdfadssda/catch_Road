@@ -1,12 +1,14 @@
 
 import 'dart:io';
+import 'package:camera/camera.dart';
 import 'package:catch2_0_1/utils/app_text_styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-// import 'package:geocoding/geocoding.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kpostal/kpostal.dart';
+// import 'package:geocoding/geocoding.dart';
+
 
 import '../../Auth/auth_service.dart';
 import '../../utils/widget.dart';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../Auth/auth_service.dart';
+import 'Camera/camera_load.dart';
 import 'mainHome.dart';
 
 class LoginPage extends StatefulWidget {
@@ -182,7 +183,14 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: ()
                           //MainHomePage
                           {
-                        signInWithGoogle();
+
+                        //signInWithGoogle();
+
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return MainHomePage();
+                        }));
+
                         // Navigator.push(
                         //   context,
                         //   PageRouteBuilder(

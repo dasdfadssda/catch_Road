@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_switch/sliding_switch.dart';
@@ -11,6 +12,8 @@ import 'album/CatchBox.dart';
 //import 'album/albumPage.dart';
 import 'projectPage/progectpage.dart';
 
+
+List<CameraDescription> cameras2 = [];
 class MainHomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -20,6 +23,18 @@ class MainHomePage extends StatefulWidget {
 class _HomePageState extends State<MainHomePage> {
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
+@override
+void initState() {
+  // TODO: implement initState
+  super.initState();
+  initCamera();
+
+}
+
+void initCamera() async{
+  cameras2 = await availableCameras();
+
+}
 
 int _selectedIndex = 0;
   Color? bgColorBottomNavigationBar;
@@ -30,15 +45,13 @@ int _selectedIndex = 0;
     });
   }
 
-var my_list2 = ['홈', '커뮤니티', '카메라','앨범','프로필'];
+var my_list2 = ['홈', '커뮤니티', '앨범','프로필'];
 
  final List<Widget> _widgetOptions = <Widget>[
     projectPage(),
     HomePage(),
-
-   CamerLoad(),
    Catchbox(),
-    MYPage(),
+   MYPage(),
  ];
 
   //String? user = FirebaseAuth.instance.currentUser!.email ?? FirebaseAuth.instance.currentUser!.displayName;
@@ -69,10 +82,10 @@ var my_list2 = ['홈', '커뮤니티', '카메라','앨범','프로필'];
               ),
               label: '커뮤니티',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.add, color: Colors.transparent,),
-              label: '',
-            ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.add, color: Colors.transparent,),
+            //   label: '카메라',
+            // ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.image,
@@ -99,8 +112,18 @@ var my_list2 = ['홈', '커뮤니티', '카메라','앨범','프로필'];
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Image.asset('assets/camera.png'),
-        onPressed: () {},
+        child: SizedBox(
+          width:20,
+          height: 20,
+          child: Image.asset('assets/camera.png'),
+
+        ),
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return CamerLoad();
+          }));
+
+        },
       ),
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterDocked,
