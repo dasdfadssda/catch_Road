@@ -182,14 +182,15 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: ()
                           //MainHomePage
                           {
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                              pageBuilder: (_, __, ___) => MainHomePage(),
-                              transitionDuration: Duration(seconds: 0),
-                              transitionsBuilder: (_, a, __, c) =>
-                                  FadeTransition(opacity: a, child: c)),
-                        );
+                        signInWithGoogle();
+                        // Navigator.push(
+                        //   context,
+                        //   PageRouteBuilder(
+                        //       pageBuilder: (_, __, ___) => MainHomePage(),
+                        //       transitionDuration: Duration(seconds: 0),
+                        //       transitionsBuilder: (_, a, __, c) =>
+                        //           FadeTransition(opacity: a, child: c)),
+                        // );
                       },
                       child: Text(
                         "로그인",

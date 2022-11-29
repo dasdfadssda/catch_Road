@@ -6,6 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'AddPAge.dart';
+
 
 
 class HomePage extends StatefulWidget {
@@ -19,10 +21,12 @@ class _HomePageState extends State<HomePage> {
 final FirebaseAuth _auth = FirebaseAuth.instance;
 var _toDay = DateTime.now(); // 시간 비교 하기
 int _mylike = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0XFFF3F4F5),
+
       appBar:  AppBar( // 앱바
         backgroundColor: Colors.white,
         elevation: 0,
@@ -158,16 +162,18 @@ int _mylike = 0;
         }),
     floatingActionButton: FloatingActionButton( // 플로팅 액션 버튼
         onPressed: () {
-          //  Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //       builder: (context) => AddPage()),
-          // );
+           Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => AddPage()),
+          );
+
         },
         child: Icon(Icons.edit_outlined),
         backgroundColor: Colors.blueAccent,
       ),
     );
+
   } 
 
     bool _all = true;
@@ -323,5 +329,6 @@ int _mylike = 0;
        ],),
      );
    }
+
   }
 }
