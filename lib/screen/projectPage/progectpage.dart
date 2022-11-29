@@ -7,8 +7,7 @@ import 'package:flutter/src/widgets/framework.dart';
 
 import 'package:sliding_switch/sliding_switch.dart';
 import '../../utils/app_text_styles.dart';
-import 'package:syncfusion_flutter_sliders/sliders.dart';
-import 'package:percent_indicator/percent_indicator.dart';
+
 
 // import 'package:persistent_bottom_nav_bar/nav_bar_styles/style_12_bottom_nav_bar.widget.dart';
 
