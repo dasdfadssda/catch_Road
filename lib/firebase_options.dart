@@ -68,7 +68,7 @@ class DefaultFirebaseOptions {
     storageBucket: 'catch-platform.appspot.com',
     androidClientId: '368970870839-bqa9qu21jbf4gl66koho78bbni7d501n.apps.googleusercontent.com',
     iosClientId: '368970870839-kmqjuejcrgmmhfmp5gk2juesu7714j4b.apps.googleusercontent.com',
-    iosBundleId: 'com.example.catch201',
+    iosBundleId: 'com.catchroad.catch201',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -79,6 +79,6 @@ class DefaultFirebaseOptions {
     storageBucket: 'catch-platform.appspot.com',
     androidClientId: '368970870839-bqa9qu21jbf4gl66koho78bbni7d501n.apps.googleusercontent.com',
     iosClientId: '368970870839-kmqjuejcrgmmhfmp5gk2juesu7714j4b.apps.googleusercontent.com',
-    iosBundleId: 'com.example.catch201',
+    iosBundleId: 'com.catchroad.catch201',
   );
 }

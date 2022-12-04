@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:368970870839:android:85373ff35557c75e8dcfb2",
         "android_client_info": {
-          "package_name": "com.example.catch0"
+          "package_name": "com.catchroad.catch0"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "368970870839-bqa9qu21jbf4gl66koho78bbni7d501n.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.catch0",
+            "package_name": "com.catchroad.catch0",
             "certificate_hash": "7e524105660ae84b00c31c64bfbc5dbb91d7dc12"
           }
         },
