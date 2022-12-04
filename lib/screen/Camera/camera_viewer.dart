@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:typed_data';
@@ -7,6 +9,7 @@ import 'package:tflite/tflite.dart';
 import 'dart:math' as math;
 import 'camera_bndbox.dart';
 import 'package:image/image.dart' as imglib;
+import 'package:intl/intl.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:math' as math;
 XFile? pictureFile;
@@ -113,44 +116,36 @@ class _CameraViewerState extends State<CameraViewer> {
   Future<void> takepicture() async {
     setState(() {issaving = true;});
     print('is saving1 : $issaving');
-    // setState(() {});
     CameraImage image = cameraImage2;
+
+    print('length: ${ image.planes[0].bytes.length}');
+
     try {
-      final int width = image.width;
-      final int height = image.height;
-      final int uvRowStride = image.planes[1].bytesPerRow;
-      final int uvPixelStride = image.planes[1].bytesPerPixel!;
-      print("uvRowStride: " + uvRowStride.toString());
-      print("uvPixelStride: " + uvPixelStride.toString());
-      var img = imglib.Image(width, height); // Create Image buffer
-      //이미지 형 변환
-      //  for (int x = 0; x < width; x++) {
-      //    for (int y = 0; y < height; y++) {
-      //      final int uvIndex =
-      //          uvPixelStride * (x / 2).floor() + uvRowStride * (y / 2).floor();
-      //      final int index = y * width + x;
-      //      final yp = image.planes[0].bytes[index];
-      //      final up = image.planes[1].bytes[uvIndex];
-      //      final vp = image.planes[2].bytes[uvIndex];
-      //      int r = (yp + vp * 1436 / 1024 - 179).round().clamp(0, 255);
-      //      int g = (yp - up * 46549 / 131072 + 44 -vp * 93604 / 131072 + 91).round().clamp(0, 255);
-      //      int b = (yp + up * 1814 / 1024 - 227).round().clamp(0, 255);
-      //      img.data[index] = (0xFF << 24) | (b << 16) | (g << 8) | r;
-      //    }
-      //  } //너무 오래 걸려서 잠시 생략
+     var img= _convertYUV420(image);
 
-
-      imglib.PngEncoder pngEncoder = new imglib.PngEncoder(level: 0, filter: 0);
-      List<int> png = pngEncoder.encodeImage(img);
+        imglib.PngEncoder pngEncoder = new imglib.PngEncoder(level: 0, filter: 0);
+       print('image.planes[0].bytes${image.planes[0].bytes}');
+       List<int> png = pngEncoder.encodeImage(img);
 
       //firebase에 저장
-      await storage.ref('tflitetest/$object/$object${DateTime.now()}.png').putData(Uint8List.fromList(png));//Uint8List.fromList(png)
-      // final url = await uploadTask.ref.getDownloadURL();
-
+      final uploadTask = await storage.ref('/traffic-Image/$object/$object${DateTime.now()}.png').putData(Uint8List.fromList(png));//Uint8List.fromList(png)
+      final url = await uploadTask.ref.getDownloadURL();
+      try {
+        await FirebaseFirestore.instance
+            .collection("category")
+            .doc("1234@handong.ac.kr")//FirebaseAuth.instance.currentUser!.email
+            .collection("car")
+            .doc("date")
+            .collection("date")
+            .add({
+          "url": url,
+          "time":DateFormat('dd/MM/yyyy').format(DateTime.now())
+        });
+      } catch (e) {
+        print(e);
+      }
       setState(() {issaving = false;});
-
-
-      print('is saving1 : $issaving');
+      //print('is saving1 : $issaving');
     } catch (e) {
       print(">>>>>>>>>>>> ERROR:" + e.toString());
     }
@@ -255,4 +250,44 @@ class _CameraViewerState extends State<CameraViewer> {
           ],
         ));
   }
+}
+
+imglib.Image _convertYUV420(CameraImage image) {
+  final int width = image.width;
+  final int height = image.height;
+  final int uvRowStride = image.planes[1].bytesPerRow;
+  final int uvPixelStride = image.planes[1].bytesPerPixel!;
+  var img = imglib.Image(image.width, image.height); // Create Image buffer
+
+
+  //var img= _convertBGRA8888(image);
+
+  //print('format ${image.format.group}');
+  //이미지 형 변환
+  //height: 720
+  //width : 1280
+  for (int x = 0; x < width; x++) {
+    for (int y = 0; y < height; y++) {
+      final int uvIndex =
+          uvPixelStride * (x / 2).floor() + uvRowStride * (y / 2).floor();
+      final int index = y * width + x;
+      final yp = image.planes[0].bytes[index];
+      final up = image.planes[1].bytes[uvIndex];
+      final vp = image.planes[2].bytes[uvIndex];
+      int r = (yp + vp * 1436 / 1024 - 179).round().clamp(0, 255);
+      int g = (yp - up * 46549 / 131072 + 44 -vp * 93604 / 131072 + 91).round().clamp(0, 255);
+      int b = (yp + up * 1814 / 1024 - 227).round().clamp(0, 255);
+      img.data[index] = (0xFF << 24) | (b << 16) | (g << 8) | r;
+    }
+  } //너무 오래 걸려서 잠시 생략
+  return img;
+}
+
+imglib.Image _convertBGRA8888(CameraImage image) {
+  return imglib.Image.fromBytes(
+    image.width,
+    image.height,
+    image.planes[0].bytes,
+    format: imglib.Format.bgra,
+  );
 }

@@ -60,10 +60,6 @@ class _CameraPageState extends State<CameraPage> {
       _imageHeight = imageHeight;
       _imageWidth = imageWidth;
 
-      print('_recognitions: $_recognitions');
-      print('_imageHeight: $_imageHeight');
-      print('_imageWidth: $_imageWidth');
-
     });
   }
 
