@@ -8,6 +8,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:sliding_switch/sliding_switch.dart';
 import '../../utils/app_text_styles.dart';
 
+bool part=false;
 
 // import 'package:persistent_bottom_nav_bar/nav_bar_styles/style_12_bottom_nav_bar.widget.dart';
 
@@ -115,7 +116,11 @@ class _add_personalState extends State<add_personal> {*/
                     value: false,
                     width: size.width * 0.9,
                     onChanged: (bool value) {
-                      print(value);
+
+                      setState(() {
+                        part=value;
+                        print(part);
+                      });
                     },
                     height: 40,
                     
@@ -140,19 +145,106 @@ class _add_personalState extends State<add_personal> {*/
         ),
        
         Expanded(
-          
           child: StreamBuilder<QuerySnapshot>(
             
         stream: FirebaseFirestore.instance.collection('project').snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) return Center(child: Text('  업로드 된\n글이 없어요 :(',style: labelLargeStyle(color: Color(0XFF9FA5B2)),));
-              return ListView.builder(
+          if(part==true) return ListView.builder(
+              itemCount: snapshot.data!.docs.length,
+              itemBuilder: (context, index) {
+                if(snapshot.data!.docs[index]['participate']==1)
+                return  Padding(
+                  padding:  EdgeInsets.only(left: size.width * 0.05, right : size.width * 0.05, bottom: size.height * 0.01),
+                  child: Card(
+                    elevation: 0.2,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
+                    child: InkWell(
+                      //카드 누르는 경우
+                      onTap: (){},
+                      child: Column(children: [
+                        Padding(
+                          padding:  EdgeInsets.only(top: size.height * 0.03, right: size.width * 0.7),
+                          child: Text("D-" + snapshot.data!.docs[index]['final_day'].toString(), style: labelLargeStyle(color: Color(0xff9FA5B2)),),
+                        ),
+                        ListTile(
+                          title: Padding(
+                            padding:  EdgeInsets.only(top: size.height*0.01),
+                            child: Text(snapshot.data!.docs[index]['title'].toString(), style: titleMediumStyle(),),
+                          ),
+                          subtitle: Row(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: Color(0xffF3F4F5),),
+
+                                margin: EdgeInsets.only(top: size.height*0.01),
+                                child: Padding(
+                                  padding:  EdgeInsets.all(8),
+                                  child: Text(snapshot.data!.docs[index]['type'].toString(), style: labelMediumStyle(color: Color(0xff9FA5B2)),),
+                                ),
+                              ),
+                              Padding(
+                                padding:  EdgeInsets.only(top: size.height * 0.01, left: size.width*0.02),
+                                child: Text(snapshot.data!.docs[index]['user'].toString(), style: labelMediumStyle(color: Color(0xff9FA5B2)),),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(left: size.width*0.05, bottom: size.height*0.03, top: size.height*0.01),
+                              width: size.width*0.60,
+                              height: size.height*0.01,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.all(Radius.circular(16)),
+                                child: LinearProgressIndicator(
+                                  value: snapshot.data!.docs[index]['percentage'].toDouble() *0.01,
+                                  valueColor:snapshot.data!.docs[index]['participate']==0? AlwaysStoppedAnimation<Color>(Color(0xff3A94EE)):AlwaysStoppedAnimation<Color>(Color(0xff00D796)),
+                                  backgroundColor: Color(0xffE7E8EC),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:  EdgeInsets.only(bottom: size.height*0.02, left: size.width*0.03),
+                              child:snapshot.data!.docs[index]['participate']==0? Image.asset('assets/coin.png', width: 20,):Image.asset('assets/coin2.png', width: 20,),
+                            ),
+                            Padding(
+                              padding:  EdgeInsets.only(bottom: size.height*0.02, left: size.width*0.01),
+                              child: Text(snapshot.data!.docs[index]['cash'].toString() + "00"),
+                            )
+
+                          ],
+                        ),
+
+
+
+
+                      ]),
+                    ),
+                  ),
+                );
+                else return Container();
+                // Container(
+                //   decoration: BoxDecoration(
+                //     border: Border(
+
+                //     )
+                //   ),
+                //   child: Column(children: [
+                //     Text(snapshot.data!.docs[index]['title'].toString()),
+                //     Text(snapshot.data!.docs[index]['final_day'].toString()),
+                //   ]),
+                // );
+              }
+          );
+          else return ListView.builder(
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
-                  return Padding(
+
+                  return  snapshot.data!.docs[index]['participate']==1&&part==true?Padding(
                     padding:  EdgeInsets.only(left: size.width * 0.05, right : size.width * 0.05, bottom: size.height * 0.01),
                     child: Card(
-                      
                       elevation: 0.2,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
                             child: InkWell(
@@ -196,14 +288,14 @@ class _add_personalState extends State<add_personal> {*/
                                         borderRadius: BorderRadius.all(Radius.circular(16)),
                                         child: LinearProgressIndicator(
                                           value: snapshot.data!.docs[index]['percentage'].toDouble() *0.01,
-                                          valueColor: AlwaysStoppedAnimation<Color>(Color(0xff3A94EE)),
+                                          valueColor:snapshot.data!.docs[index]['participate']==0? AlwaysStoppedAnimation<Color>(Color(0xff3A94EE)):AlwaysStoppedAnimation<Color>(Color(0xff00D796)),
                                           backgroundColor: Color(0xffE7E8EC),
                                         ),
                                       ),
                                     ),
                                    Padding(
                                      padding:  EdgeInsets.only(bottom: size.height*0.02, left: size.width*0.03),
-                                     child: Image.asset('assets/coin.png', width: 25,),
+                                     child:snapshot.data!.docs[index]['participate']==0? Image.asset('assets/coin.png', width: 20,):Image.asset('assets/coin2.png', width: 20,),
                                    ),
                                    Padding(
                                      padding:  EdgeInsets.only(bottom: size.height*0.02, left: size.width*0.01),
@@ -212,9 +304,82 @@ class _add_personalState extends State<add_personal> {*/
 
                                   ],
                                 ),
+
+                           
+
+
                               ]),
                             ),
                           ),
+                  ):Padding(
+                    padding:  EdgeInsets.only(left: size.width * 0.05, right : size.width * 0.05, bottom: size.height * 0.01),
+                    child: Card(
+                      elevation: 0.2,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
+                      child: InkWell(
+                        //카드 누르는 경우
+                        onTap: (){},
+                        child: Column(children: [
+                          Padding(
+                            padding:  EdgeInsets.only(top: size.height * 0.03, right: size.width * 0.7),
+                            child: Text("D-" + snapshot.data!.docs[index]['final_day'].toString(), style: labelLargeStyle(color: Color(0xff9FA5B2)),),
+                          ),
+                          ListTile(
+                            title: Padding(
+                              padding:  EdgeInsets.only(top: size.height*0.01),
+                              child: Text(snapshot.data!.docs[index]['title'].toString(), style: titleMediumStyle(),),
+                            ),
+                            subtitle: Row(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: Color(0xffF3F4F5),),
+
+                                  margin: EdgeInsets.only(top: size.height*0.01),
+                                  child: Padding(
+                                    padding:  EdgeInsets.all(8),
+                                    child: Text(snapshot.data!.docs[index]['type'].toString(), style: labelMediumStyle(color: Color(0xff9FA5B2)),),
+                                  ),
+                                ),
+                                Padding(
+                                  padding:  EdgeInsets.only(top: size.height * 0.01, left: size.width*0.02),
+                                  child: Text(snapshot.data!.docs[index]['user'].toString(), style: labelMediumStyle(color: Color(0xff9FA5B2)),),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(left: size.width*0.05, bottom: size.height*0.03, top: size.height*0.01),
+                                width: size.width*0.60,
+                                height: size.height*0.01,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.all(Radius.circular(16)),
+                                  child: LinearProgressIndicator(
+                                    value: snapshot.data!.docs[index]['percentage'].toDouble() *0.01,
+                                    valueColor:snapshot.data!.docs[index]['participate']==0? AlwaysStoppedAnimation<Color>(Color(0xff3A94EE)):AlwaysStoppedAnimation<Color>(Color(0xff00D796)),
+                                    backgroundColor: Color(0xffE7E8EC),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding:  EdgeInsets.only(bottom: size.height*0.02, left: size.width*0.03),
+                                child:snapshot.data!.docs[index]['participate']==0? Image.asset('assets/coin.png', width: 20,):Image.asset('assets/coin2.png', width: 20,),
+                              ),
+                              Padding(
+                                padding:  EdgeInsets.only(bottom: size.height*0.02, left: size.width*0.01),
+                                child: Text(snapshot.data!.docs[index]['cash'].toString() + "00"),
+                              )
+
+                            ],
+                          ),
+
+
+
+
+                        ]),
+                      ),
+                    ),
                   );
                   // Container(
                   //   decoration: BoxDecoration(
