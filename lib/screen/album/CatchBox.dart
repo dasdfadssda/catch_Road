@@ -8,7 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 //import '../utils/app_text_styles.dart';
 import 'catchbox_detail.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-
+import 'dart:math' as math;
 class Catchbox extends StatefulWidget {
   const Catchbox({Key? key}) : super(key: key);
 
@@ -74,7 +74,7 @@ class _CatchboxState extends State<Catchbox> {
             //Text(''),
             Expanded(
                 child: StreamBuilder<QuerySnapshot>(
-                    stream: FirebaseFirestore.instance.collection('category').doc("1234@handong.ac.kr").collection('category').orderBy('category', descending: true).snapshots(),
+                    stream: FirebaseFirestore.instance.collection('category').doc("1234@handong.ac.kr").collection('category').orderBy('order', descending: false).snapshots(),
                     builder: (context, snapshot){
                       if(snapshot.hasData){
                         return Container(
@@ -107,10 +107,13 @@ class _CatchboxState extends State<Catchbox> {
                                               ),
 
                                               clipBehavior: Clip.antiAlias,
-                                              child: Image.network(
-                                                x['new'],
-                                                fit: BoxFit.cover,
-                                              ),
+                                              child: Transform.rotate(
+                                                  angle: (x['category']=='kickboard'||x['category']=='traffic light'||x['category']=='all')?0:90*math.pi/180,
+                                                child: Image.network(
+                                                  x['new'],
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              )
                                             ),
                                           ),
                                           SizedBox(height: 2),

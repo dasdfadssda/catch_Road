@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart';
+import 'dart:math' as math;
 // import 'package:get/get.dart';
 //
 // import '../utils/app_colors.dart';
@@ -541,10 +542,14 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                                 // ),
                                                 margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
                                                 clipBehavior: Clip.antiAlias,
-                                                child: Image.network(
-                                                  x['url'],
-                                                  fit: BoxFit.cover,
-                                                ),
+                                                child: Transform.rotate(
+                                                    angle:(query['category']=='kickboard'||query['category']=='traffic light')?0:90*math.pi/180,
+                                                  child: Image.network(
+                                                    x['url'],
+                                                    fit: BoxFit.cover,
+                                                  ),
+
+                                                )
                                               ),
                                             ),
                                             //Image.network(x['url'], fit: BoxFit.cover),

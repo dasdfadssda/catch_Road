@@ -52,6 +52,8 @@ dependencies:
   syncfusion_flutter_datepicker: ^20.2.40
   image_picker: ^0.8.5+3
   kpostal: ^0.5.1
+  intl: ^0.17.0
+  flutter_launcher_icons: ^0.11.0
 
 
   
