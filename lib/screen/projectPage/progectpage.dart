@@ -1,4 +1,6 @@
 
+import 'package:catch2_0_1/screen/projectPage/project_detail2.dart';
+import 'package:catch2_0_1/screen/projectPage/todaycatch_detail.dart';
 import 'package:catch2_0_1/utils/app_colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -153,7 +155,10 @@ class _add_personalState extends State<add_personal> {*/
           if(part==true) return ListView.builder(
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (context, index) {
+                QueryDocumentSnapshot x = snapshot.data!.docs[index];
+
                 if(snapshot.data!.docs[index]['participate']==1)
+
                 return  Padding(
                   padding:  EdgeInsets.only(left: size.width * 0.05, right : size.width * 0.05, bottom: size.height * 0.01),
                   child: Card(
@@ -161,7 +166,19 @@ class _add_personalState extends State<add_personal> {*/
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
                     child: InkWell(
                       //카드 누르는 경우
-                      onTap: (){},
+                      onTap: (){
+                        print('참여중 프로젝트');
+                       print(snapshot.data!.docs[index]['id'].toString());
+
+
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  todaycatchdetail3(query: x),
+                            ));
+
+                      },
                       child: Column(children: [
                         Padding(
                           padding:  EdgeInsets.only(top: size.height * 0.03, right: size.width * 0.7),
@@ -176,7 +193,6 @@ class _add_personalState extends State<add_personal> {*/
                             children: [
                               Container(
                                 decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: Color(0xffF3F4F5),),
-
                                 margin: EdgeInsets.only(top: size.height*0.01),
                                 child: Padding(
                                   padding:  EdgeInsets.all(8),
@@ -225,31 +241,44 @@ class _add_personalState extends State<add_personal> {*/
                   ),
                 );
                 else return Container();
-                // Container(
-                //   decoration: BoxDecoration(
-                //     border: Border(
-
-                //     )
-                //   ),
-                //   child: Column(children: [
-                //     Text(snapshot.data!.docs[index]['title'].toString()),
-                //     Text(snapshot.data!.docs[index]['final_day'].toString()),
-                //   ]),
-                // );
               }
           );
-          else return ListView.builder(
+          if(part==false) return ListView.builder(
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
-
-                  return  snapshot.data!.docs[index]['participate']==1&&part==true?Padding(
+                  QueryDocumentSnapshot x =
+                  snapshot.data!.docs[index];
+                  return  Padding(
                     padding:  EdgeInsets.only(left: size.width * 0.05, right : size.width * 0.05, bottom: size.height * 0.01),
                     child: Card(
                       elevation: 0.2,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
                             child: InkWell(
                               //카드 누르는 경우
-                              onTap: (){},
+                              onTap: (){
+
+                                if(snapshot.data!.docs[index]['participate']==1){
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            todaycatchdetail3(query: x),
+                                      ));
+                                }else{
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            todaycatchdetail(query: x),
+                                      ));
+
+                                }
+
+
+
+                                print('모든 프로젝트');
+                                print(snapshot.data!.docs[index]['id'].toString());
+                              },
                               child: Column(children: [
                                 Padding(
                                   padding:  EdgeInsets.only(top: size.height * 0.03, right: size.width * 0.7),
@@ -264,7 +293,7 @@ class _add_personalState extends State<add_personal> {*/
                                     children: [
                                       Container(
                                         decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: Color(0xffF3F4F5),),
-                                        
+
                                         margin: EdgeInsets.only(top: size.height*0.01),
                                         child: Padding(
                                           padding:  EdgeInsets.all(8),
@@ -305,95 +334,16 @@ class _add_personalState extends State<add_personal> {*/
                                   ],
                                 ),
 
-                           
+
 
 
                               ]),
                             ),
                           ),
-                  ):Padding(
-                    padding:  EdgeInsets.only(left: size.width * 0.05, right : size.width * 0.05, bottom: size.height * 0.01),
-                    child: Card(
-                      elevation: 0.2,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
-                      child: InkWell(
-                        //카드 누르는 경우
-                        onTap: (){},
-                        child: Column(children: [
-                          Padding(
-                            padding:  EdgeInsets.only(top: size.height * 0.03, right: size.width * 0.7),
-                            child: Text("D-" + snapshot.data!.docs[index]['final_day'].toString(), style: labelLargeStyle(color: Color(0xff9FA5B2)),),
-                          ),
-                          ListTile(
-                            title: Padding(
-                              padding:  EdgeInsets.only(top: size.height*0.01),
-                              child: Text(snapshot.data!.docs[index]['title'].toString(), style: titleMediumStyle(),),
-                            ),
-                            subtitle: Row(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(10)), color: Color(0xffF3F4F5),),
-
-                                  margin: EdgeInsets.only(top: size.height*0.01),
-                                  child: Padding(
-                                    padding:  EdgeInsets.all(8),
-                                    child: Text(snapshot.data!.docs[index]['type'].toString(), style: labelMediumStyle(color: Color(0xff9FA5B2)),),
-                                  ),
-                                ),
-                                Padding(
-                                  padding:  EdgeInsets.only(top: size.height * 0.01, left: size.width*0.02),
-                                  child: Text(snapshot.data!.docs[index]['user'].toString(), style: labelMediumStyle(color: Color(0xff9FA5B2)),),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(left: size.width*0.05, bottom: size.height*0.03, top: size.height*0.01),
-                                width: size.width*0.60,
-                                height: size.height*0.01,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.all(Radius.circular(16)),
-                                  child: LinearProgressIndicator(
-                                    value: snapshot.data!.docs[index]['percentage'].toDouble() *0.01,
-                                    valueColor:snapshot.data!.docs[index]['participate']==0? AlwaysStoppedAnimation<Color>(Color(0xff3A94EE)):AlwaysStoppedAnimation<Color>(Color(0xff00D796)),
-                                    backgroundColor: Color(0xffE7E8EC),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:  EdgeInsets.only(bottom: size.height*0.02, left: size.width*0.03),
-                                child:snapshot.data!.docs[index]['participate']==0? Image.asset('assets/coin.png', width: 20,):Image.asset('assets/coin2.png', width: 20,),
-                              ),
-                              Padding(
-                                padding:  EdgeInsets.only(bottom: size.height*0.02, left: size.width*0.01),
-                                child: Text(snapshot.data!.docs[index]['cash'].toString() + "00"),
-                              )
-
-                            ],
-                          ),
-
-
-
-
-                        ]),
-                      ),
-                    ),
                   );
-                  // Container(
-                  //   decoration: BoxDecoration(
-                  //     border: Border(
-                        
-                  //     )
-                  //   ),
-                  //   child: Column(children: [
-                  //     Text(snapshot.data!.docs[index]['title'].toString()),
-                  //     Text(snapshot.data!.docs[index]['final_day'].toString()),
-                  //   ]),
-                  // );
                 }
                 );
+          else return Container();
         }),
         )
       ]),
