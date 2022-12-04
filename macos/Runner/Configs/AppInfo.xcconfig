@@ -8,7 +8,7 @@
 PRODUCT_NAME = catch2_0_1
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.catch201
+PRODUCT_BUNDLE_IDENTIFIER = com.catchroad.catch201
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2022 com.example. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2022 com.catchroad. All rights reserved.
