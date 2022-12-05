@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../Camera/camera_load.dart';
 import '../album/catchbox2.dart';
+import '../mainHome.dart';
 // import '../utils/app_colors.dart';
 // import '../utils/app_text_styles.dart';
 // import 'camera/camera_page.dart';
@@ -67,7 +68,21 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                Icon(Icons.more_vert)
+
+
+                                IconButton(
+                                  icon:Icon(Icons.more_vert),
+                                      onPressed: (){
+                                        FirebaseFirestore.instance
+                                            .collection('project')
+                                            .doc(query['id'])
+                                            .update({'participate': 0});
+
+                                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                          return MainHomePage();
+                                        }));
+                                      },
+                                )
                               ]
                           )
                       )
