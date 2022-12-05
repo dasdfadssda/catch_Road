@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +9,9 @@ import 'package:intl/intl.dart';
 import 'dart:math' as math;
 
 import '../../utils/app_text_styles.dart';
+import '../mainHome.dart';
+import '../notFound.dart';
+import '../projectPage/upload_check.dart';
 
 
 
@@ -30,7 +35,7 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
 
   final _valueList = ['오토바이', '퀵보드', '자전거'];
   String? _selectedValue;
-  bool pressed = false;
+  bool pressed = true;
   String _dateCount = '';
   String _selectedDate = '';
   String _rangeCount = '';
@@ -61,6 +66,8 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
   Color _selectCheckTextColor = Color(0xFF9FA5B2);
   double _selectCheckSize = 67.2;
   var _selectCheckIcon = true;
+
+
 
 
   Stream<QuerySnapshot> stream_ordering(){
@@ -129,7 +136,7 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
         centerTitle: true,
         title: Text(query['category'],style: titleMediumStyle(color: Colors.black),),
         actions: <Widget>[
-          TextButton(
+          pressed==true?TextButton(
             onPressed: () async {
               for(int i = 0; i < 1000; i++){
                 if(_checks[i]){
@@ -151,13 +158,22 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
                   //_checks_url[i]
                 }
               }
-              Navigator.pop(context);
-              Navigator.pop(context);
-              Navigator.pop(context);
+              // Navigator.pop(context);
+              // Navigator.pop(context);
+              // Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return uploadCheck();
+              }));
+
+              // await Future.delayed(Duration(seconds: 3));
+              //
+              // Navigator.push(context, MaterialPageRoute(builder: (context) {
+              //   return MainHomePage();
+              // }));
 
             },
             child: Text('올리기', style: TextStyle(color: Colors.black)),
-          ),
+          ):Container(),
         ],
       ),
 
@@ -169,11 +185,14 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Row(
+
                 children: [
                   Expanded(
+
                       child: Container(
+                        padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             //1
                             SizedBox(width: 23),
@@ -502,39 +521,39 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
                           ],
                         ),
                       )),
-                  TextButton(
-                    onPressed: () {
-                      print(_checks);
-                      setState(() {
-                        if(_selectCheckIcon){
-                          pressed = true;
-                          _selectCheck = '취소';
-                          _selectCheckColor = Color(0XFFF3F4F5);
-                          _selectCheckTextColor = Colors.white;
-                          _selectCheckIcon = false;
-                        }
-                        else{
-                          pressed = false;
-                          _selectCheckColor = Color(0XFFF3F4F5);
-                          _selectCheck = '선택';
-                          _selectCheckTextColor = Color(0xFF9FA5B2);
-                          _selectCheckIcon = true;
-                          _checks = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
-                          _checks_url = ['', '', '', '', '', '', '', '', '' ,'', '', '', '', '', '', '', '', '', '' ,'', '', '', '', '', '', '', '', '', '' ,'', '', '', '', '', '', '', '', '', '' ,'', '', '', '', '', '', '', '', '', '' ,'', '', '', '', '', '', '', '', '', '' ,'', '', '', '', '', '', '', '', '', '' ,'', '', '', '', '', '', '', '', '', '' ,'', '', '', '', '', '', '', '', '', '' ,'', '', '', '', '', '', '', '', '', '' ,''];
-                        }
-                      });
-                    },
-                    child: Container(
-                      width: 47,
-                      height: 24,
-                      decoration: BoxDecoration(
-                          color: _selectCheckColor,
-                          borderRadius: BorderRadius.circular(10.0)
-                      ),
-                      //padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                      child: Center(child: Text(_selectCheck, style: TextStyle(color: _selectCheckTextColor))),
-                    ),
-                  )
+                  // TextButton(
+                  //   onPressed: () {
+                  //     print(_checks);
+                  //     setState(() {
+                  //       if(_selectCheckIcon){
+                  //         pressed = true;
+                  //         _selectCheck = '취소';
+                  //         _selectCheckColor = Color(0XFFF3F4F5);
+                  //         _selectCheckTextColor = Colors.white;
+                  //         _selectCheckIcon = false;
+                  //       }
+                  //       else{
+                  //         pressed = false;
+                  //         _selectCheckColor = Color(0XFFF3F4F5);
+                  //         _selectCheck = '선택';
+                  //         _selectCheckTextColor = Color(0xFF9FA5B2);
+                  //         _selectCheckIcon = true;
+                  //         _checks = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
+                  //         _checks_url = ['', '', '', '', '', '', '', '', '' ,'', '', '', '', '', '', '', '', '', '' ,'', '', '', '', '', '', '', '', '', '' ,'', '', '', '', '', '', '', '', '', '' ,'', '', '', '', '', '', '', '', '', '' ,'', '', '', '', '', '', '', '', '', '' ,'', '', '', '', '', '', '', '', '', '' ,'', '', '', '', '', '', '', '', '', '' ,'', '', '', '', '', '', '', '', '', '' ,'', '', '', '', '', '', '', '', '', '' ,''];
+                  //       }
+                  //     });
+                  //   },
+                  //   child: Container(
+                  //     width: 47,
+                  //     height: 24,
+                  //     decoration: BoxDecoration(
+                  //         color: _selectCheckColor,
+                  //         borderRadius: BorderRadius.circular(10.0)
+                  //     ),
+                  //     //padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                  //     child: Center(child: Text(_selectCheck, style: TextStyle(color: _selectCheckTextColor))),
+                  //   ),
+                  // )
                 ],
               ),
               Expanded(
