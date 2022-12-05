@@ -160,18 +160,29 @@ int _mylike = 0;
                   }
                  );
         }),
-    floatingActionButton: FloatingActionButton( // 플로팅 액션 버튼
+    floatingActionButton: SizedBox(
+      width: 60,
+      height: 60,
+      child: FloatingActionButton(
+        // 플로팅 액션 버튼
+
         onPressed: () {
-           Navigator.push(
+          Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => AddPage()),
           );
 
         },
-        child: Icon(Icons.edit_outlined),
+        child: Icon(Icons.edit_outlined,
+          color: Colors.white,
+          size:27,
+
+        ),
         backgroundColor: Colors.blueAccent,
       ),
+
+    ),
     );
 
   } 

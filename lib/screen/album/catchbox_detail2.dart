@@ -1,4 +1,3 @@
-//import 'package:catch0/screen/signin.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,25 +7,24 @@ import 'package:intl/intl.dart';
 import 'dart:math' as math;
 
 import '../../utils/app_text_styles.dart';
-// import 'package:get/get.dart';
-//
-// import '../utils/app_colors.dart';
-// import '../utils/app_text_styles.dart';
 
 
-class Catchbox_detail extends StatefulWidget {
+
+class Catchbox_detail2 extends StatefulWidget {
   final QueryDocumentSnapshot query;
+  final QueryDocumentSnapshot query2;
 
 
-  Catchbox_detail({required this.query});
+  Catchbox_detail2({required this.query, required this.query2});
 
   @override
-  State<Catchbox_detail> createState() => _Catchbox_detailState(query: query);
+  State<Catchbox_detail2> createState() => _Catchbox_detail2State(query: query, query2: query2);
 }
 
-class _Catchbox_detailState extends State<Catchbox_detail> {
+class _Catchbox_detail2State extends State<Catchbox_detail2> {
   final QueryDocumentSnapshot query;
-  _Catchbox_detailState({required this.query});
+  final QueryDocumentSnapshot query2;
+  _Catchbox_detail2State({required this.query, required this.query2});
 
   DateRangePickerController _dataPickerController = DateRangePickerController();
 
@@ -124,11 +122,43 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
     }
 
     return Scaffold(
-      appBar: AppBar(
+      appBar:  AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: 1,
-        title: Center(child: Text(query['category'],style: titleMediumStyle(color: Colors.black),)),
+        centerTitle: true,
+        title: Text(query['category'],style: titleMediumStyle(color: Colors.black),),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () async {
+              for(int i = 0; i < 1000; i++){
+                if(_checks[i]){
+                  try {
+                    await FirebaseFirestore.instance
+                        .collection("project_url")
+                        .doc(query2['id'])
+                        .collection(query2['id'])
+                        .doc()
+                        .set({
+                      "project": query2['id'],
+                      "category": query['category'],
+                      "url": _checks_url[i],
+                      "user": FirebaseAuth.instance.currentUser!.email,
+                    });
+                  } catch (e) {
+                    print(e);
+                  }
+                  //_checks_url[i]
+                }
+              }
+              Navigator.pop(context);
+              Navigator.pop(context);
+              Navigator.pop(context);
+
+            },
+            child: Text('올리기', style: TextStyle(color: Colors.black)),
+          ),
+        ],
       ),
 
 
@@ -155,7 +185,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                     _selectPlaceIcon = true;
                                     _selectPlaceTextColor = Color(0xFF9FA5B2);
                                     _selectPlaceColor = Color(0XFFF3F4F5);
-                                    _selectDateColor =Colors.blue;// primary[40]!;
+                                    _selectDateColor = Color(0XFFF3F4F5)!;
                                     _selectDateTextColor = Colors.white;
                                   });
                                 if(_selectDateIcon)
@@ -205,7 +235,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                                             child: Text('확인'),
                                                             onPressed: (){
                                                               setState(() {
-                                                                _selectDateColor =Colors.blue;//  primary[40]!;
+                                                                _selectDateColor =Color(0XFFF3F4F5)!;
                                                                 _selectDateTextColor = Colors.white;
                                                                 _selectDate = _range1.substring(8,10) + '.' +_range1.substring(3,5)+'.' + _range1.substring(0,2);
                                                                 _selectDateSize = 80;
@@ -275,7 +305,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                   _selectDateTextColor = Color(0xFF9FA5B2);
                                   _selectDateSize = 67.2;
                                   _range1 = '';
-                                  _selectPlaceColor = Colors.blue;// primary[40]!;
+                                  _selectPlaceColor = Color(0XFFF3F4F5)!;
                                   _selectPlaceTextColor = Colors.white;
                                   place_list = [];
                                 });
@@ -316,7 +346,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                                                           width: 67.2,
                                                                           height: 30,
                                                                           decoration: BoxDecoration(
-                                                                              color: x['choose']? Colors.blue: Color(0xFFF3F4F5),
+                                                                              color: x['choose']? Color(0XFFF3F4F5) : Color(0xFFF3F4F5),
                                                                               borderRadius: BorderRadius.circular(20.0)
                                                                           ),
                                                                           child: Row(
@@ -397,7 +427,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                                               print(place_list);
                                                               setState(() {
                                                                 _selectPlaceIcon = false;
-                                                                _selectPlaceColor =Colors.blue;//  primary[40]!;
+                                                                _selectPlaceColor = Color(0XFFF3F4F5);
                                                                 _selectPlaceTextColor = Colors.white;
                                                                 if(place_list.isEmpty){
                                                                   _selectPlace = '장소';
@@ -479,7 +509,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                         if(_selectCheckIcon){
                           pressed = true;
                           _selectCheck = '취소';
-                          _selectCheckColor = Colors.blue;// primary[40]!;
+                          _selectCheckColor = Color(0XFFF3F4F5);
                           _selectCheckTextColor = Colors.white;
                           _selectCheckIcon = false;
                         }
@@ -502,7 +532,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                           borderRadius: BorderRadius.circular(10.0)
                       ),
                       //padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                    //  child: Center(child: Text(_selectCheck, style: TextStyle(color: _selectCheckTextColor))),
+                      child: Center(child: Text(_selectCheck, style: TextStyle(color: _selectCheckTextColor))),
                     ),
                   )
                 ],
@@ -542,12 +572,11 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                                 margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
                                                 clipBehavior: Clip.antiAlias,
                                                 child: Transform.rotate(
-                                                    angle:(query['category']=='kickboard'||query['category']=='traffic light')?0:90*math.pi/180,
+                                                    angle: (query['category']=='kickboard'||query['category']=='traffic light')?0:90*math.pi/180,
                                                   child: Image.network(
                                                     x['url'],
                                                     fit: BoxFit.cover,
                                                   ),
-
                                                 )
                                               ),
                                             ),
@@ -585,29 +614,6 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                 }
                               } else {return CircularProgressIndicator();}
                             })
-                      // child: GridView.count(
-                      //   shrinkWrap: true,
-                      //   crossAxisCount: 3,
-                      //   mainAxisSpacing: 2, //수평 Padding
-                      //   crossAxisSpacing: 2, //수직 Padding
-                      //   children: List.generate(21, (index) {  //item 의 반목문 항목 형성
-                      //     return InkWell(
-                      //         onTap: (){
-                      //           Navigator.push(context, MaterialPageRoute(
-                      //             builder: (BuildContext context) => Catchbox_detail(),));
-                      //         },
-                      //         child: Container(
-                      //           color: Colors.lightGreen,
-                      //           child:
-                      //           Image.asset('assets/images/2.jpeg',
-                      //               height: 70.w,
-                      //               fit : BoxFit.fitWidth),
-                      //           //Text(' Item : $index'),
-                      //         )
-                      //     );
-                      //   }),
-                      // )
-                      //
                     ),
                   )
               ),
@@ -617,5 +623,3 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
     );
   }
 }
-
-

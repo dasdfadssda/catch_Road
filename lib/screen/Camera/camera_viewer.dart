@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:typed_data';
@@ -10,8 +9,6 @@ import 'dart:math' as math;
 import 'camera_bndbox.dart';
 import 'package:image/image.dart' as imglib;
 import 'package:intl/intl.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'dart:math' as math;
 XFile? pictureFile;
 XFile? imgFile;
 CameraImage? cameraImage;
@@ -23,6 +20,7 @@ late CameraController controller;
 
 List<Uint8List> imageList = [];
 bool issaving=false;
+String ob='';
 
 typedef void Callback(List<dynamic> list, int h, int w);
 
@@ -67,9 +65,11 @@ class _CameraViewerState extends State<CameraViewer> {
         controller.startImageStream((CameraImage img) async {
           cameraImage2 = img;
           //*원하는 객체 입력
-          if (((object=='car')||(object=='motorcycle')||(object=='truck'))&&accuracy>40) {
+          if (((object=='car')||(object=='stop sign')||(object=='bicycle'))&&accuracy>40) {
             //path = (await NativeScreenshot.takeScreenshot())!;
             print('$object 저장중');
+            ob=object;
+            setState(() {issaving = true;});
             takepicture();
             print('$object 저장 완료 ');
             object = '';
@@ -114,27 +114,31 @@ class _CameraViewerState extends State<CameraViewer> {
 
   @override
   Future<void> takepicture() async {
-    setState(() {issaving = true;});
+
     print('is saving1 : $issaving');
     CameraImage image = cameraImage2;
 
-    print('length: ${ image.planes[0].bytes.length}');
+    //print('length: ${ image.planes[0].bytes.length}');
 
     try {
      var img= _convertYUV420(image);
+     if(ob=='stop sign'){
+       ob='sign';
+     }
+
 
         imglib.PngEncoder pngEncoder = new imglib.PngEncoder(level: 0, filter: 0);
-       print('image.planes[0].bytes${image.planes[0].bytes}');
+       //print('image.planes[0].bytes${image.planes[0].bytes}');
        List<int> png = pngEncoder.encodeImage(img);
 
       //firebase에 저장
-      final uploadTask = await storage.ref('/traffic-Image/$object/$object${DateTime.now()}.png').putData(Uint8List.fromList(png));//Uint8List.fromList(png)
+      final uploadTask = await storage.ref('/traffic-Image/$ob/$ob${DateTime.now()}.png').putData(Uint8List.fromList(png));//Uint8List.fromList(png)
       final url = await uploadTask.ref.getDownloadURL();
       try {
         await FirebaseFirestore.instance
             .collection("category")
             .doc("1234@handong.ac.kr")//FirebaseAuth.instance.currentUser!.email
-            .collection("car")
+            .collection(ob)
             .doc("date")
             .collection("date")
             .add({
@@ -145,7 +149,6 @@ class _CameraViewerState extends State<CameraViewer> {
         print(e);
       }
       setState(() {issaving = false;});
-      //print('is saving1 : $issaving');
     } catch (e) {
       print(">>>>>>>>>>>> ERROR:" + e.toString());
     }
@@ -259,13 +262,6 @@ imglib.Image _convertYUV420(CameraImage image) {
   final int uvPixelStride = image.planes[1].bytesPerPixel!;
   var img = imglib.Image(image.width, image.height); // Create Image buffer
 
-
-  //var img= _convertBGRA8888(image);
-
-  //print('format ${image.format.group}');
-  //이미지 형 변환
-  //height: 720
-  //width : 1280
   for (int x = 0; x < width; x++) {
     for (int y = 0; y < height; y++) {
       final int uvIndex =
@@ -283,11 +279,3 @@ imglib.Image _convertYUV420(CameraImage image) {
   return img;
 }
 
-imglib.Image _convertBGRA8888(CameraImage image) {
-  return imglib.Image.fromBytes(
-    image.width,
-    image.height,
-    image.planes[0].bytes,
-    format: imglib.Format.bgra,
-  );
-}

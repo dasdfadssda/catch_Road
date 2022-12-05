@@ -6,9 +6,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:sliding_switch/sliding_switch.dart';
 import '../../utils/app_text_styles.dart';
+import '../notFound.dart';
+import 'create_pproject.dart';
 
 bool part=false;
 
@@ -347,214 +349,113 @@ class _add_personalState extends State<add_personal> {*/
         }),
         )
       ]),
+      floatingActionButton: SpeedDial(
+/*
+        key: key,
+        animatedIcon: AnimatedIcons.menu_close,
+        animatedIconTheme: IconThemeData(size: 22.0),
+*/
+        backgroundColor: Colors.blueAccent,
+        child:Icon(Icons.edit_outlined,
+        color: Colors.white,
+          size:25,
+      ),
+        buttonSize: const Size(60, 60),
+        useRotationAnimation: false,
+        //animatedIcon: AnimatedIcons.menu_close,
+        // icon: Image.asset('assets/images/catch_logo.png',
+        //     height: 30.w,
+        //     fit : BoxFit.fitWidth),
+        activeIcon: Icons.close,
+        animatedIconTheme: IconThemeData(
+          size: 25,
+          color: primary[0]?.withOpacity(0.4),
+        ),
+        // this is ignored if animatedIcon is non null
+        curve: Curves.bounceIn,
+        overlayColor: Colors.black,
+        overlayOpacity: 0.8,
+        activeBackgroundColor: Colors.black.withOpacity(0.8),
+        //childrenButtonSize: (const Size.round(100)),
+        //activeForegroundColor: Colors.white,
+
+        foregroundColor: Colors.white,
+        elevation: 0.0,
+        direction: SpeedDialDirection.up,
+        shape: const CircleBorder(),
+        children: [
+          SpeedDialChild(
+              child: Image.asset(
+                'assets/icons/Subtract.png',
+                height: 20,
+                width: 16,
+                //fit : BoxFit.fitWidth
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50), //모서리
+                //side: BorderSide(color: Colors.black),
+              ),
+              elevation: 0,
+              backgroundColor: primary[50],
+              label: '기업, 공공기관 프로젝트 의뢰하기',
+              // labelWidget,
+              //labelShadow : Colors.black.withOpacity(0.6),
+              labelStyle: TextStyle(
+                fontFamily: 'NotoSansKR',
+                fontWeight: FontWeight.w700,
+                fontSize: 16,
+                height: 22 / 16,
+                letterSpacing: 0,
+                //fontWeight: FontWeight.w500,
+                color: Colors.white,
+                //color: primary[0]?.withOpacity(0.02),
+              ),
+              labelBackgroundColor: Colors.black.withOpacity(0.6),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          notFound(),
+                    ));
+
+              }),
+          SpeedDialChild(
+              child: Image.asset(
+                'assets/icons/Union.png',
+                height: 24,
+                width: 21.61,
+                //fit : BoxFit.fitWidth
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50), //모서리
+                //side: BorderSide(color: Colors.black),
+              ),
+              backgroundColor: primary[50],
+              label: '개인 프로젝트 올리기',
+              labelStyle: TextStyle(
+                fontFamily: 'NotoSansKR',
+                fontWeight: FontWeight.w700,
+                fontSize: 16,
+                height: 22 / 16,
+                letterSpacing: 0,
+                //fontWeight: FontWeight.w500,
+                color: Colors.white,
+                //color: primary[0]?.withOpacity(0.02),
+              ),
+              //color: primary[0]?.withOpacity(0.02)),
+              labelBackgroundColor: Colors.black.withOpacity(0.6),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          CreatePproject(),
+                    ));
+              }),
+        ],
+      ),
     );
   }
 }
-// class add_personal extends StatefulWidget {
-//   const add_personal({super.key});
 
-//   @override
-//   State<add_personal> createState() => _add_personalState();
-// }
-
-// class _add_personalState extends State<add_personal> {
-//     final contentsController = TextEditingController();
-//   @override
-//   Widget build(BuildContext context) {
-//     final Size size = MediaQuery.of(context).size;
-//     return Scaffold(
-//       appBar: AppBar(
-//           elevation: 0,
-//           backgroundColor: Color(0x9FA5B2),
-//           leading: TextButton(
-//             style: TextButton.styleFrom(
-//               minimumSize: Size.zero,
-//               padding: EdgeInsets.zero,
-//               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-//             ),
-//             onPressed: () {
-//               Navigator.pop(context);
-//             },
-//             child: Text("취소", style: TextStyle(color: Color(0xff9FA5B2))),
-//           ),
-//           actions: [
-//             TextButton(
-//               onPressed: () {},
-//               child: Padding(
-//                 padding: EdgeInsets.only(right: size.width * 0.03),
-//                 child: Text(
-//                   "업로드",
-//                   style: TextStyle(color: primary[50]),
-//                 ),
-//               ),
-//               style: TextButton.styleFrom(
-//                 minimumSize: Size.zero,
-//                 padding: EdgeInsets.zero,
-//                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-//               ),
-//             )
-//           ],
-//           title: Text("개인 프로젝트 올리기")),
-//       body: Column(children: [
-//         Padding(
-//           padding: EdgeInsets.only(
-//               top: size.height * 0.05,
-//               left: size.width * 0.06,
-//               right: size.width * 0.06),
-//           child: TextFormField(
-//             cursorColor: Color(0xffBCBCBC),
-//             decoration: InputDecoration(
-//               enabledBorder: UnderlineInputBorder(
-//                 borderSide: BorderSide(color: Color(0xffCFD2D9)),
-//               ),
-//               contentPadding: EdgeInsets.only(left: size.width * 0.02),
-//               focusedBorder: UnderlineInputBorder(
-//                 borderSide: BorderSide(color: Color(0xffCFD2D9)),
-//               ),
-//               focusColor: Colors.transparent,
-//               hintText: '프로젝트 이름',
-//             ),
-//             onSaved: (String? value) {
-//               // This optional block of code can be used to run
-//               // code when the user saves the form.
-//             },
-//           ),
-//         ),
-//         // TextButton(onPressed: () {}, child: Text("수집 객체"))
-//         Padding(
-//           padding: EdgeInsets.only(
-//               left: size.width * 0.045, right: size.width * 0.045),
-//           child: ListTile(
-//             trailing: Padding(
-//               padding: EdgeInsets.only(right: size.width * 0.02),
-//               child: Icon(
-//                 Icons.keyboard_arrow_right,
-//                 size: 35,
-//                 color: Color(0xffCFD2D9),
-//               ),
-//             ),
-//             onTap: () {
-//               _showcategoryicker(context);
-//             },
-//             title: Text("수집 객체"),
-//           ),
-//         ),
-//         Image.asset('assets/divider.png', width: size.width * 0.88),
-//         Padding(
-//           padding: EdgeInsets.only(
-//               left: size.width * 0.045, right: size.width * 0.045),
-//           child: ListTile(
-//             trailing: Padding(
-//               padding: EdgeInsets.only(right: size.width * 0.02),
-//               child: Text("총 100 캐시"),
-//             ),
-//             onTap: () {},
-//             title: Text("최대 50장  X  장 당 캐시",
-//                 style: TextStyle(color: Color(0xffCFD2D9))),
-//           ),
-//         ),
-//         Image.asset('assets/divider.png', width: size.width * 0.88),
-//         Padding(
-//           padding: EdgeInsets.only(
-//               left: size.width * 0.045, right: size.width * 0.045),
-//           child: ListTile(
-//             trailing: Padding(
-//               padding: EdgeInsets.only(right: size.width * 0.02),
-//               child: Icon(
-//                 Icons.keyboard_arrow_right,
-//                 size: 35,
-//                 color: Color(0xffCFD2D9),
-//               ),
-//             ),
-//             onTap: () {},
-//             title: Text("프로젝트 기간"),
-//           ),
-//         ),
-//         Image.asset('assets/divider.png', width: size.width * 0.88),
-//         Padding(
-//           padding: EdgeInsets.only(
-//               left: size.width * 0.045, right: size.width * 0.045),
-//           child: ListTile(
-//             trailing: Padding(
-//               padding: EdgeInsets.only(right: size.width * 0.02),
-//               child: Icon(
-//                 Icons.keyboard_arrow_right,
-//                 size: 35,
-//                 color: Color(0xffCFD2D9),
-//               ),
-//             ),
-//             onTap: () {},
-//             title: Text("예시 사진 추가"),
-//           ),
-//         ),
-//         Image.asset('assets/divider.png', width: size.width * 0.88),
-//         Padding(
-//           padding: EdgeInsets.only(
-//               left: size.width * 0.045, right: size.width * 0.045),
-//           child: ListTile(
-//             // onTap: () {},
-//             subtitle: Padding(
-//               padding: EdgeInsets.only(top: size.height * 0.015),
-//               // child: Text("수집하고자 하는 사진에 대한 자세한 설명을 추가해주세요 !",
-//               //     style: TextStyle(color: Color(0xffCFD2D9))),
-//               child: TextFormField(
-//                maxLines: 100,
-//                minLines: 1,
-//               controller: contentsController,
-//               decoration: InputDecoration(
-//                 border: InputBorder.none,
-//                 hintText: '수집하고자 하는 사진에 대한 자세한 설명을 추가해주세요 !',hintStyle:TextStyle(color:Color(0XFFCFD2D9),fontSize: 14)
-//               ),
-//             ),
-//             ),
-//           ),
-//         ),
-//       ]),
-//     );
-//   }
-//   final List myProducts =["사람","오토바이","자동차","스쿠터","자전거","버스","기차","신호등","트럭","정지 표시판","어린이 보호 구역"];
-//   final List myProductChoose = [false,false,false,false,false,false,false,false,false,false,false,];
-
-//  void _showcategoryicker(context) { // 카테고리 설정 스냅바
-//     showModalBottomSheet(
-//                 context: context,
-//                 shape: const RoundedRectangleBorder(
-//                   borderRadius: BorderRadius.vertical(
-//                     top: Radius.circular(30),
-//                   ),
-//                 ),
-//                 builder: (BuildContext context) {
-//                   return StatefulBuilder(builder: (BuildContext context, StateSetter bottomState) {
-//                     return Column(children: [
-//                       Expanded(
-//                         child: GridView.builder(
-//                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-//                         crossAxisCount: 4, 
-//                         childAspectRatio: 1 /0.4
-//                         ),
-//                         itemCount: myProducts.length,
-//                       itemBuilder: (BuildContext context, int index) {
-//                         return Container(
-//                           height: 10,
-//                           // myProductChoose[index] ? Color(0XFF3A94EE) : Colors.white,
-//                           //       onPrimary: myProductChoose[index]? Colors.white : Color(0XFF9FA5B2) ,
-//                           child: ElevatedButton(
-//                             child: Text(myProducts[index].toString()),
-//                             onPressed: (){setState(() {
-//                               if(myProductChoose[index] == true){
-//                                 myProductChoose[index] = false;
-//                               } else {
-//                                 myProductChoose[index] = true;
-//                               }
-//                             });},
-//                             ),
-//                         );
-//                       }
-//                       ),
-//                       )
-//                     ],);
-//                   });
-//                 },
-//               );
-//   }
-// }
