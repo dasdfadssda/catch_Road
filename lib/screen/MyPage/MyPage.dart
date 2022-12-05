@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../utils/app_text_styles.dart';
 import '../../utils/widget.dart';
+import '../notFound.dart';
 
 class MYPage extends StatefulWidget {
   const MYPage({super.key});
@@ -32,22 +33,22 @@ class _MYPageState extends State<MYPage> {
                  borderRadius: BorderRadius.circular(100), // Image border
                  child: SizedBox.fromSize(
                  size: Size.fromRadius(48), // Image radius
-                 child: Image.asset('assets/catchRoad_logo.png', fit: BoxFit.cover),)
+                 child: Image.asset('assets/img_1.png', fit: BoxFit.cover),)
                 ),
             ),
            SizedBox(height: 16),
-           Text('${FirebaseAuth.instance.currentUser!.displayName} 님',style: labelMediumStyle(color: Colors.black),),
+           Text('1234@handong.ac.kr 님',style: labelMediumStyle(color: Colors.black),),
            SizedBox(height: 4),
-           Text(FirebaseAuth.instance.currentUser!.email.toString(),style: labelSmallStyle(color: Color(0xff9FA5B2)),),
+           Text('1234@handong.ac.kr',style: labelSmallStyle(color: Color(0xff9FA5B2)),),
            SizedBox(height: 20),
            MyWidget().DivderLine(),
            SizedBox(height: 20),
            Row(
              mainAxisAlignment: MainAxisAlignment.center,
              children: [
-             _buildButtonColumn('assets/cash_icon.png','10000',Color(0xff3174CD)),
-           _buildButtonColumn('assets/Union.png','내가 쓴 글',Colors.black),
-           _buildButtonColumn('assets/real_project.png','참여 프로젝트',Colors.black)
+               _buildButtonColumn('assets/icons/mypage/my_coin2.png','10000',Colors.black),
+           _buildButtonColumn('assets/icons/mypage/black_pencil.png','내가 쓴 글',Colors.black),
+           _buildButtonColumn('assets/icons/mypage/part_pro.png','참여 프로젝트',Colors.black)
            ],),
            MyWidget().DivderLine(),
            _buildListTileButton('내 정보 수정'),
@@ -66,7 +67,15 @@ class _MYPageState extends State<MYPage> {
     return Container(
       margin: EdgeInsets.fromLTRB(30, 0, 25, 20),
       child: InkWell(
-        onTap: (){},
+        onTap: (){
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (BuildContext context) =>
+                    notFound(),
+              ));
+
+        },
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -90,7 +99,15 @@ class _MYPageState extends State<MYPage> {
   }
   ListTile _buildListTileButton(String word){
     return ListTile(
-      onTap: (){},
+      onTap: (){
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) =>
+                  notFound(),
+            ));
+
+      },
       leading: Text('  ${word}',style: bodyLargeStyle()),
       trailing: Icon(Icons.arrow_forward_ios),
     );

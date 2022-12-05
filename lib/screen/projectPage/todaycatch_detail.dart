@@ -34,7 +34,10 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
     _onTap3 = false;
     return Scaffold(
         appBar: AppBar(
-          title: onTap ? Text('오늘의 캐치') : Text('test'),
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.white,
+          elevation: 1,
+          title: Center(child: Text('오늘의 캐치',style: titleMediumStyle(color: Colors.black),)),
         ),
         body: ListView(padding: EdgeInsets.fromLTRB(24, 40, 24, 32), children: [
           Column(
@@ -42,11 +45,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
             children: [
               Row(
                 children: [
-                  ClipOval(
-                    clipper: MyClipper(),
-                    child: Image.asset('assets/images/2.jpeg',
-                        height: 30, fit: BoxFit.fitWidth),
-                  ),
+
                   SizedBox(
                     width: 10,
                   ),
@@ -57,18 +56,32 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                           style: labelLargeStyle(color: Color(0xff9FA5B2))),
                     ],
                   ),
-                  Expanded(
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [Icon(Icons.more_vert)]))
+
                 ],
               ),
               SizedBox(height: 20),
-              Text(query['title'],
-                  style: titleLargeStyle(color: Color(0xff1A1A1A))),
+              Row(
+                children: [
+                  Text(query['title'],
+                      style: titleLargeStyle(color: Color(0xff1A1A1A))),
+                  // Expanded(
+                  //     child: Column(
+                  //         crossAxisAlignment: CrossAxisAlignment.end,
+                  //         children: [Icon(Icons.more_vert)]))
+                ],
+              ),
+
               SizedBox(height: 10),
               Row(
                 children: [
+                  Chip(
+                      label: Container(
+                          height: 15,
+                          child: Text('기업', style: labelMediumStyle(color:Color(0xff9FA5B2)))
+                      ),
+                      backgroundColor: Color(0xffF3F4F5)
+                  ),
+                  SizedBox(width:5),
                   Text(query['cash'].toString(),
                       style: titleSmallStyle(color: Color(0xff9FA5B2))),
                   Text('캐시', style: titleSmallStyle(color: Color(0xff9FA5B2))),

@@ -112,6 +112,7 @@ var my_list2 = ['홈', '커뮤니티', '앨범','프로필'];
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blueAccent,
         child: SizedBox(
           width:20,
           height: 20,

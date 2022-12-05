@@ -3,6 +3,9 @@ import 'package:catch2_0_1/utils/app_text_styles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../Camera/camera_load.dart';
+import '../album/catchbox2.dart';
 // import '../utils/app_colors.dart';
 // import '../utils/app_text_styles.dart';
 // import 'camera/camera_page.dart';
@@ -39,7 +42,10 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('오늘의 캐치'),
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.white,
+          elevation: 1,
+          title: Center(child: Text('오늘의 캐치',style: titleMediumStyle(color: Colors.black),)),
         ),
         body: ListView(
             padding: EdgeInsets.fromLTRB(24, 40, 24, 32),
@@ -49,12 +55,7 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
                 children: [
                   Row(
                     children: [
-                      ClipOval(
-                        clipper: MyClipper(),
-                        child: Image.asset('assets/images/2.jpeg',
-                            height: 30,
-                            fit : BoxFit.fitWidth),
-                      ),
+
                       SizedBox(width: 10,),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,7 +81,7 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
                       //if(query['participate'] == 1)
                       Chip(
                           label: Container(
-                              height: 20,
+                              height: 15,
                               child: Text('참여중', style: labelMediumStyle(color:Colors.black))
                           ),
                           backgroundColor: Color(0xFF00D796)
@@ -111,7 +112,7 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
                     child: LinearProgressIndicator(
                       value: 0.04,
                       minHeight: 8,
-                      valueColor: AlwaysStoppedAnimation(Colors.black),
+                      valueColor: AlwaysStoppedAnimation(Color(0xff00D796)),
                       backgroundColor: Color(0xFFF3F4F5),
                     ),
                   ),
@@ -149,9 +150,9 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
                       // }));
 
 
-                      // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      //  return cameraPage();
-                      // }));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                       return CamerLoad();
+                      }));
                       //
                       // Navigator.push(context, MaterialPageRoute(builder: (context) {
                       //   return CameraPage(cameras);
@@ -168,9 +169,9 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
                     backgroundColor: Colors.blueAccent,
                     onPressed: () async{
 
-                      // Navigator.push(context, MaterialPageRoute(
-                      //   builder: (BuildContext context) =>
-                      //       Catchbox2(query: query),));
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            Catchbox2(query: query),));
                     },
                     child: Text('사진 업로드하기', style: titleMediumStyle(color:Colors.white)),
                     shape: RoundedRectangleBorder(
