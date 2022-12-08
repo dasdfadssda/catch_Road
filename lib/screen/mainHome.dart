@@ -8,9 +8,9 @@ import 'Camera/camera_load.dart';
 import 'Community/HomePage.dart';
 
 import 'MyPage/MyPage.dart';
-import 'album/CatchBox.dart';
+import 'album/catchbox.dart';
 //import 'album/albumPage.dart';
-import 'projectPage/progectpage.dart';
+import 'projectPage/progect_main.dart';
 
 
 List<CameraDescription> cameras2 = [];

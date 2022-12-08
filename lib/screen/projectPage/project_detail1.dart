@@ -1,4 +1,4 @@
-import 'package:catch2_0_1/screen/projectPage/progectpage.dart';
+import 'package:catch2_0_1/screen/projectPage/progect_main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

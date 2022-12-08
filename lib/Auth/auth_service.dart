@@ -7,7 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-import '../screen/LoginPage.dart';
+import '../LoginPage.dart';
 import '../screen/mainHome.dart';
 
 class AuthService {
