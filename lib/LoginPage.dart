@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../Auth/auth_service.dart';
-import 'Camera/camera_load.dart';
-import 'mainHome.dart';
+import 'Auth/auth_service.dart';
+import 'screen/Camera/camera_load.dart';
+import 'screen/mainHome.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);

@@ -1,6 +1,6 @@
 
 import 'package:catch2_0_1/screen/projectPage/project_detail2.dart';
-import 'package:catch2_0_1/screen/projectPage/todaycatch_detail.dart';
+import 'package:catch2_0_1/screen/projectPage/project_detail1.dart';
 import 'package:catch2_0_1/utils/app_colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';

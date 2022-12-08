@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,7 @@ import 'package:tflite/tflite.dart';
 import 'dart:math' as math;
 import 'camera_bndbox.dart';
 import 'package:image/image.dart' as imglib;
+import 'package:flutter_isolate/flutter_isolate.dart';
 import 'package:intl/intl.dart';
 XFile? pictureFile;
 XFile? imgFile;
@@ -118,40 +121,63 @@ class _CameraViewerState extends State<CameraViewer> {
     print('is saving1 : $issaving');
     CameraImage image = cameraImage2;
 
-    //print('length: ${ image.planes[0].bytes.length}');
-
     try {
-     var img= _convertYUV420(image);
-     if(ob=='stop sign'){
-       ob='sign';
-     }
+      final int width = image.width;
+      final int height = image.height;
+      final int uvRowStride = image.planes[1].bytesPerRow;
+      final int uvPixelStride = image.planes[1].bytesPerPixel!;
+      var img = imglib.Image(image.width, image.height); // Create Image buffer
 
-
-        imglib.PngEncoder pngEncoder = new imglib.PngEncoder(level: 0, filter: 0);
-       //print('image.planes[0].bytes${image.planes[0].bytes}');
-       List<int> png = pngEncoder.encodeImage(img);
+      for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++) {
+          final int uvIndex =
+              uvPixelStride * (x / 2).floor() + uvRowStride * (y / 2).floor();
+          final int index = y * width + x;
+          final yp = image.planes[0].bytes[index];
+          final up = image.planes[1].bytes[uvIndex];
+          final vp = image.planes[2].bytes[uvIndex];
+          int r = (yp + vp * 1436 / 1024 - 179).round().clamp(0, 255);
+          int g = (yp - up * 46549 / 131072 + 44 -vp * 93604 / 131072 + 91).round().clamp(0, 255);
+          int b = (yp + up * 1814 / 1024 - 227).round().clamp(0, 255);
+          img.data[index] = (0xFF << 24) | (b << 16) | (g << 8) | r;
+        }
+      } //너무 오래 걸려서 잠시 생략
+      if(ob=='stop sign'){
+        ob='sign';
+      }
+      imglib.PngEncoder pngEncoder = new imglib.PngEncoder(level: 0, filter: 0);
+      List<int> png = pngEncoder.encodeImage(img);
 
       //firebase에 저장
-      final uploadTask = await storage.ref('/traffic-Image/$ob/$ob${DateTime.now()}.png').putData(Uint8List.fromList(png));//Uint8List.fromList(png)
+      final uploadTask = await storage.ref('/traffic-Image/$ob/$ob${DateTime.now()}.png').putData(Uint8List.fromList(png));
       final url = await uploadTask.ref.getDownloadURL();
-      try {
-        await FirebaseFirestore.instance
-            .collection("category")
-            .doc("1234@handong.ac.kr")//FirebaseAuth.instance.currentUser!.email
-            .collection(ob)
-            .doc("date")
-            .collection("date")
-            .add({
-          "url": url,
-          "time":DateFormat('dd/MM/yyyy').format(DateTime.now())
-        });
-      } catch (e) {
-        print(e);
-      }
+      // try {
+      //   await FirebaseFirestore.instance
+      //       .collection("category")
+      //       .doc("1234@handong.ac.kr")//FirebaseAuth.instance.currentUser!.email
+      //       .collection(ob)
+      //       .doc("date")
+      //       .collection("date")
+      //       .add({
+      //     "url": url,
+      //     "time":DateFormat('dd/MM/yyyy').format(DateTime.now())
+      //   });
+      // } catch (e) {
+      //   print(e);
+      // }
       setState(() {issaving = false;});
     } catch (e) {
       print(">>>>>>>>>>>> ERROR:" + e.toString());
     }
+
+
+
+
+
+
+
+
+
   }
 
   @override
@@ -262,20 +288,20 @@ imglib.Image _convertYUV420(CameraImage image) {
   final int uvPixelStride = image.planes[1].bytesPerPixel!;
   var img = imglib.Image(image.width, image.height); // Create Image buffer
 
-  for (int x = 0; x < width; x++) {
-    for (int y = 0; y < height; y++) {
-      final int uvIndex =
-          uvPixelStride * (x / 2).floor() + uvRowStride * (y / 2).floor();
-      final int index = y * width + x;
-      final yp = image.planes[0].bytes[index];
-      final up = image.planes[1].bytes[uvIndex];
-      final vp = image.planes[2].bytes[uvIndex];
-      int r = (yp + vp * 1436 / 1024 - 179).round().clamp(0, 255);
-      int g = (yp - up * 46549 / 131072 + 44 -vp * 93604 / 131072 + 91).round().clamp(0, 255);
-      int b = (yp + up * 1814 / 1024 - 227).round().clamp(0, 255);
-      img.data[index] = (0xFF << 24) | (b << 16) | (g << 8) | r;
-    }
-  } //너무 오래 걸려서 잠시 생략
+  // for (int x = 0; x < width; x++) {
+  //   for (int y = 0; y < height; y++) {
+  //     final int uvIndex =
+  //         uvPixelStride * (x / 2).floor() + uvRowStride * (y / 2).floor();
+  //     final int index = y * width + x;
+  //     final yp = image.planes[0].bytes[index];
+  //     final up = image.planes[1].bytes[uvIndex];
+  //     final vp = image.planes[2].bytes[uvIndex];
+  //     int r = (yp + vp * 1436 / 1024 - 179).round().clamp(0, 255);
+  //     int g = (yp - up * 46549 / 131072 + 44 -vp * 93604 / 131072 + 91).round().clamp(0, 255);
+  //     int b = (yp + up * 1814 / 1024 - 227).round().clamp(0, 255);
+  //     img.data[index] = (0xFF << 24) | (b << 16) | (g << 8) | r;
+  //   }
+  // } //너무 오래 걸려서 잠시 생략
   return img;
 }
 
