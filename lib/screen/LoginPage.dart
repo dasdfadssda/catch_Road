@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../Auth/auth_service.dart';
+import 'mainHome.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -178,7 +179,11 @@ class _LoginPageState extends State<LoginPage> {
                             borderRadius: BorderRadius.circular(13.0),
                           ),
                           backgroundColor: Color(0xff2C63BB)),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                          return MainHomePage();
+                        }));
+                      },
                       child: Text(
                         "로그인",
                         style: TextStyle(
