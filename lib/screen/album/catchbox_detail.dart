@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart';
+import 'dart:math' as math;
+
+import '../../utils/app_text_styles.dart';
 // import 'package:get/get.dart';
 //
 // import '../utils/app_colors.dart';
@@ -44,21 +47,21 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
   String _selectDate = '날짜';
   Color _selectDateColor = Color(0XFFF3F4F5);
   Color _selectDateTextColor = Color(0xFF9FA5B2);
-  double _selectDateSize = 67.2.w;
+  double _selectDateSize = 67.2;
   var _selectDateIcon = true;
 
   // 2
   String _selectPlace = '장소';
   Color _selectPlaceColor = Color(0XFFF3F4F5);
   Color _selectPlaceTextColor = Color(0xFF9FA5B2);
-  double _selectPlaceSize = 67.2.w;
+  double _selectPlaceSize = 67.2;
   var _selectPlaceIcon = true;
 
   // 3
   String _selectCheck = '선택';
   Color _selectCheckColor = Color(0XFFF3F4F5);
   Color _selectCheckTextColor = Color(0xFF9FA5B2);
-  double _selectCheckSize = 67.2.w;
+  double _selectCheckSize = 67.2;
   var _selectCheckIcon = true;
 
 
@@ -66,16 +69,16 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
     print("range1=");
     print(num_list);
     if(_selectPlace != '장소'){
-      return FirebaseFirestore.instance.collection('category').doc(FirebaseAuth.instance.currentUser!.email).collection(query['category']).doc('place').collection('place_url').where('place', whereIn: place_list).snapshots();
+      return FirebaseFirestore.instance.collection('category').doc('1234@handong.ac.kr').collection(query['category']).doc('place').collection('place_url').where('place', whereIn: place_list).snapshots();
     }
     if(_range1 != ''){
-      return FirebaseFirestore.instance.collection('category').doc(FirebaseAuth.instance.currentUser!.email).collection(query['category']).doc('date').collection('date').where('time', isEqualTo: _range1).snapshots();
+      return FirebaseFirestore.instance.collection('category').doc('1234@handong.ac.kr').collection(query['category']).doc('date').collection('date').where('time', isEqualTo: _range1).snapshots();
     }
     // if(num_list.isNotEmpty){
     //   print(num_list);
     //   return FirebaseFirestore.instance.collection('category').doc('user1').collection(query['category']).doc('date').collection('date').where('time', whereIn: num_list).snapshots();
     // }
-    return FirebaseFirestore.instance.collection('category').doc(FirebaseAuth.instance.currentUser!.email).collection(query['category']).doc('date').collection('date').snapshots();
+    return FirebaseFirestore.instance.collection('category').doc('1234@handong.ac.kr').collection(query['category']).doc('date').collection('date').snapshots();
   }
 
   @override
@@ -122,17 +125,14 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          padding: EdgeInsets.zero,
-          icon: Image.asset("assets/icons/icon_back.png"),
-          onPressed: (){
-          //  Get.back();
-          },
-        ),
-        centerTitle: true,
-        title: Text(query['category']),//,style: titleMedium.copyWith(color: Colors.black),),
-        elevation: 0,
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        elevation: 1,
+        title: Center(child: Text(query['category'],style: titleMediumStyle(color: Colors.black),)),
       ),
+
+
+
       body: Container(
         // child: Center(
           child: Column(
@@ -146,7 +146,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             //1
-                            SizedBox(width: 23.w),
+                            SizedBox(width: 23),
                             InkWell(
                               onTap: (){
                                 if(_selectDateIcon)
@@ -164,95 +164,13 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                     builder: (BuildContext context) {
                                       return AlertDialog(
                                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0))),
-                                        insetPadding: EdgeInsets.only(top: 350.h),
+                                        insetPadding: EdgeInsets.only(top: 350),
                                         content: Container(
-                                            height: 420.h,
-                                            width: 360.w,
+                                            height: 420,
+                                            width: 360,
                                             child: Column(
                                               children: [
-                                                // Container(
-                                                //   padding: EdgeInsets.fromLTRB(24.w, 30.h, 24.w, 0),
-                                                //   child: Row(
-                                                //     crossAxisAlignment: CrossAxisAlignment.start,
-                                                //     children: [
-                                                //       Flexible(
-                                                //         fit: FlexFit.tight,
-                                                //         child: Column(
-                                                //           crossAxisAlignment: CrossAxisAlignment.start,
-                                                //           children: [
-                                                //             Text('시작', style: textTheme.titleSmall),
-                                                //             if(_range1 != '')
-                                                //               Row(
-                                                //                 children: [
-                                                //                   Text(_range1.substring(0,2), style: textTheme.headlineLarge),
-                                                //                   SizedBox(width: 10.w),
-                                                //                   Column(
-                                                //                     crossAxisAlignment: CrossAxisAlignment.start,
-                                                //                     children: [
-                                                //                       Text(_range1.substring(6,10)+'년 '+_range1.substring(3,5)),
-                                                //                       Text('수요일')
-                                                //                     ]
-                                                //                   )
-                                                //                 ],
-                                                //               )
-                                                //             else
-                                                //               Row(
-                                                //                 children: [
-                                                //                   Text(_range1),
-                                                //                   SizedBox(width: 10.w),
-                                                //                   Column(
-                                                //                       crossAxisAlignment: CrossAxisAlignment.start,
-                                                //                       children: [
-                                                //                         Text(_range1),
-                                                //                         Text('')
-                                                //                       ]
-                                                //                   )
-                                                //                 ],
-                                                //               )
-                                                //           ],
-                                                //         ),
-                                                //       ),
-                                                //       SizedBox(width: 76.w),
-                                                //       Flexible(
-                                                //         fit: FlexFit.tight,
-                                                //         child: Column(
-                                                //           crossAxisAlignment: CrossAxisAlignment.start,
-                                                //           children: [
-                                                //             // Text('종료', style: textTheme.titleSmall),
-                                                //             // if(_range2 != '')
-                                                //             //   Row(
-                                                //             //     children: [
-                                                //             //       Text(_range2.substring(0,2), style: textTheme.headlineLarge),
-                                                //             //       SizedBox(width: 10.w),
-                                                //             //       Column(
-                                                //             //           crossAxisAlignment: CrossAxisAlignment.start,
-                                                //             //           children: [
-                                                //             //             Text(_range2.substring(6,10)+'년 '+_range2.substring(3,5)),
-                                                //             //             Text('')
-                                                //             //           ]
-                                                //             //       )
-                                                //             //     ],
-                                                //             //   )else
-                                                //             //   Row(
-                                                //             //     children: [
-                                                //             //       Text(_range2),
-                                                //             //       SizedBox(width: 10.w),
-                                                //             //       Column(
-                                                //             //           crossAxisAlignment: CrossAxisAlignment.start,
-                                                //             //           children: [
-                                                //             //             Text(_range2),
-                                                //             //             Text('')
-                                                //             //           ]
-                                                //             //       )
-                                                //             //     ],
-                                                //             //   )
-                                                //           ],
-                                                //         ),
-                                                //       ),
-                                                //     ],
-                                                //   ),
-                                                // ),
-                                                SizedBox(height: 30.h),
+                                                SizedBox(height: 30),
                                                 SfDateRangePicker(
                                                   controller: _dataPickerController,
                                                   onSelectionChanged: _onSelectionChanged,
@@ -262,7 +180,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                                 Container(
                                                     child: Row(
                                                       children: [
-                                                        SizedBox(width: 208.w),
+                                                        SizedBox(width: 208),
                                                         TextButton(
                                                             child: Text('취소'),
                                                             onPressed: (){
@@ -282,7 +200,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                                                 alignment: Alignment.centerLeft
                                                             )
                                                         ),
-                                                        SizedBox(width: 32.w),
+                                                        SizedBox(width: 32),
                                                         TextButton(
                                                             child: Text('확인'),
                                                             onPressed: (){
@@ -290,7 +208,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                                                 _selectDateColor =Colors.blue;//  primary[40]!;
                                                                 _selectDateTextColor = Colors.white;
                                                                 _selectDate = _range1.substring(8,10) + '.' +_range1.substring(3,5)+'.' + _range1.substring(0,2);
-                                                                _selectDateSize = 80.w;
+                                                                _selectDateSize = 80;
                                                                 _selectDateIcon = false;
                                                               });
                                                               Navigator.pop(context);
@@ -316,7 +234,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                     _selectDate = '날짜';
                                     _selectDateColor = Color(0XFFF3F4F5);
                                     _selectDateTextColor = Color(0xFF9FA5B2);
-                                    _selectDateSize = 67.2.w;
+                                    _selectDateSize = 67.2;
                                     _range1 = '';
                                     //_range2 = '';
                                   });
@@ -324,7 +242,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                               //1-1
                               child: Container(
                                   width: _selectDateSize,
-                                  height: 24.h,
+                                  height: 24,
                                   decoration: BoxDecoration(
                                       color: _selectDateColor,
                                       borderRadius: BorderRadius.circular(10.0)
@@ -343,7 +261,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                   )
                               ),
                             ),
-                            SizedBox(width: 10.w),
+                            SizedBox(width: 10),
 
                             //2
                             InkWell(
@@ -355,7 +273,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                   _selectDate = '날짜';
                                   _selectDateColor = Color(0XFFF3F4F5);
                                   _selectDateTextColor = Color(0xFF9FA5B2);
-                                  _selectDateSize = 67.2.w;
+                                  _selectDateSize = 67.2;
                                   _range1 = '';
                                   _selectPlaceColor = Colors.blue;// primary[40]!;
                                   _selectPlaceTextColor = Colors.white;
@@ -368,10 +286,10 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                     builder: (BuildContext context) {
                                       return AlertDialog(
                                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0))),
-                                        insetPadding: EdgeInsets.only(top: 519.h),
+                                        insetPadding: EdgeInsets.only(top: 519),
                                         content: Container(
-                                            height: 244.h,
-                                            width: 360.w,
+                                            height: 244,
+                                            width: 360,
                                             child: Column(
                                               children: [
                                                 StreamBuilder<QuerySnapshot>(
@@ -395,8 +313,8 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                                                     InkWell(
                                                                       child: Container(
                                                                           margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                                                                          width: 67.2.w,
-                                                                          height: 30.h,
+                                                                          width: 67.2,
+                                                                          height: 30,
                                                                           decoration: BoxDecoration(
                                                                               color: x['choose']? Colors.blue: Color(0xFFF3F4F5),
                                                                               borderRadius: BorderRadius.circular(20.0)
@@ -454,7 +372,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                                 Container(
                                                     child: Row(
                                                       children: [
-                                                        SizedBox(width: 208.w),
+                                                        SizedBox(width: 208),
                                                         TextButton(
                                                             child: Text('취소'),
                                                             onPressed: (){
@@ -471,7 +389,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                                                 alignment: Alignment.centerLeft
                                                             )
                                                         ),
-                                                        SizedBox(width: 32.w),
+                                                        SizedBox(width: 32),
                                                         TextButton(
                                                             child: Text('확인'),
                                                             onPressed: (){
@@ -513,8 +431,8 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                   });
                               },
                               child: Container(
-                                  width: 67.2.w,
-                                  height: 24.h,
+                                  width: 67.2,
+                                  height: 24,
                                   decoration: BoxDecoration(
                                       color: _selectPlaceColor,
                                       borderRadius: BorderRadius.circular(10.0)
@@ -533,11 +451,11 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                   )
                               ),
                             ),
-                            SizedBox(width: 10.w),
+                            SizedBox(width: 10),
                             InkWell(
                               child: Container(
-                                  width: 102.2.w,
-                                  height: 24.h,
+                                  width: 102.2,
+                                  height: 24,
                                   decoration: BoxDecoration(
                                       color: Color(0xFFF3F4F5),
                                       borderRadius: BorderRadius.circular(10.0)
@@ -577,14 +495,14 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                       });
                     },
                     child: Container(
-                      width: 47.w,
-                      height: 24.h,
+                      width: 47,
+                      height: 24,
                       decoration: BoxDecoration(
                           color: _selectCheckColor,
                           borderRadius: BorderRadius.circular(10.0)
                       ),
                       //padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                      child: Center(child: Text(_selectCheck, style: TextStyle(color: _selectCheckTextColor))),
+                    //  child: Center(child: Text(_selectCheck, style: TextStyle(color: _selectCheckTextColor))),
                     ),
                   )
                 ],
@@ -615,18 +533,22 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                         child: Stack(
                                           children: [
                                             SizedBox(
-                                              height: 119.04.h,
-                                              width: 118.08.w,
+                                              height: 119.04,
+                                              width: 118.08,
                                               child: Card(
                                                 // shape: RoundedRectangleBorder(
                                                 //   borderRadius: BorderRadius.circular(15.0),
                                                 // ),
                                                 margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
                                                 clipBehavior: Clip.antiAlias,
-                                                child: Image.network(
-                                                  x['url'],
-                                                  fit: BoxFit.cover,
-                                                ),
+                                                child: Transform.rotate(
+                                                    angle:(query['category']=='kickboard'||query['category']=='traffic light')?0:90*math.pi/180,
+                                                  child: Image.network(
+                                                    x['url'],
+                                                    fit: BoxFit.cover,
+                                                  ),
+
+                                                )
                                               ),
                                             ),
                                             //Image.network(x['url'], fit: BoxFit.cover),

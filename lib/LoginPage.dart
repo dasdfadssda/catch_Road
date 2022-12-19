@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../Auth/auth_service.dart';
-import 'mainHome.dart';
+import 'Auth/auth_service.dart';
+import 'screen/Camera/camera_load.dart';
+import 'screen/mainHome.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -21,7 +22,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             children: [
               Padding(
-                padding: EdgeInsets.only(top: size.height * 0.3),
+                padding: EdgeInsets.only(top: size.height * 0.25),
                 child: Image.asset('assets/logo.png', width: 170),
               ),
               // 아이디 또는 이메일 textfield
@@ -179,10 +180,25 @@ class _LoginPageState extends State<LoginPage> {
                             borderRadius: BorderRadius.circular(13.0),
                           ),
                           backgroundColor: Color(0xff2C63BB)),
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      onPressed: ()
+                          //MainHomePage
+                          {
+
+                        //signInWithGoogle();
+
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
                           return MainHomePage();
                         }));
+
+                        // Navigator.push(
+                        //   context,
+                        //   PageRouteBuilder(
+                        //       pageBuilder: (_, __, ___) => MainHomePage(),
+                        //       transitionDuration: Duration(seconds: 0),
+                        //       transitionsBuilder: (_, a, __, c) =>
+                        //           FadeTransition(opacity: a, child: c)),
+                        // );
                       },
                       child: Text(
                         "로그인",
