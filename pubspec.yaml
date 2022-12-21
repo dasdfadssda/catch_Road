@@ -56,6 +56,8 @@ dependencies:
   intl: ^0.17.0
   flutter_launcher_icons: ^0.11.0
   flutter_isolate: ^2.0.4
+  image_to_byte: ^1.0.0
+  compute: ^1.0.2
 
 
   
