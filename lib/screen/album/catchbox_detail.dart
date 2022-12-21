@@ -78,7 +78,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
     //   print(num_list);
     //   return FirebaseFirestore.instance.collection('category').doc('user1').collection(query['category']).doc('date').collection('date').where('time', whereIn: num_list).snapshots();
     // }
-    return FirebaseFirestore.instance.collection('category').doc('1234@handong.ac.kr').collection(query['category']).doc('date').collection('date').snapshots();
+    return FirebaseFirestore.instance.collection('category').doc('1234@handong.ac.kr').collection(query['category']).snapshots();//.doc('date').collection('date')
   }
 
   @override
@@ -517,7 +517,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
 
                               if (snapshot.hasData) {
                                 if (snapshot.data != null) {
-
+                                  print(snapshot.data!.docs.length);
                                   return GridView.builder(
                                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
                                     itemCount: snapshot.data!.docs.length,
