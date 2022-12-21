@@ -63,7 +63,7 @@ var my_list2 = ['홈', '커뮤니티', '앨범','프로필'];
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: SizedBox(
-        height: 100,
+        height: 80,
         child: BottomNavigationBar(
           
           elevation: 10,
@@ -112,7 +112,8 @@ var my_list2 = ['홈', '커뮤니티', '앨범','프로필'];
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Colors.white,
+        elevation:5,
         child: SizedBox(
           width:20,
           height: 20,

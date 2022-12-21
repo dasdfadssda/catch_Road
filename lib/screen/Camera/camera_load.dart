@@ -29,22 +29,5 @@ class _CamerLoadState extends State<CamerLoad> {
   @override
   Widget build(BuildContext context) {
     return CameraPage(cameras);
-    //   Scaffold(
-    //   body:  ElevatedButton(
-    //     onPressed: () async {
-    //       //Get.back();
-    //       Navigator.push(context, MaterialPageRoute(builder: (context) {
-    //         return CameraPage(cameras);
-    //       }));
-    //     },
-    //     child: Text(
-    //       "카메라 사용하기",
-    //       // style: titleSmall.copyWith(
-    //       //   color: Colors.white,
-    //       // ),
-    //     ),
-    //
-    //   ),
-    // );
   }
 }
