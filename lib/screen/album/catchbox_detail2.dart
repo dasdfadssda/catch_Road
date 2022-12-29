@@ -9,9 +9,14 @@ import 'package:intl/intl.dart';
 import 'dart:math' as math;
 
 import '../../utils/app_text_styles.dart';
+import '../Camera/camera_load.dart';
+import '../Community/HomePage.dart';
+import '../MyPage/MyPage.dart';
 import '../mainHome.dart';
 import '../notFound.dart';
+import '../projectPage/progect_main.dart';
 import '../projectPage/upload_check.dart';
+import 'catchbox.dart';
 
 class Catchbox_detail2 extends StatefulWidget {
   final QueryDocumentSnapshot query;
@@ -103,6 +108,21 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
 
   @override
   Widget build(BuildContext context) {
+    Color? bgColorBottomNavigationBar;
+    Color? iconColor;
+    int _selectedIndex = 0;
+    void _onItemTapped(int index) {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
+
+    final List<Widget> _widgetOptions = <Widget>[
+      projectPage(),
+      HomePage(),
+      Catchbox(),
+      MYPage(),
+    ];
     TextTheme textTheme = Theme.of(context).textTheme;
 
     void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
@@ -144,6 +164,85 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
     }
 
     return Scaffold(
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+          boxShadow: [
+            BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 1),
+          ],
+        ),
+        height: 70,
+        child: ClipRRect(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30.0),
+            topRight: Radius.circular(30.0),
+          ),
+          child: BottomNavigationBar(
+            elevation: 10,
+            items: <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.home,
+                  color: iconColor,
+                ),
+                label: '오늘의 캐치',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.bookmark,
+                  color: iconColor,
+                ),
+                label: '커뮤니티',
+              ),
+              // BottomNavigationBarItem(
+              //   icon: Icon(Icons.add, color: Colors.transparent,),
+              //   label: '카메라',
+              // ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.image,
+                  color: iconColor,
+                ),
+                label: '캐치박스',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.account_circle_outlined,
+                  color: iconColor,
+                ),
+                label: '마이페이지',
+              ),
+            ],
+
+            currentIndex: _selectedIndex,
+            //selectedLabelStyle: Theme.of(context).primaryTextTheme.caption,
+            showUnselectedLabels: true,
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: bgColorBottomNavigationBar,
+            onTap: _onItemTapped,
+            selectedFontSize: 10,
+            unselectedFontSize: 10,
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.white,
+        child: SizedBox(
+          width: 30,
+          height: 24,
+          child: Image.asset(
+            'assets/camera.png',
+          ),
+        ),
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return CamerLoad();
+          }));
+        },
+      ),
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterDocked,
       appBar: AppBar(
         toolbarHeight: 200,
         automaticallyImplyLeading: false,

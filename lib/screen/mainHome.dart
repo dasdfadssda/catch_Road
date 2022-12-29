@@ -12,118 +12,127 @@ import 'album/catchbox.dart';
 //import 'album/albumPage.dart';
 import 'projectPage/progect_main.dart';
 
-
 List<CameraDescription> cameras2 = [];
+
 class MainHomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
-  
 }
 
 class _HomePageState extends State<MainHomePage> {
-final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-@override
-void initState() {
-  // TODO: implement initState
-  super.initState();
-  initCamera();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initCamera();
+  }
 
-}
+  void initCamera() async {
+    cameras2 = await availableCameras();
+  }
 
-void initCamera() async{
-  cameras2 = await availableCameras();
-
-}
-
-int _selectedIndex = 0;
   Color? bgColorBottomNavigationBar;
   Color? iconColor;
+  int _selectedIndex = 0;
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
 
-var my_list2 = ['홈', '커뮤니티', '앨범','프로필'];
+  var my_list2 = ['홈', '커뮤니티', '앨범', '프로필'];
 
- final List<Widget> _widgetOptions = <Widget>[
+  final List<Widget> _widgetOptions = <Widget>[
     projectPage(),
     HomePage(),
-   Catchbox(),
-   MYPage(),
- ];
+    Catchbox(),
+    MYPage(),
+  ];
 
   //String? user = FirebaseAuth.instance.currentUser!.email ?? FirebaseAuth.instance.currentUser!.displayName;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-  
       body: SafeArea(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
-      bottomNavigationBar: SizedBox(
-        height: 100,
-        child: BottomNavigationBar(
-          
-          elevation: 10,
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home,
-                color: iconColor,
-              ),
-              label: '오늘의 캐치',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.bookmark, 
-                color: iconColor,
-              ),
-              label: '커뮤니티',
-            ),
-            // BottomNavigationBarItem(
-            //   icon: Icon(Icons.add, color: Colors.transparent,),
-            //   label: '카메라',
-            // ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.image,
-                color: iconColor,
-              ),
-              label: '앨범',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.account_circle,
-                color: iconColor,
-              ),
-              label: '프로필',
-            ),
-            
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+          boxShadow: [
+            BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 1),
           ],
-          
-          currentIndex: _selectedIndex,
-          //selectedLabelStyle: Theme.of(context).primaryTextTheme.caption,
-          showUnselectedLabels: true,
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: bgColorBottomNavigationBar,
-          onTap: _onItemTapped,
+        ),
+        height: 70,
+        child: ClipRRect(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30.0),
+            topRight: Radius.circular(30.0),
+          ),
+          child: BottomNavigationBar(
+            elevation: 10,
+            items: <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.home,
+                  color: iconColor,
+                ),
+                label: '오늘의 캐치',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.bookmark,
+                  color: iconColor,
+                ),
+                label: '커뮤니티',
+              ),
+              // BottomNavigationBarItem(
+              //   icon: Icon(Icons.add, color: Colors.transparent,),
+              //   label: '카메라',
+              // ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.image,
+                  color: iconColor,
+                ),
+                label: '캐치박스',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.account_circle_outlined,
+                  color: iconColor,
+                ),
+                label: '마이페이지',
+              ),
+            ],
+
+            currentIndex: _selectedIndex,
+            //selectedLabelStyle: Theme.of(context).primaryTextTheme.caption,
+            showUnselectedLabels: true,
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: bgColorBottomNavigationBar,
+            onTap: _onItemTapped,
+            selectedFontSize: 10,
+            unselectedFontSize: 10,
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Colors.white,
         child: SizedBox(
-          width:20,
-          height: 20,
-          child: Image.asset('assets/camera.png'),
-
+          width: 30,
+          height: 24,
+          child: Image.asset(
+            'assets/camera.png',
+          ),
         ),
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return CamerLoad();
           }));
-
         },
       ),
       floatingActionButtonLocation:

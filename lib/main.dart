@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'Auth/auth_service.dart';
 import 'firebase_options.dart';
+import 'screen/mainHome.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +29,22 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.lightBlue,
         ),
-        // home: MainHomePage()
+        // home: test());
+        // home: MainHomePage());
         home: AuthService().handleAuthState());
+  }
+}
+
+class test extends StatefulWidget {
+  const test({super.key});
+
+  @override
+  State<test> createState() => _testState();
+}
+
+class _testState extends State<test> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

@@ -8,6 +8,11 @@ import 'package:intl/intl.dart';
 import 'dart:math' as math;
 
 import '../../utils/app_text_styles.dart';
+import '../Camera/camera_load.dart';
+import '../Community/HomePage.dart';
+import '../MyPage/MyPage.dart';
+import '../projectPage/progect_main.dart';
+import 'catchbox.dart';
 // import 'package:get/get.dart';
 //
 // import '../utils/app_colors.dart';
@@ -98,8 +103,24 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
         .snapshots();
   }
 
+  Color? bgColorBottomNavigationBar;
+  Color? iconColor;
+  int _selectedIndex = 2;
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  final List<Widget> _widgetOptions = <Widget>[
+    projectPage(),
+    HomePage(),
+    Catchbox(),
+    MYPage(),
+  ];
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     TextTheme textTheme = Theme.of(context).textTheme;
 
     void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
@@ -142,6 +163,131 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
 
 ////ram
     return Scaffold(
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+          boxShadow: [
+            BoxShadow(color: Colors.black, spreadRadius: 0, blurRadius: 0.5),
+          ],
+        ),
+        height: 100,
+        child: ClipRRect(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(30.0),
+            topRight: Radius.circular(30.0),
+          ),
+          //// 선택 눌렀을 때
+          child: !pressed
+              ? Text("")
+              : Column(
+                  children: [
+                    SizedBox(
+                      height: size.height * 0.01,
+                    ),
+                    Row(children: [
+                      SizedBox(width: size.width * 0.4),
+                      Text("개의 사진이 선택됨",
+                          style: labelMediumStyle(
+                              color: Color.fromRGBO(26, 26, 26, 1))),
+                      Padding(
+                        padding: EdgeInsets.only(left: size.width * 0.2),
+                        child: IconButton(
+                          onPressed: () {},
+                          icon: Image.asset(
+                            'assets/icons/delete_icon.png',
+                            height: 18,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 10)
+                    ]),
+                  ],
+                ),
+        ),
+      ),
+      ///////////// bottom ////////////////
+      // bottomNavigationBar: Container(
+      //   decoration: BoxDecoration(
+      //     borderRadius: BorderRadius.only(
+      //         topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+      //     boxShadow: [
+      //       BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 1),
+      //     ],
+      //   ),
+      //   height: 70,
+      //   child: ClipRRect(
+      //     borderRadius: BorderRadius.only(
+      //       topLeft: Radius.circular(30.0),
+      //       topRight: Radius.circular(30.0),
+      //     ),
+      //     child: BottomNavigationBar(
+      //       elevation: 10,
+      //       items: <BottomNavigationBarItem>[
+      //         BottomNavigationBarItem(
+      //           icon: Icon(
+      //             Icons.home,
+      //             color: iconColor,
+      //           ),
+      //           label: '오늘의 캐치',
+      //         ),
+      //         BottomNavigationBarItem(
+      //           icon: Icon(
+      //             Icons.bookmark,
+      //             color: iconColor,
+      //           ),
+      //           label: '커뮤니티',
+      //         ),
+      //         // BottomNavigationBarItem(
+      //         //   icon: Icon(Icons.add, color: Colors.transparent,),
+      //         //   label: '카메라',
+      //         // ),
+      //         BottomNavigationBarItem(
+      //           icon: Icon(
+      //             Icons.image,
+      //             color: iconColor,
+      //           ),
+      //           label: '캐치박스',
+      //         ),
+      //         BottomNavigationBarItem(
+      //           icon: Icon(
+      //             Icons.account_circle_outlined,
+      //             color: iconColor,
+      //           ),
+      //           label: '마이페이지',
+      //         ),
+      //       ],
+
+      //       currentIndex: _selectedIndex,
+      //       //selectedLabelStyle: Theme.of(context).primaryTextTheme.caption,
+      //       showUnselectedLabels: true,
+      //       type: BottomNavigationBarType.fixed,
+      //       backgroundColor: bgColorBottomNavigationBar,
+      //       onTap: _onItemTapped,
+      //       selectedFontSize: 10,
+      //       unselectedFontSize: 10,
+      //     ),
+      //   ),
+      // ),
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: Colors.white,
+      //   child: SizedBox(
+      //     width: 30,
+      //     height: 24,
+      //     child: Image.asset(
+      //       'assets/camera.png',
+      //     ),
+      //   ),
+      //   onPressed: () {
+      //     Navigator.push(context, MaterialPageRoute(builder: (context) {
+      //       return CamerLoad();
+      //     }));
+      //   },
+      // ),
+      // floatingActionButtonLocation:
+      //     FloatingActionButtonLocation.miniCenterDocked,
+      /////////////////////////////////
       appBar: AppBar(
         // 하람 appbar round
         toolbarHeight: 130,
@@ -921,14 +1067,13 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                   child: Container(
                     child: Center(
                         child: Text(
-                      "선택",
-                      style:
-                          TextStyle(fontSize: 12, color: _selectCheckTextColor),
+                      pressed ? "취소" : "선택",
+                      style: TextStyle(fontSize: 12, color: Colors.white),
                     )),
                     width: 60,
                     height: 30,
                     decoration: BoxDecoration(
-                        color: _selectCheckColor,
+                        color: Color.fromRGBO(58, 148, 238, 1),
                         borderRadius: BorderRadius.circular(100.0)),
                     //padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                     //  child: Center(child: Text(_selectCheck, style: TextStyle(color: _selectCheckTextColor))),
@@ -939,9 +1084,13 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
           ],
         ),
       ),
-      body: Container(
-          // child: Center(
-          child: Column(
+      body:
+          // SafeArea(
+          //   child: _widgetOptions.elementAt(_selectedIndex),
+          // ),
+          Container(
+              // child: Center(
+              child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Expanded(

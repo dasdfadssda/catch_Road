@@ -63,6 +63,7 @@ class _Catchbox2State extends State<Catchbox2> {
 
   @override
   Widget build(BuildContext context) {
+    bool isgo = false;
     final Size size = MediaQuery.of(context).size;
     bool isSearch = false;
     TextTheme textTheme = Theme.of(context).textTheme;
@@ -116,8 +117,8 @@ class _Catchbox2State extends State<Catchbox2> {
                               child: Center(
                                   child: GridView.count(
                                       shrinkWrap: true,
-                                      crossAxisCount: 3,
-                                      childAspectRatio: 17 / 20,
+                                      crossAxisCount: 2,
+                                      childAspectRatio: 16 / 20,
                                       children: List.generate(
                                         snapshot.data!.docs.length,
                                         (index) {
@@ -126,6 +127,7 @@ class _Catchbox2State extends State<Catchbox2> {
                                           return InkWell(
                                             onTap: () {
                                               //_selectedDate = '';
+                                              //
                                               Navigator.push(
                                                   context,
                                                   MaterialPageRoute(
@@ -135,6 +137,7 @@ class _Catchbox2State extends State<Catchbox2> {
                                                             query: x,
                                                             query2: query),
                                                   ));
+                                              //
                                               // 밑에꺼로 정보 넘겨줘야함.
                                               //Catchbox_detail(query: x),));
                                             },

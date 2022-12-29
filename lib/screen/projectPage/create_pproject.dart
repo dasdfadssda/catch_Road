@@ -83,7 +83,7 @@ class _CreatePprojectState extends State<CreatePproject> {
         .get()
         .then((DocumentSnapshot ds) {
       setState(() {
-        username = 'eunjin';//ds['name'].toString();
+        username = 'eunjin'; //ds['name'].toString();
         print(username);
         //cash = ds['cash'];
       });
@@ -129,13 +129,13 @@ class _CreatePprojectState extends State<CreatePproject> {
         "cash": int.parse(result),
         "category": _objects,
         "final_day": 100,
-        "id": 'userid',//user!.uid,
+        "id": 'userid', //user!.uid,
         "participate": 0,
         "percentage": 0,
         "creation_time": dateTime,
         "place": "포항시 북구 흥해읍",
         "url": image_url,
-        "user": 'eunjin',//username,
+        "user": 'eunjin', //username,
         // "userprofile": user!.photoURL,
       });
     } catch (e) {
@@ -238,17 +238,17 @@ class _CreatePprojectState extends State<CreatePproject> {
     }
 
     return Scaffold(
-
       // appBar: PreferredSize(
       //   preferredSize: Size.fromHeight(78),
       //   child:
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 1,
-
         title: Center(
-          child: Text('개인프로젝트 올리기',style: titleMediumStyle(color: Colors.black),),
-
+          child: Text(
+            '개인프로젝트 올리기',
+            style: titleMediumStyle(color: Colors.black),
+          ),
         ),
         leading: TextButton(
           child: Padding(
@@ -608,7 +608,7 @@ class _CreatePprojectState extends State<CreatePproject> {
                                         child: Column(children: [
                                           Container(
                                               padding: EdgeInsets.fromLTRB(
-                                               20,0,0, 0),
+                                                  20, 0, 0, 0),
                                               child: Row(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
@@ -692,93 +692,78 @@ class _CreatePprojectState extends State<CreatePproject> {
                                                   // ),
                                                   // SizedBox(height: 60),
                                                   SizedBox(
-                                                    width:300,
+                                                    width: 300,
                                                     height: 300,
                                                     child: SfDateRangePicker(
                                                       controller:
-                                                      _dataPickerController,
+                                                          _dataPickerController,
                                                       onSelectionChanged:
-                                                      _onSelectionChanged,
+                                                          _onSelectionChanged,
                                                       selectionMode:
-                                                      DateRangePickerSelectionMode
-                                                          .range,
+                                                          DateRangePickerSelectionMode
+                                                              .range,
                                                     ),
-
                                                   ),
                                                   //SizedBox(height: 30),
-
                                                 ],
                                               )),
                                           Container(
                                               child: Row(
-                                                children: [
-                                                  SizedBox(width: 208),
-                                                  TextButton(
-                                                      child: Text('취소'),
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          _range1 = '';
-                                                          _range2 = '';
-                                                          _dataPickerController
+                                            children: [
+                                              SizedBox(width: 208),
+                                              TextButton(
+                                                  child: Text('취소'),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      _range1 = '';
+                                                      _range2 = '';
+                                                      _dataPickerController
                                                               .selectedRanges =
                                                           null;
-                                                        });
-                                                        //Navigator.pop(context);
-                                                      },
-                                                      style: TextButton.styleFrom(
-                                                          padding:
-                                                          EdgeInsets
-                                                              .zero,
-                                                          minimumSize:
-                                                          Size(50, 30),
-                                                          tapTargetSize:
+                                                    });
+                                                    //Navigator.pop(context);
+                                                  },
+                                                  style: TextButton.styleFrom(
+                                                      padding: EdgeInsets.zero,
+                                                      minimumSize: Size(50, 30),
+                                                      tapTargetSize:
                                                           MaterialTapTargetSize
                                                               .shrinkWrap,
-                                                          alignment: Alignment
-                                                              .centerLeft)),
-                                                  SizedBox(width: 25),
-                                                  TextButton(
-                                                      child: Text('확인'),
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          _selectDateColor =
+                                                      alignment: Alignment
+                                                          .centerLeft)),
+                                              SizedBox(width: 25),
+                                              TextButton(
+                                                  child: Text('확인'),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      _selectDateColor =
                                                           Colors.black!;
-                                                          _selectDateTextColor =
-                                                              Colors.white;
-                                                          _selectDate = _range1
-                                                              .substring(
-                                                              8,
-                                                              10) +
+                                                      _selectDateTextColor =
+                                                          Colors.white;
+                                                      _selectDate =
+                                                          _range1.substring(
+                                                                  8, 10) +
                                                               '.' +
-                                                              _range1
-                                                                  .substring(
-                                                                  3,
-                                                                  5) +
+                                                              _range1.substring(
+                                                                  3, 5) +
                                                               '.' +
-                                                              _range1
-                                                                  .substring(
+                                                              _range1.substring(
                                                                   0, 2);
-                                                          _selectDateSize =
-                                                          80;
-                                                          _selectDateIcon =
-                                                          false;
-                                                        });
-                                                        Navigator.pop(
-                                                            context);
-                                                      },
-                                                      style: TextButton.styleFrom(
-                                                          padding:
-                                                          EdgeInsets
-                                                              .zero,
-                                                          minimumSize:
-                                                          Size(50, 30),
-                                                          tapTargetSize:
+                                                      _selectDateSize = 80;
+                                                      _selectDateIcon = false;
+                                                    });
+                                                    Navigator.pop(context);
+                                                  },
+                                                  style: TextButton.styleFrom(
+                                                      padding: EdgeInsets.zero,
+                                                      minimumSize: Size(50, 30),
+                                                      tapTargetSize:
                                                           MaterialTapTargetSize
                                                               .shrinkWrap,
-                                                          alignment: Alignment
-                                                              .centerLeft))
-                                                ],
-                                              ))
+                                                      alignment:
+                                                          Alignment.centerLeft))
+                                            ],
+                                          ))
                                         ])));
                               });
                           //);
@@ -817,7 +802,6 @@ class _CreatePprojectState extends State<CreatePproject> {
                           //);
                         },
                         icon: Icon(Icons.keyboard_arrow_right)),
-
                   ],
                 ),
                 SizedBox(height: 12),

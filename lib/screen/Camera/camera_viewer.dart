@@ -128,20 +128,20 @@ class _CameraViewerState extends State<CameraViewer> {
       final int uvPixelStride = image.planes[1].bytesPerPixel!;
       var img = imglib.Image(image.width, image.height); // Create Image buffer
 
-      for (int x = 0; x < width; x++) {
-        for (int y = 0; y < height; y++) {
-          final int uvIndex =
-              uvPixelStride * (x / 2).floor() + uvRowStride * (y / 2).floor();
-          final int index = y * width + x;
-          final yp = image.planes[0].bytes[index];
-          final up = image.planes[1].bytes[uvIndex];
-          final vp = image.planes[2].bytes[uvIndex];
-          int r = (yp + vp * 1436 / 1024 - 179).round().clamp(0, 255);
-          int g = (yp - up * 46549 / 131072 + 44 -vp * 93604 / 131072 + 91).round().clamp(0, 255);
-          int b = (yp + up * 1814 / 1024 - 227).round().clamp(0, 255);
-          img.data[index] = (0xFF << 24) | (b << 16) | (g << 8) | r;
-        }
-      } //너무 오래 걸려서 잠시 생략
+      // for (int x = 0; x < width; x++) {
+      //   for (int y = 0; y < height; y++) {
+      //     final int uvIndex =
+      //         uvPixelStride * (x / 2).floor() + uvRowStride * (y / 2).floor();
+      //     final int index = y * width + x;
+      //     final yp = image.planes[0].bytes[index];
+      //     final up = image.planes[1].bytes[uvIndex];
+      //     final vp = image.planes[2].bytes[uvIndex];
+      //     int r = (yp + vp * 1436 / 1024 - 179).round().clamp(0, 255);
+      //     int g = (yp - up * 46549 / 131072 + 44 -vp * 93604 / 131072 + 91).round().clamp(0, 255);
+      //     int b = (yp + up * 1814 / 1024 - 227).round().clamp(0, 255);
+      //     img.data[index] = (0xFF << 24) | (b << 16) | (g << 8) | r;
+      //   }
+      // } //너무 오래 걸려서 잠시 생략
       if(ob=='stop sign'){
         ob='sign';
       }
@@ -149,7 +149,7 @@ class _CameraViewerState extends State<CameraViewer> {
       List<int> png = pngEncoder.encodeImage(img);
 
       //firebase에 저장
-      final uploadTask = await storage.ref('/traffic-Image/$ob/$ob${DateTime.now()}.png').putData(Uint8List.fromList(png));
+      final uploadTask = await storage.ref('/traffic-Image/$ob/$ob${DateTime.now()}.png').putData(Uint8List.fromList(png));//
       final url = await uploadTask.ref.getDownloadURL();
       // try {
       //   await FirebaseFirestore.instance
@@ -169,13 +169,6 @@ class _CameraViewerState extends State<CameraViewer> {
     } catch (e) {
       print(">>>>>>>>>>>> ERROR:" + e.toString());
     }
-
-
-
-
-
-
-
 
 
   }
@@ -209,7 +202,6 @@ class _CameraViewerState extends State<CameraViewer> {
                   color: Colors.white,
                 ),
               ),
-
               SizedBox(
                 height:20,
               ),

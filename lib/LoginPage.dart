@@ -1,7 +1,9 @@
+import 'package:catch2_0_1/join/joinPage.dart';
 import 'package:flutter/material.dart';
 import 'Auth/auth_service.dart';
 import 'screen/Camera/camera_load.dart';
 import 'screen/mainHome.dart';
+import 'utils/app_text_styles.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -9,6 +11,8 @@ class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
+
+bool maintain = false;
 
 class _LoginPageState extends State<LoginPage> {
   @override
@@ -23,7 +27,7 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               Padding(
                 padding: EdgeInsets.only(top: size.height * 0.25),
-                child: Image.asset('assets/logo.png', width: 170),
+                child: Image.asset('assets/logo.png', width: 144),
               ),
               // 아이디 또는 이메일 textfield
               Padding(
@@ -39,29 +43,27 @@ class _LoginPageState extends State<LoginPage> {
                           contentPadding: EdgeInsets.only(
                               top: size.height * 0.01, left: size.width * 0.04),
                           hintText: '아이디 또는 이메일',
-                          hintStyle: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              color: Color.fromRGBO(0, 0, 0, 0.4)),
+                          hintStyle: bodyMediumStyle(color: Color(0xff9FA5B2)),
                           focusedBorder: OutlineInputBorder(
                             borderRadius:
-                                BorderRadius.all(Radius.circular(15.0)),
+                                BorderRadius.all(Radius.circular(36.0)),
                             borderSide: BorderSide(
                                 width: 0.5,
-                                color: Color.fromRGBO(0, 0, 0, 0.4)),
+                                color: Color.fromRGBO(0, 0, 0, 0.2)),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius:
-                                BorderRadius.all(Radius.circular(15.0)),
+                                BorderRadius.all(Radius.circular(36.0)),
                             borderSide: BorderSide(
                                 width: 0.5,
-                                color: Color.fromRGBO(0, 0, 0, 0.4)),
+                                color: Color.fromRGBO(0, 0, 0, 0.2)),
                           ),
                           border: OutlineInputBorder(
                             borderRadius:
-                                BorderRadius.all(Radius.circular(15.0)),
+                                BorderRadius.all(Radius.circular(36.0)),
                           ),
                           filled: true,
-                          fillColor: Color.fromRGBO(0, 0, 0, 0.03)),
+                          fillColor: Colors.white),
                       keyboardType: TextInputType.emailAddress,
                     ),
                   )),
@@ -71,36 +73,35 @@ class _LoginPageState extends State<LoginPage> {
                       top: size.height * 0.015,
                       left: size.width * 0.04,
                       right: size.width * 0.04),
-                  child: const SizedBox(
+                  child: SizedBox(
                     child: TextField(
                       style: TextStyle(fontSize: 13),
                       decoration: InputDecoration(
                           focusColor: Color.fromRGBO(0, 0, 0, 0.03),
                           contentPadding: EdgeInsets.only(top: 7, left: 15),
                           hintText: '비밀번호',
-                          hintStyle: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              color: Color.fromRGBO(0, 0, 0, 0.4)),
+                          hintStyle: bodyMediumStyle(color: Color(0xff9FA5B2)),
+                          // hintStyle: bodyLargeStyle(color: Color(0xff9FA5B2)),
                           focusedBorder: OutlineInputBorder(
                             borderRadius:
-                                BorderRadius.all(Radius.circular(15.0)),
+                                BorderRadius.all(Radius.circular(36.0)),
                             borderSide: BorderSide(
                                 width: 0.5,
-                                color: Color.fromRGBO(0, 0, 0, 0.4)),
+                                color: Color.fromRGBO(0, 0, 0, 0.2)),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius:
-                                BorderRadius.all(Radius.circular(15.0)),
+                                BorderRadius.all(Radius.circular(36.0)),
                             borderSide: BorderSide(
                                 width: 0.5,
-                                color: Color.fromRGBO(0, 0, 0, 0.4)),
+                                color: Color.fromRGBO(0, 0, 0, 0.2)),
                           ),
                           border: OutlineInputBorder(
                             borderRadius:
-                                BorderRadius.all(Radius.circular(15.0)),
+                                BorderRadius.all(Radius.circular(36.0)),
                           ),
                           filled: true,
-                          fillColor: Color.fromRGBO(0, 0, 0, 0.03)),
+                          fillColor: Colors.white),
                       keyboardType: TextInputType.emailAddress,
                     ),
                   )),
@@ -132,16 +133,24 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(
-                        top: size.height * 0.0, left: size.width * 0.06
+                        top: size.height * 0.0, left: size.width * 0.02
                         // right: size.width * 0.8,
                         ),
-                    child: Image.asset('assets/passCheck.png', height: 23),
+                    child: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            maintain = !maintain;
+                          });
+                        },
+                        icon: maintain
+                            ? Image.asset('assets/checkbox_on.png', height: 23)
+                            : Image.asset('assets/checkbox_un.png',
+                                height: 23)),
                   ),
                   ////text style 적용하기
                   Padding(
-                    padding: EdgeInsets.only(
-                        top: size.height * 0.0, left: size.width * 0.02),
-                    child: Text("비밀번호 저장",
+                    padding: EdgeInsets.only(top: size.height * 0.0),
+                    child: Text("로그인 유지",
                         style: TextStyle(
                             fontSize: 12,
                             color: Color.fromRGBO(0, 0, 0, 0.4),
@@ -173,17 +182,16 @@ class _LoginPageState extends State<LoginPage> {
                 padding: EdgeInsets.only(top: size.height * 0.03),
                 child: SizedBox(
                   width: size.width * 0.92,
-                  height: size.height * 0.05,
+                  height: size.height * 0.06,
                   child: OutlinedButton(
                       style: OutlinedButton.styleFrom(
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(13.0),
+                            borderRadius: BorderRadius.circular(20.0),
                           ),
-                          backgroundColor: Color(0xff2C63BB)),
+                          backgroundColor: Color.fromRGBO(58, 148, 238, 1)),
                       onPressed: ()
                           //MainHomePage
                           {
-
                         //signInWithGoogle();
 
                         Navigator.push(context,
@@ -208,17 +216,35 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: size.height * 0.05),
-                child: Image.asset(
-                  'assets/divider.png',
-                  width: size.width * 0.9,
+                padding: EdgeInsets.only(
+                  top: size.height * 0.05,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/icons/google.png',
+                      width: 50,
+                    ),
+                    SizedBox(
+                      width: size.width * 0.04,
+                    ),
+                    Image.asset(
+                      'assets/icons/apple.png',
+                      width: 50,
+                    ),
+                  ],
                 ),
               ),
               Padding(
                 padding: EdgeInsets.only(top: size.height * 0.04),
                 child: Text(
                   "계정이 없으신가요?",
-                  style: TextStyle(fontSize: 12),
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: Color.fromRGBO(0, 0, 0, 0.4),
+                      fontWeight: FontWeight.bold),
                 ),
               ),
               Padding(
@@ -229,12 +255,18 @@ class _LoginPageState extends State<LoginPage> {
                       padding: EdgeInsets.zero,
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      // joinPage
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return joinPage();
+                      }));
+                    },
                     child: Text("회원가입",
                         style: TextStyle(
-                            fontSize: 12,
+                            fontSize: 14,
                             color: Color(0xff2C63BB),
-                            fontWeight: FontWeight.w700))),
+                            fontWeight: FontWeight.w500))),
               )
             ],
           ),
