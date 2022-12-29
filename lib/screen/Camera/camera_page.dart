@@ -559,7 +559,6 @@ class _CameraPageState extends State<CameraPage> {
                     child:SizedBox(
                       width:45,
                       child:  Image.asset('assets/camera_button.png'),
-
                     ),
                   ),
                   // IconButton(
