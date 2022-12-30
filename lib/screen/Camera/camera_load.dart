@@ -7,8 +7,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'camera_page.dart';
 
 
-List<CameraDescription> cameras = [];
+
 class CamerLoad extends StatefulWidget {
+
+   final List<CameraDescription> cameras;
+
+  CamerLoad(this.cameras);
 
   @override
   State<CamerLoad> createState() => _CamerLoadState();
@@ -18,16 +22,16 @@ class _CamerLoadState extends State<CamerLoad> {
   @override
   void initState() {
     super.initState();
-    initCamera();
+    //initCamera();
   }
 
-  void initCamera() async{
-    cameras = await availableCameras();
-    print('cameras $cameras');
-  }
+  // void initCamera() async{
+  //   widget.cameras = await availableCameras();
+  //   print('cameras $widget.cameras');
+  // }
 
   @override
   Widget build(BuildContext context) {
-    return CameraPage(cameras);
+    return CameraPage(widget.cameras);
   }
 }

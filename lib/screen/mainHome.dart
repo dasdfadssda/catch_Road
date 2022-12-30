@@ -14,7 +14,7 @@ import 'projectPage/progect_main.dart';
 
 
 
-List<CameraDescription> cameras2 = [];
+List<CameraDescription> cameras = [];
 int selectedIndex0 = 0;
 
 class MainHomePage extends StatefulWidget {
@@ -26,8 +26,6 @@ class MainHomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<MainHomePage> {
-final FirebaseAuth _auth = FirebaseAuth.instance;
-
 @override
 void initState() {
   // TODO: implement initState
@@ -37,7 +35,7 @@ void initState() {
 }
 
 void initCamera() async{
-  cameras2 = await availableCameras();
+  cameras = await availableCameras();
 
 }
 
@@ -56,8 +54,8 @@ var my_list2 = ['홈', '커뮤니티','캐치박스','마이페이지'];
  final List<Widget> _widgetOptions = <Widget>[
     projectPage(),
     HomePage(),
-   Catchbox(),
-   MYPage(),
+    Catchbox(),
+    MYPage(),
  ];
 
   //String? user = FirebaseAuth.instance.currentUser!.email ?? FirebaseAuth.instance.currentUser!.displayName;
@@ -142,7 +140,7 @@ var my_list2 = ['홈', '커뮤니티','캐치박스','마이페이지'];
         ),
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return CamerLoad();
+            return CamerLoad(cameras);
           }));
 
         },
