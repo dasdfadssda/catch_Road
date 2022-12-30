@@ -73,7 +73,7 @@ class _CatchboxState extends State<Catchbox> {
           children: [
             Expanded(
                 child: StreamBuilder<QuerySnapshot>(
-                    stream: FirebaseFirestore.instance.collection('category').doc(FirebaseAuth.instance.currentUser!.email).collection('category').orderBy('category', descending: true).snapshots(),
+                    stream: FirebaseFirestore.instance.collection('category').doc('1234@handong.ac.kr').collection('category').orderBy('category', descending: true).snapshots(),
                     builder: (context, snapshot){
                       if(snapshot.hasData){
                         return Container(
