@@ -12,7 +12,7 @@ import '../mainHome.dart';
 // import 'camera/camera_page.dart';
 // import 'catchbox2.dart';
 
-List<CameraDescription> cameras = [];
+
 
 class todaycatchdetail3 extends StatefulWidget {
   final QueryDocumentSnapshot query;
@@ -167,7 +167,7 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
 
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return CamerLoad();
+                        return CamerLoad(cameras);
                       }));
                       //
                       // Navigator.push(context, MaterialPageRoute(builder: (context) {
