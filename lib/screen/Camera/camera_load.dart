@@ -33,5 +33,6 @@ class _CamerLoadState extends State<CamerLoad> {
   @override
   Widget build(BuildContext context) {
     return CameraPage(widget.cameras);
+
   }
 }
