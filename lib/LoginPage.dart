@@ -184,7 +184,7 @@ class _LoginPageState extends State<LoginPage> {
                           //MainHomePage
                           {
 
-                        //signInWithGoogle();
+                        signInWithGoogle();
 
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {

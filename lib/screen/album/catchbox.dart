@@ -6,9 +6,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 //import '../utils/app_text_styles.dart';
+import '../../utils/app_text_styles.dart';
 import 'catchbox_detail.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-
+import 'dart:math' as math;
 class Catchbox extends StatefulWidget {
   const Catchbox({Key? key}) : super(key: key);
 
@@ -56,28 +57,23 @@ class _CatchboxState extends State<Catchbox> {
     TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          padding: EdgeInsets.zero,
-          icon: Image.asset("assets/icons/icon_back.png"),
-          onPressed: (){
-            //   Get.back();
-          },
-        ),
-        centerTitle: true,
-        title: Text('캐치박스'),//,style: titleMedium.copyWith(color: Colors.black),),
-        elevation: 0,
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        elevation: 1,
+        title: Center(child: Text('캐치박스',style: titleMediumStyle(color: Colors.black),)),
       ),
       body: Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            //Text(''),
             Expanded(
                 child: StreamBuilder<QuerySnapshot>(
-                    stream: FirebaseFirestore.instance.collection('category').doc('1234@handong.ac.kr').collection('category').orderBy('category', descending: true).snapshots(),
+                    stream: FirebaseFirestore.instance.collection('category').doc("1234@handong.ac.kr").collection('category').orderBy('order', descending: false).snapshots(),
                     builder: (context, snapshot){
                       if(snapshot.hasData){
                         return Container(
-                          margin: EdgeInsets.fromLTRB(15.w, 0, 15.w, 10.h),
+                          margin: EdgeInsets.all(10),
                           child: Center(
                               child: GridView.count(
                                   shrinkWrap: true,
@@ -98,25 +94,28 @@ class _CatchboxState extends State<Catchbox> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           SizedBox(
-                                            height: 165.65.h,
-                                            width: 160.65.w,
+                                            height: 165.65,
+                                            width: 160.65,
                                             child: Card(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(4.76),
-                                              ),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(4.76),
+                                                ),
 
-                                              clipBehavior: Clip.antiAlias,
-                                              child: Image.network(
-                                                x['new'],
-                                                fit: BoxFit.cover,
-                                              ),
+                                                clipBehavior: Clip.antiAlias,
+                                                child: Transform.rotate(
+                                                  angle: (x['category']=='kickboard'||x['category']=='traffic light')?0:90*math.pi/180,
+                                                  child: Image.network(
+                                                    x['new'],
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                )
                                             ),
                                           ),
-                                          SizedBox(height: 2.h),
+                                          SizedBox(height: 2),
                                           Container(
                                               child: Row(
                                                 children: [
-                                                  SizedBox(width: 5.w),
+                                                  SizedBox(width: 5),
                                                   Container(
                                                       child: Column(
                                                         crossAxisAlignment: CrossAxisAlignment.start,
