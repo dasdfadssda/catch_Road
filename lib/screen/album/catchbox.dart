@@ -6,10 +6,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 //import '../utils/app_text_styles.dart';
-import '../../utils/app_text_styles.dart';
+
 import 'catchbox_detail.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'dart:math' as math;
+
 class Catchbox extends StatefulWidget {
   const Catchbox({Key? key}) : super(key: key);
 
