@@ -8,13 +8,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'dart:math' as math;
 
 import '../../utils/app_text_styles.dart';
 import 'catchbox_detail2.dart';
-
 
 class Catchbox2 extends StatefulWidget {
   final QueryDocumentSnapshot query;
@@ -22,7 +20,7 @@ class Catchbox2 extends StatefulWidget {
   Catchbox2({required this.query});
 
   @override
-  _Catchbox2State createState() => _Catchbox2State(query : query);
+  _Catchbox2State createState() => _Catchbox2State(query: query);
 }
 
 class _Catchbox2State extends State<Catchbox2> {
@@ -65,81 +63,157 @@ class _Catchbox2State extends State<Catchbox2> {
 
   @override
   Widget build(BuildContext context) {
+    bool isgo = false;
+    final Size size = MediaQuery.of(context).size;
+    bool isSearch = false;
     TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(57),
-        child:  AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: Colors.white,
-          elevation: 1,
-          title: Center(child: Text('캐치박스',style: titleMediumStyle(color: Colors.black),)),
-        ),
+        preferredSize: Size.fromHeight(size.height*0.085),
+        child: AppBar(
+            centerTitle: true,
+            // actions: [
+            //   IconButton(
+            //     onPressed: () {
+            //       setState(() {
+            //         isSearch = !isSearch;
+            //       });
+            //     },
+            //     icon: Icon(
+            //       Icons.search,
+            //       color: isSearch ? Color(0xff3A94EE) : Color(0xff9FA5B2),
+            //     ),
+            //   ),
+            // ],
+            automaticallyImplyLeading: false,
+            backgroundColor: Colors.white,
+            elevation: 0.3,
+            title: Center(
+              child: Text(
+                '캐치박스',
+                style: titleMediumStyle(color: Colors.black),
+              ),
+            )),
       ),
       body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Expanded(
-                child: StreamBuilder<QuerySnapshot>(
-                    stream: FirebaseFirestore.instance.collection('category').doc('1234@handong.ac.kr').collection('category').orderBy('order', descending: false).snapshots(),
-                    builder: (context, snapshot){
-                      if(snapshot.hasData){
-                        return Container(
-                          margin: EdgeInsets.fromLTRB(15, 10, 15, 10),
 
-                          child: Center(
-                              child: GridView.count(
-                                  shrinkWrap: true,
-                                  crossAxisCount: 2,
-                                  childAspectRatio: 19 / 20,
-                                  children: List.generate(snapshot.data!.docs.length, (index) {
-                                    QueryDocumentSnapshot x = snapshot.data!.docs[index];
-                                    return InkWell(
-                                      onTap: (){
-                                        //_selectedDate = '';
-                                        Navigator.push(context, MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              Catchbox_detail2(query: x, query2: query),));
-                                        // 밑에꺼로 정보 넘겨줘야함.
-                                        //Catchbox_detail(query: x),));
-                                      },
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          SizedBox(
-                                            height: 155.65,
-                                            width: 150.65,
-                                            child: Card(
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(4.76),
-                                              ),
+        child: Center(
 
-                                                clipBehavior: Clip.antiAlias,
-                                              child: Transform.rotate(
-                                                angle:(x['category']=='kickboard'||x['category']=='traffic light')?0:90*math.pi/180,
-                                                child: Image.network(
-                                                  x['new'],
-                                                  fit: BoxFit.cover,
+          child: Column(
+
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                  child: StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance
+                          .collection('category')
+                          .doc('1234@handong.ac.kr')
+                          .collection('category')
+                          .orderBy('order', descending: false)
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return Center(
+                            child: Container(
+                              padding:EdgeInsets.all(0),
+                              margin: EdgeInsets.fromLTRB(size.width * 0.03,
+                                  size.height * 0.0375, size.width * 0.03, 0),
+                              child: Center(
+                                  child: GridView.count(
+                                      shrinkWrap: true,
+                                      crossAxisCount: 2,
+                                      childAspectRatio: 16 / 20,
+                                      children: List.generate(
+                                        snapshot.data!.docs.length,
+                                        (index) {
+                                          QueryDocumentSnapshot x =
+                                              snapshot.data!.docs[index];
+                                          return InkWell(
+                                            onTap: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        Catchbox_detail2(
+                                                            query: x,
+                                                            query2: query),
+                                                  ));
+                                              //
+                                              // 밑에꺼로 정보 넘겨줘야함.
+                                              //Catchbox_detail(query: x),));
+                                            },
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: size.width * 0.01,
+                                                      right: size.width * 0.01),
+                                                  child: SizedBox(
+                                                    height: size.height * 0.21,
+                                                    width: size.width * 0.6,
+                                                    child: Card(
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      4.76),
+                                                        ),
+                                                        clipBehavior:
+                                                            Clip.antiAlias,
+                                                        child: Transform.rotate(
+                                                          angle: (x['category'] ==
+                                                                      'kickboard' ||
+                                                                  x['category'] ==
+                                                                      'traffic light')
+                                                              ? 0
+                                                              : 90 *
+                                                                  math.pi /
+                                                                  180,
+                                                          child: Image.network(
+                                                            x['new'],
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        )),
+                                                  ),
                                                 ),
-                                              )
-                                            ),
-                                          ),
-                                          SizedBox(height: 2),
-                                          Container(
-                                              child: Row(
-                                                children: [
-                                                  SizedBox(width: 5),
-                                                  Container(
-                                                      child: Column(
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                SizedBox(
+                                                    height:
+                                                        size.height * 0.005),
+                                                Center(
+                                                  child: Container(
+                                                      child: Row(
+                                                    children: [
+                                                      SizedBox(
+                                                          width: size.width *
+                                                              0.02),
+                                                      Container(
+                                                          child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
                                                         children: [
                                                           Text(
                                                             x['category'],
-                                                            style: Theme.of(context).textTheme.labelMedium,
-                                                            maxLines:1,
-                                                            overflow: TextOverflow.ellipsis,
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .labelLarge,
+                                                            maxLines: 1,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
                                                           ),
+                                                          Text(
+                                                            "장 수",
+                                                            style: bodySmallStyle(
+                                                                color: Color(
+                                                                    0xff9FA5B2)),
+                                                          ),
+                                                          SizedBox(height: size.height*0.0019),
                                                           //const SizedBox(height: 8.0),
                                                           // Text(
                                                           //   "${snapshot.data!.docs[index]['count']}",
@@ -147,51 +221,45 @@ class _Catchbox2State extends State<Catchbox2> {
                                                           //   style: Theme.of(context).textTheme.labelSmall,
                                                           // ),
                                                         ],
-                                                      )
-                                                  )
-                                                ],
-                                              )
-                                          ),
-                                          SizedBox(height: 12)
-                                        ],
-                                      ),
+                                                      ))
+                                                    ],
+                                                  )),
+                                                ),
 
+                                              ],
+                                            ),
 
-                                      // Padding(
-                                      //   padding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 5.0),
-                                      //   child: Column(
-                                      //     crossAxisAlignment: CrossAxisAlignment.start,
-                                      //     children: <Widget>[
-                                      //       Text(
-                                      //         x['category'],
-                                      //         style: Theme.of(context).textTheme.headline6,
-                                      //         maxLines:1,
-                                      //         overflow: TextOverflow.ellipsis,
-                                      //       ),
-                                      //       const SizedBox(height: 8.0),
-                                      //       Text(
-                                      //         //"${x['price'].toString()}원",
-                                      //         '몇개인지',
-                                      //         style: Theme.of(context).textTheme.subtitle2,
-                                      //       ),
-                                      //     ],
-                                      //   ),
-                                      // ),
-
-                                    );
-                                  },
-                                  )
-                              )
-                          ),
-                        );
-                      }
-                      else{
-                        return Center(child: CircularProgressIndicator());
-                      }
-                    }
-                )
-            ),
-          ],
+                                            // Padding(
+                                            //   padding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 5.0),
+                                            //   child: Column(
+                                            //     crossAxisAlignment: CrossAxisAlignment.start,
+                                            //     children: <Widget>[
+                                            //       Text(
+                                            //         x['category'],
+                                            //         style: Theme.of(context).textTheme.headline6,
+                                            //         maxLines:1,
+                                            //         overflow: TextOverflow.ellipsis,
+                                            //       ),
+                                            //       const SizedBox(height: 8.0),
+                                            //       Text(
+                                            //         //"${x['price'].toString()}원",
+                                            //         '몇개인지',
+                                            //         style: Theme.of(context).textTheme.subtitle2,
+                                            //       ),
+                                            //     ],
+                                            //   ),
+                                            // ),
+                                          );
+                                        },
+                                      ))),
+                            ),
+                          );
+                        } else {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                      })),
+            ],
+          ),
         ),
       ),
     );
