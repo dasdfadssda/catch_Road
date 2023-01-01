@@ -410,11 +410,19 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                                   //     .collection('project')
                                   //     .doc(
                                   //     'cLxKtSGWwhUVJp972FCh').toString());
+
+                                  var userlist=query['part_user'];
+                                  if(!userlist.contains('1234@handong.ac.kr'))
+                                    userlist.add('1234@handong.ac.kr');
+
                                   print(query['id']);
                                   FirebaseFirestore.instance
                                       .collection('project')
                                       .doc(query['id'])
-                                      .update({'participate': 1});
+                                      .update({
+                                    'participate':1,
+                                    'part_user':userlist
+                                      });
                                   Navigator.push(context,
                                       MaterialPageRoute(builder: (context) {
                                     return MainHomePage();

@@ -18,6 +18,7 @@ import '../projectPage/progect_main.dart';
 import '../projectPage/upload_check.dart';
 import 'catchbox.dart';
 
+int check_num=0;
 class Catchbox_detail2 extends StatefulWidget {
   final QueryDocumentSnapshot query;
   final QueryDocumentSnapshot query2;
@@ -85,14 +86,7 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
           .snapshots();
     }
     if (_range1 != '') {
-      return FirebaseFirestore.instance
-          .collection('category')
-          .doc('1234@handong.ac.kr')
-          .collection(query['category'])
-          .doc('date')
-          .collection('date')
-          .where('time', isEqualTo: _range1)
-          .snapshots();
+      return FirebaseFirestore.instance.collection('category').doc('1234@handong.ac.kr').collection(query['category']).where('time', isEqualTo: _range1).snapshots();
     }
     // if(num_list.isNotEmpty){
     //   print(num_list);
@@ -206,7 +200,7 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
               ),
               Row(children: [
                 SizedBox(width: size.width * 0.4),
-                Text("개의 사진이 선택됨",
+                Text("$check_num 개의 사진이 선택됨",
                     style: labelMediumStyle(
                         color: Color.fromRGBO(26, 26, 26, 1))),
                 // Padding(
@@ -257,7 +251,7 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
       ),
 
 
-      appBar: AppBar(
+      appBar:  AppBar(
         // 하람 appbar round
         toolbarHeight: 130,
         shape: RoundedRectangleBorder(
@@ -276,277 +270,202 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
             ),
             Row(
               children: [
-                TextButton(
-                  onPressed: () {
-                    print(_checks);
-                    setState(() {
-                      if (_selectCheckIcon) {
-                        pressed = true;
-                        _selectCheck = '취소';
-                        _selectCheckColor = Colors.blue; // primary[40]!;
-                        _selectCheckTextColor = Color(0XFFF3F4F5);
-                        // _selectPlaceTextColor = Colors.red;
-                        _selectCheckIcon = false;
-                      } else {
-                        pressed = false;
-                        _selectCheckColor = Color(0XFFF3F4F5);
-                        _selectCheck = '선택';
-                        _selectCheckTextColor = Color(0xFF9FA5B2);
-                        _selectCheckIcon = true;
-                        _checks = [
-                          false, false, false, false, false, false, false,
-                          false, false, false, false, false, false, false, false, false,
-                          false, false, false, false, false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false,
-                          false
-                        ];
-                        _checks_url = [
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          '',
-                          ''
-                        ];
-                      }
-                    });
-                  },
-                  child: Text(
-                    pressed ? "취소" : "선택",
-                    style: TextStyle(fontSize: 12, color: Colors.grey),
-                  )
-                  // Container(
-                  //   child: Center(
-                  //       child: Text(
-                  //         pressed ? "취소" : "선택",
-                  //         style: TextStyle(fontSize: 12, color: Colors.white),
-                  //       )),
-                  //   width: 60,
-                  //   height: 30,
-                  //   decoration: BoxDecoration(
-                  //       color: Color.fromRGBO(58, 148, 238, 1),
-                  //       borderRadius: BorderRadius.circular(100.0)),
-                  //   //padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                  //   //  child: Center(child: Text(_selectCheck, style: TextStyle(color: _selectCheckTextColor))),
-                  // ),
-                ),
-                SizedBox(
-                  width: 70,
-                ),
-                Text(
-                  query['category'],
-                  style: titleMediumStyle(color: Colors.black),
-                ),
-                SizedBox(
-                  width: 70,
-                ),
-                TextButton(
-                  onPressed: () async {
-                    // for(int i = 0; i < 1000; i++){
-                    //   if(_checks[i]){
-                    //     try {
-                    //       await FirebaseFirestore.instance
-                    //           .collection("project_url")
-                    //           .doc(query2['id'])
-                    //           .collection(query2['id'])
-                    //           .doc()
-                    //           .set({
-                    //         "project": query2['id'],
-                    //         "category": query['category'],
-                    //         "url": _checks_url[i],
-                    //         "user":"1234@handong.ac.kr",// FirebaseAuth.instance.currentUser!.email,
-                    //       });
-                    //     } catch (e) {
-                    //       print(e);
-                    //     }
-                    //     //_checks_url[i]
-                    //   }
-                    // }
+                Container(
+                  margin: EdgeInsets.zero,
+                  width: (size.width-35)/3,
+                  child:Align(
+                    alignment: Alignment.centerLeft,
+                    child: TextButton(
+                        onPressed: () {
 
-                    Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      return uploadCheck();
-                    }));
+                          setState(() {
+                            if (_selectCheckIcon) {
+                              pressed = true;
+                              _selectCheck = '취소';
+                              _selectCheckColor = Colors.blue; // primary[40]!;
+                              _selectCheckTextColor = Color(0XFFF3F4F5);
+                              // _selectPlaceTextColor = Colors.red;
+                              _selectCheckIcon = false;
+                            } else {
+                              pressed = false;
+                              _selectCheckColor = Color(0XFFF3F4F5);
+                              _selectCheck = '선택';
+                              _selectCheckTextColor = Color(0xFF9FA5B2);
+                              _selectCheckIcon = true;
+                              check_num=0;
+                              _checks.fillRange(0, _checks.length-1,false);
+                              print(_checks.length);
+                              // _checks = [
+                              //   false, false, false, false, false, false, false,
+                              //   false, false, false, false, false, false, false, false, false,
+                              //   false, false, false, false, false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false,
+                              //   false
+                              // ];
+                              _checks_url.fillRange(0, _checks_url.length-1,'');
+                            }
+                          });
+                        },
+                        child: Text(
+                          pressed ? "취소" : "선택",
+                          style: TextStyle(fontSize: 12, color: Colors.grey),
+                        )
+                      // Container(
+                      //   child: Center(
+                      //       child: Text(
+                      //         pressed ? "취소" : "선택",
+                      //         style: TextStyle(fontSize: 12, color: Colors.white),
+                      //       )),
+                      //   width: 60,
+                      //   height: 30,
+                      //   decoration: BoxDecoration(
+                      //       color: Color.fromRGBO(58, 148, 238, 1),
+                      //       borderRadius: BorderRadius.circular(100.0)),
+                      //   //padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                      //   //  child: Center(child: Text(_selectCheck, style: TextStyle(color: _selectCheckTextColor))),
+                      // ),
+                    ),
+                  ),
+                ),
+                Container(
+                    width: (size.width-35)/3,
+                    child:Center(
+                      child: Text(
+                        query['category'],
+                        style: titleMediumStyle(color: Colors.black),
+                      ),
+                    )
+                ),
+                Container(
+                  margin: EdgeInsets.zero,
+                  width: (size.width-35)/3,
+                  child:Align(
+                    alignment: Alignment.centerRight,
+                    child: pressed==true?TextButton(
+                      onPressed: () async {
+                        // for(int i = 0; i < 1000; i++){
+                        //   if(_checks[i]){
+                        //     try {
+                        //       await FirebaseFirestore.instance
+                        //           .collection("project_url")
+                        //           .doc(query2['id'])
+                        //           .collection(query2['id'])
+                        //           .doc()
+                        //           .set({
+                        //         "project": query2['id'],
+                        //         "category": query['category'],
+                        //         "url": _checks_url[i],
+                        //         "user":"1234@handong.ac.kr",// FirebaseAuth.instance.currentUser!.email,
+                        //       });
+                        //     } catch (e) {
+                        //       print(e);
+                        //     }
+                        //     //_checks_url[i]
+                        //   }
+                        // }
 
-                    // await Future.delayed(Duration(seconds: 3));
-                    //
-                    // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    //   return MainHomePage();
-                    // }));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) {
+                          return uploadCheck();
+                        }));
 
-                  },
-                  child: Text('업로드', style: TextStyle(color: Colors.blue)),
-                )
+                        // await Future.delayed(Duration(seconds: 3));
+                        //
+                        // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        //   return MainHomePage();
+                        // }));
+
+                      },
+                      child: Text('업로드', style: TextStyle(color: Colors.blue)),
+                    ):Container(),
+                  ),
+
+                ),
+
+
+
+
+
+
+
+
+
               ],
 
             ),
@@ -638,19 +557,14 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
                                                         child: Text('확인'),
                                                         onPressed: () {
                                                           setState(() {
-                                                            _selectDateColor = Colors
-                                                                .blue; //  primary[40]!;
-                                                            _selectDateTextColor =
-                                                                Colors.white;
-                                                            _selectDate = _range1
-                                                                .substring(8, 10) +
-                                                                '.' +
-                                                                _range1.substring(
-                                                                    3, 5) +
-                                                                '.' +
-                                                                _range1.substring(0, 2);
+                                                            _selectDateColor = Colors.blue; //  primary[40]!;
+                                                            _selectDateTextColor = Colors.white;
+                                                            _selectDate = _range1.substring(8, 10) + '.' +
+                                                                _range1.substring(3, 5) + '.' + _range1.substring(0, 2);
                                                             _selectDateSize = 80;
                                                             _selectDateIcon = false;
+                                                            print("range $_range1");
+                                                            print("date:$_selectDate");
                                                           });
                                                           Navigator.pop(context);
                                                         },
@@ -796,285 +710,267 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
                           ),
                           SizedBox(width: 10),
 
-                          //2
-                          InkWell(
-                            onTap: () async {
-                              setState(() {
-                                //var respectsQuery = FirebaseFirestore.instance.collection('category').doc('user1').collection(query['category']).doc('place').collection('place'),
-
-                                _selectDateIcon = true;
-                                _selectDate = '날짜';
-                                _selectDateColor = Color(0XFFF3F4F5);
-                                _selectDateTextColor = Color(0xFF9FA5B2);
-                                _selectDateSize = 67.2;
-                                _range1 = '';
-                                _selectPlaceColor = Colors.blue; // primary[40]!;
-                                _selectPlaceTextColor = Colors.white;
-                                place_list = [];
-                              });
-
-                              if (_selectPlaceIcon)
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(30.0),
-                                              topRight: Radius.circular(30.0))),
-                                      insetPadding: EdgeInsets.only(top: 519),
-                                      content: Container(
-                                          height: 244,
-                                          width: 360,
-                                          child: Column(
-                                            children: [
-                                              StreamBuilder<QuerySnapshot>(
-                                                  stream: FirebaseFirestore.instance
-                                                      .collection('category')
-                                                      .doc("1234@handong.ac.kr")
-                                                      .collection(query['category'])
-                                                      .doc('place')
-                                                      .collection('place')
-                                                      .snapshots(),
-                                                  builder: (context, snapshot) {
-                                                    if (snapshot.hasData) {
-                                                      print(snapshot
-                                                          .data!.docs.length);
-                                                      if (snapshot.data != null) {
-                                                        return GridView.builder(
-                                                          shrinkWrap: true,
-                                                          gridDelegate:
-                                                          SliverGridDelegateWithFixedCrossAxisCount(
-                                                            crossAxisCount: 3,
-                                                            childAspectRatio: 5 / 2,
-                                                          ),
-                                                          itemCount: snapshot
-                                                              .data!.docs.length,
-                                                          padding:
-                                                          EdgeInsets.all(2.0),
-                                                          itemBuilder:
-                                                              (BuildContext context,
-                                                              int index) {
-                                                            QueryDocumentSnapshot
-                                                            x = snapshot.data!
-                                                                .docs[index];
-                                                            return ListView(
-                                                                children: [
-                                                                  InkWell(
-                                                                    child:
-                                                                    Container(
-                                                                        margin: EdgeInsets.fromLTRB(
-                                                                            0,
-                                                                            0,
-                                                                            10,
-                                                                            0),
-                                                                        width:
-                                                                        67.2,
-                                                                        height:
-                                                                        30,
-                                                                        decoration: BoxDecoration(
-                                                                            color: x['choose']
-                                                                                ? Colors.blue
-                                                                                : Color(0xFFF3F4F5),
-                                                                            borderRadius: BorderRadius.circular(20.0)),
-                                                                        child: Row(
-                                                                          mainAxisAlignment:
-                                                                          MainAxisAlignment.center,
-                                                                          children: [
-                                                                            Text(x['place'] + '   ',
-                                                                                style: TextStyle(color: x['choose'] ? Colors.white : Colors.black)),
-                                                                            // Text(
-                                                                            //     x['count'].toString(),
-                                                                            //     style: TextStyle(color : x['choose']? Colors.white: Colors.black)
-                                                                            // ),
-                                                                          ],
-                                                                        )),
-                                                                    onTap: () {
-                                                                      if (x[
-                                                                      'choose']) {
-                                                                        print(x[
-                                                                        'choose']);
-                                                                        setState(
-                                                                                () {
-                                                                              place_list.removeWhere((item) =>
-                                                                              item ==
-                                                                                  x['place']);
-                                                                            });
-                                                                        FirebaseFirestore
-                                                                            .instance
-                                                                            .collection(
-                                                                            'category')
-                                                                            .doc("1234@handong.ac.kr")
-                                                                            .collection(query[
-                                                                        'category'])
-                                                                            .doc(
-                                                                            'place')
-                                                                            .collection(
-                                                                            'place')
-                                                                            .doc(x[
-                                                                        'place'])
-                                                                            .update({
-                                                                          'choose':
-                                                                          false
-                                                                        });
-                                                                      } else {
-                                                                        setState(
-                                                                                () {
-                                                                              place_list
-                                                                                  .add(x[
-                                                                              'place']);
-                                                                            });
-                                                                        FirebaseFirestore
-                                                                            .instance
-                                                                            .collection(
-                                                                            'category')
-                                                                            .doc("1234@handong.ac.kr")
-                                                                            .collection(query[
-                                                                        'category'])
-                                                                            .doc(
-                                                                            'place')
-                                                                            .collection(
-                                                                            'place')
-                                                                            .doc(x[
-                                                                        'place'])
-                                                                            .update({
-                                                                          'choose':
-                                                                          true
-                                                                        });
-                                                                      }
-                                                                    },
-                                                                  ),
-                                                                ]);
-                                                          },
-                                                        );
-                                                      } else {
-                                                        return Container(
-                                                            child: Center(
-                                                                child: Text(
-                                                                  '사진 없음.',
-                                                                  style: TextStyle(
-                                                                      fontSize: 20.0,
-                                                                      color: Colors.grey),
-                                                                  textAlign:
-                                                                  TextAlign.center,
-                                                                )));
-                                                      }
-                                                    } else {
-                                                      return CircularProgressIndicator();
-                                                    }
-                                                  }),
-                                              Container(
-                                                  child: Row(
-                                                    children: [
-                                                      SizedBox(width: 208),
-                                                      TextButton(
-                                                          child: Text('취소'),
-                                                          onPressed: () {
-                                                            Navigator.pop(context);
-                                                            setState(() {
-                                                              _selectPlaceColor =
-                                                                  Color(0XFFF3F4F5);
-                                                              _selectPlaceTextColor =
-                                                                  Color(0xFF9FA5B2);
-                                                            });
-                                                          },
-                                                          style: TextButton.styleFrom(
-                                                              padding: EdgeInsets.zero,
-                                                              minimumSize: Size(50, 30),
-                                                              tapTargetSize:
-                                                              MaterialTapTargetSize
-                                                                  .shrinkWrap,
-                                                              alignment: Alignment
-                                                                  .centerLeft)),
-                                                      SizedBox(width: 32),
-                                                      TextButton(
-                                                          child: Text('확인'),
-                                                          onPressed: () {
-                                                            print("place_list------->");
-                                                            print(place_list);
-                                                            setState(() {
-                                                              _selectPlaceIcon = false;
-                                                              _selectPlaceColor = Colors
-                                                                  .blue; //  primary[40]!;
-                                                              _selectPlaceTextColor =
-                                                                  Colors.white;
-                                                              if (place_list.isEmpty) {
-                                                                _selectPlace = '장소';
-                                                              } else
-                                                                _selectPlace =
-                                                                place_list[0];
-                                                            });
-                                                            Navigator.pop(context);
-                                                          },
-                                                          style: TextButton.styleFrom(
-                                                              padding: EdgeInsets.zero,
-                                                              minimumSize: Size(50, 30),
-                                                              tapTargetSize:
-                                                              MaterialTapTargetSize
-                                                                  .shrinkWrap,
-                                                              alignment:
-                                                              Alignment.centerLeft))
-                                                    ],
-                                                  ))
-                                            ],
-                                          )),
-                                    );
-                                  },
-                                );
-                              else
-                                setState(() {
-                                  _selectPlaceIcon = true;
-                                  _selectPlace = '장소';
-                                  _selectPlaceColor = Color(0XFFF3F4F5);
-                                  _selectPlaceTextColor = Color(0xFF9FA5B2);
-                                });
-                            },
-
-                            //// 장소 칩
-                            child: Container(
-                                width: 70,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                    color: _selectPlaceColor,
-                                    borderRadius: BorderRadius.circular(100.0)),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      _selectPlace,
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: _selectPlaceTextColor,
-                                      ),
-                                    ),
-                                    Icon(
-                                        _selectPlaceIcon
-                                            ? Icons.keyboard_arrow_down_outlined
-                                            : Icons.clear_outlined,
-                                        color: _selectPlaceTextColor),
-                                  ],
-                                )),
-                          ),
-                          Spacer()
+                          //2. 장소칩
                           // InkWell(
+                          //   onTap: () async {
+                          //     setState(() {
+                          //       //var respectsQuery = FirebaseFirestore.instance.collection('category').doc('user1').collection(query['category']).doc('place').collection('place'),
+                          //
+                          //       _selectDateIcon = true;
+                          //       _selectDate = '날짜';
+                          //       _selectDateColor = Color(0XFFF3F4F5);
+                          //       _selectDateTextColor = Color(0xFF9FA5B2);
+                          //       _selectDateSize = 67.2;
+                          //       _range1 = '';
+                          //       _selectPlaceColor = Colors.blue; // primary[40]!;
+                          //       _selectPlaceTextColor = Colors.white;
+                          //       place_list = [];
+                          //     });
+                          //
+                          //     if (_selectPlaceIcon)
+                          //       showDialog(
+                          //         context: context,
+                          //         builder: (BuildContext context) {
+                          //           return AlertDialog(
+                          //             shape: RoundedRectangleBorder(
+                          //                 borderRadius: BorderRadius.only(
+                          //                     topLeft: Radius.circular(30.0),
+                          //                     topRight: Radius.circular(30.0))),
+                          //             insetPadding: EdgeInsets.only(top: 519),
+                          //             content: Container(
+                          //                 height: 244,
+                          //                 width: 360,
+                          //                 child: Column(
+                          //                   children: [
+                          //                     StreamBuilder<QuerySnapshot>(
+                          //                         stream: FirebaseFirestore.instance
+                          //                             .collection('category')
+                          //                             .doc("1234@handong.ac.kr")
+                          //                             .collection(query['category'])
+                          //                             .doc('place')
+                          //                             .collection('place')
+                          //                             .snapshots(),
+                          //                         builder: (context, snapshot) {
+                          //                           if (snapshot.hasData) {
+                          //                             print(snapshot
+                          //                                 .data!.docs.length);
+                          //                             if (snapshot.data != null) {
+                          //                               return GridView.builder(
+                          //                                 shrinkWrap: true,
+                          //                                 gridDelegate:
+                          //                                 SliverGridDelegateWithFixedCrossAxisCount(
+                          //                                   crossAxisCount: 3,
+                          //                                   childAspectRatio: 5 / 2,
+                          //                                 ),
+                          //                                 itemCount: snapshot
+                          //                                     .data!.docs.length,
+                          //                                 padding:
+                          //                                 EdgeInsets.all(2.0),
+                          //                                 itemBuilder:
+                          //                                     (BuildContext context,
+                          //                                     int index) {
+                          //                                   QueryDocumentSnapshot
+                          //                                   x = snapshot.data!
+                          //                                       .docs[index];
+                          //                                   return ListView(
+                          //                                       children: [
+                          //                                         InkWell(
+                          //                                           child:
+                          //                                           Container(
+                          //                                               margin: EdgeInsets.fromLTRB(
+                          //                                                   0,
+                          //                                                   0,
+                          //                                                   10,
+                          //                                                   0),
+                          //                                               width:
+                          //                                               67.2,
+                          //                                               height:
+                          //                                               30,
+                          //                                               decoration: BoxDecoration(
+                          //                                                   color: x['choose']
+                          //                                                       ? Colors.blue
+                          //                                                       : Color(0xFFF3F4F5),
+                          //                                                   borderRadius: BorderRadius.circular(20.0)),
+                          //                                               child: Row(
+                          //                                                 mainAxisAlignment:
+                          //                                                 MainAxisAlignment.center,
+                          //                                                 children: [
+                          //                                                   Text(x['place'] + '   ',
+                          //                                                       style: TextStyle(color: x['choose'] ? Colors.white : Colors.black)),
+                          //                                                   // Text(
+                          //                                                   //     x['count'].toString(),
+                          //                                                   //     style: TextStyle(color : x['choose']? Colors.white: Colors.black)
+                          //                                                   // ),
+                          //                                                 ],
+                          //                                               )),
+                          //                                           onTap: () {
+                          //                                             if (x[
+                          //                                             'choose']) {
+                          //                                               print(x[
+                          //                                               'choose']);
+                          //                                               setState(
+                          //                                                       () {
+                          //                                                     place_list.removeWhere((item) =>
+                          //                                                     item ==
+                          //                                                         x['place']);
+                          //                                                   });
+                          //                                               FirebaseFirestore
+                          //                                                   .instance
+                          //                                                   .collection(
+                          //                                                   'category')
+                          //                                                   .doc("1234@handong.ac.kr")
+                          //                                                   .collection(query[
+                          //                                               'category'])
+                          //                                                   .doc(
+                          //                                                   'place')
+                          //                                                   .collection(
+                          //                                                   'place')
+                          //                                                   .doc(x[
+                          //                                               'place'])
+                          //                                                   .update({
+                          //                                                 'choose':
+                          //                                                 false
+                          //                                               });
+                          //                                             } else {
+                          //                                               setState(
+                          //                                                       () {
+                          //                                                     place_list
+                          //                                                         .add(x[
+                          //                                                     'place']);
+                          //                                                   });
+                          //                                               FirebaseFirestore
+                          //                                                   .instance
+                          //                                                   .collection(
+                          //                                                   'category')
+                          //                                                   .doc("1234@handong.ac.kr")
+                          //                                                   .collection(query[
+                          //                                               'category'])
+                          //                                                   .doc(
+                          //                                                   'place')
+                          //                                                   .collection(
+                          //                                                   'place')
+                          //                                                   .doc(x[
+                          //                                               'place'])
+                          //                                                   .update({
+                          //                                                 'choose':
+                          //                                                 true
+                          //                                               });
+                          //                                             }
+                          //                                           },
+                          //                                         ),
+                          //                                       ]);
+                          //                                 },
+                          //                               );
+                          //                             } else {
+                          //                               return Container(
+                          //                                   child: Center(
+                          //                                       child: Text(
+                          //                                         '사진 없음.',
+                          //                                         style: TextStyle(
+                          //                                             fontSize: 20.0,
+                          //                                             color: Colors.grey),
+                          //                                         textAlign:
+                          //                                         TextAlign.center,
+                          //                                       )));
+                          //                             }
+                          //                           } else {
+                          //                             return CircularProgressIndicator();
+                          //                           }
+                          //                         }),
+                          //                     Container(
+                          //                         child: Row(
+                          //                           children: [
+                          //                             SizedBox(width: 208),
+                          //                             TextButton(
+                          //                                 child: Text('취소'),
+                          //                                 onPressed: () {
+                          //                                   Navigator.pop(context);
+                          //                                   setState(() {
+                          //                                     _selectPlaceColor =
+                          //                                         Color(0XFFF3F4F5);
+                          //                                     _selectPlaceTextColor =
+                          //                                         Color(0xFF9FA5B2);
+                          //                                   });
+                          //                                 },
+                          //                                 style: TextButton.styleFrom(
+                          //                                     padding: EdgeInsets.zero,
+                          //                                     minimumSize: Size(50, 30),
+                          //                                     tapTargetSize:
+                          //                                     MaterialTapTargetSize
+                          //                                         .shrinkWrap,
+                          //                                     alignment: Alignment
+                          //                                         .centerLeft)),
+                          //                             SizedBox(width: 32),
+                          //                             TextButton(
+                          //                                 child: Text('확인'),
+                          //                                 onPressed: () {
+                          //                                   print("place_list------->");
+                          //                                   print(place_list);
+                          //                                   setState(() {
+                          //                                     _selectPlaceIcon = false;
+                          //                                     _selectPlaceColor = Colors
+                          //                                         .blue; //  primary[40]!;
+                          //                                     _selectPlaceTextColor =
+                          //                                         Colors.white;
+                          //                                     if (place_list.isEmpty) {
+                          //                                       _selectPlace = '장소';
+                          //                                     } else
+                          //                                       _selectPlace =
+                          //                                       place_list[0];
+                          //                                   });
+                          //                                   Navigator.pop(context);
+                          //                                 },
+                          //                                 style: TextButton.styleFrom(
+                          //                                     padding: EdgeInsets.zero,
+                          //                                     minimumSize: Size(50, 30),
+                          //                                     tapTargetSize:
+                          //                                     MaterialTapTargetSize
+                          //                                         .shrinkWrap,
+                          //                                     alignment:
+                          //                                     Alignment.centerLeft))
+                          //                           ],
+                          //                         ))
+                          //                   ],
+                          //                 )),
+                          //           );
+                          //         },
+                          //       );
+                          //     else
+                          //       setState(() {
+                          //         _selectPlaceIcon = true;
+                          //         _selectPlace = '장소';
+                          //         _selectPlaceColor = Color(0XFFF3F4F5);
+                          //         _selectPlaceTextColor = Color(0xFF9FA5B2);
+                          //       });
+                          //   },
+                          //
+                          //   //// 장소 칩
                           //   child: Container(
-                          //       width: 75,
+                          //       width: 70,
                           //       height: 30,
                           //       decoration: BoxDecoration(
-                          //           color: Color(0xFFF3F4F5),
+                          //           color: _selectPlaceColor,
                           //           borderRadius: BorderRadius.circular(100.0)),
                           //       child: Row(
                           //         mainAxisAlignment: MainAxisAlignment.center,
                           //         children: [
-                          //           Text('미디어 형식',
-                          //               style: TextStyle(
-                          //                   color: Color(0xFF9FA5B2),
-                          //                   fontSize: 12)),
-                          //           Icon(Icons.keyboard_arrow_down_outlined,
-                          //               color: Color(0xFF9FA5B2))
+                          //           Text(
+                          //             _selectPlace,
+                          //             style: TextStyle(
+                          //               fontSize: 12,
+                          //               color: _selectPlaceTextColor,
+                          //             ),
+                          //           ),
+                          //           Icon(
+                          //               _selectPlaceIcon
+                          //                   ? Icons.keyboard_arrow_down_outlined
+                          //                   : Icons.clear_outlined,
+                          //               color: _selectPlaceTextColor),
                           //         ],
                           //       )),
                           // ),
+                          Spacer()
+
                         ],
                       ),
                     )),
@@ -1656,8 +1552,15 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
                                           value: _checks[index],
                                           onChanged: (newValue) {
                                             setState(() {
+
+                                           check_num=0;
                                               _checks[index] = newValue!;
                                               _checks_url[index] = x['url'];
+                                             // print(_checks);
+                                              for(int i=0;i<_checks.length;i++){
+                                                if(_checks[i]==true)
+                                                  check_num=check_num+1;
+                                              }
                                             });
                                           },
                                           shape: RoundedRectangleBorder(

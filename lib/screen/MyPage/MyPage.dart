@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import '../../utils/app_text_styles.dart';
 import '../../utils/widget.dart';
 import '../notFound.dart';
+import '../projectPage/part_pro.dart';
+import '../projectPage/progect_main.dart';
 
 class MYPage extends StatefulWidget {
   const MYPage({super.key});
@@ -33,7 +35,7 @@ class _MYPageState extends State<MYPage> {
                  borderRadius: BorderRadius.circular(100), // Image border
                  child: SizedBox.fromSize(
                  size: Size.fromRadius(48), // Image radius
-                 child: Image.asset('assets/img_1.png', fit: BoxFit.cover),)
+                 child: Image.asset('assets/icons/laucher_icon.png', fit: BoxFit.cover),)
                 ),
             ),
            SizedBox(height: 16),
@@ -71,8 +73,15 @@ class _MYPageState extends State<MYPage> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    notFound(),
+                builder: (BuildContext context){
+                  if(label=='참여 프로젝트'){
+
+                    return partiprojectPage();
+                  }else{
+                    return notFound();
+                  }
+                }
+
               ));
 
         },

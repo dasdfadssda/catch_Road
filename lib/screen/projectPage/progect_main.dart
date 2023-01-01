@@ -159,8 +159,8 @@ class _add_personalState extends State<add_personal> {*/
               itemBuilder: (context, index) {
                 QueryDocumentSnapshot x = snapshot.data!.docs[index];
 
-                if(snapshot.data!.docs[index]['participate']==1)
-
+               // if(snapshot.data!.docs[index]['participate']==1)
+                if(snapshot.data!.docs[index]['part_user'].contains('1234@handong.ac.kr'))
                 return  Padding(
                   padding:  EdgeInsets.only(left: size.width * 0.05, right : size.width * 0.05, bottom: size.height * 0.01),
                   child: Card(
@@ -218,14 +218,14 @@ class _add_personalState extends State<add_personal> {*/
                                 borderRadius: BorderRadius.all(Radius.circular(16)),
                                 child: LinearProgressIndicator(
                                   value: snapshot.data!.docs[index]['percentage'].toDouble() *0.01,
-                                  valueColor:snapshot.data!.docs[index]['participate']==0? AlwaysStoppedAnimation<Color>(Color(0xff3A94EE)):AlwaysStoppedAnimation<Color>(Color(0xff00D796)),
+                                  valueColor:!snapshot.data!.docs[index]['part_user'].contains('1234@handong.ac.kr')? AlwaysStoppedAnimation<Color>(Color(0xff3A94EE)):AlwaysStoppedAnimation<Color>(Color(0xff00D796)),
                                   backgroundColor: Color(0xffE7E8EC),
                                 ),
                               ),
                             ),
                             Padding(
                               padding:  EdgeInsets.only(bottom: size.height*0.02, left: size.width*0.03),
-                              child:snapshot.data!.docs[index]['participate']==0? Image.asset('assets/coin.png', width: 20,):Image.asset('assets/coin2.png', width: 20,),
+                              child:!snapshot.data!.docs[index]['part_user'].contains('1234@handong.ac.kr')? Image.asset('assets/coin.png', width: 20,):Image.asset('assets/coin2.png', width: 20,),
                             ),
                             Padding(
                               padding:  EdgeInsets.only(bottom: size.height*0.02, left: size.width*0.01),
@@ -259,7 +259,7 @@ class _add_personalState extends State<add_personal> {*/
                               //카드 누르는 경우
                               onTap: (){
 
-                                if(snapshot.data!.docs[index]['participate']==1){
+                                if(snapshot.data!.docs[index]['part_user'].contains('1234@handong.ac.kr')){
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -319,22 +319,26 @@ class _add_personalState extends State<add_personal> {*/
                                         borderRadius: BorderRadius.all(Radius.circular(16)),
                                         child: LinearProgressIndicator(
                                           value: snapshot.data!.docs[index]['percentage'].toDouble() *0.01,
-                                          valueColor:snapshot.data!.docs[index]['participate']==0? AlwaysStoppedAnimation<Color>(Color(0xff3A94EE)):AlwaysStoppedAnimation<Color>(Color(0xff00D796)),
+                                          valueColor:!snapshot.data!.docs[index]['part_user'].contains('1234@handong.ac.kr')? AlwaysStoppedAnimation<Color>(Color(0xff3A94EE)):AlwaysStoppedAnimation<Color>(Color(0xff00D796)),
                                           backgroundColor: Color(0xffE7E8EC),
                                         ),
                                       ),
                                     ),
                                    Padding(
                                      padding:  EdgeInsets.only(bottom: size.height*0.02, left: size.width*0.03),
-                                     child:snapshot.data!.docs[index]['participate']==0? Image.asset('assets/coin.png', width: 20,):Image.asset('assets/coin2.png', width: 20,),
+                                     child:!snapshot.data!.docs[index]['part_user'].contains('1234@handong.ac.kr')? Image.asset('assets/coin.png', width: 20,):Image.asset('assets/coin2.png', width: 20,),
                                    ),
                                    Padding(
                                      padding:  EdgeInsets.only(bottom: size.height*0.02, left: size.width*0.01),
                                      child: Text(snapshot.data!.docs[index]['cash'].toString() + "00"),
-                                   )
+                                   ),
+
 
                                   ],
                                 ),
+                                // Text(
+                                //     snapshot.data!.docs[index]['part_user'].toString()
+                                // )
 
 
 
