@@ -1,3 +1,4 @@
+import 'package:catch2_0_1/Auth/user_information.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,9 +19,7 @@ class AuthService {
         if (snapshot.hasData) {
           return MainHomePage();
         } else {
-
           return LoginPage();
-
         }
       },
     );
@@ -207,50 +206,56 @@ contentsUpdate(user, _photo, TitleController, contentsController,
   }
 }
 
-LikeFunction(like, id, user) async {
-  // 좋아요 기능
-  List _likes = like;
-  _likes.add(user);
-  var doc = FirebaseFirestore.instance.collection('Product').doc(id);
-  doc.update({'like': _likes, '${user}': user}).whenComplete(
-      () => print('좋아요 업데이트 성공'));
-}
 
-Wishlist(
-    user, TitleController, contentsController, priceController, url, wish) {
-  var doc = FirebaseFirestore.instance
-      .collection('${FirebaseAuth.instance.currentUser!.displayName!}Wish')
-      .doc(priceController.text);
-  doc.set({
-    'id': doc.id,
-    'displayName': FirebaseAuth.instance.currentUser!.displayName!,
-    'title': TitleController.text,
-    'content': contentsController.text,
-    'imageUrl': url,
-    'price': priceController.text,
-    'wish': wish
-  }).whenComplete(() => print('데이터 저장 성공'));
-}
+   LikeFunction(like,id,user) async {  // 좋아요 기능
+        List _likes = like;
+     _likes.add(user);
+      var doc = FirebaseFirestore.instance.collection('Contents').doc(id); 
+      doc.update({
+        '_like' : _likes,
+      }).whenComplete(() => print('좋아요 업데이트 성공'));
+    }
 
-wishupdate(user, priceController, num, list) {
-  //
-  var doc = FirebaseFirestore.instance
-      .collection('Product')
-      .doc(priceController.text);
-  if (num == 0) {
-    doc.update({'wish': list}).whenComplete(() => print('위시 성공'));
-  } else {
-    doc.update({'wish': list}).whenComplete(() => print('위시 삭제'));
+
+
+   LikeCancelFunction(like,id,user) async {  // 좋아요 기능
+        List _likes = like;
+     _likes.remove(user);
+      var doc = FirebaseFirestore.instance.collection('Contents').doc(id); 
+      doc.update({
+        '_like' : _likes,
+      }).whenComplete(() => print('좋아요 업데이트 성공'));
+    }
+
+
+Future<void> signUpWithEmailAndPassword() async { // 이메일 로그인
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+          email: code().email, password: code().password);
+
+      FirebaseFirestore.instance
+          .collection('user')
+          .doc()
+          .set({
+        'name': code().displayName,
+        'email': code().email,
+        'birth': code().year + '/' +  code().month + '/' + code().day,
+        'NickName': code().nickname,
+        'Bank' : code().bank,
+        'Bank - Num' : code().bankNum,
+        '수취인' : code().bankName
+      })
+          .then((value) => print('User Added'))
+          .catchError((error) => print('Failed to add user: $error'));
+
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
   }
-}
-
-wishupdateTowish(user, priceController, num, list) {
-  //
-  var doc =
-      FirebaseFirestore.instance.collection('Product').doc(priceController);
-  if (num == 0) {
-    doc.update({'wish': list}).whenComplete(() => print('위시 성공'));
-  } else {
-    doc.update({'wish': list}).whenComplete(() => print('위시 삭제'));
-  }
-}

@@ -58,6 +58,10 @@ dependencies:
   image_to_byte: ^1.0.0
   compute: ^1.0.2
   step_progress_indicator: ^1.0.2
+  animated_button_bar: ^0.0.2+1
+  flutter_toggle_tab: ^1.2.0
+  flutter_geocoder: ^0.2.2-nullsafety
+  geolocator: ^9.0.2
 
 
 
@@ -100,6 +104,11 @@ flutter:
       - assets/icons/mypage/
       - assets/camera_button.png
       - assets/icons/delete_icon.png
+      - assets/icons/chaticon.png
+      - assets/icons/likeicon.png
+      - assets/icons/chat_map.png
+      - assets/icons/chat_photo.png
+      - assets/icons/chaticon.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

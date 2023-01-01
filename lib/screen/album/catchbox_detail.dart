@@ -7,7 +7,6 @@ import 'dart:math' as math;
 import '../../utils/app_text_styles.dart';
 import '../mainHome.dart';
 
-
 class Catchbox_detail extends StatefulWidget {
   final QueryDocumentSnapshot query;
 
@@ -19,6 +18,7 @@ class Catchbox_detail extends StatefulWidget {
 
 class _Catchbox_detailState extends State<Catchbox_detail> {
   final QueryDocumentSnapshot query;
+
   _Catchbox_detailState({required this.query});
 
   DateRangePickerController _dataPickerController = DateRangePickerController();
@@ -30,6 +30,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
   String _selectedDate = '';
   String _rangeCount = '';
   String _range1 = '';
+
   //String _range2 = '';
   List<String> num_list = [];
   List<String> place_list = [];
@@ -50,6 +51,8 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
   double _selectPlaceSize = 67.2;
   var _selectPlaceIcon = true;
 
+  bool jangrangdong=false;
+
   // 3
   String _selectCheck = '선택';
   Color _selectCheckColor = Color(0XFFF3F4F5);
@@ -57,21 +60,37 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
   double _selectCheckSize = 67.2;
   var _selectCheckIcon = true;
 
-
-  Stream<QuerySnapshot> stream_ordering(){
+  Stream<QuerySnapshot> stream_ordering() {
     print("range1=");
     print(num_list);
-    if(_selectPlace != '장소'){
-      return FirebaseFirestore.instance.collection('category').doc('1234@handong.ac.kr').collection(query['category']).doc('place').collection('place_url').where('place', whereIn: place_list).snapshots();
+    if (_selectPlace != '장소') {
+      print("장소ㅗ소솟");
+      return FirebaseFirestore.instance
+          .collection('category')
+          .doc('1234@handong.ac.kr')
+          .collection(query['category'])
+          // .doc('place')
+          // .collection('place_url')
+          .where('location', whereIn: place_list)
+          .snapshots();
     }
-    if(_range1 != ''){
-      return FirebaseFirestore.instance.collection('category').doc('1234@handong.ac.kr').collection(query['category']).where('time', isEqualTo: _range1).snapshots();
+    if (_range1 != '') {
+      return FirebaseFirestore.instance
+          .collection('category')
+          .doc('1234@handong.ac.kr')
+          .collection(query['category'])
+          .where('time', isEqualTo: _range1)
+          .snapshots();
     }
     // if(num_list.isNotEmpty)
     //   print(num_list);
     //   return FirebaseFirestore.instance.collection('category').doc('user1').collection(query['category']).doc('date').collection('date').where('time', whereIn: num_list).snapshots();
     // }
-    return FirebaseFirestore.instance.collection('category').doc('1234@handong.ac.kr').collection(query['category']).snapshots();//.doc('date').collection('date')
+    return FirebaseFirestore.instance
+        .collection('category')
+        .doc('1234@handong.ac.kr')
+        .collection(query['category'])
+        .snapshots(); //.doc('date').collection('date')
   }
 
   @override
@@ -119,22 +138,22 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
         }
       });
     }
+
     void _onItemTapped(int index) {
-      if(index!=2){
+      if (index != 2) {
         setState(() {
           _selectedIndex = index;
           print(_selectedIndex);
-          selectedIndex0=_selectedIndex;
+          selectedIndex0 = _selectedIndex;
         });
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) {
-              return MainHomePage();
-            }));
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return MainHomePage();
+        }));
       }
     }
 
     return Scaffold(
-      appBar:  AppBar(
+      appBar: AppBar(
         // 하람 appbar round
         toolbarHeight: 130,
         shape: RoundedRectangleBorder(
@@ -155,8 +174,8 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
               children: [
                 Container(
                   margin: EdgeInsets.zero,
-                  width: (size.width-35)/3,
-                  child:Align(
+                  width: (size.width - 35) / 3,
+                  child: Align(
                     alignment: Alignment.centerLeft,
                     child: TextButton(
                         onPressed: () {
@@ -176,9 +195,27 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                               _selectCheckTextColor = Color(0xFF9FA5B2);
                               _selectCheckIcon = true;
                               _checks = [
-                                false, false, false, false, false, false, false,
-                                false, false, false, false, false, false, false, false, false,
-                                false, false, false, false, false,
+                                false,
+                                false,
+                                false,
+                                false,
+                                false,
+                                false,
+                                false,
+                                false,
+                                false,
+                                false,
+                                false,
+                                false,
+                                false,
+                                false,
+                                false,
+                                false,
+                                false,
+                                false,
+                                false,
+                                false,
+                                false,
                                 false,
                                 false,
                                 false,
@@ -368,61 +405,48 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                           pressed ? "취소" : "선택",
                           style: TextStyle(fontSize: 12, color: Colors.grey),
                         )
-                      // Container(
-                      //   child: Center(
-                      //       child: Text(
-                      //         pressed ? "취소" : "선택",
-                      //         style: TextStyle(fontSize: 12, color: Colors.white),
-                      //       )),
-                      //   width: 60,
-                      //   height: 30,
-                      //   decoration: BoxDecoration(
-                      //       color: Color.fromRGBO(58, 148, 238, 1),
-                      //       borderRadius: BorderRadius.circular(100.0)),
-                      //   //padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                      //   //  child: Center(child: Text(_selectCheck, style: TextStyle(color: _selectCheckTextColor))),
-                      // ),
-                    ),
+                        // Container(
+                        //   child: Center(
+                        //       child: Text(
+                        //         pressed ? "취소" : "선택",
+                        //         style: TextStyle(fontSize: 12, color: Colors.white),
+                        //       )),
+                        //   width: 60,
+                        //   height: 30,
+                        //   decoration: BoxDecoration(
+                        //       color: Color.fromRGBO(58, 148, 238, 1),
+                        //       borderRadius: BorderRadius.circular(100.0)),
+                        //   //padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        //   //  child: Center(child: Text(_selectCheck, style: TextStyle(color: _selectCheckTextColor))),
+                        // ),
+                        ),
                   ),
-
                 ),
                 Container(
-                    width: (size.width-35)/3,
-                    child:Center(
+                    width: (size.width - 35) / 3,
+                    child: Center(
                       child: Text(
                         query['category'],
                         style: titleMediumStyle(color: Colors.black),
                       ),
-                    )
-                ),
-
+                    )),
                 Container(
-                    width: (size.width-35)/3,
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: () async {
-                          // await Future.delayed(Duration(seconds: 3));
-                          //
-                          // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          //   return MainHomePage();
-                          // }));
-                        },
-                        child: Text('업로드', style: TextStyle(color: Colors.white)),
-                      ),
-
+                  width: (size.width - 35) / 3,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: () async {
+                        // await Future.delayed(Duration(seconds: 3));
+                        //
+                        // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        //   return MainHomePage();
+                        // }));
+                      },
+                      child: Text('업로드', style: TextStyle(color: Colors.white)),
                     ),
-
+                  ),
                 ),
-
-
-
-
-
-
-
               ],
-
             ),
             // Center(
             //     child: Text(
@@ -434,502 +458,413 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
               children: [
                 Expanded(
                     child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          //1
-                          SizedBox(width: 20),
-                          InkWell(
-                            onTap: () {
-                              if (_selectDateIcon)
-                                setState(() {
-                                  _selectPlace = '장소';
-                                  _selectPlaceIcon = true;
-                                  _selectPlaceTextColor = Color(0xFF9FA5B2);
-                                  _selectPlaceColor = Color(0XFFF3F4F5);
-                                  _selectDateColor = Colors.blue; // primary[40]!;
-                                  _selectDateTextColor = Colors.white;
-                                });
-                              if (_selectDateIcon)
-                                // ignore: curly_braces_in_flow_control_structures
-                                showModalBottomSheet<void>(
-                                  shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(30.0),
-                                          topRight: Radius.circular(30.0))),
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return SizedBox(
-                                      height: 600,
-                                      child: Column(
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.only(
-                                                top: 40.0, left: 40, right: 40),
-                                            child: SfDateRangePicker(
-                                              controller: _dataPickerController,
-                                              onSelectionChanged:
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      //1
+                      SizedBox(width: 20),
+                      InkWell(
+                        onTap: () {
+                          if (_selectDateIcon)
+                            setState(() {
+                              _selectPlace = '장소';
+                              _selectPlaceIcon = true;
+                              _selectPlaceTextColor = Color(0xFF9FA5B2);
+                              _selectPlaceColor = Color(0XFFF3F4F5);
+                              _selectDateColor = Colors.blue; // primary[40]!;
+                              _selectDateTextColor = Colors.white;
+                            });
+                          if (_selectDateIcon)
+                            // ignore: curly_braces_in_flow_control_structures
+                            showModalBottomSheet<void>(
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(30.0),
+                                      topRight: Radius.circular(30.0))),
+                              context: context,
+                              builder: (BuildContext context) {
+                                return SizedBox(
+                                  height: 600,
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            top: 40.0, left: 40, right: 40),
+                                        child: SfDateRangePicker(
+                                          controller: _dataPickerController,
+                                          onSelectionChanged:
                                               _onSelectionChanged,
-                                              //selectionMode: DateRangePickerSelectionMode.range,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.only(
-                                                left: 50.0, right: 30),
-                                            child: Container(
-                                                child: Row(
-                                                  children: [
-                                                    TextButton(
-                                                        child: Text(
-                                                          '취소',
-                                                          style: TextStyle(
-                                                              color: Color.fromRGBO(
-                                                                  159, 165, 178, 1)),
-                                                        ),
-                                                        onPressed: () {
-                                                          Navigator.pop(context);
-                                                          setState(() {
-                                                            _selectDateColor =
-                                                                Color(0XFFF3F4F5);
-                                                            _selectDateTextColor =
-                                                                Color(0xFF9FA5B2);
-                                                            _range1 = '';
-                                                            //_range2 = '';
-                                                            _dataPickerController
-                                                                .selectedRanges = null;
-                                                          });
-                                                        },
-                                                        style: TextButton.styleFrom(
-                                                            padding: EdgeInsets.zero,
-                                                            minimumSize: Size(50, 30),
-                                                            tapTargetSize:
-                                                            MaterialTapTargetSize
-                                                                .shrinkWrap,
-                                                            alignment:
-                                                            Alignment.centerLeft)),
-                                                    Spacer(),
-                                                    TextButton(
-                                                        child: Text('확인'),
-                                                        onPressed: () {
-                                                          setState(() {
-                                                            _selectDateColor = Colors.blue; //  primary[40]!;
-                                                            _selectDateTextColor = Colors.white;
-                                                            _selectDate = _range1.substring(8, 10) + '.' +
-                                                                _range1.substring(3, 5) + '.' + _range1.substring(0, 2);
-                                                            _selectDateSize = 80;
-                                                            _selectDateIcon = false;
-                                                            print("range $_range1");
-                                                            print("date:$_selectDate");
-                                                          });
-                                                          Navigator.pop(context);
-                                                        },
-                                                        style: TextButton.styleFrom(
-                                                            padding: EdgeInsets.zero,
-                                                            minimumSize: Size(50, 30),
-                                                            tapTargetSize:
-                                                            MaterialTapTargetSize
-                                                                .shrinkWrap,
-                                                            alignment:
-                                                            Alignment.centerLeft))
-                                                  ],
-                                                )),
-                                          )
-                                        ],
+                                          //selectionMode: DateRangePickerSelectionMode.range,
+                                        ),
                                       ),
-                                      // AlertDialog(
-                                      //   // insetPadding: EdgeInsets.only(top: 350),
-                                      //   content: Container(
-                                      //     height: 420,
-                                      //     width: 360,
-                                      //     child: SfDateRangePicker(
-                                      //       controller: _dataPickerController,
-                                      //       onSelectionChanged: _onSelectionChanged,
-                                      //       //selectionMode: DateRangePickerSelectionMode.range,
-                                      //     ),
-                                      //     // Column(
-                                      //     //   children: [
-                                      //     //     SizedBox(height: 10),
-                                      //     //     SfDateRangePicker(
-                                      //     //       controller: _dataPickerController,
-                                      //     //       onSelectionChanged:
-                                      //     //           _onSelectionChanged,
-                                      //     //       //selectionMode: DateRangePickerSelectionMode.range,
-                                      //     //     ),
-                                      //     //     //SizedBox(height: 30.h),
-                                      //     //     // Container(
-                                      //     //     //     child: Row(
-                                      //     //     //   children: [
-                                      //     //     //     SizedBox(width: 208),
-                                      //     //     //     TextButton(
-                                      //     //     //         child: Text('취소'),
-                                      //     //     //         onPressed: () {
-                                      //     //     //           Navigator.pop(context);
-                                      //     //     //           setState(() {
-                                      //     //     //             _selectDateColor =
-                                      //     //     //                 Color(0XFFF3F4F5);
-                                      //     //     //             _selectDateTextColor =
-                                      //     //     //                 Color(0xFF9FA5B2);
-                                      //     //     //             _range1 = '';
-                                      //     //     //             //_range2 = '';
-                                      //     //     //             _dataPickerController
-                                      //     //     //                     .selectedRanges =
-                                      //     //     //                 null;
-                                      //     //     //           });
-                                      //     //     //         },
-                                      //     //     //         style: TextButton.styleFrom(
-                                      //     //     //             padding:
-                                      //     //     //                 EdgeInsets.zero,
-                                      //     //     //             minimumSize:
-                                      //     //     //                 Size(50, 30),
-                                      //     //     //             tapTargetSize:
-                                      //     //     //                 MaterialTapTargetSize
-                                      //     //     //                     .shrinkWrap,
-                                      //     //     //             alignment: Alignment
-                                      //     //     //                 .centerLeft)),
-                                      //     //     //     SizedBox(width: 32),
-                                      //     //     //     TextButton(
-                                      //     //     //         child: Text('확인'),
-                                      //     //     //         onPressed: () {
-                                      //     //     //           setState(() {
-                                      //     //     //             _selectDateColor = Colors
-                                      //     //     //                 .blue; //  primary[40]!;
-                                      //     //     //             _selectDateTextColor =
-                                      //     //     //                 Colors.white;
-                                      //     //     //             _selectDate = _range1
-                                      //     //     //                     .substring(
-                                      //     //     //                         8, 10) +
-                                      //     //     //                 '.' +
-                                      //     //     //                 _range1.substring(
-                                      //     //     //                     3, 5) +
-                                      //     //     //                 '.' +
-                                      //     //     //                 _range1.substring(
-                                      //     //     //                     0, 2);
-                                      //     //     //             _selectDateSize = 80;
-                                      //     //     //             _selectDateIcon = false;
-                                      //     //     //           });
-                                      //     //     //           Navigator.pop(context);
-                                      //     //     //         },
-                                      //     //     //         style: TextButton.styleFrom(
-                                      //     //     //             padding:
-                                      //     //     //                 EdgeInsets.zero,
-                                      //     //     //             minimumSize:
-                                      //     //     //                 Size(50, 30),
-                                      //     //     //             tapTargetSize:
-                                      //     //     //                 MaterialTapTargetSize
-                                      //     //     //                     .shrinkWrap,
-                                      //     //     //             alignment: Alignment
-                                      //     //     //                 .centerLeft))
-                                      //     //     //   ],
-                                      //     //     // ))
-                                      //     //   ],
-                                      //     // )
-                                      //   ),
-                                      // ),
-                                    );
-                                  },
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 50.0, right: 30),
+                                        child: Container(
+                                            child: Row(
+                                          children: [
+                                            TextButton(
+                                                child: Text(
+                                                  '취소',
+                                                  style: TextStyle(
+                                                      color: Color.fromRGBO(
+                                                          159, 165, 178, 1)),
+                                                ),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                  setState(() {
+                                                    _selectDateColor =
+                                                        Color(0XFFF3F4F5);
+                                                    _selectDateTextColor =
+                                                        Color(0xFF9FA5B2);
+                                                    _range1 = '';
+                                                    //_range2 = '';
+                                                    _dataPickerController
+                                                        .selectedRanges = null;
+                                                  });
+                                                },
+                                                style: TextButton.styleFrom(
+                                                    padding: EdgeInsets.zero,
+                                                    minimumSize: Size(50, 30),
+                                                    tapTargetSize:
+                                                        MaterialTapTargetSize
+                                                            .shrinkWrap,
+                                                    alignment:
+                                                        Alignment.centerLeft)),
+                                            Spacer(),
+                                            TextButton(
+                                                child: Text('확인'),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    _selectDateColor = Colors
+                                                        .blue; //  primary[40]!;
+                                                    _selectDateTextColor =
+                                                        Colors.white;
+                                                    _selectDate = _range1
+                                                            .substring(8, 10) +
+                                                        '.' +
+                                                        _range1.substring(
+                                                            3, 5) +
+                                                        '.' +
+                                                        _range1.substring(0, 2);
+                                                    _selectDateSize = 80;
+                                                    _selectDateIcon = false;
+                                                    print("range $_range1");
+                                                    print("date:$_selectDate");
+                                                  });
+                                                  Navigator.pop(context);
+                                                },
+                                                style: TextButton.styleFrom(
+                                                    padding: EdgeInsets.zero,
+                                                    minimumSize: Size(50, 30),
+                                                    tapTargetSize:
+                                                        MaterialTapTargetSize
+                                                            .shrinkWrap,
+                                                    alignment:
+                                                        Alignment.centerLeft))
+                                          ],
+                                        )),
+                                      )
+                                    ],
+                                  ),
+                                  // AlertDialog(
+                                  //   // insetPadding: EdgeInsets.only(top: 350),
+                                  //   content: Container(
+                                  //     height: 420,
+                                  //     width: 360,
+                                  //     child: SfDateRangePicker(
+                                  //       controller: _dataPickerController,
+                                  //       onSelectionChanged: _onSelectionChanged,
+                                  //       //selectionMode: DateRangePickerSelectionMode.range,
+                                  //     ),
+                                  //     // Column(
+                                  //     //   children: [
+                                  //     //     SizedBox(height: 10),
+                                  //     //     SfDateRangePicker(
+                                  //     //       controller: _dataPickerController,
+                                  //     //       onSelectionChanged:
+                                  //     //           _onSelectionChanged,
+                                  //     //       //selectionMode: DateRangePickerSelectionMode.range,
+                                  //     //     ),
+                                  //     //     //SizedBox(height: 30.h),
+                                  //     //     // Container(
+                                  //     //     //     child: Row(
+                                  //     //     //   children: [
+                                  //     //     //     SizedBox(width: 208),
+                                  //     //     //     TextButton(
+                                  //     //     //         child: Text('취소'),
+                                  //     //     //         onPressed: () {
+                                  //     //     //           Navigator.pop(context);
+                                  //     //     //           setState(() {
+                                  //     //     //             _selectDateColor =
+                                  //     //     //                 Color(0XFFF3F4F5);
+                                  //     //     //             _selectDateTextColor =
+                                  //     //     //                 Color(0xFF9FA5B2);
+                                  //     //     //             _range1 = '';
+                                  //     //     //             //_range2 = '';
+                                  //     //     //             _dataPickerController
+                                  //     //     //                     .selectedRanges =
+                                  //     //     //                 null;
+                                  //     //     //           });
+                                  //     //     //         },
+                                  //     //     //         style: TextButton.styleFrom(
+                                  //     //     //             padding:
+                                  //     //     //                 EdgeInsets.zero,
+                                  //     //     //             minimumSize:
+                                  //     //     //                 Size(50, 30),
+                                  //     //     //             tapTargetSize:
+                                  //     //     //                 MaterialTapTargetSize
+                                  //     //     //                     .shrinkWrap,
+                                  //     //     //             alignment: Alignment
+                                  //     //     //                 .centerLeft)),
+                                  //     //     //     SizedBox(width: 32),
+                                  //     //     //     TextButton(
+                                  //     //     //         child: Text('확인'),
+                                  //     //     //         onPressed: () {
+                                  //     //     //           setState(() {
+                                  //     //     //             _selectDateColor = Colors
+                                  //     //     //                 .blue; //  primary[40]!;
+                                  //     //     //             _selectDateTextColor =
+                                  //     //     //                 Colors.white;
+                                  //     //     //             _selectDate = _range1
+                                  //     //     //                     .substring(
+                                  //     //     //                         8, 10) +
+                                  //     //     //                 '.' +
+                                  //     //     //                 _range1.substring(
+                                  //     //     //                     3, 5) +
+                                  //     //     //                 '.' +
+                                  //     //     //                 _range1.substring(
+                                  //     //     //                     0, 2);
+                                  //     //     //             _selectDateSize = 80;
+                                  //     //     //             _selectDateIcon = false;
+                                  //     //     //           });
+                                  //     //     //           Navigator.pop(context);
+                                  //     //     //         },
+                                  //     //     //         style: TextButton.styleFrom(
+                                  //     //     //             padding:
+                                  //     //     //                 EdgeInsets.zero,
+                                  //     //     //             minimumSize:
+                                  //     //     //                 Size(50, 30),
+                                  //     //     //             tapTargetSize:
+                                  //     //     //                 MaterialTapTargetSize
+                                  //     //     //                     .shrinkWrap,
+                                  //     //     //             alignment: Alignment
+                                  //     //     //                 .centerLeft))
+                                  //     //     //   ],
+                                  //     //     // ))
+                                  //     //   ],
+                                  //     // )
+                                  //   ),
+                                  // ),
                                 );
-                              else
-                                setState(() {
-                                  _selectDateIcon = true;
-                                  _selectDate = '날짜';
-                                  _selectDateColor = Color(0XFFF3F4F5);
-                                  _selectDateTextColor = Color(0xFF9FA5B2);
-                                  _selectDateSize = 67.2;
-                                  _range1 = '';
-                                  //_range2 = '';
-                                });
-                            },
-                            //1-1 //날짜 칩
-                            child: Container(
-                                width: _selectDateSize,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                    color: _selectDateColor,
-                                    borderRadius: BorderRadius.circular(100.0)),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      _selectDate,
-                                      style: TextStyle(
-                                          color: _selectDateTextColor,
-                                          fontSize: 12),
-                                    ),
-                                    Icon(
-                                        _selectDateIcon
-                                            ? Icons.keyboard_arrow_down_outlined
-                                            : Icons.clear_outlined,
-                                        color: _selectDateTextColor),
-                                  ],
-                                )),
-                          ),
-                          SizedBox(width: 10),
-
-                          //2. 장소칩
-                          // InkWell(
-                          //   onTap: () async {
-                          //     setState(() {
-                          //       //var respectsQuery = FirebaseFirestore.instance.collection('category').doc('user1').collection(query['category']).doc('place').collection('place'),
-                          //
-                          //       _selectDateIcon = true;
-                          //       _selectDate = '날짜';
-                          //       _selectDateColor = Color(0XFFF3F4F5);
-                          //       _selectDateTextColor = Color(0xFF9FA5B2);
-                          //       _selectDateSize = 67.2;
-                          //       _range1 = '';
-                          //       _selectPlaceColor = Colors.blue; // primary[40]!;
-                          //       _selectPlaceTextColor = Colors.white;
-                          //       place_list = [];
-                          //     });
-                          //
-                          //     if (_selectPlaceIcon)
-                          //       showDialog(
-                          //         context: context,
-                          //         builder: (BuildContext context) {
-                          //           return AlertDialog(
-                          //             shape: RoundedRectangleBorder(
-                          //                 borderRadius: BorderRadius.only(
-                          //                     topLeft: Radius.circular(30.0),
-                          //                     topRight: Radius.circular(30.0))),
-                          //             insetPadding: EdgeInsets.only(top: 519),
-                          //             content: Container(
-                          //                 height: 244,
-                          //                 width: 360,
-                          //                 child: Column(
-                          //                   children: [
-                          //                     StreamBuilder<QuerySnapshot>(
-                          //                         stream: FirebaseFirestore.instance
-                          //                             .collection('category')
-                          //                             .doc("1234@handong.ac.kr")
-                          //                             .collection(query['category'])
-                          //                             .doc('place')
-                          //                             .collection('place')
-                          //                             .snapshots(),
-                          //                         builder: (context, snapshot) {
-                          //                           if (snapshot.hasData) {
-                          //                             print(snapshot
-                          //                                 .data!.docs.length);
-                          //                             if (snapshot.data != null) {
-                          //                               return GridView.builder(
-                          //                                 shrinkWrap: true,
-                          //                                 gridDelegate:
-                          //                                 SliverGridDelegateWithFixedCrossAxisCount(
-                          //                                   crossAxisCount: 3,
-                          //                                   childAspectRatio: 5 / 2,
-                          //                                 ),
-                          //                                 itemCount: snapshot
-                          //                                     .data!.docs.length,
-                          //                                 padding:
-                          //                                 EdgeInsets.all(2.0),
-                          //                                 itemBuilder:
-                          //                                     (BuildContext context,
-                          //                                     int index) {
-                          //                                   QueryDocumentSnapshot
-                          //                                   x = snapshot.data!
-                          //                                       .docs[index];
-                          //                                   return ListView(
-                          //                                       children: [
-                          //                                         InkWell(
-                          //                                           child:
-                          //                                           Container(
-                          //                                               margin: EdgeInsets.fromLTRB(
-                          //                                                   0,
-                          //                                                   0,
-                          //                                                   10,
-                          //                                                   0),
-                          //                                               width:
-                          //                                               67.2,
-                          //                                               height:
-                          //                                               30,
-                          //                                               decoration: BoxDecoration(
-                          //                                                   color: x['choose']
-                          //                                                       ? Colors.blue
-                          //                                                       : Color(0xFFF3F4F5),
-                          //                                                   borderRadius: BorderRadius.circular(20.0)),
-                          //                                               child: Row(
-                          //                                                 mainAxisAlignment:
-                          //                                                 MainAxisAlignment.center,
-                          //                                                 children: [
-                          //                                                   Text(x['place'] + '   ',
-                          //                                                       style: TextStyle(color: x['choose'] ? Colors.white : Colors.black)),
-                          //                                                   // Text(
-                          //                                                   //     x['count'].toString(),
-                          //                                                   //     style: TextStyle(color : x['choose']? Colors.white: Colors.black)
-                          //                                                   // ),
-                          //                                                 ],
-                          //                                               )),
-                          //                                           onTap: () {
-                          //                                             if (x[
-                          //                                             'choose']) {
-                          //                                               print(x[
-                          //                                               'choose']);
-                          //                                               setState(
-                          //                                                       () {
-                          //                                                     place_list.removeWhere((item) =>
-                          //                                                     item ==
-                          //                                                         x['place']);
-                          //                                                   });
-                          //                                               FirebaseFirestore
-                          //                                                   .instance
-                          //                                                   .collection(
-                          //                                                   'category')
-                          //                                                   .doc("1234@handong.ac.kr")
-                          //                                                   .collection(query[
-                          //                                               'category'])
-                          //                                                   .doc(
-                          //                                                   'place')
-                          //                                                   .collection(
-                          //                                                   'place')
-                          //                                                   .doc(x[
-                          //                                               'place'])
-                          //                                                   .update({
-                          //                                                 'choose':
-                          //                                                 false
-                          //                                               });
-                          //                                             } else {
-                          //                                               setState(
-                          //                                                       () {
-                          //                                                     place_list
-                          //                                                         .add(x[
-                          //                                                     'place']);
-                          //                                                   });
-                          //                                               FirebaseFirestore
-                          //                                                   .instance
-                          //                                                   .collection(
-                          //                                                   'category')
-                          //                                                   .doc("1234@handong.ac.kr")
-                          //                                                   .collection(query[
-                          //                                               'category'])
-                          //                                                   .doc(
-                          //                                                   'place')
-                          //                                                   .collection(
-                          //                                                   'place')
-                          //                                                   .doc(x[
-                          //                                               'place'])
-                          //                                                   .update({
-                          //                                                 'choose':
-                          //                                                 true
-                          //                                               });
-                          //                                             }
-                          //                                           },
-                          //                                         ),
-                          //                                       ]);
-                          //                                 },
-                          //                               );
-                          //                             } else {
-                          //                               return Container(
-                          //                                   child: Center(
-                          //                                       child: Text(
-                          //                                         '사진 없음.',
-                          //                                         style: TextStyle(
-                          //                                             fontSize: 20.0,
-                          //                                             color: Colors.grey),
-                          //                                         textAlign:
-                          //                                         TextAlign.center,
-                          //                                       )));
-                          //                             }
-                          //                           } else {
-                          //                             return CircularProgressIndicator();
-                          //                           }
-                          //                         }),
-                          //                     Container(
-                          //                         child: Row(
-                          //                           children: [
-                          //                             SizedBox(width: 208),
-                          //                             TextButton(
-                          //                                 child: Text('취소'),
-                          //                                 onPressed: () {
-                          //                                   Navigator.pop(context);
-                          //                                   setState(() {
-                          //                                     _selectPlaceColor =
-                          //                                         Color(0XFFF3F4F5);
-                          //                                     _selectPlaceTextColor =
-                          //                                         Color(0xFF9FA5B2);
-                          //                                   });
-                          //                                 },
-                          //                                 style: TextButton.styleFrom(
-                          //                                     padding: EdgeInsets.zero,
-                          //                                     minimumSize: Size(50, 30),
-                          //                                     tapTargetSize:
-                          //                                     MaterialTapTargetSize
-                          //                                         .shrinkWrap,
-                          //                                     alignment: Alignment
-                          //                                         .centerLeft)),
-                          //                             SizedBox(width: 32),
-                          //                             TextButton(
-                          //                                 child: Text('확인'),
-                          //                                 onPressed: () {
-                          //                                   print("place_list------->");
-                          //                                   print(place_list);
-                          //                                   setState(() {
-                          //                                     _selectPlaceIcon = false;
-                          //                                     _selectPlaceColor = Colors
-                          //                                         .blue; //  primary[40]!;
-                          //                                     _selectPlaceTextColor =
-                          //                                         Colors.white;
-                          //                                     if (place_list.isEmpty) {
-                          //                                       _selectPlace = '장소';
-                          //                                     } else
-                          //                                       _selectPlace =
-                          //                                       place_list[0];
-                          //                                   });
-                          //                                   Navigator.pop(context);
-                          //                                 },
-                          //                                 style: TextButton.styleFrom(
-                          //                                     padding: EdgeInsets.zero,
-                          //                                     minimumSize: Size(50, 30),
-                          //                                     tapTargetSize:
-                          //                                     MaterialTapTargetSize
-                          //                                         .shrinkWrap,
-                          //                                     alignment:
-                          //                                     Alignment.centerLeft))
-                          //                           ],
-                          //                         ))
-                          //                   ],
-                          //                 )),
-                          //           );
-                          //         },
-                          //       );
-                          //     else
-                          //       setState(() {
-                          //         _selectPlaceIcon = true;
-                          //         _selectPlace = '장소';
-                          //         _selectPlaceColor = Color(0XFFF3F4F5);
-                          //         _selectPlaceTextColor = Color(0xFF9FA5B2);
-                          //       });
-                          //   },
-                          //
-                          //   //// 장소 칩
-                          //   child: Container(
-                          //       width: 70,
-                          //       height: 30,
-                          //       decoration: BoxDecoration(
-                          //           color: _selectPlaceColor,
-                          //           borderRadius: BorderRadius.circular(100.0)),
-                          //       child: Row(
-                          //         mainAxisAlignment: MainAxisAlignment.center,
-                          //         children: [
-                          //           Text(
-                          //             _selectPlace,
-                          //             style: TextStyle(
-                          //               fontSize: 12,
-                          //               color: _selectPlaceTextColor,
-                          //             ),
-                          //           ),
-                          //           Icon(
-                          //               _selectPlaceIcon
-                          //                   ? Icons.keyboard_arrow_down_outlined
-                          //                   : Icons.clear_outlined,
-                          //               color: _selectPlaceTextColor),
-                          //         ],
-                          //       )),
-                          // ),
-                          Spacer()
-
-                        ],
+                              },
+                            );
+                          else
+                            setState(() {
+                              _selectDateIcon = true;
+                              _selectDate = '날짜';
+                              _selectDateColor = Color(0XFFF3F4F5);
+                              _selectDateTextColor = Color(0xFF9FA5B2);
+                              _selectDateSize = 67.2;
+                              _range1 = '';
+                              //_range2 = '';
+                            });
+                        },
+                        //1-1 //날짜 칩
+                        child: Container(
+                            width: _selectDateSize,
+                            height: 30,
+                            decoration: BoxDecoration(
+                                color: _selectDateColor,
+                                borderRadius: BorderRadius.circular(100.0)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  _selectDate,
+                                  style: TextStyle(
+                                      color: _selectDateTextColor,
+                                      fontSize: 12),
+                                ),
+                                Icon(
+                                    _selectDateIcon
+                                        ? Icons.keyboard_arrow_down_outlined
+                                        : Icons.clear_outlined,
+                                    color: _selectDateTextColor),
+                              ],
+                            )),
                       ),
-                    )),
+                      SizedBox(width: 10),
 
+                      // 2. 장소칩
+                      InkWell(
+                        onTap: () async {
+                          setState(() {
+                            //var respectsQuery = FirebaseFirestore.instance.collection('category').doc('user1').collection(query['category']).doc('place').collection('place'),
+
+                            _selectDateIcon = true;
+                            _selectDate = '날짜';
+                            _selectDateColor = Color(0XFFF3F4F5);
+                            _selectDateTextColor = Color(0xFF9FA5B2);
+                            _selectDateSize = 67.2;
+                            _range1 = '';
+                            _selectPlaceColor = Colors.blue; // primary[40]!;
+                            _selectPlaceTextColor = Colors.white;
+                            place_list = [];
+                          });
+
+                          if (_selectPlaceIcon)
+                            showDialog(
+                              context: context,
+                              builder:(BuildContext context) {
+                                return StatefulBuilder(
+                                    builder: (BuildContext context, StateSetter setState) {
+                                      return AlertDialog(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(30.0),
+                                                topRight: Radius.circular(30.0))),
+                                        insetPadding: EdgeInsets.only(top: 519),
+                                        content: Container(
+                                            height: 244,
+                                            width: 360,
+                                            child: Column(
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    InkWell(
+                                                      onTap:(){
+                                                        setState(() {
+                                                          place_list.add("장량동");
+                                                          jangrangdong=!jangrangdong;
+
+                                                        });
+
+                                                      },
+                                                      child:   Container(
+                                                          width: size.width*0.236,
+                                                          height: size.height*0.0375,
+                                                          decoration: BoxDecoration(
+                                                              color: !jangrangdong?Color(0xffF3F4F5):_selectPlaceColor,
+                                                              borderRadius: BorderRadius.circular(100.0)),
+                                                          child: Row(
+                                                            mainAxisAlignment: MainAxisAlignment.center,
+                                                            children: [
+                                                              Text(
+                                                                '장량동',
+                                                                style: TextStyle(
+                                                                  fontSize: 12,
+                                                                  color: !jangrangdong?Color(0xff9FA5B2):_selectPlaceTextColor,
+                                                                ),
+                                                              ),
+
+                                                            ],
+                                                          )),
+
+                                                    )
+                                                  ],
+                                                ),
+
+                                                Container(
+                                                    child: Row(
+                                                      children: [
+                                                        SizedBox(width: 208),
+                                                        TextButton(
+                                                            child: Text('취소'),
+                                                            onPressed: () {
+                                                              Navigator.pop(context);
+                                                              setState(() {
+                                                                _selectPlaceColor =
+                                                                    Color(0XFFF3F4F5);
+                                                                _selectPlaceTextColor =
+                                                                    Color(0xFF9FA5B2);
+                                                              });
+                                                            },
+                                                            style: TextButton.styleFrom(
+                                                                padding: EdgeInsets.zero,
+                                                                minimumSize: Size(50, 30),
+                                                                tapTargetSize:
+                                                                MaterialTapTargetSize
+                                                                    .shrinkWrap,
+                                                                alignment: Alignment
+                                                                    .centerLeft)),
+                                                        SizedBox(width:25),
+                                                        TextButton(
+                                                            child: Text('확인'),
+                                                            onPressed: () {
+                                                              print("place_list------->");
+                                                              print(place_list);
+                                                              // setState(() {
+                                                              //   _selectPlaceIcon = false;
+                                                              //   _selectPlaceColor = Colors
+                                                              //       .blue; //  primary[40]!;
+                                                              //   _selectPlaceTextColor =
+                                                              //       Colors.white;
+                                                              //   if (place_list.isEmpty) {
+                                                              //     _selectPlace = '장소';
+                                                              //   } else
+                                                              //     _selectPlace =
+                                                              //     place_list[0];
+                                                              // });
+                                                             setState((){
+                                                               Navigator.pop(context);
+                                                             });
+                                                            },
+                                                            style: TextButton.styleFrom(
+                                                                padding: EdgeInsets.zero,
+                                                                minimumSize: Size(50, 30),
+                                                                tapTargetSize:
+                                                                MaterialTapTargetSize
+                                                                    .shrinkWrap,
+                                                                alignment:
+                                                                Alignment.centerLeft))
+                                                      ],
+                                                    ))
+                                              ],
+                                            )),
+                                      );
+                                    });
+                              }
+
+                            );
+                          else
+                            setState(() {
+                              _selectPlaceIcon = true;
+                              _selectPlace =jangrangdong?'장량동':'장소';
+                              _selectPlaceColor = Color(0XFFF3F4F5);
+                              _selectPlaceTextColor = Color(0xFF9FA5B2);
+                            });
+                        },
+
+                        //// 장소 칩
+                        child: Container(
+                            width: 70,
+                            height: 30,
+                            decoration: BoxDecoration(
+                                color: _selectPlaceColor,
+                                borderRadius: BorderRadius.circular(100.0)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  jangrangdong?'장량동':'장소',//  _selectPlace,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: _selectPlaceTextColor,
+                                  ),
+                                ),
+                                Icon(
+                                    _selectPlaceIcon
+                                        ? Icons.keyboard_arrow_down_outlined
+                                        : Icons.clear_outlined,
+                                    color: _selectPlaceTextColor),
+                              ],
+                            )),
+                      ),
+                      Spacer()
+                    ],
+                  ),
+                )),
               ],
             ),
           ],
@@ -993,7 +928,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
               BottomNavigationBarItem(
                 icon: Icon(
                   Icons.home,
-                  color:iconColor,
+                  color: iconColor,
                 ),
                 label: '오늘의 캐치',
               ),
@@ -1035,122 +970,127 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
           ),
         ),
       ),
-
-
-
-
       body: Container(
-        // child: Center(
+          // child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-
-              Expanded(
-                  child: Container(
-                    margin: EdgeInsets.fromLTRB(10, 0, 10, 10),
-                    child: Center(
-                        child: StreamBuilder<QuerySnapshot>(
-                            stream: stream_ordering(),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData) {
-                                if (snapshot.data != null) {
-                                  print(snapshot.data!.docs.length);
-                                  return GridView.builder(
-                                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-                                    itemCount: snapshot.data!.docs.length,
-                                    padding: EdgeInsets.all(2.0),
-                                    itemBuilder: (BuildContext context, int index) {
-                                      QueryDocumentSnapshot x = snapshot.data!.docs[index];
-                                      return InkWell(
-                                        onLongPress : () {
-                                          setState((){
-                                            pressed = true;
-                                          });
-                                        },
-                                        child: Stack(
-                                          children: [
-                                            SizedBox(
-                                              height: 119.04,
-                                              width: 118.08,
-                                              child: Card(
-                                                // shape: RoundedRectangleBorder(
-                                                //   borderRadius: BorderRadius.circular(15.0),
-                                                // ),
-                                                  margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                                                  clipBehavior: Clip.antiAlias,
-                                                  child: Transform.rotate(
-                                                    angle:(query['category']=='kickboard'||query['category']=='traffic light')?0:90*math.pi/180,
-                                                    child: Image.network(
-                                                      x['url'],
-                                                      fit: BoxFit.cover,
-                                                    ),
-
-                                                  )
-                                              ),
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Expanded(
+              child: Container(
+            margin: EdgeInsets.fromLTRB(10, 0, 10, 10),
+            child: Center(
+                child: StreamBuilder<QuerySnapshot>(
+                    stream: stream_ordering(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        if (snapshot.data != null) {
+                          print(snapshot.data!.docs.length);
+                          return GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 3),
+                            itemCount: snapshot.data!.docs.length,
+                            padding: EdgeInsets.all(2.0),
+                            itemBuilder: (BuildContext context, int index) {
+                              QueryDocumentSnapshot x =
+                                  snapshot.data!.docs[index];
+                              return InkWell(
+                                onLongPress: () {
+                                  setState(() {
+                                    pressed = true;
+                                  });
+                                },
+                                child: Stack(
+                                  children: [
+                                    SizedBox(
+                                      height: 119.04,
+                                      width: 118.08,
+                                      child: Card(
+                                          // shape: RoundedRectangleBorder(
+                                          //   borderRadius: BorderRadius.circular(15.0),
+                                          // ),
+                                          margin:
+                                              EdgeInsets.fromLTRB(5, 5, 5, 5),
+                                          clipBehavior: Clip.antiAlias,
+                                          child: Transform.rotate(
+                                            angle: (query['category'] ==
+                                                        'kickboard' ||
+                                                    query['category'] ==
+                                                        'traffic light')
+                                                ? 0
+                                                : 90 * math.pi / 180,
+                                            child: Image.network(
+                                              x['url'],
+                                              fit: BoxFit.cover,
                                             ),
-                                            //Image.network(x['url'], fit: BoxFit.cover),
-                                            if (pressed == true)
-                                              Align(
-                                                alignment: Alignment.bottomRight,
-                                                child: Checkbox(
-                                                  value: _checks[index],
-                                                  onChanged: (newValue) {
-                                                    setState(() {
-                                                      _checks[index] = newValue!;
-                                                      _checks_url[index] = x['url'];
-                                                    });
-                                                  },
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius: BorderRadius.circular(10)),
-                                                  checkColor: Colors.white,
-                                                  activeColor: Color(0XFF007AFF),
-                                                ),
-                                              ),
-                                          ],
+                                          )),
+                                    ),
+                                    //Image.network(x['url'], fit: BoxFit.cover),
+                                    if (pressed == true)
+                                      Align(
+                                        alignment: Alignment.bottomRight,
+                                        child: Checkbox(
+                                          value: _checks[index],
+                                          onChanged: (newValue) {
+                                            setState(() {
+                                              _checks[index] = newValue!;
+                                              _checks_url[index] = x['url'];
+                                            });
+                                          },
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          checkColor: Colors.white,
+                                          activeColor: Color(0XFF007AFF),
                                         ),
-                                      );
-                                    },
-                                  );
-                                } else {
-                                  return Container(
-                                      child: Center(
-                                          child: Text(
-                                            'Es wurden noch keine Fotos im Chat gepostet.',
-                                            style: TextStyle(fontSize: 20.0, color: Colors.grey),
-                                            textAlign: TextAlign.center,
-                                          )));
-                                }
-                              } else {return CircularProgressIndicator();}
-                            })
-                      // child: GridView.count(
-                      //   shrinkWrap: true,
-                      //   crossAxisCount: 3,
-                      //   mainAxisSpacing: 2, //수평 Padding
-                      //   crossAxisSpacing: 2, //수직 Padding
-                      //   children: List.generate(21, (index) {  //item 의 반목문 항목 형성
-                      //     return InkWell(
-                      //         onTap: (){
-                      //           Navigator.push(context, MaterialPageRoute(
-                      //             builder: (BuildContext context) => Catchbox_detail(),));
-                      //         },
-                      //         child: Container(
-                      //           color: Colors.lightGreen,
-                      //           child:
-                      //           Image.asset('assets/images/2.jpeg',
-                      //               height: 70.w,
-                      //               fit : BoxFit.fitWidth),
-                      //           //Text(' Item : $index'),
-                      //         )
-                      //     );
-                      //   }),
-                      // )
-                      //
-                    ),
-                  )
-              ),
-            ],
-            //),
+                                      ),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        } else {
+                          return Container(
+                              child: Center(
+                                  child: Text(
+                            'Es wurden noch keine Fotos im Chat gepostet.',
+                            style:
+                                TextStyle(fontSize: 20.0, color: Colors.grey),
+                            textAlign: TextAlign.center,
+                          )));
+                        }
+                      } else {
+                        return CircularProgressIndicator();
+                      }
+                    })
+                // child: GridView.count(
+                //   shrinkWrap: true,
+                //   crossAxisCount: 3,
+                //   mainAxisSpacing: 2, //수평 Padding
+                //   crossAxisSpacing: 2, //수직 Padding
+                //   children: List.generate(21, (index) {  //item 의 반목문 항목 형성
+                //     return InkWell(
+                //         onTap: (){
+                //           Navigator.push(context, MaterialPageRoute(
+                //             builder: (BuildContext context) => Catchbox_detail(),));
+                //         },
+                //         child: Container(
+                //           color: Colors.lightGreen,
+                //           child:
+                //           Image.asset('assets/images/2.jpeg',
+                //               height: 70.w,
+                //               fit : BoxFit.fitWidth),
+                //           //Text(' Item : $index'),
+                //         )
+                //     );
+                //   }),
+                // )
+                //
+                ),
           )),
+        ],
+        //),
+      )),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:catch2_0_1/screen/Community/DetailPage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +19,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         initialRoute: '/',
+        routes: {
+          //route 설정
+          // '/': (context) => MyApp(),
+          '/detail': ((context) => DetailScreen())
+        },
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.lightBlue,
