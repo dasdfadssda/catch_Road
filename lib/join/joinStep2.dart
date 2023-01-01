@@ -132,7 +132,7 @@ final _formKey = GlobalKey<FormState>();
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(30)))),
                   onPressed: () {
-                    // if (_formKey.currentState!.validate()) {
+                     if (_formKey.currentState!.validate()) {
                         Navigator.push(
                       context,
                       PageRouteBuilder(
@@ -142,7 +142,7 @@ final _formKey = GlobalKey<FormState>();
                               FadeTransition(opacity: a, child: c)),
                     );
                     code().password = passwordcontroller.text;
-                    // }
+                    }
                   },
                   child: Text(
                     "다음",

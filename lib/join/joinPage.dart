@@ -117,7 +117,7 @@ final _formKey = GlobalKey<FormState>();
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(30)))),
                   onPressed: () async {
-                    // if (_formKey.currentState!.validate()) {
+                     if (_formKey.currentState!.validate()) {
                        Navigator.push(
                         context,
                         PageRouteBuilder(
@@ -127,7 +127,7 @@ final _formKey = GlobalKey<FormState>();
                                 FadeTransition(opacity: a, child: c)),
                       );
                       code().email = Emailcontroller.text;
-                    // }
+                     }
                   },
                   child: Text(
                     "이메일 입력하기",

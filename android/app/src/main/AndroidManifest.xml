@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.catchroad.catch2_0_1">
+    package="com.catchroad.catch2_1">
    <application
         android:label="CATCH ROAD"
         android:name="${applicationName}"
