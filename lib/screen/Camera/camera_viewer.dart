@@ -25,6 +25,7 @@ late CameraController controller;
 
 List<Uint8List> imageList = [];
 bool issaving=false;
+bool saved=false;
 String ob='';
 
 typedef void Callback(List<dynamic> list, int h, int w);
@@ -176,6 +177,9 @@ class _CameraViewerState extends State<CameraViewer> {
         print(e);
       }
       setState(() {issaving = false;});
+      setState(() {saved = true;});
+      await Future.delayed(Duration(seconds: 1));
+      setState(() {saved = false;});
     } catch (e) {
       print(">>>>>>>>>>>> ERROR:" + e.toString());
     }
@@ -267,6 +271,37 @@ class _CameraViewerState extends State<CameraViewer> {
                       height:20,
                     ),
                     Text('인식된 객체가 저장되고 있습니다\n 잠시만 기다려주세요',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color:Colors.white,
+                        )
+                    )
+
+                  ],
+                ),
+              ),
+
+            ):Container(),
+            saved?Container(
+              color:Colors.black.withOpacity(0.5),
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: Center(
+
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width:100,
+                      height:100,
+                      child:Image.asset('assets/icons/save_check.png'),
+                    ),
+
+                    SizedBox(
+                      height:20,
+                    ),
+                    Text('저장되었습니다',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color:Colors.white,

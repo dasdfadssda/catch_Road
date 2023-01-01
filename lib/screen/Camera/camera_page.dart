@@ -687,6 +687,9 @@ class _CameraPageState extends State<CameraPage> {
                       setState(() {
                         issaving = false;
                       });
+                      setState(() {saved = true;});
+                      await Future.delayed(Duration(seconds: 1));
+                      setState(() {saved = false;});
                     },
                     child: SizedBox(
                       width: 45,

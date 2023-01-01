@@ -106,6 +106,8 @@ class _add_personalState extends State<add_personal> {*/
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        leading:Container(),
+        centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 1,
         title: Text('오늘의 캐치',style: titleMediumStyle(color: Colors.black),),
