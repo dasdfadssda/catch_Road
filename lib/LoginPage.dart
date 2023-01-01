@@ -1,3 +1,4 @@
+import 'package:catch2_0_1/join/joinPage.dart';
 import 'package:flutter/material.dart';
 import 'Auth/auth_service.dart';
 import 'screen/Camera/camera_load.dart';
@@ -229,7 +230,12 @@ class _LoginPageState extends State<LoginPage> {
                       padding: EdgeInsets.zero,
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                            return joinPage();
+                          }));
+                    },
                     child: Text("회원가입",
                         style: TextStyle(
                             fontSize: 12,

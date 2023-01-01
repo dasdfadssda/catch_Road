@@ -14,6 +14,8 @@ import 'camera_bndbox.dart';
 import 'package:image/image.dart' as imageLib;
 import 'camera_page.dart';
 import 'image_convert.dart';
+import 'package:flutter_geocoder/geocoder.dart';
+import 'package:geolocator/geolocator.dart';
 
 XFile? pictureFile;
 XFile? imgFile;
@@ -49,6 +51,17 @@ class _CameraViewerState extends State<CameraViewer> {
 
   bool isDetecting = false;
   FirebaseStorage storage = FirebaseStorage.instance;
+
+  Future<Coordinates> getCurrentLocation() async {
+    LocationPermission permission = await Geolocator.requestPermission();
+
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+
+    final cor=new Coordinates(position.latitude, position.longitude);
+
+    return cor;
+  }
 
 
   @override
@@ -128,6 +141,11 @@ class _CameraViewerState extends State<CameraViewer> {
     print('is sav');
     print('is saving1 : $issaving');
 
+    Coordinates cordi=await getCurrentLocation();
+    var address=await Geocoder.local.findAddressesFromCoordinates(cordi);
+    var first=address.first;
+    print('주소 ${first.thoroughfare}');//동 받아옴
+
     CameraImage image = cameraImage2;
     try {
 
@@ -158,6 +176,7 @@ class _CameraViewerState extends State<CameraViewer> {
             .add({
           "url": url,
           "time":DateFormat('dd/MM/yyyy').format(DateTime.now()),
+          "location":first.thoroughfare,
           //위치추가
         });
         await FirebaseFirestore.instance
@@ -167,6 +186,7 @@ class _CameraViewerState extends State<CameraViewer> {
             .add({
           "url": url,
           "time":DateFormat('dd/MM/yyyy').format(DateTime.now()),
+          "location":first.thoroughfare,
           //위치추가
         });
 
