@@ -70,7 +70,8 @@ class _CameraViewerState extends State<CameraViewer> {
         controller.startImageStream((CameraImage img) async {
           cameraImage2 = img;
           //*원하는 객체 입력
-          if (mode=="auto"&&((object=='car')||(object=='stop sign')||(object=='keyboard'))&&accuracy>40) {
+         // if (mode=="auto"&&((object=='car')||(object=='stop sign')||(object=='keyboard'))&&accuracy>40) {
+          if(mode=="auto"&&(object_list.contains(object)||object=='keyboard')&&accuracy>40){
             //path = (await NativeScreenshot.takeScreenshot())!;
             print('$object 저장중');
             ob=object;
@@ -123,7 +124,9 @@ class _CameraViewerState extends State<CameraViewer> {
 
   @override
   Future<void> takepicture() async {
+    print('is sav');
     print('is saving1 : $issaving');
+
     CameraImage image = cameraImage2;
     try {
 
@@ -134,27 +137,41 @@ class _CameraViewerState extends State<CameraViewer> {
       //firebase에 저장
       final uploadTask = await storage.ref('/traffic-Image/$ob/$ob${DateTime.now()}.png').putData(Uint8List.fromList(png));//
       final url = await uploadTask.ref.getDownloadURL();
+
       try {
         await FirebaseFirestore.instance
             .collection("category")
             .doc("1234@handong.ac.kr")//FirebaseAuth.instance.currentUser!.email
+            .collection("category")
+            .doc(ob).set({
+          "category":ob,
+          "new": url,
+          "order":1,
+          "num":0,
+        });
+
+        await FirebaseFirestore.instance
+            .collection("category")
+            .doc("1234@handong.ac.kr")//FirebaseAuth.instance.currentUser!.email
             .collection(ob)
-            // .doc("date")
-            // .collection("date")
             .add({
           "url": url,
-          "time":DateFormat('dd/MM/yyyy').format(DateTime.now())
+          "time":DateFormat('dd/MM/yyyy').format(DateTime.now()),
+          //위치추가
         });
         await FirebaseFirestore.instance
             .collection("category")
             .doc("1234@handong.ac.kr")//FirebaseAuth.instance.currentUser!.email
             .collection("all")
-            // .doc("date")
-            // .collection("date")
             .add({
           "url": url,
-          "time":DateFormat('dd/MM/yyyy').format(DateTime.now())
+          "time":DateFormat('dd/MM/yyyy').format(DateTime.now()),
+          //위치추가
         });
+
+
+
+
       } catch (e) {
         print(e);
       }

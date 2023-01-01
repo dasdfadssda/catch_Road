@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -66,6 +67,7 @@ class _Catchbox2State extends State<Catchbox2> {
     bool isgo = false;
     final Size size = MediaQuery.of(context).size;
     bool isSearch = false;
+    int len=0;
     TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: PreferredSize(
@@ -126,8 +128,25 @@ class _Catchbox2State extends State<Catchbox2> {
                                       children: List.generate(
                                         snapshot.data!.docs.length,
                                         (index) {
+
                                           QueryDocumentSnapshot x =
                                               snapshot.data!.docs[index];
+
+                                          FirebaseFirestore.instance
+                                              .collection('category')
+                                              .doc('1234@handong.ac.kr')
+                                              .collection(x['category']).get().then((value) async {
+                                                len=value.size;
+                                                print('len $len');
+                                                await FirebaseFirestore.instance
+                                                    .collection("category")
+                                                    .doc("1234@handong.ac.kr")//FirebaseAuth.instance.currentUser!.email
+                                                    .collection('category')
+                                                    .doc(x['category'])
+                                                    .update({
+                                                  "num": value.size,
+                                                });
+                                          });
                                           return InkWell(
                                             onTap: () {
                                               Navigator.push(
@@ -197,7 +216,7 @@ class _Catchbox2State extends State<Catchbox2> {
                                                                 .start,
                                                         children: [
                                                           Text(
-                                                            x['category'],
+                                                            '${x['category']} ',
                                                             style: Theme.of(
                                                                     context)
                                                                 .textTheme
@@ -207,8 +226,10 @@ class _Catchbox2State extends State<Catchbox2> {
                                                                 TextOverflow
                                                                     .ellipsis,
                                                           ),
+
+
                                                           Text(
-                                                            "장 수",
+                                                            '${x['num']}',
                                                             style: bodySmallStyle(
                                                                 color: Color(
                                                                     0xff9FA5B2)),
@@ -250,6 +271,7 @@ class _Catchbox2State extends State<Catchbox2> {
                                             //   ),
                                             // ),
                                           );
+
                                         },
                                       ))),
                             ),
