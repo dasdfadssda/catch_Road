@@ -10,6 +10,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:sliding_switch/sliding_switch.dart';
 import '../../utils/app_text_styles.dart';
 import '../notFound.dart';
+import 'create_bproject.dart';
 import 'create_pproject.dart';
 
 bool part=false;
@@ -422,7 +423,7 @@ class _add_personalState extends State<add_personal> {*/
                     context,
                     MaterialPageRoute(
                       builder: (BuildContext context) =>
-                          notFound(),
+                          CreateBproject(),
                     ));
 
               }),

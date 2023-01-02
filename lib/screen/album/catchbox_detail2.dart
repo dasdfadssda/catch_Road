@@ -295,90 +295,6 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
                               check_num=0;
                               _checks.fillRange(0, _checks.length-1,false);
                               print(_checks.length);
-                              // _checks = [
-                              //   false, false, false, false, false, false, false,
-                              //   false, false, false, false, false, false, false, false, false,
-                              //   false, false, false, false, false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false,
-                              //   false
-                              // ];
                               _checks_url.fillRange(0, _checks_url.length-1,'');
                             }
                           });
@@ -775,265 +691,265 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
                           ),
                           SizedBox(width: 10),
 
-                          //2. 장소칩
-                          // InkWell(
-                          //   onTap: () async {
-                          //     setState(() {
-                          //       //var respectsQuery = FirebaseFirestore.instance.collection('category').doc('user1').collection(query['category']).doc('place').collection('place'),
-                          //
-                          //       _selectDateIcon = true;
-                          //       _selectDate = '날짜';
-                          //       _selectDateColor = Color(0XFFF3F4F5);
-                          //       _selectDateTextColor = Color(0xFF9FA5B2);
-                          //       _selectDateSize = 67.2;
-                          //       _range1 = '';
-                          //       _selectPlaceColor = Colors.blue; // primary[40]!;
-                          //       _selectPlaceTextColor = Colors.white;
-                          //       place_list = [];
-                          //     });
-                          //
-                          //     if (_selectPlaceIcon)
-                          //       showDialog(
-                          //         context: context,
-                          //         builder: (BuildContext context) {
-                          //           return AlertDialog(
-                          //             shape: RoundedRectangleBorder(
-                          //                 borderRadius: BorderRadius.only(
-                          //                     topLeft: Radius.circular(30.0),
-                          //                     topRight: Radius.circular(30.0))),
-                          //             insetPadding: EdgeInsets.only(top: 519),
-                          //             content: Container(
-                          //                 height: 244,
-                          //                 width: 360,
-                          //                 child: Column(
-                          //                   children: [
-                          //                     StreamBuilder<QuerySnapshot>(
-                          //                         stream: FirebaseFirestore.instance
-                          //                             .collection('category')
-                          //                             .doc("1234@handong.ac.kr")
-                          //                             .collection(query['category'])
-                          //                             .doc('place')
-                          //                             .collection('place')
-                          //                             .snapshots(),
-                          //                         builder: (context, snapshot) {
-                          //                           if (snapshot.hasData) {
-                          //                             print(snapshot
-                          //                                 .data!.docs.length);
-                          //                             if (snapshot.data != null) {
-                          //                               return GridView.builder(
-                          //                                 shrinkWrap: true,
-                          //                                 gridDelegate:
-                          //                                 SliverGridDelegateWithFixedCrossAxisCount(
-                          //                                   crossAxisCount: 3,
-                          //                                   childAspectRatio: 5 / 2,
-                          //                                 ),
-                          //                                 itemCount: snapshot
-                          //                                     .data!.docs.length,
-                          //                                 padding:
-                          //                                 EdgeInsets.all(2.0),
-                          //                                 itemBuilder:
-                          //                                     (BuildContext context,
-                          //                                     int index) {
-                          //                                   QueryDocumentSnapshot
-                          //                                   x = snapshot.data!
-                          //                                       .docs[index];
-                          //                                   return ListView(
-                          //                                       children: [
-                          //                                         InkWell(
-                          //                                           child:
-                          //                                           Container(
-                          //                                               margin: EdgeInsets.fromLTRB(
-                          //                                                   0,
-                          //                                                   0,
-                          //                                                   10,
-                          //                                                   0),
-                          //                                               width:
-                          //                                               67.2,
-                          //                                               height:
-                          //                                               30,
-                          //                                               decoration: BoxDecoration(
-                          //                                                   color: x['choose']
-                          //                                                       ? Colors.blue
-                          //                                                       : Color(0xFFF3F4F5),
-                          //                                                   borderRadius: BorderRadius.circular(20.0)),
-                          //                                               child: Row(
-                          //                                                 mainAxisAlignment:
-                          //                                                 MainAxisAlignment.center,
-                          //                                                 children: [
-                          //                                                   Text(x['place'] + '   ',
-                          //                                                       style: TextStyle(color: x['choose'] ? Colors.white : Colors.black)),
-                          //                                                   // Text(
-                          //                                                   //     x['count'].toString(),
-                          //                                                   //     style: TextStyle(color : x['choose']? Colors.white: Colors.black)
-                          //                                                   // ),
-                          //                                                 ],
-                          //                                               )),
-                          //                                           onTap: () {
-                          //                                             if (x[
-                          //                                             'choose']) {
-                          //                                               print(x[
-                          //                                               'choose']);
-                          //                                               setState(
-                          //                                                       () {
-                          //                                                     place_list.removeWhere((item) =>
-                          //                                                     item ==
-                          //                                                         x['place']);
-                          //                                                   });
-                          //                                               FirebaseFirestore
-                          //                                                   .instance
-                          //                                                   .collection(
-                          //                                                   'category')
-                          //                                                   .doc("1234@handong.ac.kr")
-                          //                                                   .collection(query[
-                          //                                               'category'])
-                          //                                                   .doc(
-                          //                                                   'place')
-                          //                                                   .collection(
-                          //                                                   'place')
-                          //                                                   .doc(x[
-                          //                                               'place'])
-                          //                                                   .update({
-                          //                                                 'choose':
-                          //                                                 false
-                          //                                               });
-                          //                                             } else {
-                          //                                               setState(
-                          //                                                       () {
-                          //                                                     place_list
-                          //                                                         .add(x[
-                          //                                                     'place']);
-                          //                                                   });
-                          //                                               FirebaseFirestore
-                          //                                                   .instance
-                          //                                                   .collection(
-                          //                                                   'category')
-                          //                                                   .doc("1234@handong.ac.kr")
-                          //                                                   .collection(query[
-                          //                                               'category'])
-                          //                                                   .doc(
-                          //                                                   'place')
-                          //                                                   .collection(
-                          //                                                   'place')
-                          //                                                   .doc(x[
-                          //                                               'place'])
-                          //                                                   .update({
-                          //                                                 'choose':
-                          //                                                 true
-                          //                                               });
-                          //                                             }
-                          //                                           },
-                          //                                         ),
-                          //                                       ]);
-                          //                                 },
-                          //                               );
-                          //                             } else {
-                          //                               return Container(
-                          //                                   child: Center(
-                          //                                       child: Text(
-                          //                                         '사진 없음.',
-                          //                                         style: TextStyle(
-                          //                                             fontSize: 20.0,
-                          //                                             color: Colors.grey),
-                          //                                         textAlign:
-                          //                                         TextAlign.center,
-                          //                                       )));
-                          //                             }
-                          //                           } else {
-                          //                             return CircularProgressIndicator();
-                          //                           }
-                          //                         }),
-                          //                     Container(
-                          //                         child: Row(
-                          //                           children: [
-                          //                             SizedBox(width: 208),
-                          //                             TextButton(
-                          //                                 child: Text('취소'),
-                          //                                 onPressed: () {
-                          //                                   Navigator.pop(context);
-                          //                                   setState(() {
-                          //                                     _selectPlaceColor =
-                          //                                         Color(0XFFF3F4F5);
-                          //                                     _selectPlaceTextColor =
-                          //                                         Color(0xFF9FA5B2);
-                          //                                   });
-                          //                                 },
-                          //                                 style: TextButton.styleFrom(
-                          //                                     padding: EdgeInsets.zero,
-                          //                                     minimumSize: Size(50, 30),
-                          //                                     tapTargetSize:
-                          //                                     MaterialTapTargetSize
-                          //                                         .shrinkWrap,
-                          //                                     alignment: Alignment
-                          //                                         .centerLeft)),
-                          //                             SizedBox(width: 32),
-                          //                             TextButton(
-                          //                                 child: Text('확인'),
-                          //                                 onPressed: () {
-                          //                                   print("place_list------->");
-                          //                                   print(place_list);
-                          //                                   setState(() {
-                          //                                     _selectPlaceIcon = false;
-                          //                                     _selectPlaceColor = Colors
-                          //                                         .blue; //  primary[40]!;
-                          //                                     _selectPlaceTextColor =
-                          //                                         Colors.white;
-                          //                                     if (place_list.isEmpty) {
-                          //                                       _selectPlace = '장소';
-                          //                                     } else
-                          //                                       _selectPlace =
-                          //                                       place_list[0];
-                          //                                   });
-                          //                                   Navigator.pop(context);
-                          //                                 },
-                          //                                 style: TextButton.styleFrom(
-                          //                                     padding: EdgeInsets.zero,
-                          //                                     minimumSize: Size(50, 30),
-                          //                                     tapTargetSize:
-                          //                                     MaterialTapTargetSize
-                          //                                         .shrinkWrap,
-                          //                                     alignment:
-                          //                                     Alignment.centerLeft))
-                          //                           ],
-                          //                         ))
-                          //                   ],
-                          //                 )),
-                          //           );
-                          //         },
-                          //       );
-                          //     else
-                          //       setState(() {
-                          //         _selectPlaceIcon = true;
-                          //         _selectPlace = '장소';
-                          //         _selectPlaceColor = Color(0XFFF3F4F5);
-                          //         _selectPlaceTextColor = Color(0xFF9FA5B2);
-                          //       });
-                          //   },
-                          //
-                          //   //// 장소 칩
-                          //   child: Container(
-                          //       width: 70,
-                          //       height: 30,
-                          //       decoration: BoxDecoration(
-                          //           color: _selectPlaceColor,
-                          //           borderRadius: BorderRadius.circular(100.0)),
-                          //       child: Row(
-                          //         mainAxisAlignment: MainAxisAlignment.center,
-                          //         children: [
-                          //           Text(
-                          //             _selectPlace,
-                          //             style: TextStyle(
-                          //               fontSize: 12,
-                          //               color: _selectPlaceTextColor,
-                          //             ),
-                          //           ),
-                          //           Icon(
-                          //               _selectPlaceIcon
-                          //                   ? Icons.keyboard_arrow_down_outlined
-                          //                   : Icons.clear_outlined,
-                          //               color: _selectPlaceTextColor),
-                          //         ],
-                          //       )),
-                          // ),
+
+                          InkWell(
+                            onTap: () async {
+                              setState(() {
+                                //var respectsQuery = FirebaseFirestore.instance.collection('category').doc('user1').collection(query['category']).doc('place').collection('place'),
+
+                                _selectDateIcon = true;
+                                _selectDate = '날짜';
+                                _selectDateColor = Color(0XFFF3F4F5);
+                                _selectDateTextColor = Color(0xFF9FA5B2);
+                                _selectDateSize = 67.2;
+                                _range1 = '';
+                                _selectPlaceColor = Colors.blue; // primary[40]!;
+                                _selectPlaceTextColor = Colors.white;
+                                place_list = [];
+                              });
+
+                              if (_selectPlaceIcon)
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(30.0),
+                                              topRight: Radius.circular(30.0))),
+                                      insetPadding: EdgeInsets.only(top: 519),
+                                      content: Container(
+                                          height: 244,
+                                          width: 360,
+                                          child: Column(
+                                            children: [
+                                              StreamBuilder<QuerySnapshot>(
+                                                  stream: FirebaseFirestore.instance
+                                                      .collection('category')
+                                                      .doc("1234@handong.ac.kr")
+                                                      .collection(query['category'])
+                                                      .doc('place')
+                                                      .collection('place')
+                                                      .snapshots(),
+                                                  builder: (context, snapshot) {
+                                                    if (snapshot.hasData) {
+                                                      print(snapshot
+                                                          .data!.docs.length);
+                                                      if (snapshot.data != null) {
+                                                        return GridView.builder(
+                                                          shrinkWrap: true,
+                                                          gridDelegate:
+                                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                                            crossAxisCount: 3,
+                                                            childAspectRatio: 5 / 2,
+                                                          ),
+                                                          itemCount: snapshot
+                                                              .data!.docs.length,
+                                                          padding:
+                                                          EdgeInsets.all(2.0),
+                                                          itemBuilder:
+                                                              (BuildContext context,
+                                                              int index) {
+                                                            QueryDocumentSnapshot
+                                                            x = snapshot.data!
+                                                                .docs[index];
+                                                            return ListView(
+                                                                children: [
+                                                                  InkWell(
+                                                                    child:
+                                                                    Container(
+                                                                        margin: EdgeInsets.fromLTRB(
+                                                                            0,
+                                                                            0,
+                                                                            10,
+                                                                            0),
+                                                                        width:
+                                                                        67.2,
+                                                                        height:
+                                                                        30,
+                                                                        decoration: BoxDecoration(
+                                                                            color: x['choose']
+                                                                                ? Colors.blue
+                                                                                : Color(0xFFF3F4F5),
+                                                                            borderRadius: BorderRadius.circular(20.0)),
+                                                                        child: Row(
+                                                                          mainAxisAlignment:
+                                                                          MainAxisAlignment.center,
+                                                                          children: [
+                                                                            Text(x['place'] + '   ',
+                                                                                style: TextStyle(color: x['choose'] ? Colors.white : Colors.black)),
+                                                                            // Text(
+                                                                            //     x['count'].toString(),
+                                                                            //     style: TextStyle(color : x['choose']? Colors.white: Colors.black)
+                                                                            // ),
+                                                                          ],
+                                                                        )),
+                                                                    onTap: () {
+                                                                      if (x[
+                                                                      'choose']) {
+                                                                        print(x[
+                                                                        'choose']);
+                                                                        setState(
+                                                                                () {
+                                                                              place_list.removeWhere((item) =>
+                                                                              item ==
+                                                                                  x['place']);
+                                                                            });
+                                                                        FirebaseFirestore
+                                                                            .instance
+                                                                            .collection(
+                                                                            'category')
+                                                                            .doc("1234@handong.ac.kr")
+                                                                            .collection(query[
+                                                                        'category'])
+                                                                            .doc(
+                                                                            'place')
+                                                                            .collection(
+                                                                            'place')
+                                                                            .doc(x[
+                                                                        'place'])
+                                                                            .update({
+                                                                          'choose':
+                                                                          false
+                                                                        });
+                                                                      } else {
+                                                                        setState(
+                                                                                () {
+                                                                              place_list
+                                                                                  .add(x[
+                                                                              'place']);
+                                                                            });
+                                                                        FirebaseFirestore
+                                                                            .instance
+                                                                            .collection(
+                                                                            'category')
+                                                                            .doc("1234@handong.ac.kr")
+                                                                            .collection(query[
+                                                                        'category'])
+                                                                            .doc(
+                                                                            'place')
+                                                                            .collection(
+                                                                            'place')
+                                                                            .doc(x[
+                                                                        'place'])
+                                                                            .update({
+                                                                          'choose':
+                                                                          true
+                                                                        });
+                                                                      }
+                                                                    },
+                                                                  ),
+                                                                ]);
+                                                          },
+                                                        );
+                                                      } else {
+                                                        return Container(
+                                                            child: Center(
+                                                                child: Text(
+                                                                  '사진 없음.',
+                                                                  style: TextStyle(
+                                                                      fontSize: 20.0,
+                                                                      color: Colors.grey),
+                                                                  textAlign:
+                                                                  TextAlign.center,
+                                                                )));
+                                                      }
+                                                    } else {
+                                                      return CircularProgressIndicator();
+                                                    }
+                                                  }),
+                                              Container(
+                                                  child: Row(
+                                                    children: [
+                                                      SizedBox(width: 208),
+                                                      TextButton(
+                                                          child: Text('취소'),
+                                                          onPressed: () {
+                                                            Navigator.pop(context);
+                                                            setState(() {
+                                                              _selectPlaceColor =
+                                                                  Color(0XFFF3F4F5);
+                                                              _selectPlaceTextColor =
+                                                                  Color(0xFF9FA5B2);
+                                                            });
+                                                          },
+                                                          style: TextButton.styleFrom(
+                                                              padding: EdgeInsets.zero,
+                                                              minimumSize: Size(50, 30),
+                                                              tapTargetSize:
+                                                              MaterialTapTargetSize
+                                                                  .shrinkWrap,
+                                                              alignment: Alignment
+                                                                  .centerLeft)),
+                                                      SizedBox(width: 32),
+                                                      TextButton(
+                                                          child: Text('확인'),
+                                                          onPressed: () {
+                                                            print("place_list------->");
+                                                            print(place_list);
+                                                            setState(() {
+                                                              _selectPlaceIcon = false;
+                                                              _selectPlaceColor = Colors
+                                                                  .blue; //  primary[40]!;
+                                                              _selectPlaceTextColor =
+                                                                  Colors.white;
+                                                              if (place_list.isEmpty) {
+                                                                _selectPlace = '장소';
+                                                              } else
+                                                                _selectPlace =
+                                                                place_list[0];
+                                                            });
+                                                            Navigator.pop(context);
+                                                          },
+                                                          style: TextButton.styleFrom(
+                                                              padding: EdgeInsets.zero,
+                                                              minimumSize: Size(50, 30),
+                                                              tapTargetSize:
+                                                              MaterialTapTargetSize
+                                                                  .shrinkWrap,
+                                                              alignment:
+                                                              Alignment.centerLeft))
+                                                    ],
+                                                  ))
+                                            ],
+                                          )),
+                                    );
+                                  },
+                                );
+                              else
+                                setState(() {
+                                  _selectPlaceIcon = true;
+                                  _selectPlace = '장소';
+                                  _selectPlaceColor = Color(0XFFF3F4F5);
+                                  _selectPlaceTextColor = Color(0xFF9FA5B2);
+                                });
+                            },
+
+                            //// 장소 칩
+                            child: Container(
+                                width: 70,
+                                height: 30,
+                                decoration: BoxDecoration(
+                                    color: _selectPlaceColor,
+                                    borderRadius: BorderRadius.circular(100.0)),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      _selectPlace,
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: _selectPlaceTextColor,
+                                      ),
+                                    ),
+                                    Icon(
+                                        _selectPlaceIcon
+                                            ? Icons.keyboard_arrow_down_outlined
+                                            : Icons.clear_outlined,
+                                        color: _selectPlaceTextColor),
+                                  ],
+                                )),
+                          ),
                           Spacer()
 
                         ],

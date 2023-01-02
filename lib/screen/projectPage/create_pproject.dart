@@ -242,9 +242,11 @@ class _CreatePprojectState extends State<CreatePproject> {
       // appBar: PreferredSize(
       //   preferredSize: Size.fromHeight(78),
       //   child:
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 1,
+
 
         title: Center(
           child: Text('개인프로젝트 올리기',style: titleMediumStyle(color: Colors.black),),
