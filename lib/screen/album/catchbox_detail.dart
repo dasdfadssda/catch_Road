@@ -34,6 +34,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
   //String _range2 = '';
   List<String> num_list = [];
   List<String> place_list = [];
+  List<String> placenamelist=['장성동','흥해읍','양덕동'];//,'장량동','환호동','두호동','우현동','창포동','죽도동'];
   List<bool> _checks = List.generate(1000, (_) => false);
   List<String> _checks_url = List.generate(1000, (_) => '');
 
@@ -64,7 +65,6 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
     print("range1=");
     print(num_list);
     if (_selectPlace != '장소') {
-      print("장소ㅗ소솟");
       return FirebaseFirestore.instance
           .collection('category')
           .doc('1234@handong.ac.kr')
@@ -82,15 +82,12 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
           .where('time', isEqualTo: _range1)
           .snapshots();
     }
-    // if(num_list.isNotEmpty)
-    //   print(num_list);
-    //   return FirebaseFirestore.instance.collection('category').doc('user1').collection(query['category']).doc('date').collection('date').where('time', whereIn: num_list).snapshots();
-    // }
+
     return FirebaseFirestore.instance
         .collection('category')
         .doc('1234@handong.ac.kr')
         .collection(query['category'])
-        .snapshots(); //.doc('date').collection('date')
+        .snapshots();
   }
 
   @override
@@ -172,6 +169,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
             ),
             Row(
               children: [
+                //선택,취소버튼
                 Container(
                   margin: EdgeInsets.zero,
                   width: (size.width - 35) / 3,
@@ -194,210 +192,8 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                               _selectCheck = '선택';
                               _selectCheckTextColor = Color(0xFF9FA5B2);
                               _selectCheckIcon = true;
-                              _checks = [
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false,
-                                false
-                              ];
-                              _checks_url = [
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                '',
-                                ''
-                              ];
+                              _checks.fillRange(0, _checks.length-1,false);
+                              _checks_url.fillRange(0, _checks_url.length-1,'');
                             }
                           });
                         },
@@ -405,28 +201,16 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                           pressed ? "취소" : "선택",
                           style: TextStyle(fontSize: 12, color: Colors.grey),
                         )
-                        // Container(
-                        //   child: Center(
-                        //       child: Text(
-                        //         pressed ? "취소" : "선택",
-                        //         style: TextStyle(fontSize: 12, color: Colors.white),
-                        //       )),
-                        //   width: 60,
-                        //   height: 30,
-                        //   decoration: BoxDecoration(
-                        //       color: Color.fromRGBO(58, 148, 238, 1),
-                        //       borderRadius: BorderRadius.circular(100.0)),
-                        //   //padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                        //   //  child: Center(child: Text(_selectCheck, style: TextStyle(color: _selectCheckTextColor))),
-                        // ),
                         ),
                   ),
                 ),
+                //선택,취소버튼
                 Container(
                     width: (size.width - 35) / 3,
                     child: Center(
                       child: Text(
-                        query['category'],
+                          _selectPlace,
+                        // query['category'],
                         style: titleMediumStyle(color: Colors.black),
                       ),
                     )),
@@ -448,11 +232,6 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                 ),
               ],
             ),
-            // Center(
-            //     child: Text(
-            //       query['category'],
-            //       style: titleMediumStyle(color: Colors.black),
-            //     )),
             SizedBox(height: 15),
             Row(
               children: [
@@ -536,15 +315,9 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                                 child: Text('확인'),
                                                 onPressed: () {
                                                   setState(() {
-                                                    _selectDateColor = Colors
-                                                        .blue; //  primary[40]!;
-                                                    _selectDateTextColor =
-                                                        Colors.white;
-                                                    _selectDate = _range1
-                                                            .substring(8, 10) +
-                                                        '.' +
-                                                        _range1.substring(
-                                                            3, 5) +
+                                                    _selectDateColor = Colors.blue; //  primary[40]!;
+                                                    _selectDateTextColor = Colors.white;
+                                                    _selectDate = _range1.substring(8, 10) + '.' + _range1.substring(3, 5) +
                                                         '.' +
                                                         _range1.substring(0, 2);
                                                     _selectDateSize = 80;
@@ -567,95 +340,6 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                       )
                                     ],
                                   ),
-                                  // AlertDialog(
-                                  //   // insetPadding: EdgeInsets.only(top: 350),
-                                  //   content: Container(
-                                  //     height: 420,
-                                  //     width: 360,
-                                  //     child: SfDateRangePicker(
-                                  //       controller: _dataPickerController,
-                                  //       onSelectionChanged: _onSelectionChanged,
-                                  //       //selectionMode: DateRangePickerSelectionMode.range,
-                                  //     ),
-                                  //     // Column(
-                                  //     //   children: [
-                                  //     //     SizedBox(height: 10),
-                                  //     //     SfDateRangePicker(
-                                  //     //       controller: _dataPickerController,
-                                  //     //       onSelectionChanged:
-                                  //     //           _onSelectionChanged,
-                                  //     //       //selectionMode: DateRangePickerSelectionMode.range,
-                                  //     //     ),
-                                  //     //     //SizedBox(height: 30.h),
-                                  //     //     // Container(
-                                  //     //     //     child: Row(
-                                  //     //     //   children: [
-                                  //     //     //     SizedBox(width: 208),
-                                  //     //     //     TextButton(
-                                  //     //     //         child: Text('취소'),
-                                  //     //     //         onPressed: () {
-                                  //     //     //           Navigator.pop(context);
-                                  //     //     //           setState(() {
-                                  //     //     //             _selectDateColor =
-                                  //     //     //                 Color(0XFFF3F4F5);
-                                  //     //     //             _selectDateTextColor =
-                                  //     //     //                 Color(0xFF9FA5B2);
-                                  //     //     //             _range1 = '';
-                                  //     //     //             //_range2 = '';
-                                  //     //     //             _dataPickerController
-                                  //     //     //                     .selectedRanges =
-                                  //     //     //                 null;
-                                  //     //     //           });
-                                  //     //     //         },
-                                  //     //     //         style: TextButton.styleFrom(
-                                  //     //     //             padding:
-                                  //     //     //                 EdgeInsets.zero,
-                                  //     //     //             minimumSize:
-                                  //     //     //                 Size(50, 30),
-                                  //     //     //             tapTargetSize:
-                                  //     //     //                 MaterialTapTargetSize
-                                  //     //     //                     .shrinkWrap,
-                                  //     //     //             alignment: Alignment
-                                  //     //     //                 .centerLeft)),
-                                  //     //     //     SizedBox(width: 32),
-                                  //     //     //     TextButton(
-                                  //     //     //         child: Text('확인'),
-                                  //     //     //         onPressed: () {
-                                  //     //     //           setState(() {
-                                  //     //     //             _selectDateColor = Colors
-                                  //     //     //                 .blue; //  primary[40]!;
-                                  //     //     //             _selectDateTextColor =
-                                  //     //     //                 Colors.white;
-                                  //     //     //             _selectDate = _range1
-                                  //     //     //                     .substring(
-                                  //     //     //                         8, 10) +
-                                  //     //     //                 '.' +
-                                  //     //     //                 _range1.substring(
-                                  //     //     //                     3, 5) +
-                                  //     //     //                 '.' +
-                                  //     //     //                 _range1.substring(
-                                  //     //     //                     0, 2);
-                                  //     //     //             _selectDateSize = 80;
-                                  //     //     //             _selectDateIcon = false;
-                                  //     //     //           });
-                                  //     //     //           Navigator.pop(context);
-                                  //     //     //         },
-                                  //     //     //         style: TextButton.styleFrom(
-                                  //     //     //             padding:
-                                  //     //     //                 EdgeInsets.zero,
-                                  //     //     //             minimumSize:
-                                  //     //     //                 Size(50, 30),
-                                  //     //     //             tapTargetSize:
-                                  //     //     //                 MaterialTapTargetSize
-                                  //     //     //                     .shrinkWrap,
-                                  //     //     //             alignment: Alignment
-                                  //     //     //                 .centerLeft))
-                                  //     //     //   ],
-                                  //     //     // ))
-                                  //     //   ],
-                                  //     // )
-                                  //   ),
-                                  // ),
                                 );
                               },
                             );
@@ -695,142 +379,139 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                             )),
                       ),
                       SizedBox(width: 10),
-
                       // 2. 장소칩
                       InkWell(
                         onTap: () async {
                           setState(() {
                             //var respectsQuery = FirebaseFirestore.instance.collection('category').doc('user1').collection(query['category']).doc('place').collection('place'),
 
+                           //날짜 필터 초기화
                             _selectDateIcon = true;
                             _selectDate = '날짜';
                             _selectDateColor = Color(0XFFF3F4F5);
                             _selectDateTextColor = Color(0xFF9FA5B2);
                             _selectDateSize = 67.2;
                             _range1 = '';
+
+                            //장소 필터 on
                             _selectPlaceColor = Colors.blue; // primary[40]!;
                             _selectPlaceTextColor = Colors.white;
                             place_list = [];
+                            _selectPlaceIcon=true;
                           });
 
                           if (_selectPlaceIcon)
                             showDialog(
                               context: context,
                               builder:(BuildContext context) {
-                                return StatefulBuilder(
-                                    builder: (BuildContext context, StateSetter setState) {
-                                      return AlertDialog(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(30.0),
-                                                topRight: Radius.circular(30.0))),
-                                        insetPadding: EdgeInsets.only(top: 519),
-                                        content: Container(
-                                            height: 244,
-                                            width: 360,
-                                            child: Column(
-                                              children: [
-                                                Row(
-                                                  children: [
-                                                    InkWell(
-                                                      onTap:(){
-                                                        setState(() {
-                                                          place_list.add("장량동");
-                                                          jangrangdong=!jangrangdong;
-
-                                                        });
-
-                                                      },
-                                                      child:   Container(
-                                                          width: size.width*0.236,
-                                                          height: size.height*0.0375,
-                                                          decoration: BoxDecoration(
-                                                              color: !jangrangdong?Color(0xffF3F4F5):_selectPlaceColor,
-                                                              borderRadius: BorderRadius.circular(100.0)),
-                                                          child: Row(
-                                                            mainAxisAlignment: MainAxisAlignment.center,
-                                                            children: [
-                                                              Text(
-                                                                '장량동',
-                                                                style: TextStyle(
-                                                                  fontSize: 12,
-                                                                  color: !jangrangdong?Color(0xff9FA5B2):_selectPlaceTextColor,
-                                                                ),
-                                                              ),
-
-                                                            ],
-                                                          )),
-
-                                                    )
-                                                  ],
-                                                ),
-
-                                                Container(
+                                return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(30.0),
+                                          topRight: Radius.circular(30.0))),
+                                  insetPadding: EdgeInsets.only(top: 519),
+                                  content: Container(
+                                      height: 244,
+                                      width: 360,
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              InkWell(
+                                                onTap:(){
+                                                  setState(() {
+                                                    place_list.add("장량동");
+                                                    jangrangdong=!jangrangdong;
+                                                  });
+                                                },
+                                                child:   Container(
+                                                    width: size.width*0.236,
+                                                    height: size.height*0.0375,
+                                                    decoration: BoxDecoration(
+                                                        color: !jangrangdong?Color(0xffF3F4F5):_selectPlaceColor,
+                                                        borderRadius: BorderRadius.circular(100.0)),
                                                     child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.center,
                                                       children: [
-                                                        SizedBox(width: 208),
-                                                        TextButton(
-                                                            child: Text('취소'),
-                                                            onPressed: () {
-                                                              Navigator.pop(context);
-                                                              setState(() {
-                                                                _selectPlaceColor =
-                                                                    Color(0XFFF3F4F5);
-                                                                _selectPlaceTextColor =
-                                                                    Color(0xFF9FA5B2);
-                                                              });
-                                                            },
-                                                            style: TextButton.styleFrom(
-                                                                padding: EdgeInsets.zero,
-                                                                minimumSize: Size(50, 30),
-                                                                tapTargetSize:
-                                                                MaterialTapTargetSize
-                                                                    .shrinkWrap,
-                                                                alignment: Alignment
-                                                                    .centerLeft)),
-                                                        SizedBox(width:25),
-                                                        TextButton(
-                                                            child: Text('확인'),
-                                                            onPressed: () {
-                                                              print("place_list------->");
-                                                              print(place_list);
-                                                              // setState(() {
-                                                              //   _selectPlaceIcon = false;
-                                                              //   _selectPlaceColor = Colors
-                                                              //       .blue; //  primary[40]!;
-                                                              //   _selectPlaceTextColor =
-                                                              //       Colors.white;
-                                                              //   if (place_list.isEmpty) {
-                                                              //     _selectPlace = '장소';
-                                                              //   } else
-                                                              //     _selectPlace =
-                                                              //     place_list[0];
-                                                              // });
-                                                             setState((){
-                                                               Navigator.pop(context);
-                                                             });
-                                                            },
-                                                            style: TextButton.styleFrom(
-                                                                padding: EdgeInsets.zero,
-                                                                minimumSize: Size(50, 30),
-                                                                tapTargetSize:
-                                                                MaterialTapTargetSize
-                                                                    .shrinkWrap,
-                                                                alignment:
-                                                                Alignment.centerLeft))
+                                                        Text(
+                                                          '장량동',
+                                                          style: TextStyle(
+                                                            fontSize: 12,
+                                                            color: !jangrangdong?Color(0xff9FA5B2):_selectPlaceTextColor,
+                                                          ),
+                                                        ),
+
                                                       ],
-                                                    ))
-                                              ],
-                                            )),
-                                      );
-                                    });
+                                                    )),
+                                              )
+                                            ],
+                                          ),
+
+
+
+                                          Container(
+                                              child: Row(
+                                                children: [
+                                                  SizedBox(width: 208),
+                                                  TextButton(
+                                                      child: Text('취소'),
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                        setState(() {
+                                                          _selectPlaceColor =
+                                                              Color(0XFFF3F4F5);
+                                                          _selectPlaceTextColor =
+                                                              Color(0xFF9FA5B2);
+                                                        });
+                                                      },
+                                                      style: TextButton.styleFrom(
+                                                          padding: EdgeInsets.zero,
+                                                          minimumSize: Size(50, 30),
+                                                          tapTargetSize:
+                                                          MaterialTapTargetSize
+                                                              .shrinkWrap,
+                                                          alignment: Alignment
+                                                              .centerLeft)),
+                                                  SizedBox(width:25),
+                                                  TextButton(
+                                                      child: Text('확인'),
+                                                      onPressed: () {
+                                                        print("place_list------->");
+                                                        print(place_list);
+                                                        setState(() {
+                                                          _selectPlaceIcon = false;
+                                                          _selectPlaceColor = Colors
+                                                              .blue; //  primary[40]!;
+                                                          _selectPlaceTextColor =
+                                                              Colors.white;
+                                                          if (place_list.isEmpty) {
+                                                            _selectPlace = '장소';
+                                                          } else
+                                                            _selectPlace =
+                                                            place_list[0];
+                                                        });
+                                                        Navigator.pop(context);
+                                                      },
+                                                      style: TextButton.styleFrom(
+                                                          padding: EdgeInsets.zero,
+                                                          minimumSize: Size(50, 30),
+                                                          tapTargetSize:
+                                                          MaterialTapTargetSize
+                                                              .shrinkWrap,
+                                                          alignment:
+                                                          Alignment.centerLeft))
+                                                ],
+                                              ))
+                                        ],
+                                      )),
+                                );
                               }
 
                             );
                           else
                             setState(() {
                               _selectPlaceIcon = true;
-                              _selectPlace =jangrangdong?'장량동':'장소';
+                              _selectPlace = '장소';
                               _selectPlaceColor = Color(0XFFF3F4F5);
                               _selectPlaceTextColor = Color(0xFF9FA5B2);
                             });
@@ -847,7 +528,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  jangrangdong?'장량동':'장소',//  _selectPlace,
+                                  _selectPlace,//  _selectPlace,
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: _selectPlaceTextColor,
@@ -939,10 +620,6 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                 ),
                 label: '커뮤니티',
               ),
-              // BottomNavigationBarItem(
-              //   icon: Icon(Icons.add, color: Colors.transparent,),
-              //   label: '카메라',
-              // ),
               BottomNavigationBarItem(
                 icon: Icon(
                   Icons.image,
@@ -1063,33 +740,9 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                         return CircularProgressIndicator();
                       }
                     })
-                // child: GridView.count(
-                //   shrinkWrap: true,
-                //   crossAxisCount: 3,
-                //   mainAxisSpacing: 2, //수평 Padding
-                //   crossAxisSpacing: 2, //수직 Padding
-                //   children: List.generate(21, (index) {  //item 의 반목문 항목 형성
-                //     return InkWell(
-                //         onTap: (){
-                //           Navigator.push(context, MaterialPageRoute(
-                //             builder: (BuildContext context) => Catchbox_detail(),));
-                //         },
-                //         child: Container(
-                //           color: Colors.lightGreen,
-                //           child:
-                //           Image.asset('assets/images/2.jpeg',
-                //               height: 70.w,
-                //               fit : BoxFit.fitWidth),
-                //           //Text(' Item : $index'),
-                //         )
-                //     );
-                //   }),
-                // )
-                //
                 ),
           )),
         ],
-        //),
       )),
     );
   }
