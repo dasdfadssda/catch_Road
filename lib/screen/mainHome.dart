@@ -51,7 +51,8 @@ class _HomePageState extends State<MainHomePage> {
     MYPage(),
   ];
 
-  //String? user = FirebaseAuth.instance.currentUser!.email ?? FirebaseAuth.instance.currentUser!.displayName;
+  String? user = FirebaseAuth.instance.currentUser!.email ??
+      FirebaseAuth.instance.currentUser!.displayName;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

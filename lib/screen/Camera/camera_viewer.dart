@@ -12,6 +12,7 @@ import 'camera_bndbox.dart';
 import 'package:image/image.dart' as imglib;
 import 'package:flutter_isolate/flutter_isolate.dart';
 import 'package:intl/intl.dart';
+
 XFile? pictureFile;
 XFile? imgFile;
 CameraImage? cameraImage;
@@ -22,8 +23,8 @@ late String path;
 late CameraController controller;
 
 List<Uint8List> imageList = [];
-bool issaving=false;
-String ob='';
+bool issaving = false;
+String ob = '';
 
 typedef void Callback(List<dynamic> list, int h, int w);
 
@@ -36,18 +37,16 @@ class CameraViewer extends StatefulWidget {
   CameraViewer(this.cameras, this.model, this.setRecognitions);
 
   @override
-  _CameraViewerState createState(){
-    issaving=false;
+  _CameraViewerState createState() {
+    issaving = false;
     return _CameraViewerState();
   }
 }
 
 class _CameraViewerState extends State<CameraViewer> {
-
   bool isDetecting = false;
 
   FirebaseStorage storage = FirebaseStorage.instance;
-
 
   @override
   void initState() {
@@ -68,11 +67,16 @@ class _CameraViewerState extends State<CameraViewer> {
         controller.startImageStream((CameraImage img) async {
           cameraImage2 = img;
           //*원하는 객체 입력
-          if (((object=='car')||(object=='stop sign')||(object=='bicycle'))&&accuracy>40) {
+          if (((object == 'car') ||
+                  (object == 'stop sign') ||
+                  (object == 'bicycle')) &&
+              accuracy > 40) {
             //path = (await NativeScreenshot.takeScreenshot())!;
             print('$object 저장중');
-            ob=object;
-            setState(() {issaving = true;});
+            ob = object;
+            setState(() {
+              issaving = true;
+            });
             takepicture();
             print('$object 저장 완료 ');
             object = '';
@@ -85,7 +89,6 @@ class _CameraViewerState extends State<CameraViewer> {
               bytesList: img.planes.map((plane) {
                 return plane.bytes;
               }).toList(),
-
               model: widget.model == "YOLO" ? "YOLO" : "SSDMobileNet",
               imageHeight: img.height,
               imageWidth: img.width,
@@ -93,8 +96,7 @@ class _CameraViewerState extends State<CameraViewer> {
               imageStd: widget.model == "YOLO" ? 255.0 : 127.5,
               numResultsPerClass: 1,
               threshold: widget.model == "YOLO" ? 0.2 : 0.4,
-              rotation:90,
-
+              rotation: 90,
             ).then((recognitions) {
               // print("imgggg2 : ${img.width} / ${img.height}");
               int endTime = new DateTime.now().millisecondsSinceEpoch;
@@ -117,7 +119,6 @@ class _CameraViewerState extends State<CameraViewer> {
 
   @override
   Future<void> takepicture() async {
-
     print('is saving1 : $issaving');
     CameraImage image = cameraImage2;
 
@@ -142,14 +143,16 @@ class _CameraViewerState extends State<CameraViewer> {
       //     img.data[index] = (0xFF << 24) | (b << 16) | (g << 8) | r;
       //   }
       // } //너무 오래 걸려서 잠시 생략
-      if(ob=='stop sign'){
-        ob='sign';
+      if (ob == 'stop sign') {
+        ob = 'sign';
       }
       imglib.PngEncoder pngEncoder = new imglib.PngEncoder(level: 0, filter: 0);
       List<int> png = pngEncoder.encodeImage(img);
 
       //firebase에 저장
-      final uploadTask = await storage.ref('/traffic-Image/$ob/$ob${DateTime.now()}.png').putData(Uint8List.fromList(png));//
+      final uploadTask = await storage
+          .ref('/traffic-Image/$ob/$ob${DateTime.now()}.png')
+          .putData(Uint8List.fromList(png)); //
       final url = await uploadTask.ref.getDownloadURL();
       // try {
       //   await FirebaseFirestore.instance
@@ -165,12 +168,12 @@ class _CameraViewerState extends State<CameraViewer> {
       // } catch (e) {
       //   print(e);
       // }
-      setState(() {issaving = false;});
+      setState(() {
+        issaving = false;
+      });
     } catch (e) {
       print(">>>>>>>>>>>> ERROR:" + e.toString());
     }
-
-
   }
 
   @override
@@ -185,37 +188,32 @@ class _CameraViewerState extends State<CameraViewer> {
     var previewRatio = previewH / previewW;
     if (!controller.value.isInitialized) {
       return Container(
-        color:Colors.black.withOpacity(0.5),
+        color: Colors.black.withOpacity(0.5),
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: Center(
-
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                width:100,
-                height:100,
-
+                width: 100,
+                height: 100,
                 child: CircularProgressIndicator(
                   color: Colors.white,
                 ),
               ),
               SizedBox(
-                height:20,
+                height: 20,
               ),
               Text('카메라가 켜지고 있습니다\n 잠시만 기다려주세요',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color:Colors.white,
-                  )
-              )
-
+                    color: Colors.white,
+                  ))
             ],
           ),
         ),
-
       );
     }
 
@@ -232,42 +230,40 @@ class _CameraViewerState extends State<CameraViewer> {
             SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
-              child:  !controller.value.isInitialized?Container(): CameraPreview(controller),
+              child: !controller.value.isInitialized
+                  ? Container()
+                  : CameraPreview(controller),
             ),
-            issaving?Container(
-              color:Colors.black.withOpacity(0.5),
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: Center(
-
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width:100,
-                      height:100,
-
-                      child: CircularProgressIndicator(
-                        color: Colors.white,
+            issaving
+                ? Container(
+                    color: Colors.black.withOpacity(0.5),
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 100,
+                            height: 100,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text('인식된 객체가 저장되고 있습니다\n 잠시만 기다려주세요',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                              ))
+                        ],
                       ),
                     ),
-
-                    SizedBox(
-                      height:20,
-                    ),
-                    Text('인식된 객체가 저장되고 있습니다\n 잠시만 기다려주세요',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color:Colors.white,
-                        )
-                    )
-
-                  ],
-                ),
-              ),
-
-            ):Container()
+                  )
+                : Container()
           ],
         ));
   }
@@ -296,4 +292,3 @@ imglib.Image _convertYUV420(CameraImage image) {
   // } //너무 오래 걸려서 잠시 생략
   return img;
 }
-
