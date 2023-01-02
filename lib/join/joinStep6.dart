@@ -76,9 +76,7 @@ class _joinStep6State extends State<joinStep6> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
                                   // Text({_dateTime}),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
+                                  SizedBox(height: 20),
                                   TextButton(
                                       onPressed: () {
                                         // setState(() {

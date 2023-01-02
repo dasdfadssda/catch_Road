@@ -118,7 +118,7 @@ class _Catchbox2State extends State<Catchbox2> {
                                   child: GridView.count(
                                       shrinkWrap: true,
                                       crossAxisCount: 2,
-                                      childAspectRatio: 16 / 20,
+                                      childAspectRatio: 15.7 / 20,
                                       children: List.generate(
                                         snapshot.data!.docs.length,
                                         (index) {

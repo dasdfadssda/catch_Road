@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'Auth/auth_service.dart';
 import 'firebase_options.dart';
+import 'screen/Community/DetailPage.dart';
 import 'screen/mainHome.dart';
 
 void main() async {
@@ -22,16 +23,18 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         initialRoute: '/',
-        // routes : {    //route 설정
-        // '/' :(context) => MyApp(),
-        // '/detail' : ((context) => DetailScreen())},
+        routes: {
+          //route 설정
+          // '/': (context) => MyApp(),
+          '/detail': ((context) => DetailScreen())
+        },
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.lightBlue,
         ),
         // home: test());
-        // home: MainHomePage());
-        home: AuthService().handleAuthState());
+        home: MainHomePage());
+    // home: AuthService().handleAuthState());
   }
 }
 

@@ -18,9 +18,7 @@ class AuthService {
         if (snapshot.hasData) {
           return MainHomePage();
         } else {
-
           return LoginPage();
-
         }
       },
     );
@@ -211,46 +209,18 @@ LikeFunction(like, id, user) async {
   // 좋아요 기능
   List _likes = like;
   _likes.add(user);
-  var doc = FirebaseFirestore.instance.collection('Product').doc(id);
-  doc.update({'like': _likes, '${user}': user}).whenComplete(
-      () => print('좋아요 업데이트 성공'));
+  var doc = FirebaseFirestore.instance.collection('Contents').doc(id);
+  doc.update({
+    '_like': _likes,
+  }).whenComplete(() => print('좋아요 업데이트 성공'));
 }
 
-Wishlist(
-    user, TitleController, contentsController, priceController, url, wish) {
-  var doc = FirebaseFirestore.instance
-      .collection('${FirebaseAuth.instance.currentUser!.displayName!}Wish')
-      .doc(priceController.text);
-  doc.set({
-    'id': doc.id,
-    'displayName': FirebaseAuth.instance.currentUser!.displayName!,
-    'title': TitleController.text,
-    'content': contentsController.text,
-    'imageUrl': url,
-    'price': priceController.text,
-    'wish': wish
-  }).whenComplete(() => print('데이터 저장 성공'));
-}
-
-wishupdate(user, priceController, num, list) {
-  //
-  var doc = FirebaseFirestore.instance
-      .collection('Product')
-      .doc(priceController.text);
-  if (num == 0) {
-    doc.update({'wish': list}).whenComplete(() => print('위시 성공'));
-  } else {
-    doc.update({'wish': list}).whenComplete(() => print('위시 삭제'));
-  }
-}
-
-wishupdateTowish(user, priceController, num, list) {
-  //
-  var doc =
-      FirebaseFirestore.instance.collection('Product').doc(priceController);
-  if (num == 0) {
-    doc.update({'wish': list}).whenComplete(() => print('위시 성공'));
-  } else {
-    doc.update({'wish': list}).whenComplete(() => print('위시 삭제'));
-  }
+LikeCancelFunction(like, id, user) async {
+  // 좋아요 기능
+  List _likes = like;
+  _likes.remove(user);
+  var doc = FirebaseFirestore.instance.collection('Contents').doc(id);
+  doc.update({
+    '_like': _likes,
+  }).whenComplete(() => print('좋아요 업데이트 성공'));
 }

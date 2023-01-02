@@ -106,7 +106,7 @@ class _add_personalState extends State<add_personal> {*/
       backgroundColor: Color.fromRGBO(243, 244, 245, 0),
       appBar: AppBar(
         backgroundColor: Colors.white,
-        // elevation: 1,
+        elevation: 0,
         centerTitle: true,
         title: Text(
           '오늘의 캐치',
@@ -137,9 +137,10 @@ class _add_personalState extends State<add_personal> {*/
               onSwipe: () {},
               textOff: "모든 프로젝트",
               textOn: "참여 중인 프로젝트",
-              contentSize: 15,
-              colorOn: Color(0xff6682c0),
-              colorOff: const Color(0xff6682c0),
+              contentSize: 16,
+              colorOn: Color(0xff3A94EE),
+              inactiveColor: Color(0xff9FA5B2),
+              colorOff: const Color(0xff3A94EE),
               background: const Color(0xffe4e5eb),
               buttonColor: const Color(0xfff7f5f7),
               // inactiveColor: Colors.red,
@@ -148,10 +149,21 @@ class _add_personalState extends State<add_personal> {*/
         ),
         Padding(
           padding: EdgeInsets.only(
-              right: size.width * 0.6, bottom: size.height * 0.03),
-          child: Text(
-            "캐치가 추천해요!",
-            style: titleSmallStyle(color: Color(0xff9FA5B2)),
+              left: size.width * 0.06, bottom: size.height * 0.02),
+          child: Row(
+            children: [
+              Text(
+                "캐치가 추천해요!",
+                style: TextStyle(
+                    fontFamily: 'NotoSansKR',
+                    fontWeight: FontWeight.w700,
+                    fontSize: 10,
+                    height: 20 / 14,
+                    letterSpacing: 0.1,
+                    color: Color(0xff9FA5B2)),
+              ),
+              Spacer()
+            ],
           ),
         ),
         Expanded(
@@ -178,7 +190,7 @@ class _add_personalState extends State<add_personal> {*/
                                 right: size.width * 0.05,
                                 bottom: size.height * 0.01),
                             child: Card(
-                              elevation: 0.2,
+                              elevation: 3,
                               shape: RoundedRectangleBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(16))),
@@ -259,13 +271,13 @@ class _add_personalState extends State<add_personal> {*/
                                       Container(
                                         margin: EdgeInsets.only(
                                             left: size.width * 0.05,
-                                            bottom: size.height * 0.03,
+                                            bottom: size.height * 0.02,
                                             top: size.height * 0.01),
                                         width: size.width * 0.60,
                                         height: size.height * 0.01,
                                         child: ClipRRect(
                                           borderRadius: BorderRadius.all(
-                                              Radius.circular(16)),
+                                              Radius.circular(46)),
                                           child: LinearProgressIndicator(
                                             value: snapshot.data!
                                                     .docs[index]['percentage']
@@ -303,10 +315,13 @@ class _add_personalState extends State<add_personal> {*/
                                         padding: EdgeInsets.only(
                                             bottom: size.height * 0.02,
                                             left: size.width * 0.01),
-                                        child: Text(snapshot
-                                                .data!.docs[index]['cash']
-                                                .toString() +
-                                            "00"),
+                                        child: Text(
+                                          snapshot.data!.docs[index]['cash']
+                                                  .toString() +
+                                              "00",
+                                          style: labelMediumStyle(
+                                              color: Color(0xff1A1A1A)),
+                                        ),
                                       )
                                     ],
                                   ),
@@ -328,7 +343,7 @@ class _add_personalState extends State<add_personal> {*/
                               right: size.width * 0.05,
                               bottom: size.height * 0.01),
                           child: Card(
-                            elevation: 0.2,
+                            elevation: 1,
                             shape: RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(16))),
@@ -384,13 +399,21 @@ class _add_personalState extends State<add_personal> {*/
                                       Container(
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.all(
-                                              Radius.circular(10)),
-                                          color: Color(0xffF3F4F5),
+                                              Radius.circular(20)),
+                                          border: Border.all(
+                                            width: 1,
+                                            color: Color(0xffCFD2D9),
+                                          ),
+                                          color: Colors.white,
                                         ),
                                         margin: EdgeInsets.only(
                                             top: size.height * 0.01),
                                         child: Padding(
-                                          padding: EdgeInsets.all(8),
+                                          padding: EdgeInsets.only(
+                                              top: size.height * 0.005,
+                                              bottom: size.height * 0.005,
+                                              left: size.width * 0.02,
+                                              right: size.width * 0.02),
                                           child: Text(
                                             snapshot.data!.docs[index]['type']
                                                 .toString(),
@@ -461,10 +484,13 @@ class _add_personalState extends State<add_personal> {*/
                                       padding: EdgeInsets.only(
                                           bottom: size.height * 0.02,
                                           left: size.width * 0.01),
-                                      child: Text(snapshot
-                                              .data!.docs[index]['cash']
-                                              .toString() +
-                                          "00"),
+                                      child: Text(
+                                        snapshot.data!.docs[index]['cash']
+                                                .toString() +
+                                            "00",
+                                        style: labelMediumStyle(
+                                            color: Color(0xff1A1A1A)),
+                                      ),
                                     )
                                   ],
                                 ),

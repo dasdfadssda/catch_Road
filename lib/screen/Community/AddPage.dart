@@ -119,9 +119,9 @@ var _scaffoldKey = new GlobalKey<ScaffoldState>();
       margin: EdgeInsets.fromLTRB(50, 0, 8, 3),
       padding: _road ? EdgeInsets.fromLTRB(14, 8.5, 14, 7) : EdgeInsets.fromLTRB(15, 8.5, 15, 7),
       height: 30,
-      child: _road ? Text('도로 위가 궁금해요',style:  labelSmallStyle(color: Colors.white)) : Text('캐치가 궁금해요',style: labelSmallStyle(color: Colors.white), textAlign: TextAlign.center,),
+      child: _road ? Text('도로 위가 궁금해요',style: labelMediumStyle(color:Colors.white),textAlign: TextAlign.center) : Text('캐치가 궁금해요',style: labelMediumStyle(color: Colors.white), textAlign: TextAlign.center,),
        decoration: BoxDecoration(
-         borderRadius: BorderRadius.circular(100),
+         borderRadius: BorderRadius.circular(6),
           color: Color(0XFF3A94EE),
         ),
     );
@@ -149,7 +149,7 @@ var _scaffoldKey = new GlobalKey<ScaffoldState>();
           margin: EdgeInsets.fromLTRB(42, 12, 26, 0),
           child: Row(children: [ // 버튼 부분 
  Container(
-   width: 151,
+   width: 153,
    child: ElevatedButton(
            style: ElevatedButton.styleFrom(
              shape: RoundedRectangleBorder(
@@ -171,9 +171,9 @@ var _scaffoldKey = new GlobalKey<ScaffoldState>();
            }, 
        child: Text('도로 위가 궁금해요')),
  ),
-     SizedBox(width: 6,),
+     SizedBox(width: 20),
      Container(
-       width: 140,
+       width: 153,
       //  height: 200,
        child: ElevatedButton(
            style: ElevatedButton.styleFrom(
@@ -208,7 +208,7 @@ var _scaffoldKey = new GlobalKey<ScaffoldState>();
                   Navigator.pop(context);
                 },
                   child: Text('취소',style: labelSmallStyle(color: Color(0XFF9FA5B2))),),
-                  SizedBox(width: 180),
+                  SizedBox(width: 210),
                   TextButton(
                 onPressed: (){
                   setState(() {
