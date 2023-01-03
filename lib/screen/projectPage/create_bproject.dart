@@ -266,8 +266,7 @@ class _CreateBprojectState extends State<CreateBproject> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          projectPage(),
+                      builder: (BuildContext context) =>projectPage(),
                     ));
                 Image_upload().then(create());
               }
