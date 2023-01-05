@@ -6,10 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 //import '../utils/app_text_styles.dart';
-import '../../utils/app_text_styles.dart';
 import 'catchbox_detail.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'dart:math' as math;
 
 class Catchbox extends StatefulWidget {
   const Catchbox({Key? key}) : super(key: key);
@@ -55,133 +53,108 @@ class _CatchboxState extends State<Catchbox> {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-    bool isSearch = false;
     TextTheme textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
-        elevation: 1,
-        title: Center(
-            child: Text(
-          '캐치박스',
-          style: titleMediumStyle(color: Colors.black),
-        )),
+        leading: IconButton(
+          padding: EdgeInsets.zero,
+          icon: Image.asset("assets/icons/icon_back.png"),
+          onPressed: (){
+         //   Get.back();
+          },
+        ),
+        centerTitle: true,
+        title: Text('캐치박스'),//,style: titleMedium.copyWith(color: Colors.black),),
+        elevation: 0,
       ),
       body: Container(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            //Text(''),
             Expanded(
                 child: StreamBuilder<QuerySnapshot>(
-                    stream: FirebaseFirestore.instance
-                        .collection('category')
-                        .doc("1234@handong.ac.kr")
-                        .collection('category')
-                        .orderBy('order', descending: false)
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return Center(
-                          child: Container(
-                            margin: EdgeInsets.fromLTRB(size.width * 0.05,
-                                size.width * 0.04, size.width * 0.00, 0),
-                            child: Center(
-                                child: GridView.count(
-                                    shrinkWrap: true,
-                                    crossAxisCount: 2,
-                                    childAspectRatio: 18 / 20,
-                                    children: List.generate(
-                                      snapshot.data!.docs.length,
-                                      (index) {
-                                        QueryDocumentSnapshot x =
-                                            snapshot.data!.docs[index];
-                                        return InkWell(
-                                          onTap: () {
-                                            //_selectedDate = '';
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (BuildContext
-                                                          context) =>
-                                                      Catchbox_detail(query: x),
-                                                ));
-                                            // 밑에꺼로 정보 넘겨줘야함.
-                                            //Catchbox_detail(query: x),));
-                                          },
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              SizedBox(
-                                                height: 165.7,
-                                                width: 165.7,
-                                                child: Card(
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              4.76),
-                                                    ),
-                                                    clipBehavior:
-                                                        Clip.antiAlias,
-                                                    child: Transform.rotate(
-                                                      angle: (x['category'] ==
-                                                                  'kickboard' ||
-                                                              x['category'] ==
-                                                                  'traffic light')
-                                                          ? 0
-                                                          : 90 * math.pi / 180,
-                                                      child: Image.network(
-                                                        x['new'],
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    )),
+                    stream: FirebaseFirestore.instance.collection('category').doc(FirebaseAuth.instance.currentUser!.email).collection('category').orderBy('category', descending: true).snapshots(),
+                    builder: (context, snapshot){
+                      if(snapshot.hasData){
+                        return Container(
+                          margin: EdgeInsets.fromLTRB(15.w, 0, 15.w, 10.h),
+                          child: Center(
+                              child: GridView.count(
+                                  shrinkWrap: true,
+                                  crossAxisCount: 2,
+                                  childAspectRatio: 19 / 20,
+                                  children: List.generate(snapshot.data!.docs.length, (index) {
+                                    QueryDocumentSnapshot x = snapshot.data!.docs[index];
+                                    return InkWell(
+                                      onTap: (){
+                                        //_selectedDate = '';
+                                        Navigator.push(context, MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              Catchbox_detail(query: x),));
+                                        // 밑에꺼로 정보 넘겨줘야함.
+                                        //Catchbox_detail(query: x),));
+                                      },
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            height: 165.65.h,
+                                            width: 160.65.w,
+                                            child: Card(
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(4.76),
                                               ),
-                                              SizedBox(height: 2),
-                                              Container(
-                                                  child: Row(
+
+                                              clipBehavior: Clip.antiAlias,
+                                              child: Image.network(
+                                                x['new'],
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(height: 2.h),
+                                          Container(
+                                              child: Row(
                                                 children: [
-                                                  SizedBox(width: 5),
+                                                  SizedBox(width: 5.w),
                                                   Container(
                                                       child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        x['category'],
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .labelLarge,
-                                                        maxLines: 1,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                      ),
-                                                      //const SizedBox(height: 8.0),
-                                                      // Text(
-                                                      //   "${snapshot.data!.docs[index]['count']}",
-                                                      //   //FirebaseFirestore.instance.collection('category').doc('user1').collection(snapshot.data!.docs[index]['category']).doc('date').collection('date').snapshots().length.toString(),
-                                                      //   style: Theme.of(context).textTheme.labelSmall,
-                                                      // ),
-                                                    ],
-                                                  ))
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                          Text(
+                                                            x['category'],
+                                                            style: Theme.of(context).textTheme.labelMedium,
+                                                            maxLines:1,
+                                                            overflow: TextOverflow.ellipsis,
+                                                          ),
+                                                          //const SizedBox(height: 8.0),
+                                                          // Text(
+                                                          //   "${snapshot.data!.docs[index]['count']}",
+                                                          //   //FirebaseFirestore.instance.collection('category').doc('user1').collection(snapshot.data!.docs[index]['category']).doc('date').collection('date').snapshots().length.toString(),
+                                                          //   style: Theme.of(context).textTheme.labelSmall,
+                                                          // ),
+                                                        ],
+                                                      )
+                                                  )
                                                 ],
-                                              )),
-                                              //SizedBox(height: 12)
-                                            ],
+                                              )
                                           ),
-                                        );
-                                      },
-                                    ))),
+                                          //SizedBox(height: 12)
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                  )
+                              )
                           ),
                         );
-                      } else {
+                      }
+                      else{
                         return Center(child: CircularProgressIndicator());
                       }
-                    })),
+                    }
+                )
+            ),
           ],
         ),
       ),
