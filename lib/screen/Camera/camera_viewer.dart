@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'dart:typed_data';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:camera/camera.dart';
-import 'package:tflite/tflite.dart';
+// import 'package:tflite/tflite.dart';
 import 'dart:math' as math;
 import 'camera_bndbox.dart';
 import 'package:image/image.dart' as imglib;
@@ -82,29 +82,29 @@ class _CameraViewerState extends State<CameraViewer> {
             object = '';
           }
           setState(() {});
-          if (!isDetecting) {
-            isDetecting = true;
-            int startTime = new DateTime.now().millisecondsSinceEpoch;
-            Tflite.detectObjectOnFrame(
-              bytesList: img.planes.map((plane) {
-                return plane.bytes;
-              }).toList(),
-              model: widget.model == "YOLO" ? "YOLO" : "SSDMobileNet",
-              imageHeight: img.height,
-              imageWidth: img.width,
-              imageMean: widget.model == "YOLO" ? 0 : 127.5,
-              imageStd: widget.model == "YOLO" ? 255.0 : 127.5,
-              numResultsPerClass: 1,
-              threshold: widget.model == "YOLO" ? 0.2 : 0.4,
-              rotation: 90,
-            ).then((recognitions) {
-              // print("imgggg2 : ${img.width} / ${img.height}");
-              int endTime = new DateTime.now().millisecondsSinceEpoch;
-              print("Detection took ${endTime - startTime}");
-              widget.setRecognitions(recognitions!, img.height, img.width);
-              isDetecting = false;
-            });
-          }
+          // if (!isDetecting) {
+          //   isDetecting = true;
+          //   int startTime = new DateTime.now().millisecondsSinceEpoch;
+          //   Tflite.detectObjectOnFrame(
+          //     bytesList: img.planes.map((plane) {
+          //       return plane.bytes;
+          //     }).toList(),
+          //     model: widget.model == "YOLO" ? "YOLO" : "SSDMobileNet",
+          //     imageHeight: img.height,
+          //     imageWidth: img.width,
+          //     imageMean: widget.model == "YOLO" ? 0 : 127.5,
+          //     imageStd: widget.model == "YOLO" ? 255.0 : 127.5,
+          //     numResultsPerClass: 1,
+          //     threshold: widget.model == "YOLO" ? 0.2 : 0.4,
+          //     rotation: 90,
+          //   ).then((recognitions) {
+          //     // print("imgggg2 : ${img.width} / ${img.height}");
+          //     int endTime = new DateTime.now().millisecondsSinceEpoch;
+          //     print("Detection took ${endTime - startTime}");
+          //     widget.setRecognitions(recognitions!, img.height, img.width);
+          //     isDetecting = false;
+          //   });
+          // }
         });
         setState(() {});
       });

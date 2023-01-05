@@ -1,4 +1,7 @@
+import 'package:catch2_0_1/Auth/user_information.dart';
+import 'package:catch2_0_1/LoginPage.dart';
 import 'package:flutter/material.dart';
+import '../Auth/auth_service.dart';
 import '../utils/app_text_styles.dart';
 
 class joinStep6 extends StatefulWidget {
@@ -9,6 +12,9 @@ class joinStep6 extends StatefulWidget {
 }
 
 class _joinStep6State extends State<joinStep6> {
+  final Bankcontroller = TextEditingController();
+  final BankNumcontroller = TextEditingController();
+  final BankNamecontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -69,25 +75,28 @@ class _joinStep6State extends State<joinStep6> {
                     height: size.height * 0.08,
                     child: TextField(
                       onTap: () {
-                        showModalBottomSheet(
-                            context: context,
-                            builder: (context) {
-                              return Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  // Text({_dateTime}),
-                                  SizedBox(height: 20),
-                                  TextButton(
-                                      onPressed: () {
-                                        // setState(() {
-                                        //   _dateTime
-                                        // });
-                                      },
-                                      child: Text("확인"))
-                                ],
-                              );
-                            });
+                        // showModalBottomSheet(
+                        //     context: context,
+                        //     builder: (context) {
+                        //       return Column(
+                        //         mainAxisSize: MainAxisSize.min,
+                        //         children: <Widget>[
+                        //           // Text({_dateTime}),
+                        //           SizedBox(
+                        //             height: 20,
+                        //           ),
+                        //           TextButton(
+                        //               onPressed: () {
+                        //                 // setState(() {
+                        //                 //   _dateTime
+                        //                 // });
+                        //               },
+                        //               child: Text("확인"))
+                        //         ],
+                        //       );
+                        //     });
                       },
+                      controller: Bankcontroller,
                       style: TextStyle(fontSize: 13),
                       decoration: InputDecoration(
                           focusColor: Color.fromARGB(6, 61, 50, 50),
@@ -148,6 +157,7 @@ class _joinStep6State extends State<joinStep6> {
                     height: size.height * 0.08,
                     child: TextField(
                       style: TextStyle(fontSize: 13),
+                      controller: BankNumcontroller,
                       decoration: InputDecoration(
                           focusColor: Color.fromARGB(6, 61, 50, 50),
                           contentPadding: EdgeInsets.only(
@@ -206,6 +216,7 @@ class _joinStep6State extends State<joinStep6> {
                   SizedBox(
                     height: size.height * 0.08,
                     child: TextField(
+                      controller: BankNamecontroller,
                       style: TextStyle(fontSize: 13),
                       decoration: InputDecoration(
                           focusColor: Color.fromARGB(6, 61, 50, 50),
@@ -260,20 +271,22 @@ class _joinStep6State extends State<joinStep6> {
               height: size.height * 0.08,
               child: OutlinedButton(
                   style: OutlinedButton.styleFrom(
-                      disabledBackgroundColor: Color(0xff3A94EE),
-                      foregroundColor: Color(0xff3A94EE),
                       backgroundColor: Color(0xff3A94EE),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(30)))),
                   onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   PageRouteBuilder(
-                    //       pageBuilder: (_, __, ___) => joinStep7(),
-                    //       transitionDuration: Duration(seconds: 0),
-                    //       transitionsBuilder: (_, a, __, c) =>
-                    //           FadeTransition(opacity: a, child: c)),
-                    // );
+                    Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                          pageBuilder: (_, __, ___) => LoginPage(),
+                          transitionDuration: Duration(seconds: 0),
+                          transitionsBuilder: (_, a, __, c) =>
+                              FadeTransition(opacity: a, child: c)),
+                    );
+                    code().bank = Bankcontroller.text;
+                    code().bankName = BankNamecontroller.text;
+                    code().bankNum = BankNumcontroller.text;
+                    signUpWithEmailAndPassword();
                   },
                   child: Text(
                     "다음",

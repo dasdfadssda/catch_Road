@@ -207,6 +207,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                 ),
         ),
       ),
+
       ///////////// bottom ////////////////
       // bottomNavigationBar: Container(
       //   decoration: BoxDecoration(
@@ -1084,6 +1085,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
           ],
         ),
       ),
+
       body:
           // SafeArea(
           //   child: _widgetOptions.elementAt(_selectedIndex),

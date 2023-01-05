@@ -1,6 +1,6 @@
-import 'package:catch2_0_1/join/joinPage.dart';
 import 'package:flutter/material.dart';
 import 'Auth/auth_service.dart';
+import 'join/joinPage.dart';
 import 'screen/Camera/camera_load.dart';
 import 'screen/mainHome.dart';
 import 'utils/app_text_styles.dart';
@@ -192,7 +192,7 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: ()
                           //MainHomePage
                           {
-                        //signInWithGoogle();
+                        // signInWithGoogle();
 
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
@@ -223,10 +223,16 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      'assets/icons/google.png',
-                      width: 50,
-                    ),
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.white, elevation: 0),
+                        onPressed: () {
+                          signInWithGoogle();
+                        },
+                        child: Image.asset(
+                          'assets/icons/google.png',
+                          width: 50,
+                        )),
                     SizedBox(
                       width: size.width * 0.04,
                     ),
@@ -378,7 +384,9 @@ class _forgotLoginState extends State<forgotLogin> {
           Padding(
             padding: EdgeInsets.only(top: size.height * 0.01),
             child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  signInWithGoogle();
+                },
                 child: Text("비밀번호를 잊으셨나요?",
                     style: TextStyle(
                         fontSize: 12,

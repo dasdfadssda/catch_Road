@@ -36,6 +36,7 @@ class _HomePageState extends State<MainHomePage> {
   Color? bgColorBottomNavigationBar;
   Color? iconColor;
   int _selectedIndex = 0;
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -51,8 +52,8 @@ class _HomePageState extends State<MainHomePage> {
     MYPage(),
   ];
 
-  String? user = FirebaseAuth.instance.currentUser!.email ??
-      FirebaseAuth.instance.currentUser!.displayName;
+  // String? user = FirebaseAuth.instance.currentUser!.email ??
+  // FirebaseAuth.instance.currentUser!.displayName;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,7 +110,6 @@ class _HomePageState extends State<MainHomePage> {
                 label: '마이페이지',
               ),
             ],
-
             currentIndex: _selectedIndex,
             //selectedLabelStyle: Theme.of(context).primaryTextTheme.caption,
             showUnselectedLabels: true,

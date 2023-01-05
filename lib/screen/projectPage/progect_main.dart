@@ -182,8 +182,9 @@ class _add_personalState extends State<add_personal> {*/
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index) {
                         QueryDocumentSnapshot x = snapshot.data!.docs[index];
-
-                        if (snapshot.data!.docs[index]['participate'] == 1)
+                        //if (snapshot.data!.docs[index]['participate'] == 1)
+                        if (snapshot.data!.docs[index]['part_user']
+                            .contains('1234@handong.ac.kr'))
                           return Padding(
                             padding: EdgeInsets.only(
                                 left: size.width * 0.05,
@@ -330,7 +331,12 @@ class _add_personalState extends State<add_personal> {*/
                             ),
                           );
                         else
-                          return Container();
+                          return Container(
+                            child: Text(
+                              'asdfsdfgsdf',
+                              style: TextStyle(color: Colors.amber),
+                            ),
+                          );
                       });
                 if (part == false)
                   return ListView.builder(

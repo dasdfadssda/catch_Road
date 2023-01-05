@@ -1,3 +1,4 @@
+import 'package:catch2_0_1/Auth/user_information.dart';
 import 'package:flutter/material.dart';
 import '../utils/app_text_styles.dart';
 import 'joinStep5.dart';
@@ -10,6 +11,8 @@ class joinStep4 extends StatefulWidget {
 }
 
 class _joinStep4State extends State<joinStep4> {
+  final _formNickKey = GlobalKey<FormState>();
+  final Nicknamecontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -68,51 +71,56 @@ class _joinStep4State extends State<joinStep4> {
                   ),
                   SizedBox(
                     height: size.height * 0.08,
-                    child: TextField(
-                      style: TextStyle(fontSize: 13),
-                      decoration: InputDecoration(
-                          focusColor: Color.fromARGB(6, 61, 50, 50),
-                          contentPadding: EdgeInsets.only(
-                              top: size.height * 0.01, left: size.width * 0.04),
-                          hintText: 'Catcher',
-                          errorText: '',
-                          errorStyle: labelSmallStyle(color: Colors.red),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(36.0)),
-                            borderSide: BorderSide(
-                                width: 0.5,
-                                color: Color.fromRGBO(0, 0, 0, 0.2)),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(36.0)),
-                            borderSide: BorderSide(
-                                width: 0.5,
-                                color: Color.fromRGBO(0, 0, 0, 0.2)),
-                          ),
-                          hintStyle: bodyMediumStyle(color: Color(0xff9FA5B2)),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(36.0)),
-                            borderSide: BorderSide(
-                                width: 0.5,
-                                color: Color.fromRGBO(0, 0, 0, 0.2)),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(36.0)),
-                            borderSide: BorderSide(
-                                width: 0.5,
-                                color: Color.fromRGBO(0, 0, 0, 0.2)),
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(36.0)),
-                          ),
-                          filled: true,
-                          fillColor: Colors.white),
-                      keyboardType: TextInputType.text,
+                    child: Form(
+                      child: TextFormField(
+                        controller: Nicknamecontroller,
+                        style: TextStyle(fontSize: 13),
+                        decoration: InputDecoration(
+                            focusColor: Color.fromARGB(6, 61, 50, 50),
+                            contentPadding: EdgeInsets.only(
+                                top: size.height * 0.01,
+                                left: size.width * 0.04),
+                            hintText: 'Catcher',
+                            errorText: '',
+                            errorStyle: labelSmallStyle(color: Colors.red),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(36.0)),
+                              borderSide: BorderSide(
+                                  width: 0.5,
+                                  color: Color.fromRGBO(0, 0, 0, 0.2)),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(36.0)),
+                              borderSide: BorderSide(
+                                  width: 0.5,
+                                  color: Color.fromRGBO(0, 0, 0, 0.2)),
+                            ),
+                            hintStyle:
+                                bodyMediumStyle(color: Color(0xff9FA5B2)),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(36.0)),
+                              borderSide: BorderSide(
+                                  width: 0.5,
+                                  color: Color.fromRGBO(0, 0, 0, 0.2)),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(36.0)),
+                              borderSide: BorderSide(
+                                  width: 0.5,
+                                  color: Color.fromRGBO(0, 0, 0, 0.2)),
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(36.0)),
+                            ),
+                            filled: true,
+                            fillColor: Colors.white),
+                        keyboardType: TextInputType.text,
+                      ),
                     ),
                   ),
                 ],
@@ -123,8 +131,6 @@ class _joinStep4State extends State<joinStep4> {
               height: size.height * 0.08,
               child: OutlinedButton(
                   style: OutlinedButton.styleFrom(
-                      disabledBackgroundColor: Color(0xff3A94EE),
-                      foregroundColor: Color(0xff3A94EE),
                       backgroundColor: Color(0xff3A94EE),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(30)))),
@@ -137,6 +143,11 @@ class _joinStep4State extends State<joinStep4> {
                           transitionsBuilder: (_, a, __, c) =>
                               FadeTransition(opacity: a, child: c)),
                     );
+                    if (Nicknamecontroller == '') {
+                      code().nickname = code().email;
+                    } else {
+                      code().nickname = Nicknamecontroller.text;
+                    }
                   },
                   child: Text(
                     "다음",
