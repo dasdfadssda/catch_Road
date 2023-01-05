@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 
 class MyWidget {
   Widget logoImage() {
-  return Container(
-    height: 49,
-    width: 111,
-    alignment: Alignment.topCenter,
-    child: Image.asset('assets/LOGO.jpg'),
-  );
-}
+    return Container(
+      height: 49,
+      width: 111,
+      alignment: Alignment.topCenter,
+      child: Image.asset('assets/LOGO.jpg'),
+    );
+  }
 
-  Widget IconImage(){
+  Widget IconImage() {
     return Image.asset(
       '',
       height: 70,
@@ -21,32 +21,39 @@ class MyWidget {
 
   Widget EnterRoomButton() {
     return IconButton(
-      onPressed: (){},
-      icon: Image.asset('assets/Make_room_button.png',
-      height: 200,
-      width: 145,
-      )
-      );
+        onPressed: () {},
+        icon: Image.asset(
+          'assets/Make_room_button.png',
+          height: 200,
+          width: 145,
+        ));
   }
 
-   Widget MakeRoomButton() {
+  Widget MakeRoomButton() {
     return IconButton(
-      onPressed: (){},
-      icon: Image.asset('assets/Go_room_button.png',
-      height: 200,
-      width: 145,
-      )
-      );
+        onPressed: () {},
+        icon: Image.asset(
+          'assets/Go_room_button.png',
+          height: 200,
+          width: 145,
+        ));
   }
 
   Widget DivderLine() {
     return Divider(
-      color: Color(0XFFE7E8EC),
-      height: 1,
-      thickness: 1,
-      indent: 15,
-      endIndent: 15
-    );
+        color: Color(0XFFE7E8EC),
+        height: 10,
+        thickness: 1,
+        indent: 3,
+        endIndent: 5);
   }
 
+  Widget DivderLineMyCash() {
+    return Divider(
+        color: Color(0XFFE7E8EC),
+        height: 20,
+        thickness: 1,
+        indent: 15,
+        endIndent: 15);
+  }
 }

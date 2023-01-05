@@ -38,7 +38,7 @@ TextStyle displaySmallStyle({Color? color}) {
       fontWeight: FontWeight.w700,
       fontSize: 36,
       height: 44 / 36,
-      letterSpacing: -0.25,
+      letterSpacing: 0,
       color: color);
 }
 
