@@ -30,6 +30,10 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
   String _selectedDate = '';
   String _rangeCount = '';
   String _range1 = '';
+  String _range2 = '';
+  String _month_0 = '';
+  String _day_0 = '';
+  int count = 0;
 
   //String _range2 = '';
   List<String> num_list = [];
@@ -37,6 +41,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
   List<String> placenamelist=['장성동','흥해읍','양덕동'];//,'장량동','환호동','두호동','우현동','창포동','죽도동'];
   List<bool> _checks = List.generate(1000, (_) => false);
   List<String> _checks_url = List.generate(1000, (_) => '');
+  List<String> _checks_docs = List.generate(1000, (_) => '');
 
   // 1
   String _selectDate = '날짜';
@@ -79,7 +84,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
           .collection('category')
           .doc('1234@handong.ac.kr')
           .collection(query['category'])
-          .where('time', isEqualTo: _range1)
+          .where('time', whereIn: num_list)
           .snapshots();
     }
 
@@ -101,29 +106,78 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
     void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
       setState(() {
         if (args.value is PickerDateRange) {
-          //List<int> days = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-          //_range1 = '${DateFormat('dd/MM/yyyy').format(args.value.Date)}';
-          //_range2 = '${DateFormat('dd/MM/yyyy').format(args.value.endDate ?? args.value.startDate)}';
-          // I tried to use whereIn(), but only 10 elements are available.
-          // for(int i = int.parse(_range1.substring(3,5)); i<= int.parse(_range2.substring(3,5)); i++){
-          //   if(i == int.parse(_range1.substring(3,5)))
-          //     for(int j = int.parse(_range1.substring(0,2)); j < days[i]; j++){
-          //       String temp = (j.toString()) + (i.toString()) + _range1.substring(5,8);
-          //       num_list.add(temp);
-          //     }
-          //   if(i == _range2.substring(3,5))
-          //     for(int j = 1; j <= int.parse(_range2.substring(0,2)); j++){
-          //       String temp = j.toString() + i.toString() + _range1.substring(5,8);
-          //       num_list.add(temp);
-          //     }
-          //   else
-          //     for(int j = 1; j <= days[i]; j++){
-          //       String temp = j.toString() + i.toString() + _range1.substring(4,8);
-          //       num_list.add(temp);
-          //     }
-          //   print(i);
-          // }
-          //print(num_list);
+          List<int> days = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+          _range1 = '${DateFormat('dd/MM/yyyy').format(args.value.startDate)}';
+          _range2 = '${DateFormat('dd/MM/yyyy').format(args.value.endDate)}';
+          //I tried to use whereIn(), but only 10 elements are available.
+          print("here!!!!");
+          print(_range1);
+          print(_range2);
+          print(_range1.substring(3,5));
+          count = 0;
+
+          for(int i = int.parse(_range1.substring(3,5)); i <= int.parse(_range2.substring(3,5)); i++){
+              if(int.parse(_range2.substring(3,5)) == int.parse(_range1.substring(3,5))){
+                if(count < 10)
+                  for(int j = int.parse(_range1.substring(0,2)); j <= int.parse(_range2.substring(0,2)); j++){
+                    //format 맞추기 위해서
+                    if(j.toString().length == 1){
+                      _month_0 = '0' + j.toString();
+                    }
+                    else _month_0 = j.toString();
+
+                    if(j.toString().length == 1){
+                      _day_0 = '0' + i.toString();
+                    }
+                    else _day_0 = i.toString();
+                    String temp = _month_0 + '/'+  _day_0 + '/' + _range1.substring(6,10);
+                    num_list.add(temp);
+                    count ++;
+                    if(count == 10) break;
+                  }
+              }
+
+              else{
+                if(count < 10){
+                  if(i == int.parse(_range1.substring(3,5)))
+                    for(int j = int.parse(_range1.substring(0,2)); j <= days[i]; j++){
+                      //format 맞추기 위해서
+                      if(j.toString().length == 1){
+                        _month_0 = '0' + j.toString();
+                      }
+                      else _month_0 = j.toString();
+
+                      if(j.toString().length == 1){
+                        _day_0 = '0' + i.toString();
+                      }
+                      else _day_0 = i.toString();
+                      String temp = _month_0 + '/'+  _day_0 + '/' + _range1.substring(6,10);
+                      num_list.add(temp);
+                      count ++;
+                      if(count == 10) break;
+                    }
+                  if(i == int.parse(_range2.substring(3,5)))
+                    for(int j = 1; j <= int.parse(_range2.substring(0,2)); j++){
+                      //format 맞추기 위해서
+                      if(j.toString().length == 1){
+                        _month_0 = '0' + j.toString();
+                      }
+                      else _month_0 = j.toString();
+
+                      if(j.toString().length == 1){
+                        _day_0 = '0' + i.toString();
+                      }
+                      else _day_0 = i.toString();
+                      String temp = _month_0 + '/'+  _day_0 + '/' + _range1.substring(6,10);
+                      num_list.add(temp);
+                      count ++;
+                      if(count == 10) break;
+                    }
+                }
+              }
+              print(i);
+            }
+
           //print(args.value.startDate - args.value.endDate);
         } else if (args.value is DateTime) {
           _selectedDate = args.value.toString();
@@ -165,71 +219,40 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
-              height: 20,
+              height: 30,
             ),
             Row(
               children: [
-                //선택,취소버튼
-                Container(
-                  margin: EdgeInsets.zero,
-                  width: (size.width - 35) / 3,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: TextButton(
-                        onPressed: () {
-                          print(_checks);
-                          setState(() {
-                            if (_selectCheckIcon) {
-                              pressed = true;
-                              _selectCheck = '취소';
-                              _selectCheckColor = Colors.blue; // primary[40]!;
-                              _selectCheckTextColor = Color(0XFFF3F4F5);
-                              // _selectPlaceTextColor = Colors.red;
-                              _selectCheckIcon = false;
-                            } else {
-                              pressed = false;
-                              _selectCheckColor = Color(0XFFF3F4F5);
-                              _selectCheck = '선택';
-                              _selectCheckTextColor = Color(0xFF9FA5B2);
-                              _selectCheckIcon = true;
-                              _checks.fillRange(0, _checks.length-1,false);
-                              _checks_url.fillRange(0, _checks_url.length-1,'');
-                            }
-                          });
-                        },
-                        child: Text(
-                          pressed ? "취소" : "선택",
-                          style: TextStyle(fontSize: 12, color: Colors.grey),
-                        )
-                        ),
-                  ),
-                ),
-                //선택,취소버튼
-                Container(
-                    width: (size.width - 35) / 3,
-                    child: Center(
-                      child: Text(
-                          _selectPlace,
-                        // query['category'],
-                        style: titleMediumStyle(color: Colors.black),
-                      ),
-                    )),
-                Container(
-                  width: (size.width - 35) / 3,
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: () async {
-                        // await Future.delayed(Duration(seconds: 3));
-                        //
-                        // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                        //   return MainHomePage();
-                        // }));
-                      },
-                      child: Text('업로드', style: TextStyle(color: Colors.white)),
+                Expanded(
+                  child: Container(
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            query['category'],
+                            style: titleMediumStyle(color: Colors.black),
+                          ),
+                        ]
                     ),
                   ),
                 ),
+
+                // Container(
+                //   width: (size.width - 35) / 3,
+                //   child: Align(
+                //     alignment: Alignment.centerRight,
+                //     child: TextButton(
+                //       onPressed: () async {
+                //         // await Future.delayed(Duration(seconds: 3));
+                //         //
+                //         // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                //         //   return MainHomePage();
+                //         // }));
+                //       },
+                //       child: Text('업로드', style: TextStyle(color: Colors.white)),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
             SizedBox(height: 15),
@@ -240,12 +263,13 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      //1
+                      //1. 날짜칩
                       SizedBox(width: 20),
                       InkWell(
                         onTap: () {
                           if (_selectDateIcon)
                             setState(() {
+                              num_list = [];
                               _selectPlace = '장소';
                               _selectPlaceIcon = true;
                               _selectPlaceTextColor = Color(0xFF9FA5B2);
@@ -263,7 +287,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                               context: context,
                               builder: (BuildContext context) {
                                 return SizedBox(
-                                  height: 600,
+                                  height: 1000,
                                   child: Column(
                                     children: [
                                       Padding(
@@ -273,7 +297,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                           controller: _dataPickerController,
                                           onSelectionChanged:
                                               _onSelectionChanged,
-                                          //selectionMode: DateRangePickerSelectionMode.range,
+                                          selectionMode: DateRangePickerSelectionMode.range,
                                         ),
                                       ),
                                       Padding(
@@ -392,6 +416,8 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                             _selectDateTextColor = Color(0xFF9FA5B2);
                             _selectDateSize = 67.2;
                             _range1 = '';
+                            _range2 = '';
+                            num_list = [];
 
                             //장소 필터 on
                             _selectPlaceColor = Colors.blue; // primary[40]!;
@@ -542,7 +568,63 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                               ],
                             )),
                       ),
-                      Spacer()
+                      Spacer(),
+                      // 임시 delete
+                      if(pressed == true)
+                        IconButton(
+                          icon: Icon(Icons.delete),
+                          color: Colors.lightBlue,
+                          onPressed: (){
+                            for(int i = 0; i< 1000; i++){
+                              if(_checks_docs[i] != ''){
+                                FirebaseFirestore.instance.collection('category').doc('1234@handong.ac.kr').collection(query['category']).doc(_checks_docs[i]).delete();
+                              }
+                            }
+                            setState(() {
+                              pressed = false;
+                              _selectCheck = '선택';
+                              _checks.fillRange(0, _checks.length-1,false);
+                              _checks_url.fillRange(0, _checks_url.length-1,'');
+                              _checks_docs.fillRange(0, _checks_docs.length-1,'');
+                            });
+                          },
+                        ),
+                      //선택,취소버튼
+                      Container(
+                        margin: EdgeInsets.zero,
+                        width: (size.width - 170) / 3,
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: TextButton(
+                              onPressed: () {
+                                print(_checks);
+                                setState(() {
+                                  if (_selectCheckIcon) {
+                                    pressed = true;
+                                    _selectCheck = '취소';
+                                    _selectCheckColor = Colors.blue; // primary[40]!;
+                                    _selectCheckTextColor = Color(0XFFF3F4F5);
+                                    // _selectPlaceTextColor = Colors.red;
+                                    _selectCheckIcon = false;
+                                  } else {
+                                    pressed = false;
+                                    _selectCheckColor = Color(0XFFF3F4F5);
+                                    _selectCheck = '선택';
+                                    _selectCheckTextColor = Color(0xFF9FA5B2);
+                                    _selectCheckIcon = true;
+                                    _checks.fillRange(0, _checks.length-1,false);
+                                    _checks_url.fillRange(0, _checks_url.length-1,'');
+                                    _checks_docs.fillRange(0, _checks_docs.length-1,'');
+                                  }
+                                });
+                              },
+                              child: Text(
+                                pressed ? "취소" : "선택",
+                                style: TextStyle(fontSize: 12, color: Colors.grey),
+                              )
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 )),
@@ -712,6 +794,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                             setState(() {
                                               _checks[index] = newValue!;
                                               _checks_url[index] = x['url'];
+                                              _checks_docs[index] = x.id;
                                             });
                                           },
                                           shape: RoundedRectangleBorder(
