@@ -2,6 +2,8 @@ import 'package:catch2_0_1/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/widget.dart';
+import 'cashCahnge.dart';
+import 'makeAccount.dart';
 
 class MyCash extends StatefulWidget {
   const MyCash({super.key});
@@ -20,7 +22,122 @@ class _MyCashState extends State<MyCash> {
         width: size.width * 0.8,
         height: size.height * 0.08,
         child: FloatingActionButton.extended(
-          onPressed: () {},
+          onPressed: () {
+            // 계좌정보가 없는 경우
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30.0),
+                          topRight: Radius.circular(30.0))),
+                  insetPadding: EdgeInsets.only(top: size.height * 0.65),
+                  content: Container(
+                      height: size.height * 0.3,
+                      width: size.width,
+                      child: Column(
+                        children: [
+                          Center(
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: size.height * 0.02,
+                                ),
+                                Text(
+                                  "계좌정보가 등록되어 있지 않습니다.",
+                                  style: bodyLargeStyle(color: Colors.black),
+                                ),
+                                SizedBox(height: size.height * 0.01),
+                                Center(
+                                  child: Text("등록하시겠습니까?",
+                                      style:
+                                          bodyLargeStyle(color: Colors.black)),
+                                ),
+                                SizedBox(
+                                  height: size.height * 0.04,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      left: size.width * 0.06,
+                                      right: size.width * 0.03),
+                                  child: Center(
+                                    child: Row(
+                                      children: [
+                                        TextButton(
+                                            child: Text(
+                                              '취소',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 16,
+                                                  color: Color(0xff9FA5B2)),
+                                            ),
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            style: TextButton.styleFrom(
+                                                padding: EdgeInsets.zero,
+                                                minimumSize: Size(50, 30),
+                                                tapTargetSize:
+                                                    MaterialTapTargetSize
+                                                        .shrinkWrap,
+                                                alignment:
+                                                    Alignment.centerLeft)),
+                                        Spacer(),
+                                        TextButton(
+                                            child: Text(
+                                              '확인',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 16,
+                                                  color: Color(0xff3A94EE)),
+                                            ),
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                PageRouteBuilder(
+                                                    pageBuilder: (_, __, ___) =>
+                                                        makeAccount(),
+                                                    transitionDuration:
+                                                        Duration(seconds: 0),
+                                                    transitionsBuilder:
+                                                        (_, a, __, c) =>
+                                                            FadeTransition(
+                                                                opacity: a,
+                                                                child: c)),
+                                              );
+                                            },
+                                            style: TextButton.styleFrom(
+                                                padding: EdgeInsets.zero,
+                                                minimumSize: Size(50, 30),
+                                                tapTargetSize:
+                                                    MaterialTapTargetSize
+                                                        .shrinkWrap,
+                                                alignment:
+                                                    Alignment.centerLeft)),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      )),
+                );
+              },
+            );
+
+            // 계좌정보가 있는 경우
+            // Navigator.push(
+            //   context,
+            //   PageRouteBuilder(
+            //       pageBuilder: (_, __, ___) => cashChange(),
+            //       transitionDuration: Duration(seconds: 0),
+            //       transitionsBuilder: (_, a, __, c) =>
+            //           FadeTransition(opacity: a, child: c)),
+            // );
+          },
           backgroundColor: Color(0xff3A94EE),
           label:
               Text("캐시 현금화 하기", style: titleMediumStyle(color: Colors.white)),

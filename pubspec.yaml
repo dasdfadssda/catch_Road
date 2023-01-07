@@ -99,6 +99,7 @@ flutter:
       - assets/model/ssd_mobilenet.txt
       - assets/icons/
       - assets/icons/mypage/
+      - assets/account/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
