@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:catch2_0_1/utils/app_text_styles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -61,8 +62,7 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Catcher',
-                          style: labelLargeStyle(color: Colors.black)),
+                      Text('D-', style: labelLargeStyle(color: Colors.black)),
                     ],
                   ),
                   Expanded(
@@ -72,15 +72,16 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
                         IconButton(
                           icon: Icon(Icons.more_vert),
                           onPressed: () {
+                            _showActionSheet(context);
                             FirebaseFirestore.instance
                                 .collection('project')
                                 .doc(query['id'])
                                 .update({'participate': 0});
 
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return MainHomePage();
-                            }));
+                            // Navigator.push(context,
+                            //     MaterialPageRoute(builder: (context) {
+                            //   return MainHomePage();
+                            // }));
                           },
                         )
                       ]))
@@ -194,26 +195,36 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
             padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 25),
             child: Row(
               children: [
-                CircleAvatar(
-                  radius: 30,
-                  backgroundColor: Color(0xff3A94EE),
-                  child: IconButton(
+                Container(
+                  decoration: BoxDecoration(
                     color: Colors.white,
-                    onPressed: () async {
-                      // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      //   return catchme();
-                      // }));
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                          blurRadius: 10, color: Colors.grey, spreadRadius: 0)
+                    ],
+                  ),
+                  child: CircleAvatar(
+                    radius: 30,
+                    backgroundColor: Color(0xff3A94EE),
+                    child: IconButton(
+                      color: Colors.white,
+                      onPressed: () async {
+                        // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        //   return catchme();
+                        // }));
 
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return CamerLoad();
-                      }));
-                      //
-                      // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      //   return CameraPage(cameras);
-                      // }));
-                    },
-                    icon: Icon(Icons.camera_alt_outlined),
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return CamerLoad();
+                        }));
+                        //
+                        // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        //   return CameraPage(cameras);
+                        // }));
+                      },
+                      icon: Icon(Icons.camera_alt_outlined),
+                    ),
                   ),
                 ),
                 SizedBox(width: 16),
@@ -236,6 +247,33 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
                 )
               ],
             )));
+  }
+
+  void _showActionSheet(BuildContext context) {
+    showCupertinoModalPopup<void>(
+      context: context,
+      builder: (BuildContext context) => CupertinoActionSheet(
+        actions: <CupertinoActionSheetAction>[
+          CupertinoActionSheetAction(
+            isDestructiveAction: true,
+            // isDefaultAction: true,
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return MainHomePage();
+              }));
+            },
+            child: const Text('프로젝트 참여 취소하기'),
+          ),
+        ],
+        cancelButton: CupertinoActionSheetAction(
+          // isDestructiveAction: true,
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('취소'),
+        ),
+      ),
+    );
   }
 }
 

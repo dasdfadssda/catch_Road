@@ -126,13 +126,20 @@ class _add_personalState extends State<add_personal> {*/
               onChanged: (bool value) {
                 setState(() {
                   part = value;
+
                   print(part);
                 });
               },
               height: 40,
 
-              animationDuration: const Duration(milliseconds: 200),
-              onTap: () {},
+              animationDuration: const Duration(milliseconds: 100),
+              onTap: () {
+                if (part == false)
+                  part = false;
+                else
+                  part = true;
+              },
+
               onDoubleTap: () {},
               onSwipe: () {},
               textOff: "모든 프로젝트",
@@ -191,7 +198,7 @@ class _add_personalState extends State<add_personal> {*/
                                 right: size.width * 0.05,
                                 bottom: size.height * 0.01),
                             child: Card(
-                              elevation: 3,
+                              elevation: 0.3,
                               shape: RoundedRectangleBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(16))),
@@ -213,13 +220,13 @@ class _add_personalState extends State<add_personal> {*/
                                   Padding(
                                     padding: EdgeInsets.only(
                                         top: size.height * 0.03,
-                                        right: size.width * 0.7),
+                                        right: size.width * 0.745),
                                     child: Text(
                                       "D-" +
                                           snapshot
                                               .data!.docs[index]['final_day']
                                               .toString(),
-                                      style: labelLargeStyle(
+                                      style: labelSmallStyle(
                                           color: Color(0xff9FA5B2)),
                                     ),
                                   ),
@@ -236,15 +243,24 @@ class _add_personalState extends State<add_personal> {*/
                                     subtitle: Row(
                                       children: [
                                         Container(
+                                          height: size.height * 0.025,
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.all(
-                                                Radius.circular(10)),
-                                            color: Color(0xffF3F4F5),
+                                                Radius.circular(20)),
+                                            border: Border.all(
+                                              width: 1,
+                                              color: Color(0xffCFD2D9),
+                                            ),
+                                            color: Colors.white,
                                           ),
                                           margin: EdgeInsets.only(
                                               top: size.height * 0.01),
                                           child: Padding(
-                                            padding: EdgeInsets.all(8),
+                                            padding: EdgeInsets.only(
+                                                top: size.height * 0.000,
+                                                bottom: size.height * 0.000,
+                                                left: size.width * 0.02,
+                                                right: size.width * 0.02),
                                             child: Text(
                                               snapshot.data!.docs[index]['type']
                                                   .toString(),
@@ -266,6 +282,39 @@ class _add_personalState extends State<add_personal> {*/
                                         ),
                                       ],
                                     ),
+                                    // Row(
+                                    //   children: [
+                                    //     Container(
+                                    //       decoration: BoxDecoration(
+                                    //         borderRadius: BorderRadius.all(
+                                    //             Radius.circular(10)),
+                                    //         color: Color(0xffF3F4F5),
+                                    //       ),
+                                    //       margin: EdgeInsets.only(
+                                    //           top: size.height * 0.01),
+                                    //       child: Padding(
+                                    //         padding: EdgeInsets.all(8),
+                                    //         child: Text(
+                                    //           snapshot.data!.docs[index]['type']
+                                    //               .toString(),
+                                    //           style: labelMediumStyle(
+                                    //               color: Color(0xff9FA5B2)),
+                                    //         ),
+                                    //       ),
+                                    //     ),
+                                    //     Padding(
+                                    //       padding: EdgeInsets.only(
+                                    //           top: size.height * 0.01,
+                                    //           left: size.width * 0.02),
+                                    //       child: Text(
+                                    //         snapshot.data!.docs[index]['user']
+                                    //             .toString(),
+                                    //         style: labelMediumStyle(
+                                    //             color: Color(0xff9FA5B2)),
+                                    //       ),
+                                    //     ),
+                                    //   ],
+                                    // ),
                                   ),
                                   Row(
                                     children: [
@@ -273,8 +322,8 @@ class _add_personalState extends State<add_personal> {*/
                                         margin: EdgeInsets.only(
                                             left: size.width * 0.05,
                                             bottom: size.height * 0.02,
-                                            top: size.height * 0.01),
-                                        width: size.width * 0.60,
+                                            top: size.height * 0.02),
+                                        width: size.width * 0.65,
                                         height: size.height * 0.01,
                                         child: ClipRRect(
                                           borderRadius: BorderRadius.all(
@@ -298,6 +347,7 @@ class _add_personalState extends State<add_personal> {*/
                                       ),
                                       Padding(
                                         padding: EdgeInsets.only(
+                                            top: size.height * 0.01,
                                             bottom: size.height * 0.02,
                                             left: size.width * 0.03),
                                         child: snapshot.data!.docs[index]
@@ -314,6 +364,7 @@ class _add_personalState extends State<add_personal> {*/
                                       ),
                                       Padding(
                                         padding: EdgeInsets.only(
+                                            top: size.height * 0.01,
                                             bottom: size.height * 0.02,
                                             left: size.width * 0.01),
                                         child: Text(
@@ -331,12 +382,7 @@ class _add_personalState extends State<add_personal> {*/
                             ),
                           );
                         else
-                          return Container(
-                            child: Text(
-                              'asdfsdfgsdf',
-                              style: TextStyle(color: Colors.amber),
-                            ),
-                          );
+                          return Container();
                       });
                 if (part == false)
                   return ListView.builder(
@@ -348,159 +394,183 @@ class _add_personalState extends State<add_personal> {*/
                               left: size.width * 0.05,
                               right: size.width * 0.05,
                               bottom: size.height * 0.01),
-                          child: Card(
-                            elevation: 1,
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(16))),
-                            child: InkWell(
-                              //카드 누르는 경우
-                              onTap: () {
-                                if (snapshot.data!.docs[index]['participate'] ==
-                                    1) {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            todaycatchdetail3(query: x),
-                                      ));
-                                } else {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            todaycatchdetail(query: x),
-                                      ));
-                                }
-
-                                print('모든 프로젝트');
-                                print(snapshot.data!.docs[index]['id']
-                                    .toString());
-                              },
-                              child: Column(children: [
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      top: size.height * 0.03,
-                                      right: size.width * 0.7),
-                                  child: Text(
-                                    "D-" +
-                                        snapshot.data!.docs[index]['final_day']
-                                            .toString(),
-                                    style: labelLargeStyle(
-                                        color: Color(0xff9FA5B2)),
+                          child: Container(
+                            decoration: new BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(.1),
+                                  blurRadius: 50.0, // soften the shadow
+                                  spreadRadius: 0.0, //extend the shadow
+                                  offset: Offset(
+                                    10.0, // Move to right 10  horizontally
+                                    10.0, // Move to bottom 10 Vertically
                                   ),
-                                ),
-                                ListTile(
-                                  title: Padding(
+                                )
+                              ],
+                            ),
+                            child: Card(
+                              elevation: 1,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(16))),
+                              child: InkWell(
+                                //카드 누르는 경우
+                                onTap: () {
+                                  if (snapshot.data!.docs[index]
+                                          ['participate'] ==
+                                      1) {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              todaycatchdetail3(query: x),
+                                        ));
+                                  } else {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              todaycatchdetail(query: x),
+                                        ));
+                                  }
+
+                                  print('모든 프로젝트');
+                                  print(snapshot.data!.docs[index]['id']
+                                      .toString());
+                                },
+                                child: Column(children: [
+                                  Padding(
                                     padding: EdgeInsets.only(
-                                        top: size.height * 0.01),
+                                        top: size.height * 0.03,
+                                        right: size.width * 0.74),
                                     child: Text(
-                                      snapshot.data!.docs[index]['title']
-                                          .toString(),
-                                      style: titleMediumStyle(),
+                                      "D-" +
+                                          snapshot
+                                              .data!.docs[index]['final_day']
+                                              .toString(),
+                                      style: labelSmallStyle(
+                                          color: Color(0xff9FA5B2)),
                                     ),
                                   ),
-                                  subtitle: Row(
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(20)),
-                                          border: Border.all(
-                                            width: 1,
-                                            color: Color(0xffCFD2D9),
+                                  ListTile(
+                                    title: Padding(
+                                      padding: EdgeInsets.only(
+                                          top: size.height * 0.01),
+                                      child: Text(
+                                        snapshot.data!.docs[index]['title']
+                                            .toString(),
+                                        style: titleMediumStyle(),
+                                      ),
+                                    ),
+                                    subtitle: Row(
+                                      children: [
+                                        Container(
+                                          height: size.height * 0.025,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(20)),
+                                            border: Border.all(
+                                              width: 1,
+                                              color: Color(0xffCFD2D9),
+                                            ),
+                                            color: Colors.white,
                                           ),
-                                          color: Colors.white,
+                                          margin: EdgeInsets.only(
+                                              top: size.height * 0.01),
+                                          child: Padding(
+                                            padding: EdgeInsets.only(
+                                                top: size.height * 0.000,
+                                                bottom: size.height * 0.000,
+                                                left: size.width * 0.02,
+                                                right: size.width * 0.02),
+                                            child: Text(
+                                              snapshot.data!.docs[index]['type']
+                                                  .toString(),
+                                              style: labelMediumStyle(
+                                                  color: Color(0xff9FA5B2)),
+                                            ),
+                                          ),
                                         ),
-                                        margin: EdgeInsets.only(
-                                            top: size.height * 0.01),
-                                        child: Padding(
+                                        Padding(
                                           padding: EdgeInsets.only(
-                                              top: size.height * 0.005,
-                                              bottom: size.height * 0.005,
-                                              left: size.width * 0.02,
-                                              right: size.width * 0.02),
+                                              top: size.height * 0.01,
+                                              left: size.width * 0.02),
                                           child: Text(
-                                            snapshot.data!.docs[index]['type']
+                                            snapshot.data!.docs[index]['user']
                                                 .toString(),
                                             style: labelMediumStyle(
                                                 color: Color(0xff9FA5B2)),
                                           ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            top: size.height * 0.01,
-                                            left: size.width * 0.02),
-                                        child: Text(
-                                          snapshot.data!.docs[index]['user']
-                                              .toString(),
-                                          style: labelMediumStyle(
-                                              color: Color(0xff9FA5B2)),
-                                        ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                Row(
-                                  children: [
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                          left: size.width * 0.05,
-                                          bottom: size.height * 0.03,
-                                          top: size.height * 0.01),
-                                      width: size.width * 0.60,
-                                      height: size.height * 0.01,
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(16)),
-                                        child: LinearProgressIndicator(
-                                          value: snapshot.data!
-                                                  .docs[index]['percentage']
-                                                  .toDouble() *
-                                              0.01,
-                                          valueColor: snapshot.data!.docs[index]
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        top: size.height * 0.015),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                              left: size.width * 0.05,
+                                              bottom: size.height * 0.03,
+                                              top: size.height * 0.01),
+                                          width: size.width * 0.65,
+                                          height: size.height * 0.01,
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(16)),
+                                            child: LinearProgressIndicator(
+                                              value: snapshot.data!
+                                                      .docs[index]['percentage']
+                                                      .toDouble() *
+                                                  0.01,
+                                              valueColor: snapshot
+                                                              .data!.docs[index]
+                                                          ['participate'] ==
+                                                      0
+                                                  ? AlwaysStoppedAnimation<
+                                                      Color>(Color(0xff3A94EE))
+                                                  : AlwaysStoppedAnimation<
+                                                      Color>(Color(0xff00D796)),
+                                              backgroundColor:
+                                                  Color(0xffE7E8EC),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              bottom: size.height * 0.02,
+                                              left: size.width * 0.03),
+                                          child: snapshot.data!.docs[index]
                                                       ['participate'] ==
                                                   0
-                                              ? AlwaysStoppedAnimation<Color>(
-                                                  Color(0xff3A94EE))
-                                              : AlwaysStoppedAnimation<Color>(
-                                                  Color(0xff00D796)),
-                                          backgroundColor: Color(0xffE7E8EC),
+                                              ? Image.asset(
+                                                  'assets/coin.png',
+                                                  width: 20,
+                                                )
+                                              : Image.asset(
+                                                  'assets/coin2.png',
+                                                  width: 20,
+                                                ),
                                         ),
-                                      ),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              bottom: size.height * 0.02,
+                                              left: size.width * 0.01),
+                                          child: Text(
+                                            snapshot.data!.docs[index]['cash']
+                                                    .toString() +
+                                                "00",
+                                            style: labelMediumStyle(
+                                                color: Color(0xff1A1A1A)),
+                                          ),
+                                        )
+                                      ],
                                     ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          bottom: size.height * 0.02,
-                                          left: size.width * 0.03),
-                                      child: snapshot.data!.docs[index]
-                                                  ['participate'] ==
-                                              0
-                                          ? Image.asset(
-                                              'assets/coin.png',
-                                              width: 20,
-                                            )
-                                          : Image.asset(
-                                              'assets/coin2.png',
-                                              width: 20,
-                                            ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          bottom: size.height * 0.02,
-                                          left: size.width * 0.01),
-                                      child: Text(
-                                        snapshot.data!.docs[index]['cash']
-                                                .toString() +
-                                            "00",
-                                        style: labelMediumStyle(
-                                            color: Color(0xff1A1A1A)),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ]),
+                                  ),
+                                ]),
+                              ),
                             ),
                           ),
                         );
@@ -516,11 +586,12 @@ class _add_personalState extends State<add_personal> {*/
         animatedIcon: AnimatedIcons.menu_close,
         animatedIconTheme: IconThemeData(size: 22.0),
 */
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Color(0xff3A94EE),
+        childrenButtonSize: Size(60, 70),
         child: Icon(
-          Icons.edit_outlined,
+          Icons.add,
           color: Colors.white,
-          size: 25,
+          size: 36,
         ),
         buttonSize: const Size(60, 60),
         useRotationAnimation: false,
@@ -529,28 +600,29 @@ class _add_personalState extends State<add_personal> {*/
         //     height: 30.w,
         //     fit : BoxFit.fitWidth),
         activeIcon: Icons.close,
+        activeForegroundColor: Colors.white,
+
         animatedIconTheme: IconThemeData(
-          size: 25,
-          color: primary[0]?.withOpacity(0.4),
+          size: 36,
+          // color: primary[0]?.withOpacity(0.4),
         ),
         // this is ignored if animatedIcon is non null
-        curve: Curves.bounceIn,
+        // curve: Curves.bounceIn,
         overlayColor: Colors.black,
-        overlayOpacity: 0.8,
-        activeBackgroundColor: Colors.black.withOpacity(0.8),
+        overlayOpacity: 0.6,
+        activeBackgroundColor: Color.fromRGBO(97, 98, 98, 0.9),
         //childrenButtonSize: (const Size.round(100)),
         //activeForegroundColor: Colors.white,
-
+        spacing: 10,
         foregroundColor: Colors.white,
-        elevation: 0.0,
+        elevation: 0.5,
         direction: SpeedDialDirection.up,
-        shape: const CircleBorder(),
+        // shape: const CircleBorder(),
         children: [
           SpeedDialChild(
               child: Image.asset(
                 'assets/icons/Subtract.png',
-                height: 20,
-                width: 16,
+                height: 30,
                 //fit : BoxFit.fitWidth
               ),
               shape: RoundedRectangleBorder(
@@ -562,17 +634,9 @@ class _add_personalState extends State<add_personal> {*/
               label: '기업, 공공기관 프로젝트 의뢰하기',
               // labelWidget,
               //labelShadow : Colors.black.withOpacity(0.6),
-              labelStyle: TextStyle(
-                fontFamily: 'NotoSansKR',
-                fontWeight: FontWeight.w700,
-                fontSize: 16,
-                height: 22 / 16,
-                letterSpacing: 0,
-                //fontWeight: FontWeight.w500,
-                color: Colors.white,
-                //color: primary[0]?.withOpacity(0.02),
-              ),
-              labelBackgroundColor: Colors.black.withOpacity(0.6),
+              labelStyle: titleMediumStyle(color: Colors.white),
+              // labelBackgroundColor: Colors.black.withOpacity(0.6),
+              labelBackgroundColor: Colors.grey.withOpacity(0),
               onTap: () {
                 Navigator.push(
                     context,
@@ -582,9 +646,8 @@ class _add_personalState extends State<add_personal> {*/
               }),
           SpeedDialChild(
               child: Image.asset(
-                'assets/icons/Union.png',
+                'assets/icons/personal.png',
                 height: 24,
-                width: 21.61,
                 //fit : BoxFit.fitWidth
               ),
               shape: RoundedRectangleBorder(

@@ -61,13 +61,26 @@ class _HomePageState extends State<MainHomePage> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+        decoration: new BoxDecoration(
           boxShadow: [
-            BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 1),
+            BoxShadow(
+              color: Colors.grey.withOpacity(.5),
+              blurRadius: 20.0, // soften the shadow
+              spreadRadius: 0.0, //extend the shadow
+              offset: Offset(
+                5.0, // Move to right 10  horizontally
+                5.0, // Move to bottom 10 Vertically
+              ),
+            )
           ],
         ),
+        // decoration: BoxDecoration(
+        //   borderRadius: BorderRadius.only(
+        //       topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+        //   boxShadow: [
+        //     BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 1),
+        //   ],
+        // ),
         height: 70,
         child: ClipRRect(
           borderRadius: BorderRadius.only(

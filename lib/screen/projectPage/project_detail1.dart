@@ -54,7 +54,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // d- 몇인지 보여줘야 함.
-                      Text('Catcher',
+                      Text('D-',
                           style: labelLargeStyle(color: Color(0xff9FA5B2))),
                     ],
                   ),
@@ -218,7 +218,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                                           color: Color(0xFF3A94EE),
                                         )
                                       : Border.all(
-                                          color: Colors.white,
+                                          color: Color(0xffCFD2D9),
                                         ),
                                   color:
                                       onTap ? Color(0xFFF2F8FE) : Colors.white,
@@ -227,14 +227,14 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                                       topRight: Radius.circular(20),
                                       bottomLeft: Radius.circular(20),
                                       bottomRight: Radius.circular(20)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Color(0xFFCFD2D9),
-                                      spreadRadius: 1,
-                                      blurRadius: 50,
-                                      //offset: Offset(0, 3), // changes position of shadow
-                                    ),
-                                  ],
+                                  // boxShadow: [
+                                  //   BoxShadow(
+                                  //     color: Color(0xFFCFD2D9),
+                                  //     spreadRadius: 1,
+                                  //     blurRadius: 50,
+                                  //     //offset: Offset(0, 3), // changes position of shadow
+                                  //   ),
+                                  // ],
                                 ),
                                 width: size.width * 0.8,
                                 child: Row(
@@ -331,7 +331,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                                           color: Color(0xFF3A94EE),
                                         )
                                       : Border.all(
-                                          color: Colors.white,
+                                          color: Color(0xffCFD2D9),
                                         ),
                                   color:
                                       onTap2 ? Color(0xFFF2F8FE) : Colors.white,
@@ -340,14 +340,14 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                                       topRight: Radius.circular(20),
                                       bottomLeft: Radius.circular(20),
                                       bottomRight: Radius.circular(20)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Color(0xFFCFD2D9),
-                                      spreadRadius: 1,
-                                      blurRadius: 50,
-                                      //offset: Offset(0, 3), // changes position of shadow
-                                    ),
-                                  ],
+                                  // boxShadow: [
+                                  //   BoxShadow(
+                                  //     color: Color(0xFFCFD2D9),
+                                  //     spreadRadius: 1,
+                                  //     blurRadius: 50,
+                                  //     //offset: Offset(0, 3), // changes position of shadow
+                                  //   ),
+                                  // ],
                                 ),
                                 width: size.width * 0.8,
                                 child: Row(
