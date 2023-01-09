@@ -120,89 +120,179 @@ class _cashChangeState extends State<cashChange> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(30)))),
                       onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(30.0),
-                                      topRight: Radius.circular(30.0))),
-                              insetPadding:
-                                  EdgeInsets.only(top: size.height * 0.4),
-                              content: Container(
-                                  height: size.height * 0.7,
-                                  width: size.width,
-                                  child: Column(
-                                    children: [
-                                      Center(
-                                        child: Column(
-                                          children: [
-                                            SizedBox(
-                                              height: size.height * 0.2,
-                                            ),
-                                            Text(
-                                              "캐시가 현금화되었습니다.\n",
-                                              style: bodyLargeStyle(
-                                                  color: Colors.black),
-                                            ),
-                                            Text(
-                                              "현금화는 영업일 기준으로",
-                                              style: bodyLargeStyle(
-                                                  color: Colors.black),
-                                            ),
-                                            Text(
-                                              "최대 7일까지 소요될 수 있습니다.",
-                                              style: bodyLargeStyle(
-                                                  color: Colors.black),
-                                            ),
-                                          ],
-                                        ),
+                        // showDialog(
+                        //   context: context,
+                        //   builder: (BuildContext context) {
+                        //     return AlertDialog(
+                        //       shape: RoundedRectangleBorder(
+                        //           borderRadius: BorderRadius.only(
+                        //               topLeft: Radius.circular(30.0),
+                        //               topRight: Radius.circular(30.0))),
+                        //       insetPadding:
+                        //           EdgeInsets.only(top: size.height * 0.4),
+                        //       content: Container(
+                        //           height: size.height * 0.7,
+                        //           width: size.width,
+                        //           child: Column(
+                        //             children: [
+                        //               Center(
+                        //                 child: Column(
+                        //                   children: [
+                        //                     SizedBox(
+                        //                       height: size.height * 0.2,
+                        //                     ),
+                        //                     Text(
+                        //                       "캐시가 현금화되었습니다.\n",
+                        //                       style: bodyLargeStyle(
+                        //                           color: Colors.black),
+                        //                     ),
+                        //                     Text(
+                        //                       "현금화는 영업일 기준으로",
+                        //                       style: bodyLargeStyle(
+                        //                           color: Colors.black),
+                        //                     ),
+                        //                     Text(
+                        //                       "최대 7일까지 소요될 수 있습니다.",
+                        //                       style: bodyLargeStyle(
+                        //                           color: Colors.black),
+                        //                     ),
+                        //                   ],
+                        //                 ),
+                        //               ),
+                        //               Padding(
+                        //                 padding: EdgeInsets.only(
+                        //                     top: size.height * 0.03,
+                        //                     bottom: size.height * 0.02),
+                        //                 child: SizedBox(
+                        //                     width: double.infinity,
+                        //                     height: size.height * 0.06,
+                        //                     child: OutlinedButton(
+                        //                         style: OutlinedButton.styleFrom(
+                        //                             backgroundColor:
+                        //                                 Color(0xff3A94EE),
+                        //                             shape: RoundedRectangleBorder(
+                        //                                 borderRadius:
+                        //                                     BorderRadius.all(
+                        //                                         Radius.circular(
+                        //                                             30)))),
+                        //                         onPressed: () {
+                        //                           Navigator.push(
+                        //                             context,
+                        //                             PageRouteBuilder(
+                        //                                 pageBuilder:
+                        //                                     (_, __, ___) =>
+                        //                                         MYPage(),
+                        //                                 transitionDuration:
+                        //                                     Duration(
+                        //                                         seconds: 0),
+                        //                                 transitionsBuilder: (_,
+                        //                                         a, __, c) =>
+                        //                                     FadeTransition(
+                        //                                         opacity: a,
+                        //                                         child: c)),
+                        //                           );
+                        //                         },
+                        //                         child: Text(
+                        //                           "확인",
+                        //                           style: titleMediumStyle(
+                        //                               color: Colors.white),
+                        //                         ))),
+                        //               )
+                        //             ],
+                        //           )),
+                        //     );
+                        //   },
+                        // );
+                        showModalBottomSheet(
+                            context: context,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(30),
+                              ),
+                            ),
+                            builder: (BuildContext context) {
+                              return StatefulBuilder(builder:
+                                  (BuildContext context,
+                                      StateSetter bottomState) {
+                                return Container(
+                                  height: 440,
+                                  child: Column(children: [
+                                    Container(
+                                      margin:
+                                          EdgeInsets.fromLTRB(100, 40, 100, 20),
+                                      child: Image.asset(
+                                        'assets/checkToFinish.gif',
+                                        height: 160,
+                                        width: 160,
                                       ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            top: size.height * 0.03,
-                                            bottom: size.height * 0.02),
-                                        child: SizedBox(
-                                            width: double.infinity,
-                                            height: size.height * 0.06,
-                                            child: OutlinedButton(
-                                                style: OutlinedButton.styleFrom(
-                                                    backgroundColor:
-                                                        Color(0xff3A94EE),
-                                                    shape: RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    30)))),
-                                                onPressed: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    PageRouteBuilder(
-                                                        pageBuilder:
-                                                            (_, __, ___) =>
-                                                                MYPage(),
-                                                        transitionDuration:
-                                                            Duration(
-                                                                seconds: 0),
-                                                        transitionsBuilder: (_,
-                                                                a, __, c) =>
+                                    ),
+                                    Container(
+                                      margin:
+                                          EdgeInsets.fromLTRB(24, 0, 24, 24),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            "캐시가 현금화 되었습니다.\n",
+                                            style: bodyLargeStyle(),
+                                          ),
+                                          Text(
+                                            "현금화는 영업일 기준으로",
+                                            style: bodyLargeStyle(),
+                                          ),
+                                          Text(
+                                            "최대7일까지 소요될 수 있습니다.",
+                                            style: bodyLargeStyle(),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                        height: 40,
+                                        width: 312,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            color: Color(0XFF3A94EE)),
+                                        margin:
+                                            EdgeInsets.fromLTRB(46, 0, 46, 50),
+                                        child: TextButton(
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                PageRouteBuilder(
+                                                    pageBuilder: (_, __, ___) =>
+                                                        MYPage(),
+                                                    transitionDuration:
+                                                        Duration(seconds: 0),
+                                                    transitionsBuilder:
+                                                        (_, a, __, c) =>
                                                             FadeTransition(
                                                                 opacity: a,
                                                                 child: c)),
-                                                  );
-                                                },
-                                                child: Text(
-                                                  "확인",
-                                                  style: titleMediumStyle(
-                                                      color: Colors.white),
-                                                ))),
-                                      )
-                                    ],
-                                  )),
-                            );
-                          },
-                        );
+                                              );
+                                              // setState(() async{
+                                              //  Navigator.push(
+                                              //   context,
+                                              //   MaterialPageRoute(
+                                              //       builder: (context) => HomePage()),
+                                              // );
+                                              //   print('데이터 전송 시작');
+                                              // UploadFunction(_selectedFileList!);
+                                              // await Future.delayed(Duration(seconds: 25));
+                                              // contentsFunction(FirebaseAuth.instance.currentUser!.displayName!,_road,_arrImageUrls,contentsController,roadAddress);
+                                              //   _road == null;
+                                              //   postCode = '-';
+                                              //   _arrImageUrls.clear();
+                                              //   contentsController.clear();
+                                              // });
+                                            },
+                                            child: Text('확인',
+                                                style: titleMediumStyle(
+                                                    color: Colors.white))))
+                                  ]),
+                                );
+                              });
+                            });
                       },
                       child: Text(
                         "현금화 하기",

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../utils/app_text_styles.dart';
+import 'MyCash.dart';
 
 class makeAccount extends StatefulWidget {
   const makeAccount({super.key});
@@ -181,64 +182,142 @@ class _makeAccountState extends State<makeAccount> {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(30)))),
                     onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(30.0),
-                                    topRight: Radius.circular(30.0))),
-                            insetPadding: EdgeInsets.only(top: 500),
-                            content: Container(
-                                margin: EdgeInsets.zero,
-                                height: 350,
-                                width: 320,
-                                child: Column(
-                                  children: [
-                                    Center(
-                                      child: Column(
-                                        children: [
-                                          SizedBox(
-                                            height: 90,
-                                          ),
-                                          Text(
-                                            "계좌정보가 등록되었습니다.",
-                                            style: bodyLargeStyle(
-                                                color: Colors.black),
-                                          ),
-                                        ],
-                                      ),
+                      showModalBottomSheet(
+                          context: context,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(30),
+                            ),
+                          ),
+                          builder: (BuildContext context) {
+                            return StatefulBuilder(builder:
+                                (BuildContext context,
+                                    StateSetter bottomState) {
+                              return Container(
+                                height: 380,
+                                child: Column(children: [
+                                  Container(
+                                    margin:
+                                        EdgeInsets.fromLTRB(100, 40, 100, 20),
+                                    child: Image.asset(
+                                      'assets/checkToFinish.gif',
+                                      height: 160,
+                                      width: 160,
                                     ),
-                                    Padding(
-                                      padding:
-                                          EdgeInsets.only(top: 20, bottom: 5),
-                                      child: SizedBox(
-                                          width: double.infinity,
-                                          height: 50,
-                                          child: OutlinedButton(
-                                              style: OutlinedButton.styleFrom(
-                                                  backgroundColor:
-                                                      Color(0xff3A94EE),
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  30)))),
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                              child: Text(
-                                                "확인",
-                                                style: titleMediumStyle(
-                                                    color: Colors.white),
-                                              ))),
-                                    )
-                                  ],
-                                )),
-                          );
-                        },
-                      );
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.fromLTRB(24, 0, 24, 24),
+                                    child: Text(
+                                      "계좌 정보가 등록 되었습니다.",
+                                      style: bodyLargeStyle(),
+                                    ),
+                                  ),
+                                  Container(
+                                      height: 40,
+                                      width: 312,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          color: Color(0XFF3A94EE)),
+                                      margin:
+                                          EdgeInsets.fromLTRB(46, 0, 46, 50),
+                                      child: TextButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              PageRouteBuilder(
+                                                  pageBuilder: (_, __, ___) =>
+                                                      MyCash(),
+                                                  transitionDuration:
+                                                      Duration(seconds: 0),
+                                                  transitionsBuilder:
+                                                      (_, a, __, c) =>
+                                                          FadeTransition(
+                                                              opacity: a,
+                                                              child: c)),
+                                            );
+                                            // setState(() async{
+                                            //  Navigator.push(
+                                            //   context,
+                                            //   MaterialPageRoute(
+                                            //       builder: (context) => HomePage()),
+                                            // );
+                                            //   print('데이터 전송 시작');
+                                            // UploadFunction(_selectedFileList!);
+                                            // await Future.delayed(Duration(seconds: 25));
+                                            // contentsFunction(FirebaseAuth.instance.currentUser!.displayName!,_road,_arrImageUrls,contentsController,roadAddress);
+                                            //   _road == null;
+                                            //   postCode = '-';
+                                            //   _arrImageUrls.clear();
+                                            //   contentsController.clear();
+                                            // });
+                                          },
+                                          child: Text('확인',
+                                              style: titleMediumStyle(
+                                                  color: Colors.white))))
+                                ]),
+                              );
+                            });
+                          });
+
+                      // showDialog(
+                      //   context: context,
+                      //   builder: (BuildContext context) {
+                      //     return AlertDialog(
+                      //       shape: RoundedRectangleBorder(
+                      //           borderRadius: BorderRadius.only(
+                      //               topLeft: Radius.circular(30.0),
+                      //               topRight: Radius.circular(30.0))),
+                      //       insetPadding: EdgeInsets.only(top: 500),
+                      //       content: Container(
+                      //           margin: EdgeInsets.zero,
+                      //           height: 350,
+                      //           width: 320,
+                      //           child: Column(
+                      //             children: [
+                      //               Center(
+                      //                 child: Column(
+                      //                   children: [
+                      //                     SizedBox(
+                      //                       height: 90,
+                      //                     ),
+                      //                     Text(
+                      //                       "계좌정보가 등록되었습니다.",
+                      //                       style: bodyLargeStyle(
+                      //                           color: Colors.black),
+                      //                     ),
+                      //                   ],
+                      //                 ),
+                      //               ),
+                      //               Padding(
+                      //                 padding:
+                      //                     EdgeInsets.only(top: 20, bottom: 5),
+                      //                 child: SizedBox(
+                      //                     width: double.infinity,
+                      //                     height: 50,
+                      //                     child: OutlinedButton(
+                      //                         style: OutlinedButton.styleFrom(
+                      //                             backgroundColor:
+                      //                                 Color(0xff3A94EE),
+                      //                             shape: RoundedRectangleBorder(
+                      //                                 borderRadius:
+                      //                                     BorderRadius.all(
+                      //                                         Radius.circular(
+                      //                                             30)))),
+                      //                         onPressed: () {
+                      //                           Navigator.pop(context);
+                      //                         },
+                      //                         child: Text(
+                      //                           "확인",
+                      //                           style: titleMediumStyle(
+                      //                               color: Colors.white),
+                      //                         ))),
+                      //               )
+                      //             ],
+                      //           )),
+                      //     );
+                      //   },
+                      // );
                     },
                     child: Text(
                       "등록하기",
@@ -417,5 +496,68 @@ class send_grid extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void _showEnroll(context) {
+    // 업로드 관련 스냅바
+    showModalBottomSheet(
+        context: context,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(30),
+          ),
+        ),
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter bottomState) {
+            return Container(
+              height: 380,
+              child: Column(children: [
+                Container(
+                  margin: EdgeInsets.fromLTRB(100, 40, 100, 20),
+                  child: Image.asset(
+                    'assets/checkToFinish.gif',
+                    height: 160,
+                    width: 160,
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(24, 0, 24, 28),
+                  child: Text(
+                    "계좌 정보가 등록 되었습니다.",
+                    style: labelSmallStyle(),
+                  ),
+                ),
+                Container(
+                    height: 40,
+                    width: 312,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Color(0XFF3A94EE)),
+                    margin: EdgeInsets.fromLTRB(46, 0, 46, 50),
+                    child: TextButton(
+                        onPressed: () {
+                          // setState(() async{
+                          //  Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //       builder: (context) => HomePage()),
+                          // );
+                          //   print('데이터 전송 시작');
+                          // UploadFunction(_selectedFileList!);
+                          // await Future.delayed(Duration(seconds: 25));
+                          // contentsFunction(FirebaseAuth.instance.currentUser!.displayName!,_road,_arrImageUrls,contentsController,roadAddress);
+                          //   _road == null;
+                          //   postCode = '-';
+                          //   _arrImageUrls.clear();
+                          //   contentsController.clear();
+                          // });
+                        },
+                        child: Text('확인',
+                            style: labelSmallStyle(color: Colors.white))))
+              ]),
+            );
+          });
+        });
   }
 }
