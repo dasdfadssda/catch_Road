@@ -6,15 +6,13 @@ import '../../utils/app_colors.dart';
 import '../../utils/app_text_styles.dart';
 import '../mainHome.dart';
 
-
 class uploadCheck extends StatefulWidget {
- // const notFound({Key? key}) : super(key: key);
+  // const notFound({Key? key}) : super(key: key);
   //final CameraDescription camera;
 
   // const notFound({
   //   required this.camera,
   // });
-
 
   @override
   _uploadCheckState createState() => _uploadCheckState();
@@ -29,16 +27,22 @@ class _uploadCheckState extends State<uploadCheck> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 60,),
             SizedBox(
-                height: 200,
-                child: Image.asset('assets/checkToFinish.gif')),
-            SizedBox(height: 20,),
-            Text("업로드 완료 ",
-              style: titleLargeStyle(color:Colors.black),
+              height: 60,
+            ),
+            SizedBox(
+                height: 200, child: Image.asset('assets/checkToFinish.gif')),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              "업로드 완료 ",
+              style: titleLargeStyle(color: Colors.black),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 70,),
+            SizedBox(
+              height: 70,
+            ),
             ElevatedButton(
               onPressed: () async {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -52,21 +56,16 @@ class _uploadCheckState extends State<uploadCheck> {
                 ),
               ),
               style: ButtonStyle(
-
                   fixedSize: MaterialStateProperty.all(Size(180, 40)),
                   backgroundColor: MaterialStateProperty.all(
                     primary[40],
                   ),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      )
-                  ),
+                    borderRadius: BorderRadius.circular(10.0),
+                  )),
                   side: MaterialStateProperty.all(
-                    BorderSide(
-                        width: 0,
-                        color: primary[0]!.withOpacity(0.02)
-                    ),
+                    BorderSide(width: 0, color: primary[0]!.withOpacity(0.02)),
                   )),
             ),
           ],

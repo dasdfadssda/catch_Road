@@ -259,65 +259,6 @@ class _makeAccountState extends State<makeAccount> {
                               );
                             });
                           });
-
-                      // showDialog(
-                      //   context: context,
-                      //   builder: (BuildContext context) {
-                      //     return AlertDialog(
-                      //       shape: RoundedRectangleBorder(
-                      //           borderRadius: BorderRadius.only(
-                      //               topLeft: Radius.circular(30.0),
-                      //               topRight: Radius.circular(30.0))),
-                      //       insetPadding: EdgeInsets.only(top: 500),
-                      //       content: Container(
-                      //           margin: EdgeInsets.zero,
-                      //           height: 350,
-                      //           width: 320,
-                      //           child: Column(
-                      //             children: [
-                      //               Center(
-                      //                 child: Column(
-                      //                   children: [
-                      //                     SizedBox(
-                      //                       height: 90,
-                      //                     ),
-                      //                     Text(
-                      //                       "계좌정보가 등록되었습니다.",
-                      //                       style: bodyLargeStyle(
-                      //                           color: Colors.black),
-                      //                     ),
-                      //                   ],
-                      //                 ),
-                      //               ),
-                      //               Padding(
-                      //                 padding:
-                      //                     EdgeInsets.only(top: 20, bottom: 5),
-                      //                 child: SizedBox(
-                      //                     width: double.infinity,
-                      //                     height: 50,
-                      //                     child: OutlinedButton(
-                      //                         style: OutlinedButton.styleFrom(
-                      //                             backgroundColor:
-                      //                                 Color(0xff3A94EE),
-                      //                             shape: RoundedRectangleBorder(
-                      //                                 borderRadius:
-                      //                                     BorderRadius.all(
-                      //                                         Radius.circular(
-                      //                                             30)))),
-                      //                         onPressed: () {
-                      //                           Navigator.pop(context);
-                      //                         },
-                      //                         child: Text(
-                      //                           "확인",
-                      //                           style: titleMediumStyle(
-                      //                               color: Colors.white),
-                      //                         ))),
-                      //               )
-                      //             ],
-                      //           )),
-                      //     );
-                      //   },
-                      // );
                     },
                     child: Text(
                       "등록하기",
