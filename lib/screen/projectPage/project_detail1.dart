@@ -206,11 +206,11 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                       child: Column(
                         children: [
                           SizedBox(
-                            height: 20,
+                            height: 10,
                           ),
                           InkWell(
                             child: Container(
-                                padding: EdgeInsets.fromLTRB(18, 17, 19, 20),
+                                padding: EdgeInsets.fromLTRB(5, 17, 5, 20),
                                 decoration: BoxDecoration(
                                   border: onTap
                                       ? Border.all(
@@ -236,7 +236,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                                   //   ),
                                   // ],
                                 ),
-                                width: size.width * 0.8,
+                                width: size.width * 0.85,
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -275,7 +275,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                                         Row(
                                           children: [
                                             Text('개인정보 통합 관리 및 조회',
-                                                style: labelLargeStyle(
+                                                style: SubTitleStyle(
                                                     color: Color(0xff9FA5B2))),
                                             //SizedBox(width: 81.w),
                                             IconButton(
@@ -291,7 +291,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                                         Row(
                                           children: [
                                             Text('응답내용',
-                                                style: labelLargeStyle(
+                                                style: SubTitleStyle(
                                                     color: Color(0xff9FA5B2))),
                                             //SizedBox(width: 174.w),
                                             IconButton(
@@ -323,7 +323,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                           SizedBox(height: 20),
                           InkWell(
                             child: Container(
-                                padding: EdgeInsets.fromLTRB(18, 20, 19, 20),
+                                padding: EdgeInsets.fromLTRB(5, 20, 5, 20),
                                 decoration: BoxDecoration(
                                   border: onTap2
                                       ? Border.all(
@@ -349,7 +349,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                                   //   ),
                                   // ],
                                 ),
-                                width: size.width * 0.8,
+                                width: size.width * 0.85,
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -388,7 +388,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                                         Row(
                                           children: [
                                             Text('개인정보 통합 관리 및 조회',
-                                                style: labelLargeStyle(
+                                                style: SubTitleStyle(
                                                     color: Color(0xff9FA5B2))),
                                             //SizedBox(width: 81.w),
                                             IconButton(
@@ -404,7 +404,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                                         Row(
                                           children: [
                                             Text('응답내용',
-                                                style: labelLargeStyle(
+                                                style: SubTitleStyle(
                                                     color: Color(0xff9FA5B2))),
                                             //SizedBox(width: 174.w),
                                             IconButton(

@@ -154,25 +154,29 @@ class _add_personalState extends State<add_personal> {*/
             ),
           ),
         ),
-        Padding(
-          padding: EdgeInsets.only(
-              left: size.width * 0.06, bottom: size.height * 0.02),
-          child: Row(
-            children: [
-              Text(
-                "캐치가 추천해요!",
-                style: TextStyle(
-                    fontFamily: 'NotoSansKR',
-                    fontWeight: FontWeight.w700,
-                    fontSize: 10,
-                    height: 20 / 14,
-                    letterSpacing: 0.1,
-                    color: Color(0xff9FA5B2)),
-              ),
-              Spacer()
-            ],
-          ),
-        ),
+        part
+            ? Padding(
+                padding: EdgeInsets.only(
+                    left: size.width * 0.06,
+                    bottom: size.height * 0.02,
+                    top: size.height * 0.02),
+                child: Row(
+                  children: [
+                    Text(
+                      "캐치가 추천해요!",
+                      style: TextStyle(
+                          fontFamily: 'NotoSansKR',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 10,
+                          height: 20 / 14,
+                          letterSpacing: 0.1,
+                          color: Color(0xff9FA5B2)),
+                    ),
+                    Spacer()
+                  ],
+                ),
+              )
+            : Container(),
         Expanded(
           child: StreamBuilder<QuerySnapshot>(
               stream:
@@ -328,7 +332,7 @@ class _add_personalState extends State<add_personal> {*/
                                                 left: size.width * 0.05,
                                                 bottom: size.height * 0.02,
                                                 top: size.height * 0.02),
-                                            width: size.width * 0.65,
+                                            width: size.width * 0.63,
                                             height: size.height * 0.01,
                                             child: ClipRRect(
                                               borderRadius: BorderRadius.all(
@@ -357,7 +361,7 @@ class _add_personalState extends State<add_personal> {*/
                                           ),
                                           Padding(
                                             padding: EdgeInsets.only(
-                                                top: size.height * 0.01,
+                                                top: size.height * 0.02,
                                                 bottom: size.height * 0.02,
                                                 left: size.width * 0.03),
                                             child: snapshot.data!.docs[index]
@@ -374,7 +378,7 @@ class _add_personalState extends State<add_personal> {*/
                                           ),
                                           Padding(
                                             padding: EdgeInsets.only(
-                                                top: size.height * 0.01,
+                                                top: size.height * 0.02,
                                                 bottom: size.height * 0.02,
                                                 left: size.width * 0.01),
                                             child: Text(
@@ -527,10 +531,11 @@ class _add_personalState extends State<add_personal> {*/
                                           children: [
                                             Container(
                                               margin: EdgeInsets.only(
-                                                  left: size.width * 0.05,
-                                                  bottom: size.height * 0.03,
-                                                  top: size.height * 0.01),
-                                              width: size.width * 0.65,
+                                                left: size.width * 0.05,
+                                                bottom: size.height * 0.03,
+                                                top: size.height * 0.02,
+                                              ),
+                                              width: size.width * 0.63,
                                               height: size.height * 0.01,
                                               child: ClipRRect(
                                                 borderRadius: BorderRadius.all(
@@ -560,7 +565,8 @@ class _add_personalState extends State<add_personal> {*/
                                             Padding(
                                               padding: EdgeInsets.only(
                                                   bottom: size.height * 0.02,
-                                                  left: size.width * 0.03),
+                                                  left: size.width * 0.025,
+                                                  top: size.height * 0.005),
                                               child: snapshot.data!.docs[index]
                                                           ['participate'] ==
                                                       0
@@ -576,7 +582,9 @@ class _add_personalState extends State<add_personal> {*/
                                             Padding(
                                               padding: EdgeInsets.only(
                                                   bottom: size.height * 0.02,
-                                                  left: size.width * 0.01),
+                                                  left: size.width * 0.01,
+                                                  right: size.width * 0.025,
+                                                  top: size.height * 0.005),
                                               child: Text(
                                                 snapshot.data!
                                                         .docs[index]['cash']
