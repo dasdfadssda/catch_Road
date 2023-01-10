@@ -1,3 +1,7 @@
+import 'package:catch2_0_1/Auth/auth_service.dart';
+import 'package:catch2_0_1/screen/MyPage/MyCash.dart';
+import 'package:catch2_0_1/screen/MyPage/makeAccount.dart';
+import 'package:catch2_0_1/screen/projectPage/part_pro.dart';
 import 'package:catch2_0_1/utils/app_text_styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -5,8 +9,6 @@ import 'package:flutter/material.dart';
 import '../../utils/app_text_styles.dart';
 import '../../utils/widget.dart';
 import '../notFound.dart';
-import '../projectPage/part_pro.dart';
-import '../projectPage/progect_main.dart';
 
 class MYPage extends StatefulWidget {
   const MYPage({super.key});
@@ -18,82 +20,251 @@ class MYPage extends StatefulWidget {
 class _MYPageState extends State<MYPage> {
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        elevation: 0.5,
+        centerTitle: true,
         leading: SizedBox(),
         backgroundColor: Color(0xffFAFBFB),
-        title: Text('마이 페이지',style: titleMediumStyle(color: Colors.black),),
+        title: Text(
+          '마이 페이지',
+          style: titleMediumStyle(color: Colors.black),
+        ),
       ),
-      body: Column(children: [
-        Container(
-          margin: EdgeInsets.fromLTRB(0, 30, 0, 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-            Center(
-              child: ClipRRect(
-                 borderRadius: BorderRadius.circular(100), // Image border
-                 child: SizedBox.fromSize(
-                 size: Size.fromRadius(48), // Image radius
-                 child: Image.asset('assets/icons/laucher_icon.png', fit: BoxFit.cover),)
-                ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.only(
+              left: size.width * 0.06, right: size.width * 0.06),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Container(
+              margin: EdgeInsets.fromLTRB(0, 30, 0, 20),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: [
+                        Center(
+                          child: ClipRRect(
+                              borderRadius:
+                                  BorderRadius.circular(100), // Image border
+                              child: SizedBox.fromSize(
+                                size: Size.fromRadius(35), // Image radius
+                                child: Image.asset('assets/icons/laucher_icon.png',
+                                    fit: BoxFit.cover),
+                              )),
+                        ),
+                        Stack(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding:
+                                      EdgeInsets.only(left: size.width * 0.04),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        '1234@handong.ac.kr',
+                                        style: titleMediumStyle(
+                                            color: Colors.black),
+                                      ),
+                                      Text(" 님",
+                                          style: labelMediumStyle(
+                                              color: Colors.black)),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  top: size.height * 0.035,
+                                  left: size.width * 0.04),
+                              child: Text(
+                                '1234@handong.ac.kr',
+                                style:
+                                    labelSmallStyle(color: Color(0xff9FA5B2)),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: size.width * 0.55),
+                              child: IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    Icons.arrow_forward_ios_rounded,
+                                    color: Color(0xffCFD2D9),
+                                  )),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: size.height * 0.03,
+                    ),
+                    // Stack(
+                    //   children: [
+                    //     // SizedBox(
+                    //     //   height: size.height * 0.03,
+                    //     // ),
+                    //     Padding(
+                    //       padding: EdgeInsets.only(top: size.height * 0.1),
+                    //       child: Image.asset(
+                    //         'assets/icons/mypage/coin.png',
+                    //         width: 100,
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                    Stack(
+                      children: [
+                        Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            //set border radius more than 50% of height and width to make circle
+                          ),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: size.height * 0.1,
+                                child: ListTile(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      PageRouteBuilder(
+                                          pageBuilder: (_, __, ___) => MyCash(),
+                                          transitionDuration:
+                                              Duration(seconds: 0),
+                                          transitionsBuilder: (_, a, __, c) =>
+                                              FadeTransition(
+                                                  opacity: a, child: c)),
+                                    );
+                                  },
+                                  title: Padding(
+                                    padding: EdgeInsets.only(
+                                        bottom: size.height * 0.005),
+                                    child: Text(
+                                      "나의 캐시",
+                                      style:
+                                          labelSmallStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                  subtitle: Text("10,000",
+                                      style:
+                                          titleLargeStyle(color: Colors.white)),
+                                  textColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10),
+                                          topRight: Radius.circular(10),
+                                          bottomRight: Radius.circular(0),
+                                          bottomLeft: Radius.circular(0))),
+                                  tileColor: Color(0xff3A94EE),
+                                ),
+                              ),
+                              SizedBox(
+                                height: size.height * 0.05,
+                                child: ListTile(
+                                  onTap: () {},
+                                  title: Padding(
+                                    padding: EdgeInsets.only(
+                                        bottom: size.height * 0.015),
+                                    child: Row(
+                                      children: [
+                                        Spacer(),
+                                        Text("캐시 현금화 하기  ",
+                                            style: labelSmallStyle(
+                                                color: Colors.black)),
+                                        Icon(
+                                          Icons.arrow_forward_ios_rounded,
+                                          size: 14,
+                                          color: Colors.black,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(0),
+                                          topRight: Radius.circular(0),
+                                          bottomRight: Radius.circular(10),
+                                          bottomLeft: Radius.circular(10))),
+                                  tileColor: Color(0xffE7E8EC),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: size.height * 0.0, left: size.width * 0.57),
+                          child: Image.asset(
+                            'assets/icons/mypage/MYcoin.png',
+                            width: 100,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ]),
             ),
-           SizedBox(height: 16),
-           Text('1234@handong.ac.kr 님',style: labelMediumStyle(color: Colors.black),),
-           SizedBox(height: 4),
-           Text('1234@handong.ac.kr',style: labelSmallStyle(color: Color(0xff9FA5B2)),),
-           SizedBox(height: 20),
-           MyWidget().DivderLine(),
-           SizedBox(height: 20),
-           Row(
-             mainAxisAlignment: MainAxisAlignment.center,
-             children: [
-               _buildButtonColumn('assets/icons/mypage/my_coin2.png','10000',Colors.black),
-           _buildButtonColumn('assets/icons/mypage/black_pencil.png','내가 쓴 글',Colors.black),
-           _buildButtonColumn('assets/icons/mypage/part_pro.png','참여 프로젝트',Colors.black)
-           ],),
-           MyWidget().DivderLine(),
-           _buildListTileButton('내 정보 수정'),
-           _buildListTileButton('결제 정보 수정'),
-           _buildListTileButton('계좌 정보 수정'),
-           MyWidget().DivderLine(),
-           SizedBox(height: 20),
-           _buildListTileButton('공지 사항'),
-           _buildListTileButton('약관 및 개인정보 처리'),
+            SizedBox(height: size.height * 0.005),
+            _buildListTileButton('내가 올린 프로젝트'),
+            _buildListTileButton('내가 작성한 커뮤니티 글'),
+            _buildListTileButton('참여중인 프로젝트'),
+            MyWidget().DivderLine(),
+            _buildListTileButton('결제 정보 수정'),
+            _buildListTileButton('계좌 정보 수정'),
+            MyWidget().DivderLine(),
+            _buildListTileButton('공지 사항'),
+            _buildListTileButton('약관 및 개인정보 처리'),
+            MyWidget().DivderLine(),
+            _buildListTileButton('로그아웃'),
+            Padding(
+              padding: EdgeInsets.only(
+                  left: size.width * 0.015, bottom: size.height * 0.05),
+              child: TextButton(
+                  style: TextButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      minimumSize: Size(0, 20),
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      alignment: Alignment.topLeft),
+                  onPressed: () {},
+                  child: Text(
+                    "탈퇴하기",
+                    style: bodySmallStyle(color: Color(0xff9FA5B2)),
+                  )),
+            )
           ]),
-        )
-      ]),
+        ),
+      ),
     );
   }
-    Container _buildButtonColumn( String image ,String label,Color color) {
+
+  Container _buildButtonColumn(String image, String label, Color color) {
     return Container(
       margin: EdgeInsets.fromLTRB(30, 0, 25, 20),
       child: InkWell(
-        onTap: (){
+        onTap: () {
+
+          if(label=='')
           Navigator.push(
               context,
+
               MaterialPageRoute(
-                builder: (BuildContext context){
-                  if(label=='참여 프로젝트'){
-
-                    return partiprojectPage();
-                  }else{
-                    return notFound();
-                  }
-                }
-
+                builder: (BuildContext context) => notFound(),
               ));
-
         },
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('${image}', height: 40,width: 40),
+            Image.asset('${image}', height: 40, width: 40),
             Container(
               margin: const EdgeInsets.only(top: 8),
               child: Text(
-                label, 
+                label,
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w400,
@@ -106,19 +277,43 @@ class _MYPageState extends State<MYPage> {
       ),
     );
   }
-  ListTile _buildListTileButton(String word){
-    return ListTile(
-      onTap: (){
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (BuildContext context) =>
-                  notFound(),
-            ));
 
-      },
-      leading: Text('  ${word}',style: bodyLargeStyle()),
-      trailing: Icon(Icons.arrow_forward_ios),
-    );
+  ListTile _buildListTileButton(String word) {
+    final Size size = MediaQuery.of(context).size;
+    return ListTile(
+        contentPadding: EdgeInsets.only(left: size.width * 0.014),
+        onTap: () {
+          if(word=="참여중인 프로젝트"){
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => partiprojectPage(),
+                ));
+          }else if(word=="계좌 정보 수정"){
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => makeAccount(),
+                ));
+
+          } else if(word=="로그아웃"){
+            signOut();
+
+          }
+          else{
+            // Navigator.push(
+            //     context,
+            //     MaterialPageRoute(
+            //       builder: (BuildContext context) => notFound(),
+            //     ));
+
+          }
+
+        },
+        leading: Text('${word}', style: labelLargeStyle(color: Colors.black)),
+        trailing: Icon(
+          Icons.arrow_forward_ios_rounded,
+          color: Color(0xffCFD2D9),
+        ));
   }
 }

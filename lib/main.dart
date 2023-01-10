@@ -1,9 +1,10 @@
-import 'package:catch2_0_1/screen/Community/DetailPage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'Auth/auth_service.dart';
 import 'firebase_options.dart';
+import 'screen/Community/DetailPage.dart';
+import 'screen/mainHome.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,6 +15,8 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  //const MyApp({super.key});
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,6 +31,22 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.lightBlue,
         ),
-        home: AuthService().handleAuthState());
+        // home: test());
+        // home: MainHomePage());
+    home: AuthService().handleAuthState());
+  }
+}
+
+class test extends StatefulWidget {
+  const test({super.key});
+
+  @override
+  State<test> createState() => _testState();
+}
+
+class _testState extends State<test> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

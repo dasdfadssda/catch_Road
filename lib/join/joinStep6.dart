@@ -1,9 +1,22 @@
 import 'package:catch2_0_1/Auth/user_information.dart';
 import 'package:catch2_0_1/LoginPage.dart';
+import 'package:catch2_0_1/join/joinPage7.dart';
 import 'package:flutter/material.dart';
 import '../Auth/auth_service.dart';
 import '../utils/app_text_styles.dart';
 
+
+
+String _bankName = '';
+String _bankNum = '';
+String _nameForBank = '';
+
+class bankInformationCode extends ChangeNotifier {
+  String bankName = _bankName;
+  String bankNum = _bankNum;
+  String nameForBank = _nameForBank;
+  notifyListeners();
+}
 class joinStep6 extends StatefulWidget {
   const joinStep6({super.key});
 
@@ -11,10 +24,10 @@ class joinStep6 extends StatefulWidget {
   State<joinStep6> createState() => _joinStep6State();
 }
 
-class _joinStep6State extends State<joinStep6> {
-  final Bankcontroller = TextEditingController();
-  final BankNumcontroller = TextEditingController();
   final BankNamecontroller = TextEditingController();
+  final BankNumcontroller = TextEditingController();
+  final nameforBankcontroller = TextEditingController();
+class _joinStep6State extends State<joinStep6> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -73,75 +86,7 @@ class _joinStep6State extends State<joinStep6> {
                   ),
                   SizedBox(
                     height: size.height * 0.08,
-                    child: TextField(
-                      onTap: () {
-                        // showModalBottomSheet(
-                        //     context: context,
-                        //     builder: (context) {
-                        //       return Column(
-                        //         mainAxisSize: MainAxisSize.min,
-                        //         children: <Widget>[
-                        //           // Text({_dateTime}),
-                        //           SizedBox(
-                        //             height: 20,
-                        //           ),
-                        //           TextButton(
-                        //               onPressed: () {
-                        //                 // setState(() {
-                        //                 //   _dateTime
-                        //                 // });
-                        //               },
-                        //               child: Text("확인"))
-                        //         ],
-                        //       );
-                        //     });
-                      },
-                      controller: Bankcontroller,
-                      style: TextStyle(fontSize: 13),
-                      decoration: InputDecoration(
-                          focusColor: Color.fromARGB(6, 61, 50, 50),
-                          contentPadding: EdgeInsets.only(
-                              top: size.height * 0.01, left: size.width * 0.04),
-                          hintText: '',
-                          errorText: '',
-                          errorStyle: labelSmallStyle(color: Colors.red),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(36.0)),
-                            borderSide: BorderSide(
-                                width: 0.5,
-                                color: Color.fromRGBO(0, 0, 0, 0.2)),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(36.0)),
-                            borderSide: BorderSide(
-                                width: 0.5,
-                                color: Color.fromRGBO(0, 0, 0, 0.2)),
-                          ),
-                          hintStyle: bodyMediumStyle(color: Color(0xff9FA5B2)),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(36.0)),
-                            borderSide: BorderSide(
-                                width: 0.5,
-                                color: Color.fromRGBO(0, 0, 0, 0.2)),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(36.0)),
-                            borderSide: BorderSide(
-                                width: 0.5,
-                                color: Color.fromRGBO(0, 0, 0, 0.2)),
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(36.0)),
-                          ),
-                          filled: true,
-                          fillColor: Colors.white),
-                      showCursor: false,
-                    ),
+                    child: _formBank()
                   ),
                   Row(
                     children: [
@@ -155,53 +100,7 @@ class _joinStep6State extends State<joinStep6> {
                   ),
                   SizedBox(
                     height: size.height * 0.08,
-                    child: TextField(
-                      style: TextStyle(fontSize: 13),
-                      controller: BankNumcontroller,
-                      decoration: InputDecoration(
-                          focusColor: Color.fromARGB(6, 61, 50, 50),
-                          contentPadding: EdgeInsets.only(
-                              top: size.height * 0.01, left: size.width * 0.04),
-                          hintText: '',
-                          errorText: '',
-                          errorStyle: labelSmallStyle(color: Colors.red),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(36.0)),
-                            borderSide: BorderSide(
-                                width: 0.5,
-                                color: Color.fromRGBO(0, 0, 0, 0.2)),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(36.0)),
-                            borderSide: BorderSide(
-                                width: 0.5,
-                                color: Color.fromRGBO(0, 0, 0, 0.2)),
-                          ),
-                          hintStyle: bodyMediumStyle(color: Color(0xff9FA5B2)),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(36.0)),
-                            borderSide: BorderSide(
-                                width: 0.5,
-                                color: Color.fromRGBO(0, 0, 0, 0.2)),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(36.0)),
-                            borderSide: BorderSide(
-                                width: 0.5,
-                                color: Color.fromRGBO(0, 0, 0, 0.2)),
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(36.0)),
-                          ),
-                          filled: true,
-                          fillColor: Colors.white),
-                      keyboardType: TextInputType.number,
-                    ),
+                    child: _formBankNum()
                   ),
                   Row(
                     children: [
@@ -215,53 +114,7 @@ class _joinStep6State extends State<joinStep6> {
                   ),
                   SizedBox(
                     height: size.height * 0.08,
-                    child: TextField(
-                      controller: BankNamecontroller,
-                      style: TextStyle(fontSize: 13),
-                      decoration: InputDecoration(
-                          focusColor: Color.fromARGB(6, 61, 50, 50),
-                          contentPadding: EdgeInsets.only(
-                              top: size.height * 0.01, left: size.width * 0.04),
-                          hintText: '',
-                          errorText: '',
-                          errorStyle: labelSmallStyle(color: Colors.red),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(36.0)),
-                            borderSide: BorderSide(
-                                width: 0.5,
-                                color: Color.fromRGBO(0, 0, 0, 0.2)),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(36.0)),
-                            borderSide: BorderSide(
-                                width: 0.5,
-                                color: Color.fromRGBO(0, 0, 0, 0.2)),
-                          ),
-                          hintStyle: bodyMediumStyle(color: Color(0xff9FA5B2)),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(36.0)),
-                            borderSide: BorderSide(
-                                width: 0.5,
-                                color: Color.fromRGBO(0, 0, 0, 0.2)),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(36.0)),
-                            borderSide: BorderSide(
-                                width: 0.5,
-                                color: Color.fromRGBO(0, 0, 0, 0.2)),
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(36.0)),
-                          ),
-                          filled: true,
-                          fillColor: Colors.white),
-                      keyboardType: TextInputType.number,
-                    ),
+                    child: _formNameForBank()
                   ),
                 ],
               )),
@@ -278,14 +131,14 @@ class _joinStep6State extends State<joinStep6> {
                     Navigator.push(
                       context,
                       PageRouteBuilder(
-                          pageBuilder: (_, __, ___) => LoginPage(),
+                          pageBuilder: (_, __, ___) => joinPage7(),
                           transitionDuration: Duration(seconds: 0),
                           transitionsBuilder: (_, a, __, c) =>
                               FadeTransition(opacity: a, child: c)),
                     );
-                    code().bank = Bankcontroller.text;
-                    code().bankName = BankNamecontroller.text;
-                    code().bankNum = BankNumcontroller.text;
+                    _bankName = BankNamecontroller.text;
+                    _bankNum = BankNumcontroller.text;
+                    _nameForBank = nameforBankcontroller.text;
                     signUpWithEmailAndPassword();
                   },
                   child: Text(
@@ -293,6 +146,136 @@ class _joinStep6State extends State<joinStep6> {
                     style: titleMediumStyle(color: Colors.white),
                   )))
         ],
+      ),
+    );
+  }
+
+  Widget _formBank() {
+    return Form(
+      child: TextField(
+        onTap: () {},
+        controller: BankNamecontroller,
+        style: TextStyle(fontSize: 13),
+        decoration: InputDecoration(
+            focusColor: Color.fromARGB(6, 61, 50, 50),
+            contentPadding: EdgeInsets.only(
+                 left: 20),
+            hintText: 'EX) 포항은행',
+            errorText: '',
+            errorStyle: labelSmallStyle(color: Colors.red),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+              borderSide:
+                  BorderSide(width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+              borderSide:
+                  BorderSide(width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
+            ),
+            hintStyle: bodyMediumStyle(color: Color(0xff9FA5B2)),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+              borderSide:
+                  BorderSide(width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+              borderSide:
+                  BorderSide(width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+            ),
+            filled: true,
+            fillColor: Colors.white),
+        showCursor: false,
+      ),
+    );
+  }
+
+  Widget _formBankNum() {
+    return Form(
+      child: TextField(
+        style: TextStyle(fontSize: 13),
+        controller: BankNumcontroller,
+        decoration: InputDecoration(
+            focusColor: Color.fromARGB(6, 61, 50, 50),
+            contentPadding: EdgeInsets.only(
+                 left: 20),
+            hintText: '',
+            errorText: '',
+            errorStyle: labelSmallStyle(color: Colors.red),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+              borderSide:
+                  BorderSide(width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+              borderSide:
+                  BorderSide(width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
+            ),
+            hintStyle: bodyMediumStyle(color: Color(0xff9FA5B2)),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+              borderSide:
+                  BorderSide(width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+              borderSide:
+                  BorderSide(width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+            ),
+            filled: true,
+            fillColor: Colors.white),
+        keyboardType: TextInputType.number,
+      ),
+    );
+  }
+  
+  Widget _formNameForBank() {
+    return Form(
+      child: TextField(
+        controller: BankNamecontroller,
+        style: TextStyle(fontSize: 13),
+        decoration: InputDecoration(
+            focusColor: Color.fromARGB(6, 61, 50, 50),
+            contentPadding: EdgeInsets.only(
+                left: 20),
+            hintText: '',
+            errorText: '',
+            errorStyle: labelSmallStyle(color: Colors.red),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+              borderSide:
+                  BorderSide(width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+              borderSide:
+                  BorderSide(width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
+            ),
+            hintStyle: bodyMediumStyle(color: Color(0xff9FA5B2)),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+              borderSide:
+                  BorderSide(width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+              borderSide:
+                  BorderSide(width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+            ),
+            filled: true,
+            fillColor: Colors.white),
+        keyboardType: TextInputType.number,
       ),
     );
   }

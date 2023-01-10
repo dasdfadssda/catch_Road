@@ -50,13 +50,11 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
             children: [
               Row(
                 children: [
-                  SizedBox(
-                    width: 10,
-                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Catcher',
+                      // d- 몇인지 보여줘야 함.
+                      Text('D-',
                           style: labelLargeStyle(color: Color(0xff9FA5B2))),
                     ],
                   ),
@@ -73,41 +71,85 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                   //         children: [Icon(Icons.more_vert)]))
                 ],
               ),
-              SizedBox(height: 10),
+              SizedBox(height: size.height * 0.02),
               Row(
                 children: [
-                  Chip(
-                      label: Container(
-                          height: 15,
-                          child: Text('기업',
-                              style:
-                                  labelMediumStyle(color: Color(0xff9FA5B2)))),
-                      backgroundColor: Color(0xffF3F4F5)),
-                  SizedBox(width: 5),
-                  Text(query['cash'].toString(),
-                      style: titleSmallStyle(color: Color(0xff9FA5B2))),
-                  Text('캐시', style: titleSmallStyle(color: Color(0xff9FA5B2))),
+                  Container(
+                      width: size.width * 0.1,
+                      height: size.height * 0.03,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        border: Border.all(
+                          width: 1,
+                          color: Color(0xffCFD2D9),
+                        ),
+                        color: Colors.white,
+                      ),
+                      child: Center(
+                        child: Text('기업',
+                            style: labelMediumStyle(color: Color(0xff9FA5B2))),
+                      )),
+                  SizedBox(width: size.width * 0.016),
+                  Text('Comapany Co',//query['cash'].toString(),
+                      style: labelMediumStyle(color: Color(0xff9FA5B2))),
+                 // Text('캐시', style: labelMediumStyle(color: Color(0xff9FA5B2))),
                 ],
               ),
-              SizedBox(height: 20),
+              SizedBox(height: size.height * 0.04),
               Text(query['content'],
                   style: bodyMediumStyle(color: Color(0xff1A1A1A))),
               SizedBox(height: 30),
               Row(
                 children: [
+                  Image.asset(
+                    'assets/coin.png',
+                    width: 20,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: size.width * 0.01, right: size.width * 0.03),
+                    child: Text(
+                        //snapshot.data!.docs[index]['cash']
+                        //   .toString() +
+                        "100",
+                        style: labelLargeStyle(color: Color(0xff1A1A1A))),
+                  ),
                   for (int i = 0; i < query['category'].length; i++)
                     Padding(
                       padding: EdgeInsets.only(right: 10),
                       //height: 25.h,
-                      child: Chip(
-                        label: Text(query['category'][i],
-                            style: labelMediumStyle(color: Color(0xff1A1A1A))),
-                        backgroundColor: Color(0xFFF3F4F5),
-                        deleteIcon: Icon(
-                          Icons.close,
-                          size: 8,
-                        ),
-                      ),
+                      child: Container(
+                          // width: size.width * 0.18,
+                          height: size.height * 0.035,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            border: Border.all(
+                              width: 1,
+                              color: Color(0xffCFD2D9),
+                            ),
+                            color: Colors.white,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                left: size.width * 0.02,
+                                right: size.width * 0.02),
+                            child: Center(
+                              child: Text(query['category'][i],
+                                  style: labelMediumStyle(
+                                      color: Color(0xff1A1A1A))),
+                              // Text('기업',
+                              //     style: labelMediumStyle(color: Color(0xff9FA5B2))),
+                            ),
+                          )),
+                      // Chip(
+                      //   label: Text(query['category'][i],
+                      //       style: labelMediumStyle(color: Color(0xff1A1A1A))),
+                      //   backgroundColor: Color(0xFFF3F4F5),
+                      //   deleteIcon: Icon(
+                      //     Icons.close,
+                      //     size: 8,
+                      //   ),
+                      // ),
                     ),
                 ],
               ),
@@ -116,7 +158,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                 borderRadius: BorderRadius.all(Radius.circular(10)),
                 child: LinearProgressIndicator(
                   value: int.parse(query['percentage'].toString()) * 0.01,
-                  minHeight: 8,
+                  minHeight: size.height * 0.015,
                   valueColor: AlwaysStoppedAnimation(primary[50]),
                   backgroundColor: primary[0]!.withOpacity(0.05),
                 ),
@@ -124,16 +166,17 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
               SizedBox(height: 10),
               Row(
                 children: [
-                  Text(query['percentage'].toString(),
-                      style: labelLargeStyle(color: Color(0xff9FA5B2))),
-                  Text('% 달성',
-                      style: labelLargeStyle(color: Color(0xff9FA5B2))),
+                  // Text(query['percentage'].toString(),
+                  //     style: labelLargeStyle(color: Color(0xff9FA5B2))),
+                  // Text('% 달성',
+                  //     style: labelLargeStyle(color: Color(0xff9FA5B2))),
                   Expanded(
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text('${query['final_day'].toString()}일 후 마감',
-                              style: labelSmallStyle(color: Color(0xff9FA5B2)))
+                          Text(
+                              '100장 중 ${query['percentage'].toString()}장이 수집되었어요 !',
+                              style: labelSmallStyle(color: Color(0xff1A1A1A)))
                         ]),
                   )
                 ],
@@ -158,7 +201,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                   return StatefulBuilder(
                       builder: (BuildContext context, StateSetter setState) {
                     return Container(
-                      height: size.height * 0.52,
+                      height: size.height * 0.57,
                       padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                       child: Column(
                         children: [
@@ -167,7 +210,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                           ),
                           InkWell(
                             child: Container(
-                                padding: EdgeInsets.fromLTRB(18, 20, 19, 20),
+                                padding: EdgeInsets.fromLTRB(18, 17, 19, 20),
                                 decoration: BoxDecoration(
                                   border: onTap
                                       ? Border.all(
@@ -175,7 +218,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                                           color: Color(0xFF3A94EE),
                                         )
                                       : Border.all(
-                                          color: Colors.white,
+                                          color: Color(0xffCFD2D9),
                                         ),
                                   color:
                                       onTap ? Color(0xFFF2F8FE) : Colors.white,
@@ -184,34 +227,40 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                                       topRight: Radius.circular(20),
                                       bottomLeft: Radius.circular(20),
                                       bottomRight: Radius.circular(20)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Color(0xFFCFD2D9),
-                                      spreadRadius: 1,
-                                      blurRadius: 50,
-                                      //offset: Offset(0, 3), // changes position of shadow
-                                    ),
-                                  ],
+                                  // boxShadow: [
+                                  //   BoxShadow(
+                                  //     color: Color(0xFFCFD2D9),
+                                  //     spreadRadius: 1,
+                                  //     blurRadius: 50,
+                                  //     //offset: Offset(0, 3), // changes position of shadow
+                                  //   ),
+                                  // ],
                                 ),
-                                width: 312,
+                                width: size.width * 0.86,
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    IconButton(
-                                      color: onTap
-                                          ? Colors.blueAccent
-                                          : Color(0xFFCFD2D9),
-                                      onPressed: () {
-                                        setState(() {
-                                          onTap = !onTap;
-                                          print(onTap);
-                                        });
-                                        if (onTap == true && onTap2 == true) //
-                                          _onTap3 = true;
-                                        else
-                                          _onTap3 = false;
-                                      },
-                                      icon: Icon(Icons.check),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          right: size.width * 0.02,
+                                          top: size.height * 0.022),
+                                      child: IconButton(
+                                        color: onTap
+                                            ? Colors.blueAccent
+                                            : Color(0xFFCFD2D9),
+                                        onPressed: () {
+                                          setState(() {
+                                            onTap = !onTap;
+                                            print(onTap);
+                                          });
+                                          if (onTap == true &&
+                                              onTap2 == true) //
+                                            _onTap3 = true;
+                                          else
+                                            _onTap3 = false;
+                                        },
+                                        icon: Icon(Icons.check),
+                                      ),
                                     ),
                                     Column(
                                       crossAxisAlignment:
@@ -219,7 +268,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
-                                        Text('개인정보 및 데이터 수집 및 이용 동의',
+                                        Text('개인정보 및 데이터 수집 및 이용 동의\n',
                                             style: titleSmallStyle(
                                                 color: Color(0xff1A1A1A))),
                                         //SizedBox(height: 16.h),
@@ -282,7 +331,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                                           color: Color(0xFF3A94EE),
                                         )
                                       : Border.all(
-                                          color: Colors.white,
+                                          color: Color(0xffCFD2D9),
                                         ),
                                   color:
                                       onTap2 ? Color(0xFFF2F8FE) : Colors.white,
@@ -291,34 +340,40 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                                       topRight: Radius.circular(20),
                                       bottomLeft: Radius.circular(20),
                                       bottomRight: Radius.circular(20)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Color(0xFFCFD2D9),
-                                      spreadRadius: 1,
-                                      blurRadius: 50,
-                                      //offset: Offset(0, 3), // changes position of shadow
-                                    ),
-                                  ],
+                                  // boxShadow: [
+                                  //   BoxShadow(
+                                  //     color: Color(0xFFCFD2D9),
+                                  //     spreadRadius: 1,
+                                  //     blurRadius: 50,
+                                  //     //offset: Offset(0, 3), // changes position of shadow
+                                  //   ),
+                                  // ],
                                 ),
-                                width: 312,
+                                width: size.width * 0.86,
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    IconButton(
-                                      color: onTap2
-                                          ? Colors.blueAccent
-                                          : Color(0xFFCFD2D9),
-                                      onPressed: () {
-                                        setState(() {
-                                          onTap2 = !onTap2;
-                                          print(onTap);
-                                        });
-                                        if (onTap == true && onTap2 == true) //
-                                          _onTap3 = true;
-                                        else
-                                          _onTap3 = false;
-                                      },
-                                      icon: Icon(Icons.check),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          right: size.width * 0.02,
+                                          top: size.height * 0.022),
+                                      child: IconButton(
+                                        color: onTap2
+                                            ? Colors.blueAccent
+                                            : Color(0xFFCFD2D9),
+                                        onPressed: () {
+                                          setState(() {
+                                            onTap2 = !onTap2;
+                                            print(onTap);
+                                          });
+                                          if (onTap == true &&
+                                              onTap2 == true) //
+                                            _onTap3 = true;
+                                          else
+                                            _onTap3 = false;
+                                        },
+                                        icon: Icon(Icons.check),
+                                      ),
                                     ),
                                     Column(
                                       crossAxisAlignment:
@@ -326,7 +381,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: [
-                                        Text('개인정보 및 데이터 수집 및 이용 동의',
+                                        Text('개인정보 및 데이터 수집 및 이용 동의\n',
                                             style: titleSmallStyle(
                                                 color: Color(0xff1A1A1A))),
                                         //SizedBox(height: 16.h),
@@ -379,7 +434,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                             },
                           ),
                           SizedBox(
-                            height: 20,
+                            height: size.height * 0.04,
                           ),
                           ElevatedButton(
                               // backgroundColor: _onTap3? primary[40] : Color(0xFFCFD2D9),
@@ -388,7 +443,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                               // ),
                               style: ButtonStyle(
                                 fixedSize:
-                                    MaterialStateProperty.all(Size(307, 58)),
+                                    MaterialStateProperty.all(Size(size.width * 0.86, size.height * 0.075)),
                                 backgroundColor: MaterialStateProperty.all(
                                   _onTap3 ? primary[40] : Color(0xFFCFD2D9),
                                   //_onTap3? primary[40] : onSecondaryColor,
@@ -410,23 +465,16 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                                   //     .collection('project')
                                   //     .doc(
                                   //     'cLxKtSGWwhUVJp972FCh').toString());
-
-                                  var userlist=query['part_user'];
-                                  if(!userlist.contains('1234@handong.ac.kr'))
-                                    userlist.add('1234@handong.ac.kr');
-
                                   print(query['id']);
                                   FirebaseFirestore.instance
                                       .collection('project')
                                       .doc(query['id'])
-                                      .update({
-                                    'participate':1,
-                                    'part_user':userlist
-                                      });
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return MainHomePage();
-                                  }));
+                                      .update({'participate': 1});
+                                  Navigator.pop(context);
+                                  // Navigator.push(context,
+                                  //     MaterialPageRoute(builder: (context) {
+                                  //   return MainHomePage();
+                                  // }));
                                 }
 
                                 // if(_onTap3 == true)

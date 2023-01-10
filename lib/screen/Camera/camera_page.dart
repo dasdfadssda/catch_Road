@@ -42,7 +42,7 @@ class _CameraPageState extends State<CameraPage> {
   }
 
   @override
-  Future<void> takepicture() async {
+  Future<void> noauto_takepicture() async {
     print('is saving1 : $issaving');
     CameraImage image = cameraImage2;
     try {
@@ -682,7 +682,8 @@ class _CameraPageState extends State<CameraPage> {
                         issaving = true;
                       });
                       print('clicked!!');
-                      takepicture();
+                      noauto_takepicture();
+                     // takepicture();
                       await Future.delayed(Duration(seconds: 1));
                       setState(() {
                         issaving = false;
