@@ -64,6 +64,7 @@ class _CameraViewerState extends State<CameraViewer> {
   }
 
 
+
   @override
   void initState() {
     super.initState();
@@ -141,10 +142,10 @@ class _CameraViewerState extends State<CameraViewer> {
     print('is sav');
     print('is saving1 : $issaving');
 
-    Coordinates cordi=await getCurrentLocation();
-    var address=await Geocoder.local.findAddressesFromCoordinates(cordi);
-    var first=address.first;
-    print('주소 ${first.thoroughfare}');//동 받아옴
+    // Coordinates cordi=await getCurrentLocation();
+    // var address=await Geocoder.local.findAddressesFromCoordinates(cordi);
+    // var first=address.first;
+    // print('주소 ${first.thoroughfare}');//동 받아옴
 
     CameraImage image = cameraImage2;
     try {
@@ -176,7 +177,7 @@ class _CameraViewerState extends State<CameraViewer> {
             .add({
           "url": url,
           "time":DateFormat('dd/MM/yyyy').format(DateTime.now()),
-          "location":first.thoroughfare,
+          "location":"흥해읍"//first.thoroughfare,
           //위치추가
         });
         await FirebaseFirestore.instance
@@ -186,7 +187,7 @@ class _CameraViewerState extends State<CameraViewer> {
             .add({
           "url": url,
           "time":DateFormat('dd/MM/yyyy').format(DateTime.now()),
-          "location":first.thoroughfare,
+          "location":"흥해읍"//first.thoroughfare,
           //위치추가
         });
 

@@ -109,6 +109,9 @@ flutter:
       - assets/icons/chat_map.png
       - assets/icons/chat_photo.png
       - assets/icons/chaticon.png
+      - assets/icons/mypage/MYcoin.png
+      - assets/account/
+      - assets/icons/bottombar/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

@@ -1,8 +1,15 @@
 import 'package:catch2_0_1/Auth/user_information.dart';
 import 'package:flutter/material.dart';
 import '../utils/app_text_styles.dart';
+import 'joinPage.dart';
 import 'joinStep5.dart';
 
+
+String _Nickname = '';
+class nicknameCode extends ChangeNotifier {
+  String nickname= _Nickname;
+  notifyListeners();
+}
 class joinStep4 extends StatefulWidget {
   const joinStep4({super.key});
 
@@ -71,55 +78,7 @@ class _joinStep4State extends State<joinStep4> {
                   ),
                   SizedBox(
                     height: size.height * 0.08,
-                    child: Form(
-                      child: TextFormField(
-                        controller: Nicknamecontroller,
-                        style: TextStyle(fontSize: 13),
-                        decoration: InputDecoration(
-                            focusColor: Color.fromARGB(6, 61, 50, 50),
-                            contentPadding: EdgeInsets.only(
-                                top: size.height * 0.01, left: size.width * 0.04),
-                            hintText: 'Catcher',
-                            errorText: '',
-                            errorStyle: labelSmallStyle(color: Colors.red),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(36.0)),
-                              borderSide: BorderSide(
-                                  width: 0.5,
-                                  color: Color.fromRGBO(0, 0, 0, 0.2)),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(36.0)),
-                              borderSide: BorderSide(
-                                  width: 0.5,
-                                  color: Color.fromRGBO(0, 0, 0, 0.2)),
-                            ),
-                            hintStyle: bodyMediumStyle(color: Color(0xff9FA5B2)),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(36.0)),
-                              borderSide: BorderSide(
-                                  width: 0.5,
-                                  color: Color.fromRGBO(0, 0, 0, 0.2)),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(36.0)),
-                              borderSide: BorderSide(
-                                  width: 0.5,
-                                  color: Color.fromRGBO(0, 0, 0, 0.2)),
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(36.0)),
-                            ),
-                            filled: true,
-                            fillColor: Colors.white),
-                        keyboardType: TextInputType.text,
-                      ),
-                    ),
+                    child: _formNickname()
                   ),
                 ],
               )),
@@ -141,17 +100,60 @@ class _joinStep4State extends State<joinStep4> {
                           transitionsBuilder: (_, a, __, c) =>
                               FadeTransition(opacity: a, child: c)),
                     );
-                    if(Nicknamecontroller == '') {
-                      code().nickname = code().email;
+                    if (Nicknamecontroller == '') {
+                      _Nickname = emailCode().email;
                     } else {
-                      code().nickname = Nicknamecontroller.text;
+                     _Nickname = Nicknamecontroller.text;
                     }
+
+                    print('닉네임은 : ${nicknameCode().nickname}');
                   },
                   child: Text(
                     "다음",
                     style: titleMediumStyle(color: Colors.white),
                   )))
         ],
+      ),
+    );
+  }
+  Widget _formNickname() {
+    return Form(
+      child: TextFormField(
+        controller: Nicknamecontroller,
+        style: TextStyle(fontSize: 13),
+        decoration: InputDecoration(
+            focusColor: Color.fromARGB(6, 61, 50, 50),
+            contentPadding: EdgeInsets.only(left: 30),
+            hintText: 'Catcher',
+            errorText: '',
+            errorStyle: labelSmallStyle(color: Colors.red),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+              borderSide:
+                  BorderSide(width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+              borderSide:
+                  BorderSide(width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
+            ),
+            hintStyle: bodyMediumStyle(color: Color(0xff9FA5B2)),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+              borderSide:
+                  BorderSide(width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+              borderSide:
+                  BorderSide(width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+            ),
+            filled: true,
+            fillColor: Colors.white),
+        keyboardType: TextInputType.text,
       ),
     );
   }
