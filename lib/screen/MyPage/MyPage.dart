@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../../utils/app_text_styles.dart';
 import '../../utils/widget.dart';
 import '../notFound.dart';
+import 'editMyinfo.dart';
 
 class MYPage extends StatefulWidget {
   const MYPage({super.key});
@@ -88,7 +89,19 @@ class _MYPageState extends State<MYPage> {
                             Padding(
                               padding: EdgeInsets.only(left: size.width * 0.55),
                               child: IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      PageRouteBuilder(
+                                          pageBuilder: (_, __, ___) =>
+                                              editinfo(),
+                                          transitionDuration:
+                                              Duration(seconds: 0),
+                                          transitionsBuilder: (_, a, __, c) =>
+                                              FadeTransition(
+                                                  opacity: a, child: c)),
+                                    );
+                                  },
                                   icon: Icon(
                                     Icons.arrow_forward_ios_rounded,
                                     color: Color(0xffCFD2D9),

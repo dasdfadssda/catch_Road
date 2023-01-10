@@ -216,168 +216,178 @@ class _add_personalState extends State<add_personal> {*/
                                             todaycatchdetail3(query: x),
                                       ));
                                 },
-                                child: Column(children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        top: size.height * 0.03,
-                                        right: size.width * 0.745),
-                                    child: Text(
-                                      "D-" +
-                                          snapshot
-                                              .data!.docs[index]['final_day']
-                                              .toString(),
-                                      style: labelSmallStyle(
-                                          color: Color(0xff9FA5B2)),
-                                    ),
-                                  ),
-                                  ListTile(
-                                    title: Padding(
-                                      padding: EdgeInsets.only(
-                                          top: size.height * 0.01),
-                                      child: Text(
-                                        snapshot.data!.docs[index]['title']
-                                            .toString(),
-                                        style: titleMediumStyle(),
-                                      ),
-                                    ),
-                                    subtitle: Row(
-                                      children: [
-                                        Container(
-                                          height: size.height * 0.025,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(20)),
-                                            border: Border.all(
-                                              width: 1,
-                                              color: Color(0xffCFD2D9),
-                                            ),
-                                            color: Colors.white,
-                                          ),
-                                          margin: EdgeInsets.only(
-                                              top: size.height * 0.01),
-                                          child: Padding(
-                                            padding: EdgeInsets.only(
-                                                top: size.height * 0.000,
-                                                bottom: size.height * 0.000,
-                                                left: size.width * 0.02,
-                                                right: size.width * 0.02),
-                                            child: Text(
-                                              snapshot.data!.docs[index]['type']
-                                                  .toString(),
-                                              style: labelMediumStyle(
-                                                  color: Color(0xff9FA5B2)),
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                              top: size.height * 0.01,
-                                              left: size.width * 0.02),
-                                          child: Text(
-                                            snapshot.data!.docs[index]['user']
-                                                .toString(),
-                                            style: labelMediumStyle(
-                                                color: Color(0xff9FA5B2)),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    // Row(
-                                    //   children: [
-                                    //     Container(
-                                    //       decoration: BoxDecoration(
-                                    //         borderRadius: BorderRadius.all(
-                                    //             Radius.circular(10)),
-                                    //         color: Color(0xffF3F4F5),
-                                    //       ),
-                                    //       margin: EdgeInsets.only(
-                                    //           top: size.height * 0.01),
-                                    //       child: Padding(
-                                    //         padding: EdgeInsets.all(8),
-                                    //         child: Text(
-                                    //           snapshot.data!.docs[index]['type']
-                                    //               .toString(),
-                                    //           style: labelMediumStyle(
-                                    //               color: Color(0xff9FA5B2)),
-                                    //         ),
-                                    //       ),
-                                    //     ),
-                                    //     Padding(
-                                    //       padding: EdgeInsets.only(
-                                    //           top: size.height * 0.01,
-                                    //           left: size.width * 0.02),
-                                    //       child: Text(
-                                    //         snapshot.data!.docs[index]['user']
-                                    //             .toString(),
-                                    //         style: labelMediumStyle(
-                                    //             color: Color(0xff9FA5B2)),
-                                    //       ),
-                                    //     ),
-                                    //   ],
-                                    // ),
-                                  ),
-                                  Row(
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            left: size.width * 0.05,
-                                            bottom: size.height * 0.02,
-                                            top: size.height * 0.02),
-                                        width: size.width * 0.65,
-                                        height: size.height * 0.01,
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(46)),
-                                          child: LinearProgressIndicator(
-                                            value: snapshot.data!
-                                                    .docs[index]['percentage']
-                                                    .toDouble() *
-                                                0.01,
-                                            valueColor: snapshot
-                                                            .data!.docs[index]
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            top: size.height * 0.03,
+                                            left: size.width * 0.045),
+                                        child: Text(
+                                          "D-" +
+                                              snapshot.data!
+                                                  .docs[index]['final_day']
+                                                  .toString(),
+                                          style: labelSmallStyle(
+                                              color: Color(0xff9FA5B2)),
+                                        ),
+                                      ),
+                                      ListTile(
+                                        title: Padding(
+                                          padding: EdgeInsets.only(
+                                              top: size.height * 0.01),
+                                          child: Text(
+                                            snapshot.data!.docs[index]['title']
+                                                .toString(),
+                                            style: titleMediumStyle(),
+                                          ),
+                                        ),
+                                        subtitle: Row(
+                                          children: [
+                                            Container(
+                                              height: size.height * 0.025,
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(20)),
+                                                border: Border.all(
+                                                  width: 1,
+                                                  color: Color(0xffCFD2D9),
+                                                ),
+                                                color: Colors.white,
+                                              ),
+                                              margin: EdgeInsets.only(
+                                                  top: size.height * 0.01),
+                                              child: Padding(
+                                                padding: EdgeInsets.only(
+                                                    top: size.height * 0.000,
+                                                    bottom: size.height * 0.000,
+                                                    left: size.width * 0.02,
+                                                    right: size.width * 0.02),
+                                                child: Text(
+                                                  snapshot
+                                                      .data!.docs[index]['type']
+                                                      .toString(),
+                                                  style: labelMediumStyle(
+                                                      color: Color(0xff9FA5B2)),
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsets.only(
+                                                  top: size.height * 0.01,
+                                                  left: size.width * 0.02),
+                                              child: Text(
+                                                snapshot
+                                                    .data!.docs[index]['user']
+                                                    .toString(),
+                                                style: labelMediumStyle(
+                                                    color: Color(0xff9FA5B2)),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        // Row(
+                                        //   children: [
+                                        //     Container(
+                                        //       decoration: BoxDecoration(
+                                        //         borderRadius: BorderRadius.all(
+                                        //             Radius.circular(10)),
+                                        //         color: Color(0xffF3F4F5),
+                                        //       ),
+                                        //       margin: EdgeInsets.only(
+                                        //           top: size.height * 0.01),
+                                        //       child: Padding(
+                                        //         padding: EdgeInsets.all(8),
+                                        //         child: Text(
+                                        //           snapshot.data!.docs[index]['type']
+                                        //               .toString(),
+                                        //           style: labelMediumStyle(
+                                        //               color: Color(0xff9FA5B2)),
+                                        //         ),
+                                        //       ),
+                                        //     ),
+                                        //     Padding(
+                                        //       padding: EdgeInsets.only(
+                                        //           top: size.height * 0.01,
+                                        //           left: size.width * 0.02),
+                                        //       child: Text(
+                                        //         snapshot.data!.docs[index]['user']
+                                        //             .toString(),
+                                        //         style: labelMediumStyle(
+                                        //             color: Color(0xff9FA5B2)),
+                                        //       ),
+                                        //     ),
+                                        //   ],
+                                        // ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          Container(
+                                            margin: EdgeInsets.only(
+                                                left: size.width * 0.05,
+                                                bottom: size.height * 0.02,
+                                                top: size.height * 0.02),
+                                            width: size.width * 0.65,
+                                            height: size.height * 0.01,
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(46)),
+                                              child: LinearProgressIndicator(
+                                                value: snapshot
+                                                        .data!
+                                                        .docs[index]
+                                                            ['percentage']
+                                                        .toDouble() *
+                                                    0.01,
+                                                valueColor: snapshot.data!
+                                                                .docs[index]
+                                                            ['participate'] ==
+                                                        0
+                                                    ? AlwaysStoppedAnimation<
+                                                            Color>(
+                                                        Color(0xff3A94EE))
+                                                    : AlwaysStoppedAnimation<
+                                                            Color>(
+                                                        Color(0xff00D796)),
+                                                backgroundColor:
+                                                    Color(0xffE7E8EC),
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                                top: size.height * 0.01,
+                                                bottom: size.height * 0.02,
+                                                left: size.width * 0.03),
+                                            child: snapshot.data!.docs[index]
                                                         ['participate'] ==
                                                     0
-                                                ? AlwaysStoppedAnimation<Color>(
-                                                    Color(0xff3A94EE))
-                                                : AlwaysStoppedAnimation<Color>(
-                                                    Color(0xff00D796)),
-                                            backgroundColor: Color(0xffE7E8EC),
+                                                ? Image.asset(
+                                                    'assets/coin.png',
+                                                    width: 20,
+                                                  )
+                                                : Image.asset(
+                                                    'assets/coin2.png',
+                                                    width: 20,
+                                                  ),
                                           ),
-                                        ),
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                                top: size.height * 0.01,
+                                                bottom: size.height * 0.02,
+                                                left: size.width * 0.01),
+                                            child: Text(
+                                              snapshot.data!.docs[index]['cash']
+                                                      .toString() +
+                                                  "00",
+                                              style: labelMediumStyle(
+                                                  color: Color(0xff1A1A1A)),
+                                            ),
+                                          )
+                                        ],
                                       ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            top: size.height * 0.01,
-                                            bottom: size.height * 0.02,
-                                            left: size.width * 0.03),
-                                        child: snapshot.data!.docs[index]
-                                                    ['participate'] ==
-                                                0
-                                            ? Image.asset(
-                                                'assets/coin.png',
-                                                width: 20,
-                                              )
-                                            : Image.asset(
-                                                'assets/coin2.png',
-                                                width: 20,
-                                              ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            top: size.height * 0.01,
-                                            bottom: size.height * 0.02,
-                                            left: size.width * 0.01),
-                                        child: Text(
-                                          snapshot.data!.docs[index]['cash']
-                                                  .toString() +
-                                              "00",
-                                          style: labelMediumStyle(
-                                              color: Color(0xff1A1A1A)),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ]),
+                                    ]),
                               ),
                             ),
                           );
@@ -438,138 +448,148 @@ class _add_personalState extends State<add_personal> {*/
                                   print(snapshot.data!.docs[index]['id']
                                       .toString());
                                 },
-                                child: Column(children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        top: size.height * 0.03,
-                                        right: size.width * 0.74),
-                                    child: Text(
-                                      "D-" +
-                                          snapshot
-                                              .data!.docs[index]['final_day']
-                                              .toString(),
-                                      style: labelSmallStyle(
-                                          color: Color(0xff9FA5B2)),
-                                    ),
-                                  ),
-                                  ListTile(
-                                    title: Padding(
-                                      padding: EdgeInsets.only(
-                                          top: size.height * 0.01),
-                                      child: Text(
-                                        snapshot.data!.docs[index]['title']
-                                            .toString(),
-                                        style: titleMediumStyle(),
-                                      ),
-                                    ),
-                                    subtitle: Row(
-                                      children: [
-                                        Container(
-                                          height: size.height * 0.025,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(20)),
-                                            border: Border.all(
-                                              width: 1,
-                                              color: Color(0xffCFD2D9),
-                                            ),
-                                            color: Colors.white,
-                                          ),
-                                          margin: EdgeInsets.only(
-                                              top: size.height * 0.01),
-                                          child: Padding(
-                                            padding: EdgeInsets.only(
-                                                top: size.height * 0.000,
-                                                bottom: size.height * 0.000,
-                                                left: size.width * 0.02,
-                                                right: size.width * 0.02),
-                                            child: Text(
-                                              snapshot.data!.docs[index]['type']
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            top: size.height * 0.03,
+                                            left: size.width * 0.045),
+                                        child: Text(
+                                          "D-" +
+                                              snapshot.data!
+                                                  .docs[index]['final_day']
                                                   .toString(),
-                                              style: labelMediumStyle(
-                                                  color: Color(0xff9FA5B2)),
-                                            ),
-                                          ),
+                                          style: labelSmallStyle(
+                                              color: Color(0xff9FA5B2)),
                                         ),
-                                        Padding(
+                                      ),
+                                      ListTile(
+                                        title: Padding(
                                           padding: EdgeInsets.only(
-                                              top: size.height * 0.01,
-                                              left: size.width * 0.02),
+                                              top: size.height * 0.01),
                                           child: Text(
-                                            snapshot.data!.docs[index]['user']
+                                            snapshot.data!.docs[index]['title']
                                                 .toString(),
-                                            style: labelMediumStyle(
-                                                color: Color(0xff9FA5B2)),
+                                            style: titleMediumStyle(),
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        top: size.height * 0.015),
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.only(
-                                              left: size.width * 0.05,
-                                              bottom: size.height * 0.03,
-                                              top: size.height * 0.01),
-                                          width: size.width * 0.65,
-                                          height: size.height * 0.01,
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(16)),
-                                            child: LinearProgressIndicator(
-                                              value: snapshot.data!
-                                                      .docs[index]['percentage']
-                                                      .toDouble() *
-                                                  0.01,
-                                              valueColor: snapshot
-                                                              .data!.docs[index]
+                                        subtitle: Row(
+                                          children: [
+                                            Container(
+                                              height: size.height * 0.025,
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(20)),
+                                                border: Border.all(
+                                                  width: 1,
+                                                  color: Color(0xffCFD2D9),
+                                                ),
+                                                color: Colors.white,
+                                              ),
+                                              margin: EdgeInsets.only(
+                                                  top: size.height * 0.01),
+                                              child: Padding(
+                                                padding: EdgeInsets.only(
+                                                    top: size.height * 0.000,
+                                                    bottom: size.height * 0.000,
+                                                    left: size.width * 0.02,
+                                                    right: size.width * 0.02),
+                                                child: Text(
+                                                  snapshot
+                                                      .data!.docs[index]['type']
+                                                      .toString(),
+                                                  style: labelMediumStyle(
+                                                      color: Color(0xff9FA5B2)),
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsets.only(
+                                                  top: size.height * 0.01,
+                                                  left: size.width * 0.02),
+                                              child: Text(
+                                                snapshot
+                                                    .data!.docs[index]['user']
+                                                    .toString(),
+                                                style: labelMediumStyle(
+                                                    color: Color(0xff9FA5B2)),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            top: size.height * 0.015),
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                              margin: EdgeInsets.only(
+                                                  left: size.width * 0.05,
+                                                  bottom: size.height * 0.03,
+                                                  top: size.height * 0.01),
+                                              width: size.width * 0.65,
+                                              height: size.height * 0.01,
+                                              child: ClipRRect(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(16)),
+                                                child: LinearProgressIndicator(
+                                                  value: snapshot
+                                                          .data!
+                                                          .docs[index]
+                                                              ['percentage']
+                                                          .toDouble() *
+                                                      0.01,
+                                                  valueColor: snapshot.data!
+                                                                  .docs[index]
+                                                              ['participate'] ==
+                                                          0
+                                                      ? AlwaysStoppedAnimation<
+                                                              Color>(
+                                                          Color(0xff3A94EE))
+                                                      : AlwaysStoppedAnimation<
+                                                              Color>(
+                                                          Color(0xff00D796)),
+                                                  backgroundColor:
+                                                      Color(0xffE7E8EC),
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsets.only(
+                                                  bottom: size.height * 0.02,
+                                                  left: size.width * 0.03),
+                                              child: snapshot.data!.docs[index]
                                                           ['participate'] ==
                                                       0
-                                                  ? AlwaysStoppedAnimation<
-                                                      Color>(Color(0xff3A94EE))
-                                                  : AlwaysStoppedAnimation<
-                                                      Color>(Color(0xff00D796)),
-                                              backgroundColor:
-                                                  Color(0xffE7E8EC),
+                                                  ? Image.asset(
+                                                      'assets/coin.png',
+                                                      width: 20,
+                                                    )
+                                                  : Image.asset(
+                                                      'assets/coin2.png',
+                                                      width: 20,
+                                                    ),
                                             ),
-                                          ),
+                                            Padding(
+                                              padding: EdgeInsets.only(
+                                                  bottom: size.height * 0.02,
+                                                  left: size.width * 0.01),
+                                              child: Text(
+                                                snapshot.data!
+                                                        .docs[index]['cash']
+                                                        .toString() +
+                                                    "00",
+                                                style: labelMediumStyle(
+                                                    color: Color(0xff1A1A1A)),
+                                              ),
+                                            )
+                                          ],
                                         ),
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                              bottom: size.height * 0.02,
-                                              left: size.width * 0.03),
-                                          child: snapshot.data!.docs[index]
-                                                      ['participate'] ==
-                                                  0
-                                              ? Image.asset(
-                                                  'assets/coin.png',
-                                                  width: 20,
-                                                )
-                                              : Image.asset(
-                                                  'assets/coin2.png',
-                                                  width: 20,
-                                                ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                              bottom: size.height * 0.02,
-                                              left: size.width * 0.01),
-                                          child: Text(
-                                            snapshot.data!.docs[index]['cash']
-                                                    .toString() +
-                                                "00",
-                                            style: labelMediumStyle(
-                                                color: Color(0xff1A1A1A)),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ]),
+                                      ),
+                                    ]),
                               ),
                             ),
                           ),
