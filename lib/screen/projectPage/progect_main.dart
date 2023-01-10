@@ -154,6 +154,7 @@ class _add_personalState extends State<add_personal> {*/
             ),
           ),
         ),
+        // 수정1 시작부분 (하람 1/10)
         part
             ? Padding(
                 padding: EdgeInsets.only(
@@ -177,6 +178,7 @@ class _add_personalState extends State<add_personal> {*/
                 ),
               )
             : Container(),
+        // 수정1 끝 부분 (하람 1/10)
         Expanded(
           child: StreamBuilder<QuerySnapshot>(
               stream:
@@ -197,6 +199,7 @@ class _add_personalState extends State<add_personal> {*/
                         if (snapshot.data!.docs[index]['part_user']
                             .contains('1234@handong.ac.kr'))
                           return Padding(
+                            // 수정2 시작부분 (하람 1/10)
                             padding: EdgeInsets.only(
                                 left: size.width * 0.05,
                                 right: size.width * 0.05,
@@ -603,6 +606,7 @@ class _add_personalState extends State<add_personal> {*/
                           ),
                         );
                       });
+                // 수정2 끝 부분 (하람 1/10)
                 else
                   return Container();
               }),

@@ -95,6 +95,7 @@ class _Catchbox2State extends State<Catchbox2> {
               ),
             )),
       ),
+      // 여기서부터 수정한 부분입니다. (하람 01/10) - 수정1 시작부분
       body: Container(
         child: Center(
           child: Column(
@@ -222,9 +223,9 @@ class _Catchbox2State extends State<Catchbox2> {
                                                     ],
                                                   )),
                                                 ),
-                                                SizedBox(height: 12)
+                                                SizedBox(height: 11)
                                               ],
-                                            ),
+                                            ), // 여기까지 수정한 부분입니다. (하람 01/10) - 수정1 끝부분
 
                                             // Padding(
                                             //   padding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 5.0),
