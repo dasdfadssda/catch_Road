@@ -6,9 +6,12 @@ import 'package:catch2_0_1/utils/app_text_styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../LoginPage.dart';
+import '../../main.dart';
 import '../../utils/app_text_styles.dart';
 import '../../utils/widget.dart';
 import '../notFound.dart';
+import 'editMyinfo.dart';
 
 class MYPage extends StatefulWidget {
   const MYPage({super.key});
@@ -66,7 +69,7 @@ class _MYPageState extends State<MYPage> {
                                   child: Row(
                                     children: [
                                       Text(
-                                        '1234@handong.ac.kr',
+                                        '${ FirebaseAuth.instance.currentUser!.email!}',
                                         style: titleMediumStyle(
                                             color: Colors.black),
                                       ),
@@ -83,7 +86,7 @@ class _MYPageState extends State<MYPage> {
                                   top: size.height * 0.035,
                                   left: size.width * 0.04),
                               child: Text(
-                                '1234@handong.ac.kr',
+                                '${FirebaseAuth.instance.currentUser!.email!}',
                                 style:
                                     labelSmallStyle(color: Color(0xff9FA5B2)),
                               ),
@@ -91,7 +94,13 @@ class _MYPageState extends State<MYPage> {
                             Padding(
                               padding: EdgeInsets.only(left: size.width * 0.55),
                               child: IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => editinfo()),
+                                    );
+
+                                  },
                                   icon: Icon(
                                     Icons.arrow_forward_ios_rounded,
                                     color: Color(0xffCFD2D9),
@@ -210,17 +219,17 @@ class _MYPageState extends State<MYPage> {
                   ]),
             ),
             SizedBox(height: size.height * 0.005),
-            _buildListTileButton('내가 올린 프로젝트'),
-            _buildListTileButton('내가 작성한 커뮤니티 글'),
-            _buildListTileButton('참여중인 프로젝트'),
+            _buildListTileButton('내가 올린 프로젝트', 'myUpLoadProject'),
+            _buildListTileButton('내가 작성한 커뮤니티 글', 'myCommunity'),
+            _buildListTileButton('참여중인 프로젝트', 'myJoinProject'),
             MyWidget().DivderLine(),
-            _buildListTileButton('결제 정보 수정'),
-            _buildListTileButton('계좌 정보 수정'),
+            _buildListTileButton('결제 정보 수정', 'myPayInformation'),
+            _buildListTileButton('계좌 정보 수정', 'myBankInformation'),
             MyWidget().DivderLine(),
-            _buildListTileButton('공지 사항'),
-            _buildListTileButton('약관 및 개인정보 처리'),
+            _buildListTileButton('공지 사항', 'announcement'),
+            _buildListTileButton('약관 및 개인정보 처리', 'myInformation'),
             MyWidget().DivderLine(),
-            _buildListTileButton('로그아웃'),
+            _buildListTileButton('로그아웃','logout'),
             Padding(
               padding: EdgeInsets.only(
                   left: size.width * 0.015, bottom: size.height * 0.05),
@@ -230,7 +239,9 @@ class _MYPageState extends State<MYPage> {
                       minimumSize: Size(0, 20),
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       alignment: Alignment.topLeft),
-                  onPressed: () {},
+                  onPressed: () {
+                    _showSnapBarForwithdraw(context);
+                  },
                   child: Text(
                     "탈퇴하기",
                     style: bodySmallStyle(color: Color(0xff9FA5B2)),
@@ -250,7 +261,6 @@ class _MYPageState extends State<MYPage> {
           if(label=='')
           Navigator.push(
               context,
-
               MaterialPageRoute(
                 builder: (BuildContext context) => notFound(),
               ));
@@ -277,7 +287,7 @@ class _MYPageState extends State<MYPage> {
     );
   }
 
-  ListTile _buildListTileButton(String word) {
+  ListTile _buildListTileButton(String word,String route) {
     final Size size = MediaQuery.of(context).size;
     return ListTile(
         contentPadding: EdgeInsets.only(left: size.width * 0.014),
@@ -295,18 +305,11 @@ class _MYPageState extends State<MYPage> {
                   builder: (BuildContext context) => makeAccount(),
                 ));
 
-          } else if(word=="로그아웃"){
-            signOut();
-
           }
-          else{
-            // Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //       builder: (BuildContext context) => notFound(),
-            //     ));
-
-          }
+          else if (route == 'logout') {
+            print('logout');
+            _showSnapBarForLogOut(context);
+          } else {}
 
         },
         leading: Text('${word}', style: labelLargeStyle(color: Colors.black)),
@@ -314,5 +317,135 @@ class _MYPageState extends State<MYPage> {
           Icons.arrow_forward_ios_rounded,
           color: Color(0xffCFD2D9),
         ));
+  }
+
+  void _showSnapBarForLogOut(context) {
+    // 나가기 관련 스냅바
+    showModalBottomSheet(
+        context: context,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(30),
+          ),
+        ),
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter bottomState) {
+                return Container(
+                  height: 150,
+                  child: Column(children: [
+                    Container(
+                      margin: EdgeInsets.fromLTRB(14, 40, 14, 17),
+                      child: Text(
+                        "로그아웃 하시겠습니까?",
+                        style: labelLargeStyle(),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(39, 0, 39, 0),
+                      child: Row(
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text('취소',
+                                style: labelMediumStyle(color: Color(0XFF9FA5B2))),
+                          ),
+                          SizedBox(width: 175),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => MyApp()),
+                              );
+                              signOut();
+                            },
+                            child: Text('확인',
+                                style: labelMediumStyle(color: Color(0XFF3A94EE))),
+                          ),
+                        ],
+                      ),
+                    )
+                  ]),
+                );
+              });
+        });
+  }
+  void _showSnapBarForwithdraw(context) {
+    // 나가기 관련 스냅바
+    showModalBottomSheet(
+        context: context,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(30),
+          ),
+        ),
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter bottomState) {
+                return Container(
+                  height: 350,
+                  child: Column(children: [
+                    Container(
+                      margin: EdgeInsets.fromLTRB(14, 30, 14, 20),
+                      child: Text(
+                        "정말 탈퇴하시겠습니까?",
+                        style: titleLargeStyle(),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(20, 15, 20, 5),
+                      child: Text(
+                        "${FirebaseAuth.instance.currentUser!.email!}님, 탈퇴시 삭제/유지되는 정보를 확인해주세요!\n한 번 삭제된 정보는 복구가 불가능합니다.",
+                        style: labelLargeStyle(color: Colors.grey), textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Container(
+                      height: 119,
+                      width: 400,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Color(0XFF3A94EE),
+                          width: 1,
+                        ),
+                      ),
+                      margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
+                      padding: EdgeInsets.fromLTRB(9, 10, 10, 5),
+                      child: Text(
+                        "계정을 삭제하면 회원님의 모든 콘텐츠와 활동 기록, 포인트 적립·사용 내역이 삭제됩니다. 프로젝트 참여를 통해 적립한 포인트는 계정 삭제 시 환불이 불가합니다. 또한 삭제된 정보는 복구할 수 없으니 신중하게 결정해주세요.\n\n회원님이 참여한 프로젝트 데이터셋과 커뮤니티 관련 컨텐츠와 댓글은 정보가 유지됩니다.",
+                        style: labelMediumStyle(color: Color(0XFF3A94EE)), textAlign: TextAlign.left,
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                      child: Row(
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: Text('취소',
+                                style: labelMediumStyle(color: Color(0XFF9FA5B2))),
+                          ),
+                          SizedBox(width: 230),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => LoginPage()),
+                              );
+                              //deleteUserFromFirebase();
+                            },
+                            child: Text('탈퇴하기',
+                                style: labelMediumStyle(color: Color(0XFF3A94EE))),
+                          ),
+                        ],
+                      ),
+                    )
+                  ]),
+                );
+              });
+        });
   }
 }

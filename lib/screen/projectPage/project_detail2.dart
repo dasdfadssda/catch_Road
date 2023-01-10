@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:catch2_0_1/utils/app_text_styles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -258,6 +259,21 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
             isDestructiveAction: true,
             // isDefaultAction: true,
             onPressed: () {
+              print(query['id']);
+              var userlist=query['part_user'];
+              print(userlist);
+              userlist.remove(FirebaseAuth.instance.currentUser!.email!);
+              print(userlist);
+              // if(!userlist.contains(FirebaseAuth.instance.currentUser!.email!))
+              //   userlist.add(FirebaseAuth.instance.currentUser!.email!);
+
+              FirebaseFirestore.instance
+                  .collection('project')
+                  .doc(query['id'])
+                  .update({
+                'participate':1,
+                'part_user':userlist
+              });
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return MainHomePage();
               }));

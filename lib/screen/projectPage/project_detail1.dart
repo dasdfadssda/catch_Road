@@ -1,5 +1,7 @@
 import 'package:catch2_0_1/screen/projectPage/progect_main.dart';
+import 'package:catch2_0_1/screen/projectPage/project_detail2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -465,12 +467,26 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                                   //     .collection('project')
                                   //     .doc(
                                   //     'cLxKtSGWwhUVJp972FCh').toString());
+
                                   print(query['id']);
+                                  var userlist=query['part_user'];
+                                  if(!userlist.contains(FirebaseAuth.instance.currentUser!.email!))
+                                    userlist.add(FirebaseAuth.instance.currentUser!.email!);
+
                                   FirebaseFirestore.instance
                                       .collection('project')
                                       .doc(query['id'])
-                                      .update({'participate': 1});
-                                  Navigator.pop(context);
+                                      .update({
+                                    'participate':1,
+                                    'part_user':userlist
+                                  });
+                                  //Navigator.pop(context);
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            todaycatchdetail3(query: query),
+                                      ));
                                   // Navigator.push(context,
                                   //     MaterialPageRoute(builder: (context) {
                                   //   return MainHomePage();

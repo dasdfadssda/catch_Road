@@ -16,7 +16,7 @@ import 'projectPage/progect_main.dart';
 
 List<CameraDescription> cameras = [];
 int selectedIndex0 = 0;
-List<Color> main_colorList=[Color(0xffCFD2D9),Color(0xffCFD2D9),Color(0xffCFD2D9),Color(0xffCFD2D9)];
+List<Color> main_colorList=[Color(0xff3A94EE),Color(0xffCFD2D9),Color(0xffCFD2D9),Color(0xffCFD2D9)];
 
 class MainHomePage extends StatefulWidget {
   @override
