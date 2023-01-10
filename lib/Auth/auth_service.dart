@@ -1,4 +1,7 @@
 import 'package:catch2_0_1/Auth/user_information.dart';
+import 'package:catch2_0_1/join/joinPage.dart';
+import 'package:catch2_0_1/join/joinStep2.dart';
+import 'package:catch2_0_1/join/joinStep4.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,6 +12,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import '../LoginPage.dart';
+import '../join/joinStep3.dart';
+import '../join/joinStep6.dart';
 import '../screen/mainHome.dart';
 
 class AuthService {
@@ -206,56 +211,75 @@ contentsUpdate(user, _photo, TitleController, contentsController,
   }
 }
 
+LikeFunction(like, id, user) async {
+  // 좋아요 기능
+  List _likes = like;
+  _likes.add(user);
+  var doc = FirebaseFirestore.instance.collection('Contents').doc(id);
+  doc.update({
+    '_like': _likes,
+  }).whenComplete(() => print('좋아요 업데이트 성공'));
+}
 
-   LikeFunction(like,id,user) async {  // 좋아요 기능
-        List _likes = like;
-     _likes.add(user);
-      var doc = FirebaseFirestore.instance.collection('Contents').doc(id); 
-      doc.update({
-        '_like' : _likes,
-      }).whenComplete(() => print('좋아요 업데이트 성공'));
+LikeCancelFunction(like, id, user) async {
+  // 좋아요 기능
+  List _likes = like;
+  _likes.remove(user);
+  var doc = FirebaseFirestore.instance.collection('Contents').doc(id);
+  doc.update({
+    '_like': _likes,
+  }).whenComplete(() => print('좋아요 업데이트 성공'));
+}
+
+Future<void> signUpWithEmailAndPassword() async {
+  // 이메일 로그인 생성
+  try {
+    UserCredential userCredential = await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(
+            email: emailCode().email, password: passwordCode().password);
+
+    FirebaseFirestore.instance
+        .collection('user')
+        .doc()
+        .set({
+          'name': informationCode().name,
+          'password' :  passwordCode().password,
+          'email': emailCode().email,
+          'birth': informationCode().year + '/' + informationCode().month + '/' + informationCode().day,
+          'NickName': nicknameCode().nickname,
+          'Bank': bankInformationCode().bankName,
+          'Bank - Num': bankInformationCode().bankNum,
+          '수취인': bankInformationCode().nameForBank
+        })
+        .then((value) => print('User Added'))
+        .catchError((error) => print('Failed to add user: $error'));
+  } on FirebaseAuthException catch (e) {
+    if (e.code == 'weak-password') {
+      print('The password provided is too weak.');
+    } else if (e.code == 'email-already-in-use') {
+      print('The account already exists for that email.');
     }
+  } catch (e) {
+    print(e);
+  }
+}
 
-
-
-   LikeCancelFunction(like,id,user) async {  // 좋아요 기능
-        List _likes = like;
-     _likes.remove(user);
-      var doc = FirebaseFirestore.instance.collection('Contents').doc(id); 
-      doc.update({
-        '_like' : _likes,
-      }).whenComplete(() => print('좋아요 업데이트 성공'));
-    }
-
-
-Future<void> signUpWithEmailAndPassword() async { // 이메일 로그인
+Future<void> loginWithIdandPassword(email,password) async {
     try {
+      // sign in with email and password using signInWithEmailAndPassword()
       UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-          email: code().email, password: code().password);
+          .signInWithEmailAndPassword(
+          email: email.text, password: password.text);
 
-      FirebaseFirestore.instance
-          .collection('user')
-          .doc()
-          .set({
-        'name': code().displayName,
-        'email': code().email,
-        'birth': code().year + '/' +  code().month + '/' + code().day,
-        'NickName': code().nickname,
-        'Bank' : code().bank,
-        'Bank - Num' : code().bankNum,
-        '수취인' : code().bankName
-      })
-          .then((value) => print('User Added'))
-          .catchError((error) => print('Failed to add user: $error'));
 
+      // navigate to Homepage
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+      if (e.code == 'user-not-found') {
+
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+
+        print('Wrong password provided for that user.');
       }
-    } catch (e) {
-      print(e);
     }
   }
