@@ -1,5 +1,3 @@
-
-
 import 'package:catch2_0_1/Auth/user_information.dart';
 import 'package:catch2_0_1/join/joinPage.dart';
 import 'package:catch2_0_1/join/joinStep2.dart';
@@ -268,15 +266,10 @@ Future<void> signUpWithEmailAndPassword() async {
 
 Future<void> loginWithIdandPassword(email,password) async {
     try {
-      print('로그인정보');
-      print('이메일: ${email.text} / ${password.text}');
       // sign in with email and password using signInWithEmailAndPassword()
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(
           email: email.text, password: password.text);
-
-      print('로그인');
-      print(userCredential);
 
 
       // navigate to Homepage
@@ -289,8 +282,4 @@ Future<void> loginWithIdandPassword(email,password) async {
         print('Wrong password provided for that user.');
       }
     }
-
-
-
-
   }

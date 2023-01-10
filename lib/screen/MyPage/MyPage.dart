@@ -247,7 +247,6 @@ class _MYPageState extends State<MYPage> {
       margin: EdgeInsets.fromLTRB(30, 0, 25, 20),
       child: InkWell(
         onTap: () {
-
           if(label=='')
           Navigator.push(
               context,

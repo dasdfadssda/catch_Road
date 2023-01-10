@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'Auth/auth_service.dart';
 import 'join/joinPage.dart';
@@ -162,7 +163,7 @@ class _LoginPageState extends State<LoginPage> {
                             fontWeight: FontWeight.w700)),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: size.width * 0.3),
+                    padding: EdgeInsets.only(left: size.width * 0.25),
                     child: TextButton(
                         onPressed: () {
                           Navigator.push(
@@ -195,8 +196,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           backgroundColor: Color.fromRGBO(58, 148, 238, 1)),
                       onPressed: () async {
-                        loginWithIdandPassword(_email,_password);
-
+                         loginWithIdandPassword(_email,_password);
                       },
                       child: Text(
                         "로그인",
@@ -222,14 +222,14 @@ class _LoginPageState extends State<LoginPage> {
                         userstart();
                         },
                         child: Image.asset(
-                          'assets/icons/google.png',
+                          'assets/icons/google_icon.png',
                           width: 50,
                         )),
                     SizedBox(
                       width: size.width * 0.04,
                     ),
                     Image.asset(
-                      'assets/icons/apple.png',
+                      'assets/icons/apple_icon.png',
                       width: 50,
                     ),
                   ],
@@ -287,6 +287,7 @@ class _forgotLoginState extends State<forgotLogin> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: [
           Padding(

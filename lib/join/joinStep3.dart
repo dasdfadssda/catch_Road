@@ -142,7 +142,7 @@ class _joinStep3State extends State<joinStep3> {
                         ),
                         //태어난 일
                         SizedBox(
-                          width: size.width * 0.155,
+                          width: size.width * 0.15,
                           child: formDay()
                         ),
                         Padding(

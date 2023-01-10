@@ -122,11 +122,14 @@ class _joinStep2State extends State<joinStep2> {
         decoration: InputDecoration(
             suffixIcon: IconButton(
                 onPressed: () {
-                  isObscure = !isObscure;
+                  setState(() {
+                    isObscure = !isObscure;
+                    print(isObscure);
+                  });
                 },
                 icon: isObscure
-                    ? Image.asset('assets/icons/password_eye.png')
-                    : Image.asset('assets/icons/password_openeye.png')),
+                    ? Image.asset('assets/icons/eye_active.png')
+                    : Image.asset('assets/icons/eye_inactive.png')),
             suffixIconConstraints: BoxConstraints(minHeight: 6, minWidth: 16),
             focusColor: Color.fromARGB(6, 61, 50, 50),
             contentPadding: EdgeInsets.only( left: 30),

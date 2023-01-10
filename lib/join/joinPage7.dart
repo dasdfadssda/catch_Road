@@ -47,22 +47,23 @@ class _joinPage7State extends State<joinPage7> {
           children: [
             Padding(
                 padding: EdgeInsets.only(
-                    top: size.height * 0.19,
-                    left: size.width * 0.06,
-                    right: size.width * 0.06),
+                    top: size.height * 0.0,),
+                    //left: size.width * 0.06,
+                    //right: size.width * 0.06),
                 child: SizedBox(
                   // height: size.height * 0.08,
                   child: Center(
-                    child:Image.asset('assets/icons/car.png', height: 110,width: 310,)
+                    child:Image.asset('assets/icons/cacher.gif', width:size.width*0.86,)
                   )
                 )),
-            SizedBox(height: size.height * 0.1),
+            SizedBox(height: size.height * 0.05),
              Text("${emailCode().email}님,", style: titleLargeStyle(color: Colors.black)),
              Text("Catch에 오신 걸 환영합니다.", style: titleLargeStyle(color: Colors.black)),
-             SizedBox(height: size.height * 0.2),
+             SizedBox(height: size.height * 0.15),
             SizedBox(
                 width: size.width * 0.85,
-                height: size.height * 0.08,
+                height: size.height * 0.075,
+               // height: size.height * 0.08,
                 child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
                         backgroundColor: Color(0xff3174CD),

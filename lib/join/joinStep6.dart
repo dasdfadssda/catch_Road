@@ -240,7 +240,7 @@ class _joinStep6State extends State<joinStep6> {
   Widget _formNameForBank() {
     return Form(
       child: TextField(
-        controller: BankNamecontroller,
+        controller: nameforBankcontroller,//BankNamecontroller,
         style: TextStyle(fontSize: 13),
         decoration: InputDecoration(
             focusColor: Color.fromARGB(6, 61, 50, 50),
