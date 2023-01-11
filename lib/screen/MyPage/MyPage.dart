@@ -1,17 +1,15 @@
 import 'package:catch2_0_1/Auth/auth_service.dart';
+import 'package:catch2_0_1/LoginPage.dart';
+import 'package:catch2_0_1/main.dart';
 import 'package:catch2_0_1/screen/MyPage/MyCash.dart';
-import 'package:catch2_0_1/screen/MyPage/makeAccount.dart';
-import 'package:catch2_0_1/screen/projectPage/part_pro.dart';
+import 'package:catch2_0_1/screen/mainHome.dart';
 import 'package:catch2_0_1/utils/app_text_styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../../LoginPage.dart';
-import '../../main.dart';
 import '../../utils/app_text_styles.dart';
 import '../../utils/widget.dart';
 import '../notFound.dart';
-import 'editMyinfo.dart';
 
 class MYPage extends StatefulWidget {
   const MYPage({super.key});
@@ -54,7 +52,7 @@ class _MYPageState extends State<MYPage> {
                                   BorderRadius.circular(100), // Image border
                               child: SizedBox.fromSize(
                                 size: Size.fromRadius(35), // Image radius
-                                child: Image.asset('assets/icons/laucher_icon.png',
+                                child: Image.asset('assets/icons/apple.png',
                                     fit: BoxFit.cover),
                               )),
                         ),
@@ -69,7 +67,7 @@ class _MYPageState extends State<MYPage> {
                                   child: Row(
                                     children: [
                                       Text(
-                                        '${ FirebaseAuth.instance.currentUser!.email!}',
+                                        '${FirebaseAuth.instance.currentUser!.displayName!}',
                                         style: titleMediumStyle(
                                             color: Colors.black),
                                       ),
@@ -95,11 +93,7 @@ class _MYPageState extends State<MYPage> {
                               padding: EdgeInsets.only(left: size.width * 0.55),
                               child: IconButton(
                                   onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => editinfo()),
-                                    );
-
+                                    signOut();
                                   },
                                   icon: Icon(
                                     Icons.arrow_forward_ios_rounded,
@@ -113,20 +107,6 @@ class _MYPageState extends State<MYPage> {
                     SizedBox(
                       height: size.height * 0.03,
                     ),
-                    // Stack(
-                    //   children: [
-                    //     // SizedBox(
-                    //     //   height: size.height * 0.03,
-                    //     // ),
-                    //     Padding(
-                    //       padding: EdgeInsets.only(top: size.height * 0.1),
-                    //       child: Image.asset(
-                    //         'assets/icons/mypage/coin.png',
-                    //         width: 100,
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
                     Stack(
                       children: [
                         Card(
@@ -219,9 +199,9 @@ class _MYPageState extends State<MYPage> {
                   ]),
             ),
             SizedBox(height: size.height * 0.005),
-            _buildListTileButton('내가 올린 프로젝트', 'myUpLoadProject'),
+            _buildListTileButton('내가 올린 프로젝트', 'myUpLoadProject'),// 1.10일 mypage 회원 탈퇴 부분 밑으로 쭉
             _buildListTileButton('내가 작성한 커뮤니티 글', 'myCommunity'),
-            _buildListTileButton('참여중인 프로젝트', 'myJoinProject'),
+            _buildListTileButton('참여한 프로젝트', 'myJoinProject'),
             MyWidget().DivderLine(),
             _buildListTileButton('결제 정보 수정', 'myPayInformation'),
             _buildListTileButton('계좌 정보 수정', 'myBankInformation'),
@@ -229,7 +209,7 @@ class _MYPageState extends State<MYPage> {
             _buildListTileButton('공지 사항', 'announcement'),
             _buildListTileButton('약관 및 개인정보 처리', 'myInformation'),
             MyWidget().DivderLine(),
-            _buildListTileButton('로그아웃','logout'),
+            _buildListTileButton('로그아웃', 'logout'),// 1.10일 mypage 회원 탈퇴 부분 여기까지
             Padding(
               padding: EdgeInsets.only(
                   left: size.width * 0.015, bottom: size.height * 0.05),
@@ -240,7 +220,10 @@ class _MYPageState extends State<MYPage> {
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       alignment: Alignment.topLeft),
                   onPressed: () {
-                    _showSnapBarForwithdraw(context);
+                    setState(() {
+                      print('탈퇴하기');
+                      _showSnapBarForwithdraw(context);
+                    });
                   },
                   child: Text(
                     "탈퇴하기",
@@ -258,7 +241,6 @@ class _MYPageState extends State<MYPage> {
       margin: EdgeInsets.fromLTRB(30, 0, 25, 20),
       child: InkWell(
         onTap: () {
-          if(label=='')
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -287,30 +269,16 @@ class _MYPageState extends State<MYPage> {
     );
   }
 
-  ListTile _buildListTileButton(String word,String route) {
+  ListTile _buildListTileButton(String word, String route) { // 1.10일 mypage 회원 탈퇴 부분 밑으로 쭉
     final Size size = MediaQuery.of(context).size;
     return ListTile(
         contentPadding: EdgeInsets.only(left: size.width * 0.014),
         onTap: () {
-          if(word=="참여중인 프로젝트"){
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) => partiprojectPage(),
-                ));
-          }else if(word=="계좌 정보 수정"){
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) => makeAccount(),
-                ));
-
-          }
-          else if (route == 'logout') {
+          print('onTap');
+          if (route == 'logout') {
             print('logout');
-            _showSnapBarForLogOut(context);
+           _showSnapBarForLogOut(context);
           } else {}
-
         },
         leading: Text('${word}', style: labelLargeStyle(color: Colors.black)),
         trailing: Icon(
@@ -331,48 +299,48 @@ class _MYPageState extends State<MYPage> {
         builder: (BuildContext context) {
           return StatefulBuilder(
               builder: (BuildContext context, StateSetter bottomState) {
-                return Container(
-                  height: 150,
-                  child: Column(children: [
-                    Container(
-                      margin: EdgeInsets.fromLTRB(14, 40, 14, 17),
-                      child: Text(
-                        "로그아웃 하시겠습니까?",
-                        style: labelLargeStyle(),
+            return Container(
+              height: 150,
+              child: Column(children: [
+                Container(
+                  margin: EdgeInsets.fromLTRB(14, 40, 14, 17),
+                  child: Text(
+                    "로그아웃 하시겠습니까?",
+                    style: labelLargeStyle(),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(39, 0, 39, 0),
+                  child: Row(
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text('취소',
+                            style: labelMediumStyle(color: Color(0XFF9FA5B2))),
                       ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(39, 0, 39, 0),
-                      child: Row(
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Text('취소',
-                                style: labelMediumStyle(color: Color(0XFF9FA5B2))),
-                          ),
-                          SizedBox(width: 175),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => MyApp()),
-                              );
-                              signOut();
-                            },
-                            child: Text('확인',
-                                style: labelMediumStyle(color: Color(0XFF3A94EE))),
-                          ),
-                        ],
+                      SizedBox(width: 200),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => MyApp()),
+                          );
+                          signOut();
+                        },
+                        child: Text('확인',
+                            style: labelMediumStyle(color: Color(0XFF3A94EE))),
                       ),
-                    )
-                  ]),
-                );
-              });
+                    ],
+                  ),
+                )
+              ]),
+            );
+          });
         });
   }
-  void _showSnapBarForwithdraw(context) {
+   void _showSnapBarForwithdraw(context) {
     // 나가기 관련 스냅바
     showModalBottomSheet(
         context: context,
@@ -384,68 +352,68 @@ class _MYPageState extends State<MYPage> {
         builder: (BuildContext context) {
           return StatefulBuilder(
               builder: (BuildContext context, StateSetter bottomState) {
-                return Container(
-                  height: 350,
-                  child: Column(children: [
-                    Container(
-                      margin: EdgeInsets.fromLTRB(14, 30, 14, 20),
-                      child: Text(
-                        "정말 탈퇴하시겠습니까?",
-                        style: titleLargeStyle(),
-                      ),
+            return Container(
+              height: 310,
+              child: Column(children: [
+                Container(
+                  margin: EdgeInsets.fromLTRB(14, 30, 14, 20),
+                  child: Text(
+                    "정말 탈퇴하시겠습니까?",
+                    style: titleLargeStyle(),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(20, 15, 20, 5),
+                  child: Text(
+                    "${FirebaseAuth.instance.currentUser!.displayName!}님, 탈퇴시 삭제/유지되는 정보를 확인해주세요!\n한 번 삭제된 정보는 복구가 불가능합니다.",
+                    style: labelLargeStyle(color: Colors.grey), textAlign: TextAlign.center,
+                  ),
+                ),
+                Container(
+                  height: 95,
+                  width: 400,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Color(0XFF3A94EE),
+                      width: 1,
                     ),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(20, 15, 20, 5),
-                      child: Text(
-                        "${FirebaseAuth.instance.currentUser!.email!}님, 탈퇴시 삭제/유지되는 정보를 확인해주세요!\n한 번 삭제된 정보는 복구가 불가능합니다.",
-                        style: labelLargeStyle(color: Colors.grey), textAlign: TextAlign.center,
+                  ),
+                  margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
+                  padding: EdgeInsets.fromLTRB(9, 10, 10, 5),
+                  child: Text(
+                    "계정을 삭제하면 회원님의 모든 콘텐츠와 활동 기록, 포인트 적립·사용 내역이 삭제됩니다. 프로젝트 참여를 통해 적립한 포인트는 계정 삭제 시 환불이 불가합니다. 또한 삭제된 정보는 복구할 수 없으니 신중하게 결정해주세요.\n\n회원님이 참여한 프로젝트 데이터셋과 커뮤니티 관련 컨텐츠와 댓글은 정보가 유지됩니다.",
+                    style: labelMediumStyle(color: Color(0XFF3A94EE)), textAlign: TextAlign.left,
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  child: Row(
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text('취소',
+                            style: labelMediumStyle(color: Color(0XFF9FA5B2))),
                       ),
-                    ),
-                    Container(
-                      height: 119,
-                      width: 400,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Color(0XFF3A94EE),
-                          width: 1,
-                        ),
+                      SizedBox(width: 255),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => MyApp()),
+                          );
+                         deleteUserFromFirebase();
+                        },
+                        child: Text('탈퇴하기',
+                            style: labelMediumStyle(color: Color(0XFF3A94EE))),
                       ),
-                      margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
-                      padding: EdgeInsets.fromLTRB(9, 10, 10, 5),
-                      child: Text(
-                        "계정을 삭제하면 회원님의 모든 콘텐츠와 활동 기록, 포인트 적립·사용 내역이 삭제됩니다. 프로젝트 참여를 통해 적립한 포인트는 계정 삭제 시 환불이 불가합니다. 또한 삭제된 정보는 복구할 수 없으니 신중하게 결정해주세요.\n\n회원님이 참여한 프로젝트 데이터셋과 커뮤니티 관련 컨텐츠와 댓글은 정보가 유지됩니다.",
-                        style: labelMediumStyle(color: Color(0XFF3A94EE)), textAlign: TextAlign.left,
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                      child: Row(
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Text('취소',
-                                style: labelMediumStyle(color: Color(0XFF9FA5B2))),
-                          ),
-                          SizedBox(width: 230),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => LoginPage()),
-                              );
-                              //deleteUserFromFirebase();
-                            },
-                            child: Text('탈퇴하기',
-                                style: labelMediumStyle(color: Color(0XFF3A94EE))),
-                          ),
-                        ],
-                      ),
-                    )
-                  ]),
-                );
-              });
+                    ],
+                  ),
+                )
+              ]),
+            );
+          });
         });
   }
 }

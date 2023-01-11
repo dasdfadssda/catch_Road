@@ -261,7 +261,7 @@ class _CreatePprojectState extends State<CreatePproject> {
                 child: Text(
                   '취소',
                   style: textTheme.titleMedium!.copyWith(
-                    color: Colors.black?.withOpacity(0.4),
+                    color: Colors.black.withOpacity(0.4),
                   ),
                 ),
               )),
@@ -312,7 +312,7 @@ class _CreatePprojectState extends State<CreatePproject> {
                   decoration: InputDecoration(
                     filled: true,
                     hintText: '프로젝트 이름',
-                    hintStyle: TextStyle(color: Colors.black!.withOpacity(0.2)),
+                    hintStyle: TextStyle(color: Colors.black.withOpacity(0.2)),
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.fromLTRB(5, 0, 0, 0),
                     fillColor: Color.fromRGBO(255, 255, 255, 255),
@@ -335,7 +335,7 @@ class _CreatePprojectState extends State<CreatePproject> {
                 Container(
                   height: 1,
                   width: 340,
-                  color: Colors.black!.withOpacity(0.05),
+                  color: Colors.black.withOpacity(0.05),
                 ),
                 SizedBox(height: 12),
                 Row(
@@ -344,7 +344,7 @@ class _CreatePprojectState extends State<CreatePproject> {
                     Text(
                       '수집 객체',
                       style: textTheme.titleSmall!
-                          .copyWith(color: Colors.black!.withOpacity(0.5)),
+                          .copyWith(color: Colors.black.withOpacity(0.5)),
                     ),
                     SizedBox(
                       width: 228,
@@ -456,7 +456,7 @@ class _CreatePprojectState extends State<CreatePproject> {
                 Container(
                   height: 1,
                   width: 340,
-                  color: Colors.black!.withOpacity(0.05),
+                  color: Colors.black.withOpacity(0.05),
                 ),
                 SizedBox(height: 12),
                 Row(
@@ -472,7 +472,7 @@ class _CreatePprojectState extends State<CreatePproject> {
                           filled: true,
                           hintText: '최대 50장',
                           hintStyle:
-                              TextStyle(color: Colors.black!.withOpacity(0.2)),
+                              TextStyle(color: Colors.black.withOpacity(0.2)),
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.fromLTRB(5, 0, 0, 0),
                           fillColor: Color.fromRGBO(255, 255, 255, 255),
@@ -496,7 +496,7 @@ class _CreatePprojectState extends State<CreatePproject> {
                     SizedBox(
                         width: 1,
                         child: Icon(Icons.close,
-                            color: Colors.black!.withOpacity(0.2))),
+                            color: Colors.black.withOpacity(0.2))),
                     SizedBox(width: 22),
                     Container(
                       width: 70,
@@ -509,7 +509,7 @@ class _CreatePprojectState extends State<CreatePproject> {
                           filled: true,
                           hintText: '장 당 캐시',
                           hintStyle:
-                              TextStyle(color: Colors.black!.withOpacity(0.2)),
+                              TextStyle(color: Colors.black.withOpacity(0.2)),
                           border: InputBorder.none,
                           contentPadding: EdgeInsets.fromLTRB(5, 0, 0, 0),
                           fillColor: Color.fromRGBO(255, 255, 255, 255),
@@ -573,7 +573,7 @@ class _CreatePprojectState extends State<CreatePproject> {
                 Container(
                   height: 1,
                   width: 340,
-                  color: Colors.black!.withOpacity(0.05),
+                  color: Colors.black.withOpacity(0.05),
                 ),
                 SizedBox(height: 12),
                 Row(
@@ -864,7 +864,7 @@ class _CreatePprojectState extends State<CreatePproject> {
                   decoration: InputDecoration(
                     filled: true,
                     hintText: '원하시는 사진에 대한 자세한 설명을 적어주세요.',
-                    hintStyle: TextStyle(color: Colors.black!.withOpacity(0.2)),
+                    hintStyle: TextStyle(color: Colors.black.withOpacity(0.2)),
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.fromLTRB(5, 20, 0, 20),
                     fillColor: Color.fromRGBO(255, 255, 255, 255),
