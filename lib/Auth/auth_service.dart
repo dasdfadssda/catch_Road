@@ -41,30 +41,24 @@ final uid = user!.uid;
 final GoogleSignIn googleSignIn = new GoogleSignIn();
 
 final DateTime timestamp = DateTime.now();
-// final GoogleSignInAccount? gCurrentUser = googleSignIn.currentUser;
 
 final userReference = FirebaseFirestore.instance.collection('users');
 // User? currentUser;
 
 signInWithGoogle() async {
-  // Trigger the authentication flow
   final GoogleSignInAccount? googleUser =
       await GoogleSignIn(scopes: <String>["email"]).signIn();
 
-  // Obtain the auth details from the request
   final GoogleSignInAuthentication googleAuth =
       await googleUser!.authentication;
 
-  // Create a new credential
   final credential = GoogleAuthProvider.credential(
     accessToken: googleAuth.accessToken,
     idToken: googleAuth.idToken,
   );
-  // saveUserInfoFirestore();
   DocumentSnapshot documentSnapshot =
       await userReference.doc(googleUser.email).get();
 
-  // Once signed in, return the UserCredential
   return await FirebaseAuth.instance.signInWithCredential(credential);
 }
 
@@ -97,6 +91,7 @@ Future<void> signOut() async {
   print('logOut');
 }
 
+
 contentsFunction(
     user, _photo, TitleController, contentsController, priceController) async {
   //파이어 베이스 저장 (유저 이름, 사진, 제목, 글 내용 )
@@ -112,17 +107,6 @@ contentsFunction(
         .child(
             '${_photo} + ${FirebaseAuth.instance.currentUser!.displayName!}') // 업로드한 파일의 최종이름
         .putFile(_photo!);
-    //  var doc = FirebaseFirestore.instance.collection('Product').doc(priceController.text);
-    //     doc.set({
-    //       'id': doc.id,
-    //       'datetime' : DateTime.now().toString(),
-    //       'displayName':FirebaseAuth.instance.currentUser!.displayName!,
-    //       'title' : TitleController.text,
-    //       'content' : contentsController.text,
-    //       'imageUrl' : _photo,
-    //       'price' : priceController.text,
-    //       'like' : _like,
-    //     }).whenComplete(() => print('데이터 저장 성공'));
     if (task != null) {
       var downloadUrl = await task.ref
           .getDownloadURL()
@@ -239,13 +223,17 @@ Future<void> signUpWithEmailAndPassword() async {
             email: emailCode().email, password: passwordCode().password);
 
     FirebaseFirestore.instance
-        .collection('user')
+        .collection('users')
         .doc()
         .set({
           'name': informationCode().name,
-          'password' :  passwordCode().password,
+          'password': passwordCode().password,
           'email': emailCode().email,
-          'birth': informationCode().year + '/' + informationCode().month + '/' + informationCode().day,
+          'birth': informationCode().year +
+              '/' +
+              informationCode().month +
+              '/' +
+              informationCode().day,
           'NickName': nicknameCode().nickname,
           'Bank': bankInformationCode().bankName,
           'Bank - Num': bankInformationCode().bankNum,
@@ -264,22 +252,27 @@ Future<void> signUpWithEmailAndPassword() async {
   }
 }
 
-Future<void> loginWithIdandPassword(email,password) async {
-    try {
-      // sign in with email and password using signInWithEmailAndPassword()
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-          email: email.text, password: password.text);
+Future<void> loginWithIdandPassword(email, password) async {
+  try {
+    // sign in with email and password using signInWithEmailAndPassword()
+    UserCredential userCredential = await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password);
 
-
-      // navigate to Homepage
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-
-        print('Wrong password provided for that user.');
-      }
+    // navigate to Homepage
+  } on FirebaseAuthException catch (e) {
+    if (e.code == 'user-not-found') {
+      print('No user found for that email.');
+    } else if (e.code == 'wrong-password') {
+      print('Wrong password provided for that user.');
     }
   }
+}
+
+void deleteUserFromFirebase() async {
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
+  users.doc(FirebaseAuth.instance.currentUser!.uid).delete();
+  User user = FirebaseAuth.instance.currentUser!;
+  user.delete();
+  await signOut();
+}
+
