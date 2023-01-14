@@ -256,7 +256,7 @@ Future<void> loginWithIdandPassword(email, password) async {
   try {
     // sign in with email and password using signInWithEmailAndPassword()
     UserCredential userCredential = await FirebaseAuth.instance
-        .signInWithEmailAndPassword(email: email, password: password);
+        .signInWithEmailAndPassword(email: email.text, password: password.text);
 
     // navigate to Homepage
   } on FirebaseAuthException catch (e) {
