@@ -10,6 +10,8 @@ import '../../utils/app_text_styles.dart';
 import 'catchbox_detail.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'dart:math' as math;
+import 'package:extended_image/extended_image.dart';
+
 class Catchbox extends StatefulWidget {
   const Catchbox({Key? key}) : super(key: key);
 
@@ -160,7 +162,7 @@ class _CatchboxState extends State<Catchbox> {
                                                               : 90 *
                                                               math.pi /
                                                               180,
-                                                          child: Image.network(
+                                                          child: ExtendedImage.network(
                                                             x['new'],
                                                             fit: BoxFit.cover,
                                                           ),

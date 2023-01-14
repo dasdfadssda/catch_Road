@@ -49,7 +49,7 @@ class _partiprojectPageState extends State<partiprojectPage> {
                     itemBuilder: (context, index) {
                       QueryDocumentSnapshot x = snapshot.data!.docs[index];
 
-                      if(snapshot.data!.docs[index]['participate']==1)
+                      if(snapshot.data!.docs[index]['part_user'].contains('1234@handong.ac.kr'))
 
                         return  Padding(
                           padding:  EdgeInsets.only(left: size.width * 0.05, right : size.width * 0.05, bottom: size.height * 0.01),

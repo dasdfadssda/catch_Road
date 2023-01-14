@@ -547,7 +547,7 @@ class _HomePageState extends State<HomePage> {
                   imageList[0].toString(),
                   fit: BoxFit.fill,
                   height: 160,
-                  width: 161,
+                  width: 145,
                 )),
             SizedBox(width: 10),
             ClipRRect(

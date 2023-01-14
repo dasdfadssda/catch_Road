@@ -197,7 +197,8 @@ class _add_personalState extends State<add_personal> {*/
                       itemBuilder: (context, index) {
                         QueryDocumentSnapshot x = snapshot.data!.docs[index];
                         //if (snapshot.data!.docs[index]['participate'] == 1)
-                        if (snapshot.data!.docs[index]['part_user'].contains(FirebaseAuth.instance.currentUser!.email!))
+
+                        if (snapshot.data!.docs[index]['part_user'].contains('1234@handong.ac.kr'))//FirebaseAuth.instance.currentUser!.email!))
                           return Padding(
                             padding: EdgeInsets.only(
                                 left: size.width * 0.05,
@@ -314,7 +315,7 @@ class _add_personalState extends State<add_personal> {*/
                                                 ['percentage']
                                                     .toDouble() *
                                                     0.01,
-                                                valueColor: !snapshot.data!.docs[index]['part_user'].contains(FirebaseAuth.instance.currentUser!.email!)
+                                                valueColor: !snapshot.data!.docs[index]['part_user'].contains('1234@handong.ac.kr')//FirebaseAuth.instance.currentUser!.email!)
                                                 ? AlwaysStoppedAnimation<Color>(
                                                     Color(0xff3A94EE))
                                                 : AlwaysStoppedAnimation<Color>(
@@ -328,7 +329,7 @@ class _add_personalState extends State<add_personal> {*/
                                                 top: size.height * 0.02,
                                                 bottom: size.height * 0.02,
                                                 left: size.width * 0.03),
-                                            child: !snapshot.data!.docs[index]['part_user'].contains(FirebaseAuth.instance.currentUser!.email!)
+                                            child: !snapshot.data!.docs[index]['part_user'].contains('1234@handong.ac.kr')//FirebaseAuth.instance.currentUser!.email!)
                                             ? Image.asset(
                                                 'assets/coin.png',
                                                 width: 20,
@@ -392,7 +393,8 @@ class _add_personalState extends State<add_personal> {*/
                               child: InkWell(
                                 //카드 누르는 경우
                                 onTap: () {
-                                  if (snapshot.data!.docs[index]['part_user'].contains(FirebaseAuth.instance.currentUser!.email!)) {
+                                  if (snapshot.data!.docs[index]['part_user'].contains('1234@handong.ac.kr')) {
+                                    //snapshot.data!.docs[index]['part_user'].contains(FirebaseAuth.instance.currentUser!.email!)
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -400,6 +402,7 @@ class _add_personalState extends State<add_personal> {*/
                                               todaycatchdetail3(query: x),
                                         ));
                                   } else {
+                                    print('참여 X');
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -458,10 +461,10 @@ class _add_personalState extends State<add_personal> {*/
                                                 left: size.width * 0.02,
                                                 right: size.width * 0.02),
                                             child: Text(
-                                              // snapshot
-                                              //     .data!.docs[index]['type']
-                                              //     .toString(),
-                                              '기업',
+                                              snapshot
+                                                  .data!.docs[index]['type']
+                                                  .toString(),
+                                              //'기업',
                                               style: labelMediumStyle(
                                                   color: Color(0xff9FA5B2)),
                                             ),
@@ -501,7 +504,7 @@ class _add_personalState extends State<add_personal> {*/
                                                       .docs[index]['percentage']
                                                       .toDouble() *
                                                   0.01,
-                                              valueColor: !snapshot.data!.docs[index]['part_user'].contains(FirebaseAuth.instance.currentUser!.email!)
+                                              valueColor: !snapshot.data!.docs[index]['part_user'].contains('1234@handong.ac.kr')//FirebaseAuth.instance.currentUser!.email!)
                                                   ? AlwaysStoppedAnimation<
                                                       Color>(Color(0xff3A94EE))
                                                   : AlwaysStoppedAnimation<
@@ -515,7 +518,7 @@ class _add_personalState extends State<add_personal> {*/
                                           padding: EdgeInsets.only(
                                               bottom: size.height * 0.02,
                                               left: size.width * 0.03),
-                                          child: !snapshot.data!.docs[index]['part_user'].contains(FirebaseAuth.instance.currentUser!.email!)
+                                          child: !snapshot.data!.docs[index]['part_user'].contains('1234@handong.ac.kr')//FirebaseAuth.instance.currentUser!.email!
                                               ? Image.asset(
                                                   'assets/coin.png',
                                                   width: 20,

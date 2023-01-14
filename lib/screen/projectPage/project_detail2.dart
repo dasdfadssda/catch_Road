@@ -63,7 +63,7 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('D-49', style: labelLargeStyle(color: Colors.black)),
+                      Text('D-${query['final_day'].toString()}', style: labelLargeStyle(color:Color(0xff9FA5B2))),
                     ],
                   ),
                   Expanded(
@@ -116,14 +116,14 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
                         color: Colors.white,
                       ),
                       child: Center(
-                        child: Text('기업',
+                        child: Text(query['type'],
                             style: labelMediumStyle(color: Color(0xff9FA5B2))),
                       )),
                   SizedBox(width: size.width * 0.02),
                   // 텍스트 다름
-                  Text(query['cash'].toString(),
-                      style: titleSmallStyle(color: Colors.black)),
-                  Text('캐시', style: titleSmallStyle(color: Colors.black)),
+                  Text('${query['user']}',
+                      style: labelMediumStyle(color: Color(0xff9FA5B2))),
+                  //Text('캐시', style: titleSmallStyle(color: Colors.black)),
                 ],
               ),
               SizedBox(height: 20),
@@ -169,7 +169,8 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
               ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
                 child: LinearProgressIndicator(
-                  value: 0.04,
+                  value: query['percentage'].toDouble() *
+                    0.01,//0.8,
                   minHeight: size.height * 0.015,
                   valueColor: AlwaysStoppedAnimation(Color(0xff00D796)),
                   backgroundColor: Color(0xFFF3F4F5),
@@ -262,7 +263,7 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
               print(query['id']);
               var userlist=query['part_user'];
               print(userlist);
-              userlist.remove(FirebaseAuth.instance.currentUser!.email!);
+              userlist.remove('1234@handong.ac.kr');
               print(userlist);
               // if(!userlist.contains(FirebaseAuth.instance.currentUser!.email!))
               //   userlist.add(FirebaseAuth.instance.currentUser!.email!);

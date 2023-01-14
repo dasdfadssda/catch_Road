@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart';
 import 'dart:math' as math;
-
+import 'package:extended_image/extended_image.dart';
 import '../../utils/app_text_styles.dart';
 import '../Camera/camera_load.dart';
 import '../Community/HomePage.dart';
@@ -40,7 +40,7 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
 
   final _valueList = ['오토바이', '퀵보드', '자전거'];
   String? _selectedValue;
-  bool pressed = false;
+  bool pressed = true;
   String _dateCount = '';
   String _selectedDate = '';
   String _rangeCount = '';
@@ -107,6 +107,7 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
     Color? bgColorBottomNavigationBar;
     Color? iconColor;
     int _selectedIndex = 2;
+
     void _onItemTapped(int index) {
 
       if(index!=2){
@@ -277,30 +278,31 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
                     alignment: Alignment.centerLeft,
                     child: TextButton(
                         onPressed: () {
-
-                          setState(() {
-                            if (_selectCheckIcon) {
-                              pressed = true;
-                              _selectCheck = '취소';
-                              _selectCheckColor = Colors.blue; // primary[40]!;
-                              _selectCheckTextColor = Color(0XFFF3F4F5);
-                              // _selectPlaceTextColor = Colors.red;
-                              _selectCheckIcon = false;
-                            } else {
-                              pressed = false;
-                              _selectCheckColor = Color(0XFFF3F4F5);
-                              _selectCheck = '선택';
-                              _selectCheckTextColor = Color(0xFF9FA5B2);
-                              _selectCheckIcon = true;
-                              check_num=0;
-                              _checks.fillRange(0, _checks.length-1,false);
-                              print(_checks.length);
-                              _checks_url.fillRange(0, _checks_url.length-1,'');
-                            }
-                          });
+                          check_num=0;
+                          Navigator.pop(context);
+                          // setState(() {
+                          //   if (_selectCheckIcon) {
+                          //     pressed = true;
+                          //     _selectCheck = '취소';
+                          //     _selectCheckColor = Colors.blue; // primary[40]!;
+                          //     _selectCheckTextColor = Color(0XFFF3F4F5);
+                          //     // _selectPlaceTextColor = Colors.red;
+                          //     _selectCheckIcon = false;
+                          //   } else {
+                          //     pressed = false;
+                          //     _selectCheckColor = Color(0XFFF3F4F5);
+                          //     _selectCheck = '선택';
+                          //     _selectCheckTextColor = Color(0xFF9FA5B2);
+                          //     _selectCheckIcon = true;
+                          //     check_num=0;
+                          //     _checks.fillRange(0, _checks.length-1,false);
+                          //     print(_checks.length);
+                          //     _checks_url.fillRange(0, _checks_url.length-1,'');
+                          //   }
+                          // });
                         },
                         child: Text(
-                          pressed ? "취소" : "선택",
+                          "취소",//pressed ? "취소" : "선택",
                           style: TextStyle(fontSize: 12, color: Colors.grey),
                         )
                       // Container(
@@ -334,7 +336,7 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
                   width: (size.width-35)/3,
                   child:Align(
                     alignment: Alignment.centerRight,
-                    child: pressed==true?TextButton(
+                    child: TextButton(//pressed==true?
                       onPressed: () async {
                         // for(int i = 0; i < 1000; i++){
                         //   if(_checks[i]){
@@ -357,6 +359,7 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
                         //   }
                         // }
 
+
                         showModalBottomSheet<void>(
                           enableDrag: true,
                           isScrollControlled: true,
@@ -369,7 +372,7 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
                             return StatefulBuilder(
                                 builder: (BuildContext context, StateSetter setState) {
                                   return Container(
-                                    height: size.height * 0.48,
+                                    height: size.height * 0.5,
                                     padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                                     child: Column(
                                       children: [
@@ -409,6 +412,7 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
                                                 style: titleMediumStyle(
                                                     color: Color(0xffFAFBFB))),
                                             onPressed: () {
+                                              check_num=0;
                                               print("here");
                                               Navigator.pop(context);
                                               Navigator.pop(context);
@@ -434,7 +438,7 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
 
                       },
                       child: Text('업로드', style: TextStyle(color: Colors.blue)),
-                    ):Container(),
+                    ),//:Container(),
                   ),
 
                 ),
@@ -1519,7 +1523,7 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
                                                         'traffic light')
                                                 ? 0
                                                 : 90 * math.pi / 180,
-                                            child: Image.network(
+                                            child: ExtendedImage.network(
                                               x['url'],
                                               fit: BoxFit.cover,
                                             ),
