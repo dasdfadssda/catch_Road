@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'dart:math' as math;
 import '../../utils/app_text_styles.dart';
 import '../mainHome.dart';
+import 'package:extended_image/extended_image.dart';
 
 int check_num=0;
 
@@ -744,6 +745,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                     //color: Colors.lightBlue,
 
                     onPressed: (){
+
                       showModalBottomSheet<void>(
                         enableDrag: true,
                         isScrollControlled: true,
@@ -798,6 +800,8 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                           ),
                                           TextButton(
                                               onPressed: (){
+                                                print('1/12');
+                                                check_num=0;
                                             for(int i = 0; i< 1000; i++){
                                               if(_checks_docs[i] != ''){
                                                 FirebaseFirestore.instance.collection('category').doc('1234@handong.ac.kr').collection(query['category']).doc(_checks_docs[i]).delete();
@@ -823,7 +827,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                                 return StatefulBuilder(
                                                     builder: (BuildContext context, StateSetter setState) {
                                                       return Container(
-                                                        height: size.height * 0.48,
+                                                        height: size.height * 0.5,
                                                         padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                                                         child: Column(
                                                           children: [
@@ -1053,7 +1057,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                                             'traffic light')
                                                         ? 0
                                                         : 90 * math.pi / 180,
-                                                    child: Image.network(
+                                                    child: ExtendedImage.network(
                                                       x['url'],
                                                       fit: BoxFit.cover,
                                                     ),

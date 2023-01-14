@@ -196,7 +196,13 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           backgroundColor: Color.fromRGBO(58, 148, 238, 1)),
                       onPressed: () async {
-                         loginWithIdandPassword(_email,_password);
+                         //loginWithIdandPassword(_email,_password);
+                        main_colorList=[Color(0xff3A94EE),Color(0xffCFD2D9),Color(0xffCFD2D9),Color(0xffCFD2D9)];
+                        selectedIndex0 = 0;
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MainHomePage()),
+                        );
                       },
                       child: Text(
                         "로그인",

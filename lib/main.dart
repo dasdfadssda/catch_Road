@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   //const MyApp({super.key});
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         initialRoute: '/',
@@ -33,13 +33,12 @@ class MyApp extends StatelessWidget {
         ),
         // home: test());
         // home: MainHomePage());
-    home: AuthService().handleAuthState());
+    home:MainHomePage());// AuthService().handleAuthState());
   }
 }
 
 class test extends StatefulWidget {
   const test({super.key});
-
   @override
   State<test> createState() => _testState();
 }
