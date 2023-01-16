@@ -101,6 +101,30 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
               Text(query['content'],
                   style: bodyMediumStyle(color: Color(0xff1A1A1A))),
               SizedBox(height: 30),
+              Container(
+                height: 70,
+                child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: <Widget>[
+                      for (int i = 0; i < query['url'].length; i++)
+                        Padding(
+                          padding: EdgeInsets.only(right: 10),
+                          //height: 25.h,
+                          child: Container(
+                            height: 70,
+                            width: 70,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.all(Radius.circular(14))
+                            ),
+                            child: Expanded(
+                              child: Image.network(query['url'][i], fit: BoxFit.fitHeight)
+                            )
+                          ),
+                        ),
+                    ],
+                  ),
+              ),
+              SizedBox(height: 10),
               Row(
                 children: [
                   Image.asset(

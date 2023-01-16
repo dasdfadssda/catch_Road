@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:math' as math;
 import '../../utils/app_text_styles.dart';
 import '../mainHome.dart';
@@ -34,8 +35,8 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
   String _dateCount = '';
   String _selectedDate = '';
   String _rangeCount = '';
-  String _range1 = '';
-  String _range2 = '';
+  String _range1 = '          ';
+  String _range2 = '          ';
   String _month_0 = '';
   String _day_0 = '';
   int count = 0;
@@ -84,7 +85,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
           .where('location', whereIn: place_list)
           .snapshots();
     }
-    if (_range1 != '') {
+    if (count != 0) {
       return FirebaseFirestore.instance
           .collection('category')
           .doc('1234@handong.ac.kr')
@@ -290,6 +291,241 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                 // ignore: curly_braces_in_flow_control_structures
                                 showModalBottomSheet<void>(
                                   shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(30.0),
+                                      topRight: Radius.circular(30.0))),
+                              context: context,
+                              builder: (BuildContext context) {
+                                return SizedBox(
+                                  height: 2500,
+                                  child: Column(
+                                    children: [
+                                      //선택한 날짜
+                                      Container(
+                                        padding: EdgeInsets.fromLTRB(24, 30, 24, 0),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Flexible(
+                                              fit: FlexFit.tight,
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text('시작', style: textTheme.titleSmall),
+                                                  if(_range1 != '          ')
+                                                    Row(
+                                                      children: [
+                                                        Text(_range1.substring(0,2), style: textTheme.headlineLarge),
+                                                        SizedBox(width: 10),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: [
+                                                            Text(_range1.substring(6,10)+'년 '+_range1.substring(3,5)+'일'),
+                                                            Text('수요일')
+                                                          ]
+                                                        )
+                                                      ],
+                                                    )
+                                                  else
+                                                    Row(
+                                                      children: [
+                                                        Text(_range1),
+                                                        SizedBox(width: 10),
+                                                        Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: [
+                                                              Text(_range1),
+                                                              Text('')
+                                                            ]
+                                                        )
+                                                      ],
+                                                    )
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(width: 76),
+                                            Flexible(
+                                              fit: FlexFit.tight,
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text('종료', style: textTheme.titleSmall),
+                                                  if(_range2 != '          ')
+                                                    Row(
+                                                      children: [
+                                                        Text(_range2.substring(0,2), style: textTheme.headlineLarge),
+                                                        Text(_range2),
+                                                        SizedBox(width: 10),
+                                                        Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: [
+                                                              Text(_range2.substring(6,10)+'년 '+_range2.substring(3,5)),
+                                                              Text('')
+                                                            ]
+                                                        )
+                                                      ],
+                                                    )else
+                                                    Row(
+                                                      children: [
+                                                        Text(_range2),
+                                                        SizedBox(width: 10),
+                                                        Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: [
+                                                              Text(_range2),
+                                                              Text('')
+                                                            ]
+                                                        )
+                                                      ],
+                                                    )
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            top: 40.0, left: 40, right: 40),
+                                        child: SfDateRangePicker(
+                                          controller: _dataPickerController,
+                                          onSelectionChanged:
+                                              _onSelectionChanged,
+                                          selectionMode: DateRangePickerSelectionMode.range,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 50.0, right: 30),
+                                        child: Container(
+                                            child: Row(
+                                          children: [
+                                            TextButton(
+                                                child: Text(
+                                                  '취소',
+                                                  style: TextStyle(
+                                                      color: Color.fromRGBO(
+                                                          159, 165, 178, 1)),
+                                                ),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                  setState(() {
+                                                    _selectDateColor =
+                                                        Color(0XFFF3F4F5);
+                                                    _selectDateTextColor =
+                                                        Color(0xFF9FA5B2);
+                                                    _range1 = '';
+                                                    //_range2 = '';
+                                                    _dataPickerController
+                                                        .selectedRanges = null;
+                                                  });
+                                                },
+                                                style: TextButton.styleFrom(
+                                                    padding: EdgeInsets.zero,
+                                                    minimumSize: Size(50, 30),
+                                                    tapTargetSize:
+                                                        MaterialTapTargetSize
+                                                            .shrinkWrap,
+                                                    alignment:
+                                                        Alignment.centerLeft)),
+                                            Spacer(),
+                                            TextButton(
+                                                child: Text('확인'),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    _selectDateColor = Colors.blue; //  primary[40]!;
+                                                    _selectDateTextColor = Colors.white;
+                                                    _selectDate = _range1.substring(8, 10) + '.' + _range1.substring(3, 5) +
+                                                        '.' +
+                                                        _range1.substring(0, 2);
+                                                    _selectDateSize = 80;
+                                                    _selectDateIcon = false;
+                                                    print("range $_range1");
+                                                    print("date:$_selectDate");
+                                                  });
+                                                  Navigator.pop(context);
+                                                },
+                                                style: TextButton.styleFrom(
+                                                    padding: EdgeInsets.zero,
+                                                    minimumSize: Size(50, 30),
+                                                    tapTargetSize:
+                                                        MaterialTapTargetSize
+                                                            .shrinkWrap,
+                                                    alignment:
+                                                        Alignment.centerLeft))
+                                          ],
+                                        )),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          else
+                            setState(() {
+                              _selectDateIcon = true;
+                              _selectDate = '날짜';
+                              _selectDateColor = Color(0XFFF3F4F5);
+                              _selectDateTextColor = Color(0xFF9FA5B2);
+                              _selectDateSize = 67.2;
+                              _range1 = '';
+                              //_range2 = '';
+                            });
+                        },
+                        //1-1 //날짜 칩
+                        child: Container(
+                            width: _selectDateSize,
+                            height: 30,
+                            decoration: BoxDecoration(
+                                color: _selectDateColor,
+                                borderRadius: BorderRadius.circular(100.0)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  _selectDate,
+                                  style: TextStyle(
+                                      color: _selectDateTextColor,
+                                      fontSize: 12),
+                                ),
+                                Icon(
+                                    _selectDateIcon
+                                        ? Icons.keyboard_arrow_down_outlined
+                                        : Icons.clear_outlined,
+                                    color: _selectDateTextColor),
+                              ],
+                            )),
+                      ),
+                      SizedBox(width: 10),
+                      // 2. 장소칩
+                      InkWell(
+                        onTap: () async {
+                          setState(() {
+                            //var respectsQuery = FirebaseFirestore.instance.collection('category').doc('user1').collection(query['category']).doc('place').collection('place'),
+
+                           //날짜 필터 초기화
+                            _selectDateIcon = true;
+                            _selectDate = '날짜';
+                            _selectDateColor = Color(0XFFF3F4F5);
+                            _selectDateTextColor = Color(0xFF9FA5B2);
+                            _selectDateSize = 67.2;
+                            _range1 = '';
+                            _range2 = '';
+                            num_list = [];
+
+                            //장소 필터 on
+                            _selectPlaceColor = Colors.blue; // primary[40]!;
+                            _selectPlaceTextColor = Colors.white;
+                            place_list = [];
+                            _selectPlaceIcon=true;
+                          });
+
+                          if (_selectPlaceIcon)
+                            showDialog(
+                              context: context,
+                              builder:(BuildContext context) {
+                                return AlertDialog(
+                                  shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.only(
                                           topLeft: Radius.circular(30.0),
                                           topRight: Radius.circular(30.0))),
