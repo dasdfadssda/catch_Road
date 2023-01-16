@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:math' as math;
 import '../../utils/app_text_styles.dart';
 import '../mainHome.dart';
@@ -29,8 +30,8 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
   String _dateCount = '';
   String _selectedDate = '';
   String _rangeCount = '';
-  String _range1 = '';
-  String _range2 = '';
+  String _range1 = '          ';
+  String _range2 = '          ';
   String _month_0 = '';
   String _day_0 = '';
   int count = 0;
@@ -79,7 +80,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
           .where('location', whereIn: place_list)
           .snapshots();
     }
-    if (_range1 != '') {
+    if (count != 0) {
       return FirebaseFirestore.instance
           .collection('category')
           .doc('1234@handong.ac.kr')
@@ -287,9 +288,93 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                               context: context,
                               builder: (BuildContext context) {
                                 return SizedBox(
-                                  height: 1000,
+                                  height: 2500,
                                   child: Column(
                                     children: [
+                                      //선택한 날짜
+                                      Container(
+                                        padding: EdgeInsets.fromLTRB(24, 30, 24, 0),
+                                        child: Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Flexible(
+                                              fit: FlexFit.tight,
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text('시작', style: textTheme.titleSmall),
+                                                  if(_range1 != '          ')
+                                                    Row(
+                                                      children: [
+                                                        Text(_range1.substring(0,2), style: textTheme.headlineLarge),
+                                                        SizedBox(width: 10),
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: [
+                                                            Text(_range1.substring(6,10)+'년 '+_range1.substring(3,5)+'일'),
+                                                            Text('수요일')
+                                                          ]
+                                                        )
+                                                      ],
+                                                    )
+                                                  else
+                                                    Row(
+                                                      children: [
+                                                        Text(_range1),
+                                                        SizedBox(width: 10),
+                                                        Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: [
+                                                              Text(_range1),
+                                                              Text('')
+                                                            ]
+                                                        )
+                                                      ],
+                                                    )
+                                                ],
+                                              ),
+                                            ),
+                                            SizedBox(width: 76),
+                                            Flexible(
+                                              fit: FlexFit.tight,
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text('종료', style: textTheme.titleSmall),
+                                                  if(_range2 != '          ')
+                                                    Row(
+                                                      children: [
+                                                        Text(_range2.substring(0,2), style: textTheme.headlineLarge),
+                                                        Text(_range2),
+                                                        SizedBox(width: 10),
+                                                        Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: [
+                                                              Text(_range2.substring(6,10)+'년 '+_range2.substring(3,5)),
+                                                              Text('')
+                                                            ]
+                                                        )
+                                                      ],
+                                                    )else
+                                                    Row(
+                                                      children: [
+                                                        Text(_range2),
+                                                        SizedBox(width: 10),
+                                                        Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: [
+                                                              Text(_range2),
+                                                              Text('')
+                                                            ]
+                                                        )
+                                                      ],
+                                                    )
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                       Padding(
                                         padding: EdgeInsets.only(
                                             top: 40.0, left: 40, right: 40),
