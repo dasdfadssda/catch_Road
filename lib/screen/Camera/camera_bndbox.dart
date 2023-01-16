@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'package:image/image.dart' as imglib;
+import 'camera_page.dart';
 import 'camera_viewer.dart';
 
 String object = '';
@@ -140,7 +141,7 @@ class _BndBoxState extends State<BndBox> {
               top: math.max(0, y),
               width: w,
               height: h,
-              child: Container(
+              child: object_list.contains(re["detectedClass"])||re["detectedClass"]=='keyboard'||re["detectedClass"]=='stop sign'||re["detectedClass"]=='person'||re["detectedClass"]=='car'? Container(
                   padding: EdgeInsets.fromLTRB(10, 20, 30, 40),
                   decoration: BoxDecoration(
                     border: Border.all(
@@ -151,8 +152,8 @@ class _BndBoxState extends State<BndBox> {
                   child: Transform.rotate(
                     angle: 0 * math.pi / 180,
                     child: Text(
-                      "${re["detectedClass"]}",
-                      //"${re["detectedClass"]} ${(re["confidenceInClass"] * 100).toStringAsFixed(0)}%",
+                     // "${re["detectedClass"]}",
+                      "${re["detectedClass"]} ${(re["confidenceInClass"] * 100).toStringAsFixed(0)}%",
                       style: TextStyle(
                         color: Colors.greenAccent,
                         fontSize:20.0,
@@ -161,7 +162,7 @@ class _BndBoxState extends State<BndBox> {
                     ),
                   )
 
-              )
+              ):Container()
 
             );
           })

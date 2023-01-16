@@ -64,6 +64,7 @@ class _CameraViewerState extends State<CameraViewer> {
   }
 
 
+
   @override
   void initState() {
     super.initState();
@@ -74,7 +75,7 @@ class _CameraViewerState extends State<CameraViewer> {
       controller = new CameraController(
         widget.cameras[0],
         ResolutionPreset.veryHigh,
-         // imageFormatGroup: ImageFormatGroup.jpeg
+        // imageFormatGroup: ImageFormatGroup.jpeg
       );
       print(controller);
       controller.initialize().then((_) {
@@ -84,8 +85,8 @@ class _CameraViewerState extends State<CameraViewer> {
         controller.startImageStream((CameraImage img) async {
           cameraImage2 = img;
           //*원하는 객체 입력
-         // if (mode=="auto"&&((object=='car')||(object=='stop sign')||(object=='keyboard'))&&accuracy>40) {
-          if(mode=="auto"&&(object_list.contains(object)||object=='keyboard')&&accuracy>40){
+          // if (mode=="auto"&&((object=='car')||(object=='stop sign')||(object=='keyboard'))&&accuracy>40) {
+          if(mode=="auto"&&(object_list.contains(object)||object=='keyboard'||object=='person'||object=='car'||object=='stop sign')&&accuracy>65){
             //path = (await NativeScreenshot.takeScreenshot())!;
             print('$object 저장중');
             ob=object;
@@ -141,13 +142,18 @@ class _CameraViewerState extends State<CameraViewer> {
     print('is sav');
     print('is saving1 : $issaving');
 
-    Coordinates cordi=await getCurrentLocation();
-    var address=await Geocoder.local.findAddressesFromCoordinates(cordi);
-    var first=address.first;
-    print('주소 ${first.thoroughfare}');//동 받아옴
+    // Coordinates cordi=await getCurrentLocation();
+    // var address=await Geocoder.local.findAddressesFromCoordinates(cordi);
+    // var first=address.first;
+    // print('주소 ${first.thoroughfare}');//동 받아옴
 
     CameraImage image = cameraImage2;
     try {
+      await Future.delayed(Duration(seconds: 1));
+      setState(() {issaving = false;});
+      setState(() {saved = true;});
+      await Future.delayed(Duration(milliseconds: 300));
+      setState(() {saved = false;});
 
       imageLib.Image img=convertYUV420ToImage(image);
       imageLib.PngEncoder pngEncoder = new imageLib.PngEncoder(level: 0, filter: 0);
@@ -176,7 +182,7 @@ class _CameraViewerState extends State<CameraViewer> {
             .add({
           "url": url,
           "time":DateFormat('dd/MM/yyyy').format(DateTime.now()),
-          "location":first.thoroughfare,
+          "location":"흥해읍"//first.thoroughfare,
           //위치추가
         });
         await FirebaseFirestore.instance
@@ -186,7 +192,7 @@ class _CameraViewerState extends State<CameraViewer> {
             .add({
           "url": url,
           "time":DateFormat('dd/MM/yyyy').format(DateTime.now()),
-          "location":first.thoroughfare,
+          "location":"흥해읍"//first.thoroughfare,
           //위치추가
         });
 
@@ -196,10 +202,7 @@ class _CameraViewerState extends State<CameraViewer> {
       } catch (e) {
         print(e);
       }
-      setState(() {issaving = false;});
-      setState(() {saved = true;});
-      await Future.delayed(Duration(seconds: 1));
-      setState(() {saved = false;});
+
     } catch (e) {
       print(">>>>>>>>>>>> ERROR:" + e.toString());
     }
