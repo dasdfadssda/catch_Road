@@ -253,17 +253,42 @@ Future<void> signUpWithEmailAndPassword() async {
 }
 
 Future<void> loginWithIdandPassword(email, password) async {
+  // try {
+  //   // sign in with email and password using signInWithEmailAndPassword()
+  //   print('로그인');
+  //   print(email.text);
+  //   print(password.text);
+  //   UserCredential userCredential = await FirebaseAuth.instance
+  //       .signInWithEmailAndPassword(email: email.text, password: password.text);
+  //
+  //   // navigate to Homepage
+  // } on FirebaseAuthException catch (e) {
+  //   if (e.code == 'user-not-found') {
+  //     print('No user found for that email.');
+  //   } else if (e.code == 'wrong-password') {
+  //     print('Wrong password provided for that user.');
+  //   }
+  // }
   try {
-    // sign in with email and password using signInWithEmailAndPassword()
     UserCredential userCredential = await FirebaseAuth.instance
-        .signInWithEmailAndPassword(email: email.text, password: password.text);
-
-    // navigate to Homepage
+        .signInWithEmailAndPassword(
+        email: email.text,
+        password: password.text) //아이디와 비밀번호로 로그인 시도
+        .then((value) {
+      print(value);
+      value.user!.emailVerified == true //이메일 인증 여부
+          ? print('로그인 성공')
+          : print('이메일 확인 안댐');
+      return value;
+    });
   } on FirebaseAuthException catch (e) {
+    //로그인 예외처리
     if (e.code == 'user-not-found') {
-      print('No user found for that email.');
+      print('등록되지 않은 이메일입니다');
     } else if (e.code == 'wrong-password') {
-      print('Wrong password provided for that user.');
+      print('비밀번호가 틀렸습니다');
+    } else {
+      print(e.code);
     }
   }
 }
