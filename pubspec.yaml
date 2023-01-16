@@ -47,7 +47,7 @@ dependencies:
   flutter_speed_dial: ^6.0.0
   camera: ^0.10.0+4
   tflite: ^1.1.2
-  #tflite_flutter: ^0.9.0
+  tflite_flutter: ^0.9.0
   image: ^3.1.0
   syncfusion_flutter_datepicker: ^20.2.40
   image_picker: ^0.8.5+3

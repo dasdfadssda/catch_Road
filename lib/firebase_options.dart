@@ -53,8 +53,8 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAm79x7ot7xJ9Ety6nPDad6rg_GTn9QWOQ',
-    appId: '1:368970870839:android:b19829d6001f70108dcfb2',
+    apiKey: 'AIzaSyB_MXBqDnytNxPW0BTBBrfBfRf9HwGOQG4',
+    appId: '1:368970870839:android:c0cc68a96e06df3f8dcfb2',
     messagingSenderId: '368970870839',
     projectId: 'catch-platform',
     storageBucket: 'catch-platform.appspot.com',
@@ -62,23 +62,23 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBM2eSGesbfYQ7XEm4gYAyXWcA9DePxxX4',
-    appId: '1:368970870839:ios:a2d9702c36322e3d8dcfb2',
+    appId: '1:368970870839:ios:384fc75f97c170988dcfb2',
     messagingSenderId: '368970870839',
     projectId: 'catch-platform',
     storageBucket: 'catch-platform.appspot.com',
-    androidClientId: '368970870839-bqa9qu21jbf4gl66koho78bbni7d501n.apps.googleusercontent.com',
-    iosClientId: '368970870839-kmqjuejcrgmmhfmp5gk2juesu7714j4b.apps.googleusercontent.com',
+    androidClientId: '368970870839-4lna8qg00kpldf0ti88hvsdqppaedm8v.apps.googleusercontent.com',
+    iosClientId: '368970870839-7bnav1sfs019448dfni3vl0m7ckgqv5u.apps.googleusercontent.com',
     iosBundleId: 'com.catchroad.catch201',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyBM2eSGesbfYQ7XEm4gYAyXWcA9DePxxX4',
-    appId: '1:368970870839:ios:a2d9702c36322e3d8dcfb2',
+    appId: '1:368970870839:ios:384fc75f97c170988dcfb2',
     messagingSenderId: '368970870839',
     projectId: 'catch-platform',
     storageBucket: 'catch-platform.appspot.com',
-    androidClientId: '368970870839-bqa9qu21jbf4gl66koho78bbni7d501n.apps.googleusercontent.com',
-    iosClientId: '368970870839-kmqjuejcrgmmhfmp5gk2juesu7714j4b.apps.googleusercontent.com',
+    androidClientId: '368970870839-4lna8qg00kpldf0ti88hvsdqppaedm8v.apps.googleusercontent.com',
+    iosClientId: '368970870839-7bnav1sfs019448dfni3vl0m7ckgqv5u.apps.googleusercontent.com',
     iosBundleId: 'com.catchroad.catch201',
   );
 }

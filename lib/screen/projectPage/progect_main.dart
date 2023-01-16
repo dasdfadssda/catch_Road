@@ -110,7 +110,7 @@ class _add_personalState extends State<add_personal> {*/
         elevation: 0,
         centerTitle: true,
         title: Text(
-       '오늘의 캐치',
+       '오늘의 캐치2',
           style: titleMediumStyle(color: Colors.black),
         ),
       ),
