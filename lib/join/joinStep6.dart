@@ -139,7 +139,16 @@ class _joinStep6State extends State<joinStep6> {
                     _bankName = BankNamecontroller.text;
                     _bankNum = BankNumcontroller.text;
                     _nameForBank = nameforBankcontroller.text;
+
+
+
+
                     signUpWithEmailAndPassword();
+
+
+
+
+
                   },
                   child: Text(
                     "다음",

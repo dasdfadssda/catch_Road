@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:catch2_0_1/screen/projectPage/project_detail2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,8 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
   _Catchbox_detail2State({required this.query, required this.query2});
 
   DateRangePickerController _dataPickerController = DateRangePickerController();
+
+
 
   final _valueList = ['오토바이', '퀵보드', '자전거'];
   String? _selectedValue;
@@ -338,26 +341,25 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
                     alignment: Alignment.centerRight,
                     child: TextButton(//pressed==true?
                       onPressed: () async {
-                        // for(int i = 0; i < 1000; i++){
-                        //   if(_checks[i]){
-                        //     try {
-                        //       await FirebaseFirestore.instance
-                        //           .collection("project_url")
-                        //           .doc(query2['id'])
-                        //           .collection(query2['id'])
-                        //           .doc()
-                        //           .set({
-                        //         "project": query2['id'],
-                        //         "category": query['category'],
-                        //         "url": _checks_url[i],
-                        //         "user":"1234@handong.ac.kr",// FirebaseAuth.instance.currentUser!.email,
-                        //       });
-                        //     } catch (e) {
-                        //       print(e);
-                        //     }
-                        //     //_checks_url[i]
-                        //   }
-                        // }
+
+                        var urllist=query2['url'];
+
+
+
+                        for(int i = 0; i < 1000; i++){
+                          if(_checks[i]){
+                            urllist.add(_checks_url[i]);}
+                        }
+                        print(urllist);
+
+                       await FirebaseFirestore.instance
+                            .collection('project')
+                            .doc(query2['id'])
+                            .update({
+                          'participate':1,
+                          'url':urllist
+                        });
+
 
 
                         showModalBottomSheet<void>(
@@ -412,11 +414,20 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
                                                 style: titleMediumStyle(
                                                     color: Color(0xffFAFBFB))),
                                             onPressed: () {
+
                                               check_num=0;
                                               print("here");
-                                              Navigator.pop(context);
-                                              Navigator.pop(context);
-                                              Navigator.pop(context);
+                                              print(_checks_url);
+
+                                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                                return MainHomePage();
+                                              }));
+
+
+                                              // Navigator.pop(context);
+                                              // Navigator.pop(context);
+                                              // Navigator.pop(context);
+                                              //
                                             }
 
                                               )
@@ -736,6 +747,7 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
                                                       .collection('place')
                                                       .snapshots(),
                                                   builder: (context, snapshot) {
+
                                                     if (snapshot.hasData) {
                                                       print(snapshot
                                                           .data!.docs.length);
@@ -992,7 +1004,7 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
         //         return uploadCheck();
         //       }));
         //
-        //       // await Future.delayed(Duration(seconds: 3));
+        //       // await Future.delayed(Durati드on(seconds: 3));
         //       //
         //       // Navigator.push(context, MaterialPageRoute(builder: (context) {
         //       //   return MainHomePage();
@@ -1524,10 +1536,11 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
                                                 ? 0
                                                 : 90 * math.pi / 180,
                                             child: ExtendedImage.network(
-                                              x['url'],
+                                              x['url'] ,
                                               fit: BoxFit.cover,
                                             ),
-                                          )),
+                                          )
+                                      ),
                                     ),
                                     //Image.network(x['url'], fit: BoxFit.cover),
                                     if (pressed == true)
@@ -1538,10 +1551,11 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
                                           onChanged: (newValue) {
                                             setState(() {
 
+
                                            check_num=0;
                                               _checks[index] = newValue!;
                                               _checks_url[index] = x['url'];
-                                             // print(_checks);
+                                              print(_checks);
                                               for(int i=0;i<_checks.length;i++){
                                                 if(_checks[i]==true)
                                                   check_num=check_num+1;

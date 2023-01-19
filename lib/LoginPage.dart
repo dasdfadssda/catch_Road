@@ -15,8 +15,8 @@ class LoginPage extends StatefulWidget {
 }
 
 bool maintain = false;
-     final _email = TextEditingController();
-     final _password= TextEditingController();
+final _email = TextEditingController();
+final _password= TextEditingController();
 
 class _LoginPageState extends State<LoginPage> {
   @override
@@ -51,21 +51,21 @@ class _LoginPageState extends State<LoginPage> {
                           hintStyle: bodyMediumStyle(color: Color(0xff9FA5B2)),
                           focusedBorder: OutlineInputBorder(
                             borderRadius:
-                                BorderRadius.all(Radius.circular(36.0)),
+                            BorderRadius.all(Radius.circular(36.0)),
                             borderSide: BorderSide(
                                 width: 0.5,
                                 color: Color.fromRGBO(0, 0, 0, 0.2)),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius:
-                                BorderRadius.all(Radius.circular(36.0)),
+                            BorderRadius.all(Radius.circular(36.0)),
                             borderSide: BorderSide(
                                 width: 0.5,
                                 color: Color.fromRGBO(0, 0, 0, 0.2)),
                           ),
                           border: OutlineInputBorder(
                             borderRadius:
-                                BorderRadius.all(Radius.circular(36.0)),
+                            BorderRadius.all(Radius.circular(36.0)),
                           ),
                           filled: true,
                           fillColor: Colors.white),
@@ -90,21 +90,21 @@ class _LoginPageState extends State<LoginPage> {
                           // hintStyle: bodyLargeStyle(color: Color(0xff9FA5B2)),
                           focusedBorder: OutlineInputBorder(
                             borderRadius:
-                                BorderRadius.all(Radius.circular(36.0)),
+                            BorderRadius.all(Radius.circular(36.0)),
                             borderSide: BorderSide(
                                 width: 0.5,
                                 color: Color.fromRGBO(0, 0, 0, 0.2)),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius:
-                                BorderRadius.all(Radius.circular(36.0)),
+                            BorderRadius.all(Radius.circular(36.0)),
                             borderSide: BorderSide(
                                 width: 0.5,
                                 color: Color.fromRGBO(0, 0, 0, 0.2)),
                           ),
                           border: OutlineInputBorder(
                             borderRadius:
-                                BorderRadius.all(Radius.circular(36.0)),
+                            BorderRadius.all(Radius.circular(36.0)),
                           ),
                           filled: true,
                           fillColor: Colors.white),
@@ -140,8 +140,8 @@ class _LoginPageState extends State<LoginPage> {
                   Padding(
                     padding: EdgeInsets.only(
                         top: size.height * 0.0, left: size.width * 0.02
-                        // right: size.width * 0.8,
-                        ),
+                      // right: size.width * 0.8,
+                    ),
                     child: IconButton(
                         onPressed: () {
                           setState(() {
@@ -151,7 +151,7 @@ class _LoginPageState extends State<LoginPage> {
                         icon: maintain
                             ? Image.asset('assets/checkbox_on.png', height: 23)
                             : Image.asset('assets/checkbox_un.png',
-                                height: 23)),
+                            height: 23)),
                   ),
                   ////text style 적용하기
                   Padding(
@@ -198,13 +198,23 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () async {
                         print('이메일 ${_email}');
                         print('비번 ${_password}');
-                         loginWithIdandPassword(_email,_password);
+                        loginWithIdandPassword(_email,_password);
+
+                        setState(() {
+                          //if(login){
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                                  return MainHomePage();
+                                }));
+                         // }
+                        });
+
+
+
+
                         main_colorList=[Color(0xff3A94EE),Color(0xffCFD2D9),Color(0xffCFD2D9),Color(0xffCFD2D9)];
                         selectedIndex0 = 0;
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => MainHomePage()),
-                        // );
+
                       },
                       child: Text(
                         "로그인",
@@ -226,8 +236,8 @@ class _LoginPageState extends State<LoginPage> {
                             primary: Colors.white, elevation: 0),
                         onPressed: () async{
                           signInWithGoogle();
-                             await Future.delayed(Duration(seconds: 10));
-                        userstart();
+                          await Future.delayed(Duration(seconds: 1));
+                          userstart();
                         },
                         child: Image.asset(
                           'assets/icons/google_icon.png',
@@ -265,8 +275,8 @@ class _LoginPageState extends State<LoginPage> {
                       // joinPage
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return joinPage();
-                      }));
+                            return joinPage();
+                          }));
                     },
                     child: Text("회원가입",
                         style: TextStyle(
