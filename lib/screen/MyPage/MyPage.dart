@@ -2,10 +2,7 @@ import 'package:catch2_0_1/Auth/auth_service.dart';
 import 'package:catch2_0_1/LoginPage.dart';
 import 'package:catch2_0_1/main.dart';
 import 'package:catch2_0_1/screen/MyPage/MyCash.dart';
-import 'package:catch2_0_1/screen/MyPage/editMyinfo.dart';
-import 'package:catch2_0_1/screen/MyPage/makeAccount.dart';
 import 'package:catch2_0_1/screen/mainHome.dart';
-import 'package:catch2_0_1/screen/projectPage/part_pro.dart';
 import 'package:catch2_0_1/utils/app_text_styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +10,9 @@ import 'package:flutter/material.dart';
 import '../../utils/app_text_styles.dart';
 import '../../utils/widget.dart';
 import '../notFound.dart';
+import '../projectPage/part_pro.dart';
+import 'editMyinfo.dart';
+import 'makeAccount.dart';
 
 class MYPage extends StatefulWidget {
   const MYPage({super.key});
@@ -55,7 +55,7 @@ class _MYPageState extends State<MYPage> {
                                   BorderRadius.circular(100), // Image border
                               child: SizedBox.fromSize(
                                 size: Size.fromRadius(35), // Image radius
-                                child: Image.asset('assets/img.png',
+                                child: Image.asset('assets/icons/apple.png',
                                     fit: BoxFit.cover),
                               )),
                         ),
@@ -70,8 +70,7 @@ class _MYPageState extends State<MYPage> {
                                   child: Row(
                                     children: [
                                       Text(
-                                        '${'1234@handong.ac.kr'}',
-                                        //FirebaseAuth.instance.currentUser!.displayName!
+                                        '${'1234@handong.ac.kr'}',//FirebaseAuth.instance.currentUser!.displayName!
                                         style: titleMediumStyle(
                                             color: Colors.black),
                                       ),
@@ -88,8 +87,7 @@ class _MYPageState extends State<MYPage> {
                                   top: size.height * 0.035,
                                   left: size.width * 0.04),
                               child: Text(
-                                '${'1234@handong.ac.kr'}',
-                                //FirebaseAuth.instance.currentUser!.email!}',
+                                '${'1234@handong.ac.kr'}',//FirebaseAuth.instance.currentUser!.email!
                                 style:
                                     labelSmallStyle(color: Color(0xff9FA5B2)),
                               ),
@@ -98,10 +96,16 @@ class _MYPageState extends State<MYPage> {
                               padding: EdgeInsets.only(left: size.width * 0.55),
                               child: IconButton(
                                   onPressed: () {
-                                    //signOut();
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(builder: (context) => editinfo()),
+                                      PageRouteBuilder(
+                                          pageBuilder: (_, __, ___) =>
+                                              editinfo(),
+                                          transitionDuration:
+                                              Duration(seconds: 0),
+                                          transitionsBuilder: (_, a, __, c) =>
+                                              FadeTransition(
+                                                  opacity: a, child: c)),
                                     );
                                   },
                                   icon: Icon(
@@ -208,8 +212,8 @@ class _MYPageState extends State<MYPage> {
                   ]),
             ),
             SizedBox(height: size.height * 0.005),
-            _buildListTileButton('내가 올린 프로젝트', 'myUpLoadProject'),
-            // 1.10일 mypage 회원 탈퇴 부분 밑으로 쭉
+            _buildListTileButton(
+                '내가 올린 프로젝트', 'myUpLoadProject'), // 1.10일 mypage 회원 탈퇴 부분 밑으로 쭉
             _buildListTileButton('내가 작성한 커뮤니티 글', 'myCommunity'),
             _buildListTileButton('참여한 프로젝트', 'myJoinProject'),
             MyWidget().DivderLine(),
@@ -219,8 +223,8 @@ class _MYPageState extends State<MYPage> {
             _buildListTileButton('공지 사항', 'announcement'),
             _buildListTileButton('약관 및 개인정보 처리', 'myInformation'),
             MyWidget().DivderLine(),
-            _buildListTileButton('로그아웃', 'logout'),
-            // 1.10일 mypage 회원 탈퇴 부분 여기까지
+            _buildListTileButton(
+                '로그아웃', 'logout'), // 1.10일 mypage 회원 탈퇴 부분 여기까지
             Padding(
               padding: EdgeInsets.only(
                   left: size.width * 0.015, bottom: size.height * 0.05),
@@ -290,17 +294,17 @@ class _MYPageState extends State<MYPage> {
           if (route == 'logout') {
             print('logout');
             _showSnapBarForLogOut(context);
-          } else if (route == 'myJoinProject') {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => partiprojectPage()),
-            );
-          } else if (route == 'myBankInformation') {
+          }  else if (route == 'myJoinProject') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => partiprojectPage()),
+      );}
+          else if (route == 'myBankInformation') {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => makeAccount()),
             );
-          } else {}
+          }
         },
         leading: Text('${word}', style: labelLargeStyle(color: Colors.black)),
         trailing: Icon(
@@ -342,15 +346,18 @@ class _MYPageState extends State<MYPage> {
                         child: Text('취소',
                             style: labelMediumStyle(color: Color(0XFF9FA5B2))),
                       ),
-                      SizedBox(width: 175),
+                      SizedBox(width: 150),
                       TextButton(
-                        onPressed: () {
+                        onPressed: ()async {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginPage()),
+                            MaterialPageRoute(builder: (context) => MyApp()),
                           );
-                          //signOut();
+                          await signOut();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => LoginPage()),
+                          );
                         },
                         child: Text('확인',
                             style: labelMediumStyle(color: Color(0XFF3A94EE))),

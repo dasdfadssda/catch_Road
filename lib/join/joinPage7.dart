@@ -71,7 +71,13 @@ class _joinPage7State extends State<joinPage7> {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(30)))),
                     onPressed: () async {
+
+
                       signUpWithEmailAndPassword();
+
+
+
+
                         Navigator.push(
                           context,
                           PageRouteBuilder(

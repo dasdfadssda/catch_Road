@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:extended_image/extended_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -154,9 +155,7 @@ class _Catchbox2State extends State<Catchbox2> {
                                                   MaterialPageRoute(
                                                     builder: (BuildContext
                                                             context) =>
-                                                        Catchbox_detail2(
-                                                            query: x,
-                                                            query2: query),
+                                                        Catchbox_detail2(query: x, query2: query),
                                                   ));
                                               //
                                               // 밑에꺼로 정보 넘겨줘야함.
@@ -167,9 +166,7 @@ class _Catchbox2State extends State<Catchbox2> {
                                                   CrossAxisAlignment.end,
                                               children: [
                                                 Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: size.width * 0.01,
-                                                      right: size.width * 0.01),
+                                                  padding: EdgeInsets.only(left:8,right: 8),
                                                   child: SizedBox(
                                                     height: size.height * 0.21,
                                                     width: size.width * 0.6,
@@ -192,7 +189,7 @@ class _Catchbox2State extends State<Catchbox2> {
                                                               : 90 *
                                                                   math.pi /
                                                                   180,
-                                                          child: Image.network(
+                                                          child: ExtendedImage.network(
                                                             x['new'],
                                                             fit: BoxFit.cover,
                                                           ),

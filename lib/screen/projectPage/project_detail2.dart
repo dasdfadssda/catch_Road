@@ -1,18 +1,16 @@
 import 'package:camera/camera.dart';
 import 'package:catch2_0_1/utils/app_text_styles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../Camera/camera_load.dart';
 import '../album/catchbox2.dart';
 import '../mainHome.dart';
-// import '../utils/app_colors.dart';
-// import '../utils/app_text_styles.dart';
-// import 'camera/camera_page.dart';
-// import 'catchbox2.dart';
 
 List<CameraDescription> cameras = [];
 
@@ -139,16 +137,26 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
                       Padding(
                         padding: EdgeInsets.only(right: 10),
                         //height: 25.h,
-                        child: Container(
-                            height: 70,
-                            width: 70,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(Radius.circular(14))
-                            ),
-                            child: Expanded(
-                                child: Image.network(query['url'][i], fit: BoxFit.fitHeight)
-                            )
-                        ),
+
+                        child: Card(
+                          margin: EdgeInsets.all(0),
+                          clipBehavior: Clip.antiAlias,
+                          child: Container(
+                              height: 70,
+                              width: 70,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(Radius.circular(14)),
+                              ),
+                              child: Expanded(
+                                  child:Transform.rotate(
+                                      angle: 90 * math.pi / 180,
+                                      child: ExtendedImage.network(query['url'][i], fit: BoxFit.fill)
+                                  )
+
+                                //
+                              )
+                          ),
+                        )
                       ),
                   ],
                 ),
@@ -208,7 +216,7 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                              '100장 중 ${query['percentage'].toString()}장이 수집되었어요 !',
+                              '100장 중 ${query['url'].length}장이 수집되었어요 !',
                               style: labelSmallStyle(color: Color(0xff1A1A1A)))
                         ]),
                   )

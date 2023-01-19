@@ -1,7 +1,27 @@
 import 'package:flutter/material.dart';
 
+import '../../Auth/auth_service.dart';
 import '../../utils/app_text_styles.dart';
 import 'MyCash.dart';
+import 'MyPage.dart';
+
+String _bankName = '';
+String _bankNum = '';
+String _nameForBank = '';
+
+class bankInformationUpdateCode extends ChangeNotifier {
+  String bankName = _bankName;
+  String bankNum = _bankNum;
+  String nameForBank = _nameForBank;
+  notifyListeners();
+}
+
+final Bankcontroller = TextEditingController();
+final BankNumcontroller = TextEditingController();
+final BankNamecontroller = TextEditingController();
+final _formBankKeyK = GlobalKey<FormState>();
+final _formBankNumcKeyk = GlobalKey<FormState>();
+final _formBankNamehKeyk = GlobalKey<FormState>();
 
 class makeAccount extends StatefulWidget {
   const makeAccount({super.key});
@@ -13,7 +33,6 @@ class makeAccount extends StatefulWidget {
 class _makeAccountState extends State<makeAccount> {
   @override
   Widget build(BuildContext context) {
-    // final Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Colors.white,
@@ -33,142 +52,17 @@ class _makeAccountState extends State<makeAccount> {
             SizedBox(
               height: 6,
             ),
-            TextFormField(
-              style: TextStyle(fontSize: 13),
-              decoration: InputDecoration(
-                  suffixIcon: IconButton(
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return _dialogGrid();
-                          },
-                        );
-                      },
-                      icon: Icon(
-                        Icons.keyboard_arrow_down_outlined,
-                        size: 35,
-                        color: Color(0xffCFD2D9),
-                      )),
-                  suffixIconConstraints:
-                      BoxConstraints(minHeight: 6, minWidth: 16),
-                  focusColor: Color.fromARGB(6, 61, 50, 50),
-                  contentPadding: EdgeInsets.only(top: 8, left: 24),
-                  hintText: '',
-                  errorText: '',
-                  errorStyle: labelSmallStyle(color: Colors.red),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(36.0)),
-                    borderSide: BorderSide(
-                        width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(36.0)),
-                    borderSide: BorderSide(
-                        width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
-                  ),
-                  hintStyle: bodyMediumStyle(color: Color(0xff9FA5B2)),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(36.0)),
-                    borderSide: BorderSide(
-                        width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(36.0)),
-                    borderSide: BorderSide(
-                        width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(36.0)),
-                  ),
-                  filled: true,
-                  fillColor: Colors.white),
-              keyboardType: TextInputType.emailAddress,
-            ),
+            _formBank(),
             _textfieldLabel('계좌번호'),
             SizedBox(
               height: 6,
             ),
-            TextFormField(
-              style: TextStyle(fontSize: 13),
-              decoration: InputDecoration(
-                  suffixIconConstraints:
-                      BoxConstraints(minHeight: 6, minWidth: 16),
-                  focusColor: Color.fromARGB(6, 61, 50, 50),
-                  contentPadding: EdgeInsets.only(top: 8, left: 24),
-                  hintText: '',
-                  errorText: '',
-                  errorStyle: labelSmallStyle(color: Colors.red),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(36.0)),
-                    borderSide: BorderSide(
-                        width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(36.0)),
-                    borderSide: BorderSide(
-                        width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
-                  ),
-                  hintStyle: bodyMediumStyle(color: Color(0xff9FA5B2)),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(36.0)),
-                    borderSide: BorderSide(
-                        width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(36.0)),
-                    borderSide: BorderSide(
-                        width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(36.0)),
-                  ),
-                  filled: true,
-                  fillColor: Colors.white),
-              keyboardType: TextInputType.emailAddress,
-            ),
+            _formBankNum(),
             _textfieldLabel('수취인명'),
             SizedBox(
               height: 6,
             ),
-            TextFormField(
-              style: TextStyle(fontSize: 13),
-              decoration: InputDecoration(
-                  suffixIconConstraints:
-                      BoxConstraints(minHeight: 6, minWidth: 16),
-                  focusColor: Color.fromARGB(6, 61, 50, 50),
-                  contentPadding: EdgeInsets.only(top: 2, left: 5),
-                  hintText: '',
-                  errorText: '',
-                  errorStyle: labelSmallStyle(color: Colors.red),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(36.0)),
-                    borderSide: BorderSide(
-                        width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(36.0)),
-                    borderSide: BorderSide(
-                        width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
-                  ),
-                  hintStyle: bodyMediumStyle(color: Color(0xff9FA5B2)),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(36.0)),
-                    borderSide: BorderSide(
-                        width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(36.0)),
-                    borderSide: BorderSide(
-                        width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(36.0)),
-                  ),
-                  filled: true,
-                  fillColor: Colors.white),
-              keyboardType: TextInputType.emailAddress,
-            ),
+            _formNameForBank(),
             SizedBox(
               height: 20,
             ),
@@ -177,11 +71,21 @@ class _makeAccountState extends State<makeAccount> {
                 height: 45,
                 child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
-                        backgroundColor: Color(0xffCFD2D9),
+                        backgroundColor: Color(0xFF3A94EE),
                         shape: RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(30)))),
-                    onPressed: () {
+                    onPressed: () async {
+                      // if (_formBankKeyK.currentState!.validate()) {
+                      //   if (_formBankNumcKeyk.currentState!.validate()) {
+                      //     if (_formBankNamehKeyk.currentState!.validate()) {
+                      _bankName = Bankcontroller.text;
+                      _bankNum = BankNumcontroller.text;
+                      _nameForBank = BankNumcontroller.text;
+                      UpdateUserBankFunction();
+                      //     }
+                      //   }
+                      // }
                       showModalBottomSheet(
                           context: context,
                           shape: const RoundedRectangleBorder(
@@ -224,33 +128,15 @@ class _makeAccountState extends State<makeAccount> {
                                       child: TextButton(
                                           onPressed: () {
                                             Navigator.push(
-                                              context,
-                                              PageRouteBuilder(
-                                                  pageBuilder: (_, __, ___) =>
-                                                      MyCash(),
-                                                  transitionDuration:
-                                                      Duration(seconds: 0),
-                                                  transitionsBuilder:
-                                                      (_, a, __, c) =>
-                                                          FadeTransition(
-                                                              opacity: a,
-                                                              child: c)),
-                                            );
-                                            // setState(() async{
-                                            //  Navigator.push(
-                                            //   context,
-                                            //   MaterialPageRoute(
-                                            //       builder: (context) => HomePage()),
-                                            // );
-                                            //   print('데이터 전송 시작');
-                                            // UploadFunction(_selectedFileList!);
-                                            // await Future.delayed(Duration(seconds: 25));
-                                            // contentsFunction(FirebaseAuth.instance.currentUser!.displayName!,_road,_arrImageUrls,contentsController,roadAddress);
-                                            //   _road == null;
-                                            //   postCode = '-';
-                                            //   _arrImageUrls.clear();
-                                            //   contentsController.clear();
-                                            // });
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                          MYPage(),
+                                                ));
+                                            Bankcontroller.clear();
+                                            BankNumcontroller.clear();
+                                            BankNamecontroller.clear();
                                           },
                                           child: Text('확인',
                                               style: titleMediumStyle(
@@ -259,69 +145,10 @@ class _makeAccountState extends State<makeAccount> {
                               );
                             });
                           });
-
-                      // showDialog(
-                      //   context: context,
-                      //   builder: (BuildContext context) {
-                      //     return AlertDialog(
-                      //       shape: RoundedRectangleBorder(
-                      //           borderRadius: BorderRadius.only(
-                      //               topLeft: Radius.circular(30.0),
-                      //               topRight: Radius.circular(30.0))),
-                      //       insetPadding: EdgeInsets.only(top: 500),
-                      //       content: Container(
-                      //           margin: EdgeInsets.zero,
-                      //           height: 350,
-                      //           width: 320,
-                      //           child: Column(
-                      //             children: [
-                      //               Center(
-                      //                 child: Column(
-                      //                   children: [
-                      //                     SizedBox(
-                      //                       height: 90,
-                      //                     ),
-                      //                     Text(
-                      //                       "계좌정보가 등록되었습니다.",
-                      //                       style: bodyLargeStyle(
-                      //                           color: Colors.black),
-                      //                     ),
-                      //                   ],
-                      //                 ),
-                      //               ),
-                      //               Padding(
-                      //                 padding:
-                      //                     EdgeInsets.only(top: 20, bottom: 5),
-                      //                 child: SizedBox(
-                      //                     width: double.infinity,
-                      //                     height: 50,
-                      //                     child: OutlinedButton(
-                      //                         style: OutlinedButton.styleFrom(
-                      //                             backgroundColor:
-                      //                                 Color(0xff3A94EE),
-                      //                             shape: RoundedRectangleBorder(
-                      //                                 borderRadius:
-                      //                                     BorderRadius.all(
-                      //                                         Radius.circular(
-                      //                                             30)))),
-                      //                         onPressed: () {
-                      //                           Navigator.pop(context);
-                      //                         },
-                      //                         child: Text(
-                      //                           "확인",
-                      //                           style: titleMediumStyle(
-                      //                               color: Colors.white),
-                      //                         ))),
-                      //               )
-                      //             ],
-                      //           )),
-                      //     );
-                      //   },
-                      // );
                     },
                     child: Text(
                       "등록하기",
-                      style: titleMediumStyle(color: Color(0xff9FA5B2)),
+                      style: titleMediumStyle(color: Color(0xffFAFBFB)),
                     )))
           ],
         ),
@@ -398,6 +225,154 @@ class _makeAccountState extends State<makeAccount> {
       insetPadding: EdgeInsets.only(top: 230),
       content:
           Container(height: 500, width: double.infinity, child: send_grid()),
+    );
+  }
+
+  Widget _formBank() {
+    return Form(
+      child: TextFormField(
+        key: _formBankKeyK,
+        validator: (val) {
+          if (val?.length == 0) {
+            return '수취인명은 필수사항입니다.';
+          }
+          return null;
+        },
+        onTap: () {},
+        controller: Bankcontroller,
+        style: TextStyle(fontSize: 13),
+        decoration: InputDecoration(
+            focusColor: Color.fromARGB(6, 61, 50, 50),
+            contentPadding: EdgeInsets.only(left: 20),
+            hintText: 'EX) 포항은행',
+            errorText: '',
+            errorStyle: labelSmallStyle(color: Colors.red),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+              borderSide:
+                  BorderSide(width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+              borderSide:
+                  BorderSide(width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
+            ),
+            hintStyle: bodyMediumStyle(color: Color(0xff9FA5B2)),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+              borderSide:
+                  BorderSide(width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+              borderSide:
+                  BorderSide(width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+            ),
+            filled: true,
+            fillColor: Colors.white),
+        showCursor: false,
+      ),
+    );
+  }
+
+  Widget _formBankNum() {
+    return Form(
+      child: TextFormField(
+        key: _formBankNumcKeyk,
+        validator: (val) {
+          if (val?.length == 0) {
+            return '계좌번호는 필수사항입니다.';
+          }
+          return null;
+        },
+        style: TextStyle(fontSize: 13),
+        controller: BankNumcontroller,
+        decoration: InputDecoration(
+            focusColor: Color.fromARGB(6, 61, 50, 50),
+            contentPadding: EdgeInsets.only(left: 20),
+            hintText: '',
+            errorText: '',
+            errorStyle: labelSmallStyle(color: Colors.red),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+              borderSide:
+                  BorderSide(width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+              borderSide:
+                  BorderSide(width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
+            ),
+            hintStyle: bodyMediumStyle(color: Color(0xff9FA5B2)),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+              borderSide:
+                  BorderSide(width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+              borderSide:
+                  BorderSide(width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+            ),
+            filled: true,
+            fillColor: Colors.white),
+        keyboardType: TextInputType.number,
+      ),
+    );
+  }
+
+  Widget _formNameForBank() {
+    return Form(
+      child: TextFormField(
+        key: _formBankNamehKeyk,
+        validator: (val) {
+          if (val?.length == 0) {
+            return '수취인명은 필수사항입니다.';
+          }
+          return null;
+        },
+        controller: BankNamecontroller,
+        style: TextStyle(fontSize: 13),
+        decoration: InputDecoration(
+            focusColor: Color.fromARGB(6, 61, 50, 50),
+            contentPadding: EdgeInsets.only(left: 20),
+            hintText: 'ex) 홍길동',
+            errorText: '',
+            errorStyle: labelSmallStyle(color: Colors.red),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+              borderSide:
+                  BorderSide(width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+              borderSide:
+                  BorderSide(width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
+            ),
+            hintStyle: bodyMediumStyle(color: Color(0xff9FA5B2)),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+              borderSide:
+                  BorderSide(width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+              borderSide:
+                  BorderSide(width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.2)),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(36.0)),
+            ),
+            filled: true,
+            fillColor: Colors.white),
+        keyboardType: TextInputType.number,
+      ),
     );
   }
 }
@@ -537,21 +512,7 @@ class send_grid extends StatelessWidget {
                     margin: EdgeInsets.fromLTRB(46, 0, 46, 50),
                     child: TextButton(
                         onPressed: () {
-                          // setState(() async{
-                          //  Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //       builder: (context) => HomePage()),
-                          // );
-                          //   print('데이터 전송 시작');
-                          // UploadFunction(_selectedFileList!);
-                          // await Future.delayed(Duration(seconds: 25));
-                          // contentsFunction(FirebaseAuth.instance.currentUser!.displayName!,_road,_arrImageUrls,contentsController,roadAddress);
-                          //   _road == null;
-                          //   postCode = '-';
-                          //   _arrImageUrls.clear();
-                          //   contentsController.clear();
-                          // });
+                   
                         },
                         child: Text('확인',
                             style: labelSmallStyle(color: Colors.white))))
