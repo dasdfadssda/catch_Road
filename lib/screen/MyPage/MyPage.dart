@@ -55,7 +55,7 @@ class _MYPageState extends State<MYPage> {
                                   BorderRadius.circular(100), // Image border
                               child: SizedBox.fromSize(
                                 size: Size.fromRadius(35), // Image radius
-                                child: Image.asset('assets/icons/apple.png',
+                                child: Image.asset('assets/img.png',
                                     fit: BoxFit.cover),
                               )),
                         ),
