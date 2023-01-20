@@ -196,7 +196,11 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           backgroundColor: Color.fromRGBO(58, 148, 238, 1)),
                       onPressed: () async {
-                         loginWithIdandPassword(_email,_password);
+                         //loginWithIdandPassword(_email.text,_password.text);
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                              return MainHomePage();
+                            }));
                       },
                       child: Text(
                         "로그인",
