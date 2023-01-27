@@ -56,7 +56,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // d- 몇인지 보여줘야 함.
-                      Text('D-',
+                      Text('D-${query['final_day'].toString()}',
                           style: labelLargeStyle(color: Color(0xff9FA5B2))),
                     ],
                   ),
@@ -77,7 +77,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
               Row(
                 children: [
                   Container(
-                      width: size.width * 0.1,
+                      width: size.width * 0.15,
                       height: size.height * 0.03,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -88,11 +88,11 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                         color: Colors.white,
                       ),
                       child: Center(
-                        child: Text('기업',
+                        child: Text(query['type'],
                             style: labelMediumStyle(color: Color(0xff9FA5B2))),
                       )),
                   SizedBox(width: size.width * 0.016),
-                  Text('Comapany Co',//query['cash'].toString(),
+                  Text(query['user'],//query['cash'].toString(),
                       style: labelMediumStyle(color: Color(0xff9FA5B2))),
                  // Text('캐시', style: labelMediumStyle(color: Color(0xff9FA5B2))),
                 ],
@@ -101,6 +101,30 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
               Text(query['content'],
                   style: bodyMediumStyle(color: Color(0xff1A1A1A))),
               SizedBox(height: 30),
+              // Container(
+              //   height: 70,
+              //   child: ListView(
+              //       scrollDirection: Axis.horizontal,
+              //       children: <Widget>[
+              //         for (int i = 0; i < query['url'].length; i++)
+              //           Padding(
+              //             padding: EdgeInsets.only(right: 10),
+              //             //height: 25.h,
+              //             child: Container(
+              //               height: 70,
+              //               width: 70,
+              //               decoration: BoxDecoration(
+              //                 borderRadius: BorderRadius.all(Radius.circular(14))
+              //               ),
+              //               child: Expanded(
+              //                 child: Image.network(query['url'][i], fit: BoxFit.fitHeight)
+              //               )
+              //             ),
+              //           ),
+              //       ],
+              //     ),
+              // ),
+              SizedBox(height: 10),
               Row(
                 children: [
                   Image.asset(
@@ -238,7 +262,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                                   //   ),
                                   // ],
                                 ),
-                                width: size.width * 0.86,
+                                width: size.width * 0.9,
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -351,7 +375,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                                   //   ),
                                   // ],
                                 ),
-                                width: size.width * 0.86,
+                                width: size.width * 0.9,
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -470,8 +494,8 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
 
                                   print(query['id']);
                                   var userlist=query['part_user'];
-                                  if(!userlist.contains(FirebaseAuth.instance.currentUser!.email!))
-                                    userlist.add(FirebaseAuth.instance.currentUser!.email!);
+                                  if(!userlist.contains('1234@handong.ac.kr'))
+                                    userlist.add('1234@handong.ac.kr');
 
                                   FirebaseFirestore.instance
                                       .collection('project')
@@ -480,7 +504,8 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                                     'participate':1,
                                     'part_user':userlist
                                   });
-                                  //Navigator.pop(context);
+                                  Navigator.pop(context);
+                                  Navigator.pop(context);
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(

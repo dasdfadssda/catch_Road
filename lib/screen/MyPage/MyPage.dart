@@ -10,6 +10,9 @@ import 'package:flutter/material.dart';
 import '../../utils/app_text_styles.dart';
 import '../../utils/widget.dart';
 import '../notFound.dart';
+import '../projectPage/part_pro.dart';
+import 'editMyinfo.dart';
+import 'makeAccount.dart';
 
 class MYPage extends StatefulWidget {
   const MYPage({super.key});
@@ -67,7 +70,7 @@ class _MYPageState extends State<MYPage> {
                                   child: Row(
                                     children: [
                                       Text(
-                                        '${FirebaseAuth.instance.currentUser!.displayName!}',
+                                        '${'1234@handong.ac.kr'}',//FirebaseAuth.instance.currentUser!.displayName!
                                         style: titleMediumStyle(
                                             color: Colors.black),
                                       ),
@@ -84,7 +87,7 @@ class _MYPageState extends State<MYPage> {
                                   top: size.height * 0.035,
                                   left: size.width * 0.04),
                               child: Text(
-                                '${FirebaseAuth.instance.currentUser!.email!}',
+                                '${'1234@handong.ac.kr'}',//FirebaseAuth.instance.currentUser!.email!
                                 style:
                                     labelSmallStyle(color: Color(0xff9FA5B2)),
                               ),
@@ -93,7 +96,17 @@ class _MYPageState extends State<MYPage> {
                               padding: EdgeInsets.only(left: size.width * 0.55),
                               child: IconButton(
                                   onPressed: () {
-                                    signOut();
+                                    Navigator.push(
+                                      context,
+                                      PageRouteBuilder(
+                                          pageBuilder: (_, __, ___) =>
+                                              editinfo(),
+                                          transitionDuration:
+                                              Duration(seconds: 0),
+                                          transitionsBuilder: (_, a, __, c) =>
+                                              FadeTransition(
+                                                  opacity: a, child: c)),
+                                    );
                                   },
                                   icon: Icon(
                                     Icons.arrow_forward_ios_rounded,
@@ -199,7 +212,8 @@ class _MYPageState extends State<MYPage> {
                   ]),
             ),
             SizedBox(height: size.height * 0.005),
-            _buildListTileButton('내가 올린 프로젝트', 'myUpLoadProject'),// 1.10일 mypage 회원 탈퇴 부분 밑으로 쭉
+            _buildListTileButton(
+                '내가 올린 프로젝트', 'myUpLoadProject'), // 1.10일 mypage 회원 탈퇴 부분 밑으로 쭉
             _buildListTileButton('내가 작성한 커뮤니티 글', 'myCommunity'),
             _buildListTileButton('참여한 프로젝트', 'myJoinProject'),
             MyWidget().DivderLine(),
@@ -209,7 +223,8 @@ class _MYPageState extends State<MYPage> {
             _buildListTileButton('공지 사항', 'announcement'),
             _buildListTileButton('약관 및 개인정보 처리', 'myInformation'),
             MyWidget().DivderLine(),
-            _buildListTileButton('로그아웃', 'logout'),// 1.10일 mypage 회원 탈퇴 부분 여기까지
+            _buildListTileButton(
+                '로그아웃', 'logout'), // 1.10일 mypage 회원 탈퇴 부분 여기까지
             Padding(
               padding: EdgeInsets.only(
                   left: size.width * 0.015, bottom: size.height * 0.05),
@@ -269,7 +284,8 @@ class _MYPageState extends State<MYPage> {
     );
   }
 
-  ListTile _buildListTileButton(String word, String route) { // 1.10일 mypage 회원 탈퇴 부분 밑으로 쭉
+  ListTile _buildListTileButton(String word, String route) {
+    // 1.10일 mypage 회원 탈퇴 부분 밑으로 쭉
     final Size size = MediaQuery.of(context).size;
     return ListTile(
         contentPadding: EdgeInsets.only(left: size.width * 0.014),
@@ -277,8 +293,18 @@ class _MYPageState extends State<MYPage> {
           print('onTap');
           if (route == 'logout') {
             print('logout');
-           _showSnapBarForLogOut(context);
-          } else {}
+            _showSnapBarForLogOut(context);
+          }  else if (route == 'myJoinProject') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => partiprojectPage()),
+      );}
+          else if (route == 'myBankInformation') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => makeAccount()),
+            );
+          }
         },
         leading: Text('${word}', style: labelLargeStyle(color: Colors.black)),
         trailing: Icon(
@@ -320,14 +346,18 @@ class _MYPageState extends State<MYPage> {
                         child: Text('취소',
                             style: labelMediumStyle(color: Color(0XFF9FA5B2))),
                       ),
-                      SizedBox(width: 200),
+                      SizedBox(width: 150),
                       TextButton(
-                        onPressed: () {
+                        onPressed: ()async {
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => MyApp()),
                           );
-                          signOut();
+                          await signOut();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => LoginPage()),
+                          );
                         },
                         child: Text('확인',
                             style: labelMediumStyle(color: Color(0XFF3A94EE))),
@@ -340,7 +370,8 @@ class _MYPageState extends State<MYPage> {
           });
         });
   }
-   void _showSnapBarForwithdraw(context) {
+
+  void _showSnapBarForwithdraw(context) {
     // 나가기 관련 스냅바
     showModalBottomSheet(
         context: context,
@@ -366,7 +397,8 @@ class _MYPageState extends State<MYPage> {
                   margin: EdgeInsets.fromLTRB(20, 15, 20, 5),
                   child: Text(
                     "${FirebaseAuth.instance.currentUser!.displayName!}님, 탈퇴시 삭제/유지되는 정보를 확인해주세요!\n한 번 삭제된 정보는 복구가 불가능합니다.",
-                    style: labelLargeStyle(color: Colors.grey), textAlign: TextAlign.center,
+                    style: labelLargeStyle(color: Colors.grey),
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 Container(
@@ -382,7 +414,8 @@ class _MYPageState extends State<MYPage> {
                   padding: EdgeInsets.fromLTRB(9, 10, 10, 5),
                   child: Text(
                     "계정을 삭제하면 회원님의 모든 콘텐츠와 활동 기록, 포인트 적립·사용 내역이 삭제됩니다. 프로젝트 참여를 통해 적립한 포인트는 계정 삭제 시 환불이 불가합니다. 또한 삭제된 정보는 복구할 수 없으니 신중하게 결정해주세요.\n\n회원님이 참여한 프로젝트 데이터셋과 커뮤니티 관련 컨텐츠와 댓글은 정보가 유지됩니다.",
-                    style: labelMediumStyle(color: Color(0XFF3A94EE)), textAlign: TextAlign.left,
+                    style: labelMediumStyle(color: Color(0XFF3A94EE)),
+                    textAlign: TextAlign.left,
                   ),
                 ),
                 Container(
@@ -403,7 +436,7 @@ class _MYPageState extends State<MYPage> {
                             context,
                             MaterialPageRoute(builder: (context) => MyApp()),
                           );
-                         deleteUserFromFirebase();
+                          deleteUserFromFirebase();
                         },
                         child: Text('탈퇴하기',
                             style: labelMediumStyle(color: Color(0XFF3A94EE))),

@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'dart:math' as math;
 import '../../utils/app_text_styles.dart';
 import '../mainHome.dart';
+import 'package:extended_image/extended_image.dart';
 
 int check_num=0;
 
@@ -733,206 +734,209 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                 // ),
                 SizedBox(width: size.width * 0.13),
                 //if(pressed == true)
-                  IconButton(
+                IconButton(
 
-                    padding: EdgeInsets.all(0),
-                    icon: Image.asset("assets/icons/trash_can.png",
+                  padding: EdgeInsets.all(0),
+                  icon: Image.asset("assets/icons/trash_can.png",
 
-                      width:size.width*0.044,
-                    ),
-                    // Icon(Icons.delete),
-                    //color: Colors.lightBlue,
-
-                    onPressed: (){
-                      showModalBottomSheet<void>(
-                        enableDrag: true,
-                        isScrollControlled: true,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(30.0),
-                                topRight: Radius.circular(30.0))),
-                        context: context,
-                        builder: (BuildContext context) {
-                          return StatefulBuilder(
-                              builder: (BuildContext context, StateSetter setState) {
-                                return Container(
-                                  height: size.height * 0.266,
-                                  padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                                  child: Column(
-                                    children: [
-                                      SizedBox(
-                                        height: size.height * 0.05,
-                                      ),
-
-                                      Text('사진을 삭제하시겠습니까?',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: size.height * 0.025,
-                                      ),
-                                      Text('삭제한 사진은 복구할 수 없습니다. ',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-
-                                        ),
-                                      ),
-
-                                      SizedBox(
-                                        height: size.height * 0.025,
-                                      ),
-                                      Row(
-                                        children: [
-                                          SizedBox(
-                                            width: size.width*0.055,
-                                          ),
-                                          TextButton(onPressed: (){
-                                            Navigator.pop(context);
-                                          }, child: Text('취소',
-                                              style:TextStyle(color: Color(0xff9FA5B2)),
-                                          )),
-                                          SizedBox(
-                                            width: size.width*0.544,
-                                          ),
-                                          TextButton(
-                                              onPressed: (){
-                                            for(int i = 0; i< 1000; i++){
-                                              if(_checks_docs[i] != ''){
-                                                FirebaseFirestore.instance.collection('category').doc('1234@handong.ac.kr').collection(query['category']).doc(_checks_docs[i]).delete();
-                                              }
-                                            }
-                                            setState(() {
-                                              pressed = false;
-                                              _selectCheck = '선택';
-                                              _checks.fillRange(0, _checks.length-1,false);
-                                              _checks_url.fillRange(0, _checks_url.length-1,'');
-                                              _checks_docs.fillRange(0, _checks_docs.length-1,'');
-                                            });
-
-                                            showModalBottomSheet<void>(
-                                              enableDrag: true,
-                                              isScrollControlled: true,
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.only(
-                                                      topLeft: Radius.circular(30.0),
-                                                      topRight: Radius.circular(30.0))),
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return StatefulBuilder(
-                                                    builder: (BuildContext context, StateSetter setState) {
-                                                      return Container(
-                                                        height: size.height * 0.48,
-                                                        padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                                                        child: Column(
-                                                          children: [
-                                                            SizedBox(
-                                                              height: size.height * 0.06,
-                                                            ),
-
-                                                            SizedBox(
-                                                                height:150,
-                                                                child: Image.asset('assets/checkToFinish.gif')),
-                                                            SizedBox(
-                                                              height: size.height * 0.0475,
-                                                            ),
-                                                            Text('사진이 삭제되었습니다. '),
-
-                                                            SizedBox(height: size.height * 0.025),
-
-                                                            SizedBox(
-                                                              height: 20,
-                                                            ),
-                                                            ElevatedButton(
-                                                                style:ButtonStyle(
-                                                                  fixedSize:
-                                                                  MaterialStateProperty.all(Size(307, 50)),
-                                                                  backgroundColor: MaterialStateProperty.all(
-                                                                    Color(0xff3A94EE),
-                                                                    //_onTap3? primary[40] : onSecondaryColor,
-                                                                  ),
-                                                                  shape: MaterialStateProperty.all<
-                                                                      RoundedRectangleBorder>(
-                                                                      RoundedRectangleBorder(
-                                                                        borderRadius: BorderRadius.circular(30.0),
-                                                                      )),
-                                                                ),
-
-                                                                child: Text('확인',
-                                                                    style: titleMediumStyle(
-                                                                        color: Color(0xffFAFBFB))),
-                                                                onPressed: () {
-                                                                  print("here");
-                                                                  Navigator.pop(context);
-                                                                  Navigator.pop(context);
-
-                                                                }
-
-                                                            )
-                                                          ],
-                                                        ),
-                                                      );
-                                                    });
-                                              },
-                                            );
-
-                                          }, child: Text('확인',
-                                            style: TextStyle(
-                                              color: Color(0xff3A94EE),
-                                            ),
-                                          ))
-
-                                        ],
-
-                                      )
-
-
-                                      // ElevatedButton(
-                                      //     style:ButtonStyle(
-                                      //       fixedSize:
-                                      //       MaterialStateProperty.all(Size(307, 50)),
-                                      //       backgroundColor: MaterialStateProperty.all(
-                                      //         Color(0xff3A94EE),
-                                      //         //_onTap3? primary[40] : onSecondaryColor,
-                                      //       ),
-                                      //       shape: MaterialStateProperty.all<
-                                      //           RoundedRectangleBorder>(
-                                      //           RoundedRectangleBorder(
-                                      //             borderRadius: BorderRadius.circular(30.0),
-                                      //           )),
-                                      //     ),
-                                      //
-                                      //     child: Text('확인',
-                                      //         style: titleMediumStyle(
-                                      //             color: Color(0xffFAFBFB))),
-                                      //     onPressed: () {
-                                      //       for(int i = 0; i< 1000; i++){
-                                      //         if(_checks_docs[i] != ''){
-                                      //           FirebaseFirestore.instance.collection('category').doc('1234@handong.ac.kr').collection(query['category']).doc(_checks_docs[i]).delete();
-                                      //         }
-                                      //       }
-                                      //       setState(() {
-                                      //         pressed = false;
-                                      //         _selectCheck = '선택';
-                                      //         _checks.fillRange(0, _checks.length-1,false);
-                                      //         _checks_url.fillRange(0, _checks_url.length-1,'');
-                                      //         _checks_docs.fillRange(0, _checks_docs.length-1,'');
-                                      //       });
-                                      //       Navigator.pop(context);
-                                      //
-                                      //     }
-                                      //
-                                      // )
-                                    ],
-                                  ),
-                                );
-                              });
-                        },
-                      );
-
-                    },
+                    width:size.width*0.044,
                   ),
+                  // Icon(Icons.delete),
+                  //color: Colors.lightBlue,
+
+                  onPressed: (){
+
+                    showModalBottomSheet<void>(
+                      enableDrag: true,
+                      isScrollControlled: true,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30.0),
+                              topRight: Radius.circular(30.0))),
+                      context: context,
+                      builder: (BuildContext context) {
+                        return StatefulBuilder(
+                            builder: (BuildContext context, StateSetter setState) {
+                              return Container(
+                                height: size.height * 0.266,
+                                padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: size.height * 0.05,
+                                    ),
+
+                                    Text('사진을 삭제하시겠습니까?',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: size.height * 0.025,
+                                    ),
+                                    Text('삭제한 사진은 복구할 수 없습니다. ',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+
+                                      ),
+                                    ),
+
+                                    SizedBox(
+                                      height: size.height * 0.025,
+                                    ),
+                                    Row(
+                                      children: [
+                                        SizedBox(
+                                          width: size.width*0.055,
+                                        ),
+                                        TextButton(onPressed: (){
+                                          Navigator.pop(context);
+                                        }, child: Text('취소',
+                                          style:TextStyle(color: Color(0xff9FA5B2)),
+                                        )),
+                                        SizedBox(
+                                          width: size.width*0.544,
+                                        ),
+                                        TextButton(
+                                            onPressed: (){
+                                              print('1/12');
+                                              check_num=0;
+                                              for(int i = 0; i< 1000; i++){
+                                                if(_checks_docs[i] != ''){
+                                                  FirebaseFirestore.instance.collection('category').doc('1234@handong.ac.kr').collection(query['category']).doc(_checks_docs[i]).delete();
+                                                }
+                                              }
+                                              setState(() {
+                                                pressed = false;
+                                                _selectCheck = '선택';
+                                                _checks.fillRange(0, _checks.length-1,false);
+                                                _checks_url.fillRange(0, _checks_url.length-1,'');
+                                                _checks_docs.fillRange(0, _checks_docs.length-1,'');
+                                              });
+
+                                              showModalBottomSheet<void>(
+                                                enableDrag: true,
+                                                isScrollControlled: true,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.only(
+                                                        topLeft: Radius.circular(30.0),
+                                                        topRight: Radius.circular(30.0))),
+                                                context: context,
+                                                builder: (BuildContext context) {
+                                                  return StatefulBuilder(
+                                                      builder: (BuildContext context, StateSetter setState) {
+                                                        return Container(
+                                                          height: size.height * 0.5,
+                                                          padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                                                          child: Column(
+                                                            children: [
+                                                              SizedBox(
+                                                                height: size.height * 0.06,
+                                                              ),
+
+                                                              SizedBox(
+                                                                  height:150,
+                                                                  child: Image.asset('assets/checkToFinish.gif')),
+                                                              SizedBox(
+                                                                height: size.height * 0.0475,
+                                                              ),
+                                                              Text('사진이 삭제되었습니다. '),
+
+                                                              SizedBox(height: size.height * 0.025),
+
+                                                              SizedBox(
+                                                                height: 20,
+                                                              ),
+                                                              ElevatedButton(
+                                                                  style:ButtonStyle(
+                                                                    fixedSize:
+                                                                    MaterialStateProperty.all(Size(307, 50)),
+                                                                    backgroundColor: MaterialStateProperty.all(
+                                                                      Color(0xff3A94EE),
+                                                                      //_onTap3? primary[40] : onSecondaryColor,
+                                                                    ),
+                                                                    shape: MaterialStateProperty.all<
+                                                                        RoundedRectangleBorder>(
+                                                                        RoundedRectangleBorder(
+                                                                          borderRadius: BorderRadius.circular(30.0),
+                                                                        )),
+                                                                  ),
+
+                                                                  child: Text('확인',
+                                                                      style: titleMediumStyle(
+                                                                          color: Color(0xffFAFBFB))),
+                                                                  onPressed: () {
+                                                                    print("here");
+                                                                    Navigator.pop(context);
+                                                                    Navigator.pop(context);
+
+                                                                  }
+
+                                                              )
+                                                            ],
+                                                          ),
+                                                        );
+                                                      });
+                                                },
+                                              );
+
+                                            }, child: Text('확인',
+                                          style: TextStyle(
+                                            color: Color(0xff3A94EE),
+                                          ),
+                                        ))
+
+                                      ],
+
+                                    )
+
+
+                                    // ElevatedButton(
+                                    //     style:ButtonStyle(
+                                    //       fixedSize:
+                                    //       MaterialStateProperty.all(Size(307, 50)),
+                                    //       backgroundColor: MaterialStateProperty.all(
+                                    //         Color(0xff3A94EE),
+                                    //         //_onTap3? primary[40] : onSecondaryColor,
+                                    //       ),
+                                    //       shape: MaterialStateProperty.all<
+                                    //           RoundedRectangleBorder>(
+                                    //           RoundedRectangleBorder(
+                                    //             borderRadius: BorderRadius.circular(30.0),
+                                    //           )),
+                                    //     ),
+                                    //
+                                    //     child: Text('확인',
+                                    //         style: titleMediumStyle(
+                                    //             color: Color(0xffFAFBFB))),
+                                    //     onPressed: () {
+                                    //       for(int i = 0; i< 1000; i++){
+                                    //         if(_checks_docs[i] != ''){
+                                    //           FirebaseFirestore.instance.collection('category').doc('1234@handong.ac.kr').collection(query['category']).doc(_checks_docs[i]).delete();
+                                    //         }
+                                    //       }
+                                    //       setState(() {
+                                    //         pressed = false;
+                                    //         _selectCheck = '선택';
+                                    //         _checks.fillRange(0, _checks.length-1,false);
+                                    //         _checks_url.fillRange(0, _checks_url.length-1,'');
+                                    //         _checks_docs.fillRange(0, _checks_docs.length-1,'');
+                                    //       });
+                                    //       Navigator.pop(context);
+                                    //
+                                    //     }
+                                    //
+                                    // )
+                                  ],
+                                ),
+                              );
+                            });
+                      },
+                    );
+
+                  },
+                ),
 
               ]),
             ],
@@ -1053,7 +1057,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                                             'traffic light')
                                                         ? 0
                                                         : 90 * math.pi / 180,
-                                                    child: Image.network(
+                                                    child: ExtendedImage.network(
                                                       x['url'],
                                                       fit: BoxFit.cover,
                                                     ),

@@ -1,18 +1,16 @@
 import 'package:camera/camera.dart';
 import 'package:catch2_0_1/utils/app_text_styles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../Camera/camera_load.dart';
 import '../album/catchbox2.dart';
 import '../mainHome.dart';
-// import '../utils/app_colors.dart';
-// import '../utils/app_text_styles.dart';
-// import 'camera/camera_page.dart';
-// import 'catchbox2.dart';
 
 List<CameraDescription> cameras = [];
 
@@ -63,7 +61,7 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('D-49', style: labelLargeStyle(color: Colors.black)),
+                      Text('D-${query['final_day'].toString()}', style: labelLargeStyle(color:Color(0xff9FA5B2))),
                     ],
                   ),
                   Expanded(
@@ -116,20 +114,54 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
                         color: Colors.white,
                       ),
                       child: Center(
-                        child: Text('기업',
+                        child: Text(query['type'],
                             style: labelMediumStyle(color: Color(0xff9FA5B2))),
                       )),
                   SizedBox(width: size.width * 0.02),
                   // 텍스트 다름
-                  Text(query['cash'].toString(),
-                      style: titleSmallStyle(color: Colors.black)),
-                  Text('캐시', style: titleSmallStyle(color: Colors.black)),
+                  Text('${query['user']}',
+                      style: labelMediumStyle(color: Color(0xff9FA5B2))),
+                  //Text('캐시', style: titleSmallStyle(color: Colors.black)),
                 ],
               ),
               SizedBox(height: 20),
               Text(query['content'],
                   style: bodyMediumStyle(color: Colors.black)),
               SizedBox(height: 30),
+              Container(
+                height: 70,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: <Widget>[
+                    for (int i = 0; i < query['url'].length; i++)
+                      Padding(
+                        padding: EdgeInsets.only(right: 10),
+                        //height: 25.h,
+
+                        child: Card(
+                          margin: EdgeInsets.all(0),
+                          clipBehavior: Clip.antiAlias,
+                          child: Container(
+                              height: 70,
+                              width: 70,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(Radius.circular(14)),
+                              ),
+                              child: Expanded(
+                                  child:Transform.rotate(
+                                      angle: 90 * math.pi / 180,
+                                      child: ExtendedImage.network(query['url'][i], fit: BoxFit.fill)
+                                  )
+
+                                //
+                              )
+                          ),
+                        )
+                      ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 10),
               Row(
                 children: [
                   Image.asset(
@@ -169,7 +201,8 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
               ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
                 child: LinearProgressIndicator(
-                  value: 0.04,
+                  value: query['percentage'].toDouble() *
+                    0.01,//0.8,
                   minHeight: size.height * 0.015,
                   valueColor: AlwaysStoppedAnimation(Color(0xff00D796)),
                   backgroundColor: Color(0xFFF3F4F5),
@@ -183,7 +216,7 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                              '100장 중 ${query['percentage'].toString()}장이 수집되었어요 !',
+                              '100장 중 ${query['url'].length}장이 수집되었어요 !',
                               style: labelSmallStyle(color: Color(0xff1A1A1A)))
                         ]),
                   )
@@ -262,7 +295,7 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
               print(query['id']);
               var userlist=query['part_user'];
               print(userlist);
-              userlist.remove(FirebaseAuth.instance.currentUser!.email!);
+              userlist.remove('1234@handong.ac.kr');
               print(userlist);
               // if(!userlist.contains(FirebaseAuth.instance.currentUser!.email!))
               //   userlist.add(FirebaseAuth.instance.currentUser!.email!);
