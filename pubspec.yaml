@@ -64,6 +64,7 @@ dependencies:
   flutter_toggle_tab: ^1.2.0
   flutter_geocoder: ^0.2.2-nullsafety
   geolocator: ^9.0.2
+  localization: ^2.1.0
 
 dev_dependencies:
   flutter_test:
