@@ -67,6 +67,7 @@ dependencies:
   geolocator: ^9.0.2
   localization: ^2.1.0
   extended_image: ^6.0.1
+  chips_choice: ^3.0.0
 
 
 dev_dependencies:

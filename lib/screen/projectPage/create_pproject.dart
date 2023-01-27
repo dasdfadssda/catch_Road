@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:catch2_0_1/screen/projectPage/progect_main.dart';
+import 'package:chips_choice/chips_choice.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:image_picker/image_picker.dart';
@@ -27,6 +28,35 @@ class CreatePproject extends StatefulWidget {
 }
 
 class _CreatePprojectState extends State<CreatePproject> {
+
+  int tag = 3;
+
+  // multiple choice value
+  List<String> tags = ['Education'];
+
+  // list of string options
+  List<String> options = [
+    '사람',
+    '오토바이',
+    '자동차',
+    '스쿠터',
+    '자전거',
+    '버스',
+    '기차',
+    '트럭',
+    '신호등',
+    '벤치',
+    '우산',
+    '비행기',
+    '보트',
+    '정지 표지판',
+    '어린이 보호구역'
+  ];
+
+  String? user;
+  final usersMemoizer = C2ChoiceMemoizer<String>();
+
+
   final _titleController = TextEditingController();
   final _unitPriceController = TextEditingController();
   final _quantityController = TextEditingController();
@@ -411,12 +441,12 @@ class _CreatePprojectState extends State<CreatePproject> {
                 ),
               )),
           onPressed: () {
-            //Navigator.pop(context);
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (BuildContext context) => projectPage(),
-                ));
+            Navigator.pop(context);
+            // Navigator.push(
+            //     context,
+            //     MaterialPageRoute(
+            //       builder: (BuildContext context) => projectPage(),
+            //     ));
           },
         ),
         actions: [
@@ -493,102 +523,65 @@ class _CreatePprojectState extends State<CreatePproject> {
                     ),
                     IconButton(
                         onPressed: () {
-                          showDialog(
+                          showModalBottomSheet(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(30),
+                                    topLeft: Radius.circular(30),
+                                  )
+                              ),
+                              isScrollControlled: true,
                               context: context,
                               builder: (BuildContext context) {
-                                return AlertDialog(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(0),
-                                            topRight: Radius.circular(30.0))),
-                                    insetPadding: EdgeInsets.only(top: 80),
-                                    content: Container(
-                                        height: 280,
-                                        width: 360,
-                                        child: Column(children: [
-                                          Container(
-                                            padding:
-                                                EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                            child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Container(
-                                                    width: 60,
-                                                    height: 24,
-                                                    decoration: BoxDecoration(
-                                                        color: _selectDateColor,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                                    10.0)),
-                                                    child:
-                                                        // Column(
-                                                        //   mainAxisAlignment: MainAxisAlignment.center,
-                                                        //   children: [
-                                                        Column(
-                                                      children: [
-                                                        // _buildChips(),
-                                                        Container(
-                                                            child: Row(
-                                                          children: [
-                                                            SizedBox(
-                                                                width: 208),
-                                                            TextButton(
-                                                                child:
-                                                                    Text('취소'),
-                                                                onPressed: () {
-                                                                  setState(() {
-                                                                    print(
-                                                                        'dsds');
-                                                                  });
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                },
-                                                                style: TextButton.styleFrom(
-                                                                    padding:
-                                                                        EdgeInsets
-                                                                            .zero,
-                                                                    minimumSize:
-                                                                        Size(50,
-                                                                            30),
-                                                                    tapTargetSize:
-                                                                        MaterialTapTargetSize
-                                                                            .shrinkWrap,
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .centerLeft)),
-                                                            SizedBox(width: 25),
-                                                            TextButton(
-                                                                child:
-                                                                    Text('확인'),
-                                                                onPressed: () {
-                                                                  setState(
-                                                                      () {});
-                                                                  //Navigator.pop(context);
-                                                                  // Get.back();
-                                                                },
-                                                                style: TextButton.styleFrom(
-                                                                    padding:
-                                                                        EdgeInsets
-                                                                            .zero,
-                                                                    minimumSize:
-                                                                        Size(50,
-                                                                            30),
-                                                                    tapTargetSize:
-                                                                        MaterialTapTargetSize
-                                                                            .shrinkWrap,
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .centerLeft))
-                                                          ],
-                                                        )),
-                                                      ],
+                                return StatefulBuilder(
+                                    builder: (BuildContext context, StateSetter setState) {
+                                    return SizedBox(
+                                        height: MediaQuery.of(context).size.height * 0.4,
+                                        child: Column(
+                                            children: [
+                                              Container(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    16,36,16,0 ),
+                                                child: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: <Widget>[
+
+                                                    Flexible(
+                                                        fit: FlexFit.loose,
+                                                        child: ChipsChoice<String>.multiple(
+                                                          value: tags,
+                                                          onChanged: (val) => setState(() => tags = val),
+                                                          choiceItems: C2Choice.listFrom<String, String>(
+                                                            source: options,
+                                                            value: (i, v) => v,
+                                                            label: (i, v) => v,
+                                                            tooltip: (i, v) => v,
+                                                          ),
+                                                          choiceCheckmark: true,
+                                                          wrapped: true,
+                                                        ),
                                                     ),
-                                                  ),
-                                                ]),
-                                          )
-                                        ])));
+                                                  ],
+                                                ),
+                                              ),
+
+                                              Container(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    30,0,30,0 ),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    TextButton(child:Text("취소", style: buttonLargeStyle().copyWith(color:Color(0XFF9FA5B2)),),onPressed: (){},),
+                                                    TextButton(child:Text("확인", style: buttonLargeStyle().copyWith(color:primary[50]),),onPressed: (){},),
+                                                    //background: #9FA5B2;
+                                                  ],
+                                                ),
+                                              ),
+                                            ]));
+                                  }
+                                );
+
                               });
                         },
                         icon: Icon(Icons.keyboard_arrow_right)),
@@ -756,278 +749,281 @@ class _CreatePprojectState extends State<CreatePproject> {
                               isScrollControlled: true,
                               context: context,
                               builder: (BuildContext context) {
-                                return SizedBox(
-                                    height: MediaQuery.of(context).size.height * 0.65,
-                                        child: Column(
-                                            children: [
+                                return StatefulBuilder(
+                                    builder: (BuildContext context, StateSetter setState) {
+                                    return SizedBox(
+                                        height: MediaQuery.of(context).size.height * 0.65,
+                                            child: Column(
+                                                children: [
+                                                  Container(
+                                                    padding: EdgeInsets.fromLTRB(
+                                                        36,46,36,0 ),
+                                                    child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      children: [
+
+                                                        Column(
+                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                          children: [
+                                                            Text("시작", style: titleSmallStyle()),
+                                                            SizedBox(height: 10,),
+                                                            Row(
+                                                              children: [
+                                                                Text(_SDate, style: headlineLargeStyle().copyWith(color: primary[50])),
+                                                                SizedBox(width: 10,),
+                                                                Column(
+                                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                                  children: [
+                                                                    Text(_SYearMonth, style: labelMediumStyle().copyWith(color: primary[50])),
+                                                                    Text(_SDay, style: labelMediumStyle().copyWith(color: primary[50])),
+                                                                  ],
+                                                                ),
+                                                              ],
+                                                            )
+                                                          ],
+                                                        ),
+
+
+                                                        Padding(
+                                                          padding: const EdgeInsets.fromLTRB(0,0,40,0),
+                                                          child: Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: [
+                                                              Text("종료", style: titleSmallStyle()),
+                                                              SizedBox(height: 10,),
+                                                              Row(
+                                                                children: [
+                                                                  Text(_EDate, style: headlineLargeStyle().copyWith(color: primary[50])),
+                                                                  SizedBox(width: 10,),
+                                                                  Column(
+                                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                                    children: [
+                                                                      Text(_EYearMonth, style: labelMediumStyle().copyWith(color: primary[50])),
+                                                                      Text(_EDay, style: labelMediumStyle().copyWith(color: primary[50])),
+                                                                    ],
+                                                                  ),
+                                                                ],
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                              Container(
+                                                  padding: EdgeInsets.fromLTRB(
+                                                   30,36,30,0 ),
+                                                  child: Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.center,
+                                                    children: [
+                                                      // Flexible(
+                                                      //   fit: FlexFit.tight,
+                                                      //   child: Column(
+                                                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                                                      //     children: [
+                                                      //       Text('시작', style: textTheme.titleSmall),
+                                                      //       if(_range1 != '')
+                                                      //         Row(
+                                                      //           children: [
+                                                      //             Text(_range1.substring(0,2), style: textTheme.headlineLarge),
+                                                      //             SizedBox(width: 10),
+                                                      //             Column(
+                                                      //                 crossAxisAlignment: CrossAxisAlignment.start,
+                                                      //                 children: [
+                                                      //                   Text(_range1.substring(6,10)+'년 '+_range1.substring(3,5)),
+                                                      //                   Text('수요일')
+                                                      //                 ]
+                                                      //             )
+                                                      //           ],
+                                                      //         )
+                                                      //       else
+                                                      //         Row(
+                                                      //           children: [
+                                                      //             Text(_range1),
+                                                      //             SizedBox(width: 10),
+                                                      //             Column(
+                                                      //                 crossAxisAlignment: CrossAxisAlignment.start,
+                                                      //                 children: [
+                                                      //                   Text(_range1),
+                                                      //                   Text('')
+                                                      //                 ]
+                                                      //             )
+                                                      //           ],
+                                                      //         )
+                                                      //     ],
+                                                      //   ),
+                                                      // ),
+                                                      // SizedBox(width: 76),
+                                                      //       Flexible(
+                                                      //         fit: FlexFit.tight,
+                                                      //         child: Column(
+                                                      //           crossAxisAlignment: CrossAxisAlignment.start,
+                                                      //           children: [
+                                                      //             Text('종료', style: textTheme.titleSmall),
+                                                      //             if(_range2 != '')
+                                                      //               Row(
+                                                      //                 children: [
+                                                      //                   Text(_range2.substring(0,2), style: textTheme.headlineLarge),
+                                                      //                   SizedBox(width: 10),
+                                                      //                   Column(
+                                                      //                       crossAxisAlignment: CrossAxisAlignment.start,
+                                                      //                       children: [
+                                                      //                         Text(_range2.substring(6,10)+'년 '+_range2.substring(3,5)),
+                                                      //                         Text('')
+                                                      //                       ]
+                                                      //                   )
+                                                      //                 ],
+                                                      //               )else
+                                                      //               Row(
+                                                      //                 children: [
+                                                      //                   Text(_range2),
+                                                      //                   SizedBox(width: 10),
+                                                      //                   Column(
+                                                      //                       crossAxisAlignment: CrossAxisAlignment.start,
+                                                      //                       children: [
+                                                      //                         Text(_range2),
+                                                      //                         Text('')
+                                                      //                       ]
+                                                      //                   )
+                                                      //                 ],
+                                                      //               )
+                                                      //           ],
+                                                      //         ),
+                                                      //       ),
+                                                      //     ],
+                                                      //   ),
+                                                      // ),
+                                                      // SizedBox(height: 60),
+                                                      SizedBox(
+                                                        width: MediaQuery.of(context).size.width * 0.85,
+                                                        child: SfDateRangePicker(
+                                                          view: DateRangePickerView.month,
+                                                          initialSelectedDate: DateTime.now(),
+                                                          minDate: DateTime(2000),
+                                                          maxDate: DateTime(2100),
+
+                                                          selectionMode: DateRangePickerSelectionMode.range,
+                                                          controller: _controller,
+                                                          onSelectionChanged: selectionChanged,
+                                                          //onSelectionChanged: _onSelectionChanged,
+
+                                                          // onSelectionChanged:
+                                                          //     (DateRangePickerSelectionChangedArgs args) {
+                                                          //   setState(() {
+                                                          //     if (args.value is PickerDateRange) {
+                                                          //       start = args.value.startDate
+                                                          //           .toString()
+                                                          //           .substring(0, 10);
+                                                          //
+                                                          //       end = args.value.endDate != null
+                                                          //           ? args.value.endDate
+                                                          //           .toString()
+                                                          //           .substring(0, 10)
+                                                          //           : start;
+                                                          //     }
+                                                          //   });
+                                                          // },
+
+                                                          // controller:
+                                                          // _dataPickerController,
+
+                                                        ),
+
+                                                      ),
+                                                      //SizedBox(height: 30),
+
+                                                    ],
+                                                  ),
+                                              ),
+
                                               Container(
                                                 padding: EdgeInsets.fromLTRB(
-                                                    36,46,36,0 ),
+                                                30,0,30,0 ),
                                                 child: Row(
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [
-
-                                                    Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: [
-                                                        Text("시작", style: titleSmallStyle()),
-                                                        SizedBox(height: 10,),
-                                                        Row(
-                                                          children: [
-                                                            Text(_SDate, style: headlineLargeStyle().copyWith(color: primary[50])),
-                                                            SizedBox(width: 10,),
-                                                            Column(
-                                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                                              children: [
-                                                                Text(_SYearMonth, style: labelMediumStyle().copyWith(color: primary[50])),
-                                                                Text(_SDay, style: labelMediumStyle().copyWith(color: primary[50])),
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        )
-                                                      ],
-                                                    ),
-
-
-                                                    Padding(
-                                                      padding: const EdgeInsets.fromLTRB(0,0,40,0),
-                                                      child: Column(
-                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                        children: [
-                                                          Text("종료", style: titleSmallStyle()),
-                                                          SizedBox(height: 10,),
-                                                          Row(
-                                                            children: [
-                                                              Text(_EDate, style: headlineLargeStyle().copyWith(color: primary[50])),
-                                                              SizedBox(width: 10,),
-                                                              Column(
-                                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                                children: [
-                                                                  Text(_EYearMonth, style: labelMediumStyle().copyWith(color: primary[50])),
-                                                                  Text(_EDay, style: labelMediumStyle().copyWith(color: primary[50])),
-                                                                ],
-                                                              ),
-                                                            ],
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
+                                                    TextButton(child:Text("취소", style: buttonLargeStyle().copyWith(color:Color(0XFF9FA5B2)),),onPressed: (){},),
+                                                    TextButton(child:Text("확인", style: buttonLargeStyle().copyWith(color:primary[50]),),onPressed: (){},),
+                                                    //background: #9FA5B2;
                                                   ],
                                                 ),
                                               ),
-                                          Container(
-                                              padding: EdgeInsets.fromLTRB(
-                                               30,36,30,0 ),
-                                              child: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  // Flexible(
-                                                  //   fit: FlexFit.tight,
-                                                  //   child: Column(
-                                                  //     crossAxisAlignment: CrossAxisAlignment.start,
-                                                  //     children: [
-                                                  //       Text('시작', style: textTheme.titleSmall),
-                                                  //       if(_range1 != '')
-                                                  //         Row(
-                                                  //           children: [
-                                                  //             Text(_range1.substring(0,2), style: textTheme.headlineLarge),
-                                                  //             SizedBox(width: 10),
-                                                  //             Column(
-                                                  //                 crossAxisAlignment: CrossAxisAlignment.start,
-                                                  //                 children: [
-                                                  //                   Text(_range1.substring(6,10)+'년 '+_range1.substring(3,5)),
-                                                  //                   Text('수요일')
-                                                  //                 ]
-                                                  //             )
-                                                  //           ],
-                                                  //         )
-                                                  //       else
-                                                  //         Row(
-                                                  //           children: [
-                                                  //             Text(_range1),
-                                                  //             SizedBox(width: 10),
-                                                  //             Column(
-                                                  //                 crossAxisAlignment: CrossAxisAlignment.start,
-                                                  //                 children: [
-                                                  //                   Text(_range1),
-                                                  //                   Text('')
-                                                  //                 ]
-                                                  //             )
-                                                  //           ],
-                                                  //         )
-                                                  //     ],
-                                                  //   ),
-                                                  // ),
-                                                  // SizedBox(width: 76),
-                                                  //       Flexible(
-                                                  //         fit: FlexFit.tight,
-                                                  //         child: Column(
-                                                  //           crossAxisAlignment: CrossAxisAlignment.start,
-                                                  //           children: [
-                                                  //             Text('종료', style: textTheme.titleSmall),
-                                                  //             if(_range2 != '')
-                                                  //               Row(
-                                                  //                 children: [
-                                                  //                   Text(_range2.substring(0,2), style: textTheme.headlineLarge),
-                                                  //                   SizedBox(width: 10),
-                                                  //                   Column(
-                                                  //                       crossAxisAlignment: CrossAxisAlignment.start,
-                                                  //                       children: [
-                                                  //                         Text(_range2.substring(6,10)+'년 '+_range2.substring(3,5)),
-                                                  //                         Text('')
-                                                  //                       ]
-                                                  //                   )
-                                                  //                 ],
-                                                  //               )else
-                                                  //               Row(
-                                                  //                 children: [
-                                                  //                   Text(_range2),
-                                                  //                   SizedBox(width: 10),
-                                                  //                   Column(
-                                                  //                       crossAxisAlignment: CrossAxisAlignment.start,
-                                                  //                       children: [
-                                                  //                         Text(_range2),
-                                                  //                         Text('')
-                                                  //                       ]
-                                                  //                   )
-                                                  //                 ],
-                                                  //               )
-                                                  //           ],
-                                                  //         ),
-                                                  //       ),
-                                                  //     ],
-                                                  //   ),
-                                                  // ),
-                                                  // SizedBox(height: 60),
-                                                  SizedBox(
-                                                    width: MediaQuery.of(context).size.width * 0.85,
-                                                    child: SfDateRangePicker(
-                                                      view: DateRangePickerView.month,
-                                                      initialSelectedDate: DateTime.now(),
-                                                      minDate: DateTime(2000),
-                                                      maxDate: DateTime(2100),
-
-                                                      selectionMode: DateRangePickerSelectionMode.range,
-                                                      controller: _controller,
-                                                      // onViewChanged: viewChanged,
-                                                      onSelectionChanged: selectionChanged,
-                                                      //onSelectionChanged: _onSelectionChanged,
-
-                                                      // onSelectionChanged:
-                                                      //     (DateRangePickerSelectionChangedArgs args) {
-                                                      //   setState(() {
-                                                      //     if (args.value is PickerDateRange) {
-                                                      //       start = args.value.startDate
-                                                      //           .toString()
-                                                      //           .substring(0, 10);
-                                                      //
-                                                      //       end = args.value.endDate != null
-                                                      //           ? args.value.endDate
-                                                      //           .toString()
-                                                      //           .substring(0, 10)
-                                                      //           : start;
-                                                      //     }
-                                                      //   });
-                                                      // },
-
-                                                      // controller:
-                                                      // _dataPickerController,
-
-                                                    ),
-
-                                                  ),
-                                                  //SizedBox(height: 30),
-
-                                                ],
-                                              ),
-                                          ),
-
-                                          Container(
-                                            padding: EdgeInsets.fromLTRB(
-                                            30,0,30,0 ),
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                TextButton(child:Text("취소", style: buttonLargeStyle().copyWith(color:Color(0XFF9FA5B2)),),onPressed: (){},),
-                                                TextButton(child:Text("확인", style: buttonLargeStyle().copyWith(color:primary[50]),),onPressed: (){},),
-                                                //background: #9FA5B2;
-                                              ],
-                                            ),
-                                          ),
-                                          /*
-                                          Container(
-                                              child: Row(
-                                                children: [
-                                                  SizedBox(width: 208),
-                                                  TextButton(
-                                                      child: Text('취소'),
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          _range1 = '';
-                                                          _range2 = '';
-                                                          _dataPickerController
-                                                              .selectedRanges =
-                                                          null;
-                                                        });
-                                                        //Navigator.pop(context);
-                                                      },
-                                                      style: TextButton.styleFrom(
-                                                          padding:
-                                                          EdgeInsets
-                                                              .zero,
-                                                          minimumSize:
-                                                          Size(50, 30),
-                                                          tapTargetSize:
-                                                          MaterialTapTargetSize
-                                                              .shrinkWrap,
-                                                          alignment: Alignment
-                                                              .centerLeft)),
-                                                  SizedBox(width: 25),
-                                                  TextButton(
-                                                      child: Text('확인'),
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          _selectDateColor =
-                                                          Colors.black!;
-                                                          _selectDateTextColor =
-                                                              Colors.white;
-                                                          _selectDate = _range1
-                                                              .substring(
-                                                              8,
-                                                              10) +
-                                                              '.' +
-                                                              _range1
+                                              /*
+                                              Container(
+                                                  child: Row(
+                                                    children: [
+                                                      SizedBox(width: 208),
+                                                      TextButton(
+                                                          child: Text('취소'),
+                                                          onPressed: () {
+                                                            setState(() {
+                                                              _range1 = '';
+                                                              _range2 = '';
+                                                              _dataPickerController
+                                                                  .selectedRanges =
+                                                              null;
+                                                            });
+                                                            //Navigator.pop(context);
+                                                          },
+                                                          style: TextButton.styleFrom(
+                                                              padding:
+                                                              EdgeInsets
+                                                                  .zero,
+                                                              minimumSize:
+                                                              Size(50, 30),
+                                                              tapTargetSize:
+                                                              MaterialTapTargetSize
+                                                                  .shrinkWrap,
+                                                              alignment: Alignment
+                                                                  .centerLeft)),
+                                                      SizedBox(width: 25),
+                                                      TextButton(
+                                                          child: Text('확인'),
+                                                          onPressed: () {
+                                                            setState(() {
+                                                              _selectDateColor =
+                                                              Colors.black!;
+                                                              _selectDateTextColor =
+                                                                  Colors.white;
+                                                              _selectDate = _range1
                                                                   .substring(
-                                                                  3,
-                                                                  5) +
-                                                              '.' +
-                                                              _range1
-                                                                  .substring(
-                                                                  0, 2);
-                                                          _selectDateSize =
-                                                          80;
-                                                          _selectDateIcon =
-                                                          false;
-                                                        });
-                                                        Navigator.pop(
-                                                            context);
-                                                      },
-                                                      style: TextButton.styleFrom(
-                                                          padding:
-                                                          EdgeInsets
-                                                              .zero,
-                                                          minimumSize:
-                                                          Size(50, 30),
-                                                          tapTargetSize:
-                                                          MaterialTapTargetSize
-                                                              .shrinkWrap,
-                                                          alignment: Alignment
-                                                              .centerLeft))
-                                                ],
-                                              ))
-                                              */
-                                        ]));
+                                                                  8,
+                                                                  10) +
+                                                                  '.' +
+                                                                  _range1
+                                                                      .substring(
+                                                                      3,
+                                                                      5) +
+                                                                  '.' +
+                                                                  _range1
+                                                                      .substring(
+                                                                      0, 2);
+                                                              _selectDateSize =
+                                                              80;
+                                                              _selectDateIcon =
+                                                              false;
+                                                            });
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
+                                                          style: TextButton.styleFrom(
+                                                              padding:
+                                                              EdgeInsets
+                                                                  .zero,
+                                                              minimumSize:
+                                                              Size(50, 30),
+                                                              tapTargetSize:
+                                                              MaterialTapTargetSize
+                                                                  .shrinkWrap,
+                                                              alignment: Alignment
+                                                                  .centerLeft))
+                                                    ],
+                                                  ))
+                                                  */
+                                            ]));
+                                  }
+                                );
 
 
 
@@ -1255,3 +1251,35 @@ class _CreatePprojectState extends State<CreatePproject> {
     return StringResult;
   }
 }
+
+//
+// class Content extends StatefulWidget {
+//   final Widget child;
+//
+//   const Content({
+//     Key? key,
+//     required this.child,
+//   }) : super(key: key);
+//
+//   @override
+//   ContentState createState() => ContentState();
+// }
+//
+// class ContentState extends State<Content> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Card(
+//       elevation: 2,
+//       margin: const EdgeInsets.all(5),
+//       clipBehavior: Clip.antiAliasWithSaveLayer,
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         mainAxisSize: MainAxisSize.min,
+//         children: <Widget>[
+//
+//           Flexible(fit: FlexFit.loose, child: widget.child),
+//         ],
+//       ),
+//     );
+//   }
+// }
