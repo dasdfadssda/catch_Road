@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:catch2_0_1/screen/projectPage/progect_main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart';
 
+import '../../utils/app_colors.dart';
 import '../../utils/app_text_styles.dart';
 
 class CreatePproject extends StatefulWidget {
@@ -37,6 +39,9 @@ class _CreatePprojectState extends State<CreatePproject> {
   String dateTime = "";
   String _selectedObject = "";
   String naming = "";
+
+  String start="";
+  String end ="";
 
   //_quantityController.text=null;
   // String _resultText = '';
@@ -104,6 +109,33 @@ class _CreatePprojectState extends State<CreatePproject> {
         _image = selected_image;
       }
     });
+  }
+
+  List<XFile>? imageFileList = [];
+
+  void selectImages() async {
+    final List<XFile> selectedImages = await _picker.pickMultiImage();
+    if (selectedImages!.isNotEmpty) {
+      imageFileList!.addAll(selectedImages);
+    }
+    setState(() {
+    });
+
+    if (_image != null) {
+      var snapshot = await FirebaseStorage.instance
+          .ref()
+          .child('$dateTime.png')
+          .putFile(_image!); // 파일 업로드
+
+      String url = await snapshot.ref.getDownloadURL();
+      //print(url);
+      image_url = url;
+      await update(url);
+    } else {
+      String url =
+      await FirebaseStorage.instance.ref('default.png').getDownloadURL();
+      await update(url);
+    }
   }
 
   create() async {
@@ -184,10 +216,119 @@ class _CreatePprojectState extends State<CreatePproject> {
 
   int? _result;
 
+
+
+  String _range = '';
+
+  void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
+
+    setState(() {
+      if (args.value is PickerDateRange) {
+        _range = '${DateFormat('dd/MM/yyyy').format(args.value.startDate)} -'
+        // ignore: lines_longer_than_80_chars
+            ' ${DateFormat('dd/MM/yyyy').format(args.value.endDate ?? args.value.startDate)}';
+      } else if (args.value is DateTime) {
+        _selectedDate = args.value.toString();
+      } else if (args.value is List<DateTime>) {
+        _dateCount = args.value.length.toString();
+      } else {
+        _rangeCount = args.value.length.toString();
+      }
+    });
+  }
+
+
+  String _SYearMonth ="";
+  String _SDate="";
+  String _SDay="";
+
+  String _EYearMonth="";
+  String _EDate="";
+  String _EDay="";
+
+
+
   @override
   Widget build(BuildContext context) {
+    String _startDate = '', _endDate = '';
+
+    /*
+    void viewChanged(DateRangePickerViewChangedArgs args) {
+
+      if (args.visibleDateRange is PickerDateRange) {
+        _SYearMonth = DateFormat('yyyy년 MMMM', 'ko')
+            .format(args.visibleDateRange.startDate!)
+            .toString();
+        _SDate =
+            DateFormat('dd', 'ko').format(args.visibleDateRange.startDate!).toString();
+        _SDay = DateFormat('EEEE', 'ko')
+            .format(args.visibleDateRange.startDate!)
+            .toString();
+
+        _EYearMonth = args.visibleDateRange.endDate != null
+            ? DateFormat('yyyy년 MMMM', 'ko').format(args.visibleDateRange.endDate!).toString()
+            : _SYearMonth;
+        _EDate = args.visibleDateRange.endDate != null
+            ? DateFormat('dd', 'ko').format(args.visibleDateRange.endDate!).toString()
+            : _SDate;
+        _EDay = args.visibleDateRange.endDate != null
+            ? DateFormat('EEEE', 'ko').format(args.visibleDateRange.endDate!).toString()
+            : _SDay;
+      }
+
+      // _startDate = DateFormat('dd, MMMM yyyy')
+      //     .format(args.visibleDateRange.startDate!)
+      //     .toString();
+      // _endDate=DateFormat('dd, MMMM yyyy')
+      //     .format(args.visibleDateRange.endDate!)
+      //     .toString();
+      SchedulerBinding.instance!.addPostFrameCallback((duration) {
+        setState(() {});
+      });
+    }
+
+     */
+
+    void selectionChanged(DateRangePickerSelectionChangedArgs args) {
+      SchedulerBinding.instance!.addPostFrameCallback((duration) {
+        setState(() {
+          if (args.value is PickerDateRange) {
+            _SYearMonth = DateFormat('yyyy년 MMMM', 'ko')
+                .format(args.value.startDate)
+                .toString();
+            _SDate =
+                DateFormat('dd', 'ko').format(args.value.startDate).toString();
+            _SDay = DateFormat('EEEE', 'ko')
+                .format(args.value.startDate)
+                .toString();
+
+            _EYearMonth = args.value.endDate != null
+                ? DateFormat('yyyy년 MMMM', 'ko').format(args.value.endDate).toString()
+                : _SYearMonth;
+            _EDate = args.value.endDate != null
+                ? DateFormat('dd', 'ko').format(args.value.endDate).toString()
+                : _SDate;
+            _EDay = args.value.endDate != null
+                ? DateFormat('EEEE', 'ko').format(args.value.endDate).toString()
+                : _SDay;
+          }
+          });
+
+      });
+    }
+
     TextTheme textTheme = Theme.of(context).textTheme;
     final _formKey = GlobalKey<FormState>();
+
+    final DateRangePickerController _controller = DateRangePickerController();
+    String _YearMonth ="";
+    String _Date = "";
+    String _Day = "";
+
+    String _Defaultyearmonth = DateFormat('yyyy년 MMMM','ko').format(DateTime.now()).toString();
+    String _Defaultdate = DateFormat('dd','ko').format(DateTime.now()).toString();
+    String _Defaultday = DateFormat('EEEE','ko').format(DateTime.now()).toString();
+
     // var t1 = int.parse(_quantityController.text);
     // var t2 = int.parse(_unitPriceController.text);
 
@@ -199,6 +340,7 @@ class _CreatePprojectState extends State<CreatePproject> {
     // category: x['category'],
     // participate: x['participate'],
 
+    /*
     void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
       setState(() {
         if (args.value is PickerDateRange) {
@@ -236,6 +378,9 @@ class _CreatePprojectState extends State<CreatePproject> {
         }
       });
     }
+
+     */
+
 
     return Scaffold(
 
@@ -299,7 +444,7 @@ class _CreatePprojectState extends State<CreatePproject> {
       ),
       //),
       body: Padding(
-          padding: EdgeInsets.fromLTRB(19, 10, 19, 0),
+          padding: EdgeInsets.fromLTRB(24, 10, 19, 0),
           child: Form(
             key: _formKey,
             child: Column(
@@ -314,7 +459,7 @@ class _CreatePprojectState extends State<CreatePproject> {
                     hintText: '프로젝트 이름',
                     hintStyle: TextStyle(color: Colors.black.withOpacity(0.2)),
                     border: InputBorder.none,
-                    contentPadding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+                    contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                     fillColor: Color.fromRGBO(255, 255, 255, 255),
                     enabledBorder: UnderlineInputBorder(
                       borderSide:
@@ -334,20 +479,17 @@ class _CreatePprojectState extends State<CreatePproject> {
                 SizedBox(height: 12),
                 Container(
                   height: 1,
-                  width: 340,
+                  width: MediaQuery.of(context).size.width,
                   color: Colors.black.withOpacity(0.05),
                 ),
                 SizedBox(height: 12),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SizedBox(width: 5),
                     Text(
                       '수집 객체',
                       style: textTheme.titleSmall!
                           .copyWith(color: Colors.black.withOpacity(0.5)),
-                    ),
-                    SizedBox(
-                      width: 228,
                     ),
                     IconButton(
                         onPressed: () {
@@ -455,10 +597,13 @@ class _CreatePprojectState extends State<CreatePproject> {
                 SizedBox(height: 12),
                 Container(
                   height: 1,
-                  width: 340,
+                  width: MediaQuery.of(context).size.width,
                   color: Colors.black.withOpacity(0.05),
                 ),
                 SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
                 Row(
                   children: [
                     Container(
@@ -474,7 +619,7 @@ class _CreatePprojectState extends State<CreatePproject> {
                           hintStyle:
                               TextStyle(color: Colors.black.withOpacity(0.2)),
                           border: InputBorder.none,
-                          contentPadding: EdgeInsets.fromLTRB(5, 0, 0, 0),
+                          contentPadding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                           fillColor: Color.fromRGBO(255, 255, 255, 255),
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
@@ -529,7 +674,12 @@ class _CreatePprojectState extends State<CreatePproject> {
                         },
                       ),
                     ),
-                    SizedBox(width: 25),
+
+                    ],
+                ),
+
+                Row(
+                  children: [
                     Container(
                       width: 43,
                       child: TextButton(
@@ -551,7 +701,10 @@ class _CreatePprojectState extends State<CreatePproject> {
                             ),
                           )),
                     ),
-                    SizedBox(width: 10),
+                    ],),
+
+                Row(
+                  children: [
                     Text(
                       '총',
                       style:
@@ -567,27 +720,25 @@ class _CreatePprojectState extends State<CreatePproject> {
                       style:
                           textTheme.titleSmall!.copyWith(color: Colors.black),
                     ),
+                    SizedBox(width: 20),
+                  ],
+                ),
                   ],
                 ),
                 SizedBox(height: 12),
                 Container(
                   height: 1,
-                  width: 340,
+                  width: MediaQuery.of(context).size.width,
                   color: Colors.black.withOpacity(0.05),
                 ),
                 SizedBox(height: 12),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SizedBox(
-                      width: 5,
-                    ),
                     Text(
                       '프로젝트 기간',
                       style: textTheme.titleSmall!
                           .copyWith(color: Colors.black!.withOpacity(0.5)),
-                    ),
-                    SizedBox(
-                      width: 203,
                     ),
                     //수집 기간 선택
                     IconButton(
@@ -595,25 +746,81 @@ class _CreatePprojectState extends State<CreatePproject> {
                           //InkWell(
                           //onTap: (){
                           //if(_selectDateIcon)
-                          showDialog(
+                          showModalBottomSheet(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(30),
+                                  topLeft: Radius.circular(30),
+                                )
+                              ),
+                              isScrollControlled: true,
                               context: context,
                               builder: (BuildContext context) {
-                                return AlertDialog(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(30.0),
-                                            topRight: Radius.circular(30.0))),
-                                    insetPadding: EdgeInsets.only(top: 229),
-                                    content: Container(
-                                        height: 400,
-                                        width: 360,
-                                        child: Column(children: [
+                                return SizedBox(
+                                    height: MediaQuery.of(context).size.height * 0.65,
+                                        child: Column(
+                                            children: [
+                                              Container(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    36,46,36,0 ),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+
+                                                    Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Text("시작", style: titleSmallStyle()),
+                                                        SizedBox(height: 10,),
+                                                        Row(
+                                                          children: [
+                                                            Text(_SDate, style: headlineLargeStyle().copyWith(color: primary[50])),
+                                                            SizedBox(width: 10,),
+                                                            Column(
+                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                              children: [
+                                                                Text(_SYearMonth, style: labelMediumStyle().copyWith(color: primary[50])),
+                                                                Text(_SDay, style: labelMediumStyle().copyWith(color: primary[50])),
+                                                              ],
+                                                            ),
+                                                          ],
+                                                        )
+                                                      ],
+                                                    ),
+
+
+                                                    Padding(
+                                                      padding: const EdgeInsets.fromLTRB(0,0,40,0),
+                                                      child: Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                          Text("종료", style: titleSmallStyle()),
+                                                          SizedBox(height: 10,),
+                                                          Row(
+                                                            children: [
+                                                              Text(_EDate, style: headlineLargeStyle().copyWith(color: primary[50])),
+                                                              SizedBox(width: 10,),
+                                                              Column(
+                                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                                children: [
+                                                                  Text(_EYearMonth, style: labelMediumStyle().copyWith(color: primary[50])),
+                                                                  Text(_EDay, style: labelMediumStyle().copyWith(color: primary[50])),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
                                           Container(
                                               padding: EdgeInsets.fromLTRB(
-                                               20,0,0, 0),
+                                               30,36,30,0 ),
                                               child: Row(
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                    CrossAxisAlignment.center,
                                                 children: [
                                                   // Flexible(
                                                   //   fit: FlexFit.tight,
@@ -694,23 +901,61 @@ class _CreatePprojectState extends State<CreatePproject> {
                                                   // ),
                                                   // SizedBox(height: 60),
                                                   SizedBox(
-                                                    width:300,
-                                                    height: 300,
+                                                    width: MediaQuery.of(context).size.width * 0.85,
                                                     child: SfDateRangePicker(
-                                                      controller:
-                                                      _dataPickerController,
-                                                      onSelectionChanged:
-                                                      _onSelectionChanged,
-                                                      selectionMode:
-                                                      DateRangePickerSelectionMode
-                                                          .range,
+                                                      view: DateRangePickerView.month,
+                                                      initialSelectedDate: DateTime.now(),
+                                                      minDate: DateTime(2000),
+                                                      maxDate: DateTime(2100),
+
+                                                      selectionMode: DateRangePickerSelectionMode.range,
+                                                      controller: _controller,
+                                                      // onViewChanged: viewChanged,
+                                                      onSelectionChanged: selectionChanged,
+                                                      //onSelectionChanged: _onSelectionChanged,
+
+                                                      // onSelectionChanged:
+                                                      //     (DateRangePickerSelectionChangedArgs args) {
+                                                      //   setState(() {
+                                                      //     if (args.value is PickerDateRange) {
+                                                      //       start = args.value.startDate
+                                                      //           .toString()
+                                                      //           .substring(0, 10);
+                                                      //
+                                                      //       end = args.value.endDate != null
+                                                      //           ? args.value.endDate
+                                                      //           .toString()
+                                                      //           .substring(0, 10)
+                                                      //           : start;
+                                                      //     }
+                                                      //   });
+                                                      // },
+
+                                                      // controller:
+                                                      // _dataPickerController,
+
                                                     ),
 
                                                   ),
                                                   //SizedBox(height: 30),
 
                                                 ],
-                                              )),
+                                              ),
+                                          ),
+
+                                          Container(
+                                            padding: EdgeInsets.fromLTRB(
+                                            30,0,30,0 ),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                TextButton(child:Text("취소", style: buttonLargeStyle().copyWith(color:Color(0XFF9FA5B2)),),onPressed: (){},),
+                                                TextButton(child:Text("확인", style: buttonLargeStyle().copyWith(color:primary[50]),),onPressed: (){},),
+                                                //background: #9FA5B2;
+                                              ],
+                                            ),
+                                          ),
+                                          /*
                                           Container(
                                               child: Row(
                                                 children: [
@@ -781,7 +1026,11 @@ class _CreatePprojectState extends State<CreatePproject> {
                                                               .centerLeft))
                                                 ],
                                               ))
-                                        ])));
+                                              */
+                                        ]));
+
+
+
                               });
                           //);
                           // else
@@ -825,35 +1074,82 @@ class _CreatePprojectState extends State<CreatePproject> {
                 SizedBox(height: 12),
                 Container(
                   height: 1,
-                  width: 340,
+                  width: MediaQuery.of(context).size.width,
                   color: Colors.black!.withOpacity(0.05),
                 ),
                 SizedBox(height: 12),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SizedBox(
-                      width: 5,
-                    ),
+                    // SizedBox(
+                    //   width: 5,
+                    // ),
                     Text(
                       '예시 사진 추가',
                       style: textTheme.titleSmall!
                           .copyWith(color: Colors.black!.withOpacity(0.5)),
                     ),
-                    SizedBox(
-                      width: 200,
-                    ),
+                    // SizedBox(
+                    //   width: 200,
+                    // ),
                     IconButton(
                         onPressed: () {
-                          _getImage();
+                          // _getImage();
                           //Get.to(() => Catchbox());
+                          selectImages();
                         },
                         icon: Icon(Icons.keyboard_arrow_right))
                   ],
                 ),
-                SizedBox(height: 12),
+                SizedBox(height: 6),
+                (imageFileList?.isEmpty == true)?
+                SizedBox(height: 0)
+                :SizedBox(
+                  height: 70,
+                  child: Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
+                        child: GridView.builder(
+                            itemCount: imageFileList!.length,
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 4,
+                                mainAxisSpacing: 20,
+                                crossAxisSpacing: 20,
+                            ),
+                            itemBuilder: (BuildContext context, int index) {
+                              return Card(
+                                clipBehavior: Clip.antiAlias,
+                                child: Stack(
+                                  children: [
+                                    Image.file(File(imageFileList![index].path), fit: BoxFit.fill),
+                                    Positioned(
+                                      right: 1,
+                                      top: 1,
+                                      child: InkWell(
+                                        child: Icon(
+                                          Icons.cancel_rounded,
+                                          size: 20,
+                                          color: Colors.grey,
+                                        ),
+                                        onTap: () {
+                                          setState(() {
+                                            imageFileList?.replaceRange(index, index + 1, []);
+                                          });
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }
+                        ),
+                      )
+                  ),
+                ),
+                SizedBox(height: 10),
                 Container(
                   height: 1,
-                  width: 340,
+                  width: MediaQuery.of(context).size.width,
                   color: Colors.black!.withOpacity(0.05),
                 ),
                 SizedBox(height: 5),

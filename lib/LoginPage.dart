@@ -214,7 +214,6 @@ class _LoginPageState extends State<LoginPage> {
 
                         main_colorList=[Color(0xff3A94EE),Color(0xffCFD2D9),Color(0xffCFD2D9),Color(0xffCFD2D9)];
                         selectedIndex0 = 0;
-
                       },
                       child: Text(
                         "로그인",

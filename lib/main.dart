@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'Auth/auth_service.dart';
 import 'firebase_options.dart';
@@ -22,6 +23,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context){
     return MaterialApp(
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate
+        ],
+        supportedLocales: [
+          const Locale('ko'),
+          const Locale('en')
+        ],
+        locale: const Locale('ko'),
         debugShowCheckedModeBanner: false,
         initialRoute: '/',
         routes: {
