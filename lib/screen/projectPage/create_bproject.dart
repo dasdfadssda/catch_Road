@@ -3,6 +3,7 @@ import 'package:camera/camera.dart';
 import 'package:catch2_0_1/screen/projectPage/progect_main.dart';
 import 'package:chips_choice/chips_choice.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,8 +11,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kpostal/kpostal.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart';
+import 'package:file_picker/file_picker.dart';
 
 import '../../utils/app_colors.dart';
 import '../../utils/app_text_styles.dart';
@@ -79,6 +82,7 @@ class _CreateBprojectState extends State<CreateBproject> {
 
   String result = '0';
   String username = '';
+
 
   @override
   void initState() {
@@ -190,6 +194,25 @@ class _CreateBprojectState extends State<CreateBproject> {
     }
   }
 
+  PlatformFile? pickedFile;
+
+  void selectFile() async {
+    final result = await FilePicker.platform.pickFiles();
+    if(result == null) return;
+
+    setState(() {
+      pickedFile = result.files.first;
+    });
+  }
+
+  void uploadFile() async {
+    final path = 'files/${pickedFile!.name}';
+    final file = File(pickedFile!.path!);
+
+    final ref = FirebaseStorage.instance.ref().child(path);
+    ref.putFile(file);
+  }
+
   @override
   void dispose() {
     _titleController.dispose();
@@ -201,7 +224,15 @@ class _CreateBprojectState extends State<CreateBproject> {
 
   int? _result;
 
+  String postCode = '-';
+  String roadAddress = '-';
+  String jibunAddress = '-';
+  String latitude = '-';
+  String longitude = '-';
+  String kakaoLatitude = '-';
+  String kakaoLongitude = '-';
 
+  bool isAddress = false;
 
 
 
@@ -257,7 +288,7 @@ class _CreateBprojectState extends State<CreateBproject> {
 
 
         title: Center(
-          child: Text('개인프로젝트 올리기',style: titleMediumStyle(color: Colors.black),),
+          child: Text('기업 프로젝트 의뢰하기',style: titleMediumStyle(color: Colors.black),),
 
         ),
         leading: TextButton(
@@ -274,6 +305,9 @@ class _CreateBprojectState extends State<CreateBproject> {
                 ),
               )),
           onPressed: () {
+            setState(() {
+              isAddress = false;
+            });
             Navigator.pop(context);
           },
         ),
@@ -420,52 +454,36 @@ class _CreateBprojectState extends State<CreateBproject> {
                         style: textTheme.titleSmall!
                             .copyWith(color: Colors.black.withOpacity(0.5)),
                       ),
-                      IconButton(
-                          onPressed: () {
-                            showModalBottomSheet(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(30),
-                                      topLeft: Radius.circular(30),
-                                    )
+                      (isAddress!=false)?
+                      Text(
+                        '${roadAddress}',
+                        style: textTheme.titleSmall!
+                            .copyWith(color: Colors.black.withOpacity(0.5)),
+                      )
+                      :IconButton(
+                          onPressed: () async {
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => KpostalView(
+                                  useLocalServer: false,
+                                  kakaoKey: '7be3e55f3a9d247057f61554bdbbcebb',
+                                  callback: (Kpostal result) {
+                                    setState(() {
+                                      isAddress = true;
+                                      this.postCode = result.postCode;
+                                      this.roadAddress = result.address;
+                                      this.jibunAddress = result.jibunAddress;
+                                      this.latitude = result.latitude.toString();
+                                      this.longitude = result.longitude.toString();
+                                      this.kakaoLatitude = result.kakaoLatitude.toString();
+                                      this.kakaoLongitude =
+                                          result.kakaoLongitude.toString();
+                                    });
+                                  },
                                 ),
-                                isScrollControlled: true,
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return StatefulBuilder(
-                                      builder: (BuildContext context, StateSetter setState) {
-                                        return SizedBox(
-                                            height: MediaQuery.of(context).size.height * 0.4,
-                                            child: Column(
-                                                children: [
-                                                  Container(
-                                                    padding: EdgeInsets.fromLTRB(
-                                                        16,36,16,0 ),
-                                                    child: Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      mainAxisSize: MainAxisSize.min,
-                                                      children: <Widget>[
-                                                      ],
-                                                    ),
-                                                  ),
-
-                                                  Container(
-                                                    padding: EdgeInsets.fromLTRB(
-                                                        30,0,30,0 ),
-                                                    child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      children: [
-                                                        TextButton(child:Text("취소", style: buttonLargeStyle().copyWith(color:Color(0XFF9FA5B2)),),onPressed: (){},),
-                                                        TextButton(child:Text("확인", style: buttonLargeStyle().copyWith(color:primary[50]),),onPressed: (){},),
-                                                        //background: #9FA5B2;
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ]));
-                                      }
-                                  );
-
-                                });
+                              ),
+                            );
                           },
                           icon: Icon(Icons.keyboard_arrow_right)),
                     ],
@@ -555,51 +573,8 @@ class _CreateBprojectState extends State<CreateBproject> {
                             .copyWith(color: Colors.black.withOpacity(0.5)),
                       ),
                       IconButton(
-                          onPressed: () {
-                            showModalBottomSheet(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(30),
-                                      topLeft: Radius.circular(30),
-                                    )
-                                ),
-                                isScrollControlled: true,
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return StatefulBuilder(
-                                      builder: (BuildContext context, StateSetter setState) {
-                                        return SizedBox(
-                                            height: MediaQuery.of(context).size.height * 0.4,
-                                            child: Column(
-                                                children: [
-                                                  Container(
-                                                    padding: EdgeInsets.fromLTRB(
-                                                        16,36,16,0 ),
-                                                    child: Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      mainAxisSize: MainAxisSize.min,
-                                                      children: <Widget>[
-                                                      ],
-                                                    ),
-                                                  ),
-
-                                                  Container(
-                                                    padding: EdgeInsets.fromLTRB(
-                                                        30,0,30,0 ),
-                                                    child: Row(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                      children: [
-                                                        TextButton(child:Text("취소", style: buttonLargeStyle().copyWith(color:Color(0XFF9FA5B2)),),onPressed: (){},),
-                                                        TextButton(child:Text("확인", style: buttonLargeStyle().copyWith(color:primary[50]),),onPressed: (){},),
-                                                        //background: #9FA5B2;
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ]));
-                                      }
-                                  );
-
-                                });
+                          onPressed: () async {
+                            selectFile();
                           },
                           icon: Icon(Icons.keyboard_arrow_right)),
                     ],
@@ -1382,36 +1357,5 @@ class _CreateBprojectState extends State<CreateBproject> {
     StringResult = _result.toString();
     return StringResult;
   }
-}
 
-//
-// class Content extends StatefulWidget {
-//   final Widget child;
-//
-//   const Content({
-//     Key? key,
-//     required this.child,
-//   }) : super(key: key);
-//
-//   @override
-//   ContentState createState() => ContentState();
-// }
-//
-// class ContentState extends State<Content> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Card(
-//       elevation: 2,
-//       margin: const EdgeInsets.all(5),
-//       clipBehavior: Clip.antiAliasWithSaveLayer,
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         mainAxisSize: MainAxisSize.min,
-//         children: <Widget>[
-//
-//           Flexible(fit: FlexFit.loose, child: widget.child),
-//         ],
-//       ),
-//     );
-//   }
-// }
+}

@@ -424,7 +424,7 @@ class _CreatePprojectState extends State<CreatePproject> {
 
 
         title: Center(
-          child: Text('개인프로젝트 올리기',style: titleMediumStyle(color: Colors.black),),
+          child: Text('개인 프로젝트 올리기',style: titleMediumStyle(color: Colors.black),),
 
         ),
         leading: TextButton(
@@ -453,17 +453,20 @@ class _CreatePprojectState extends State<CreatePproject> {
           Padding(
             padding: EdgeInsets.only(right: 5),
             child: TextButton(
+              //icon: new Icon(Icons.accessibility),
               child: Text(
-                '올리기',
-                style: textTheme.titleMedium!.copyWith(
-                  color: Colors.black,
-                ),
+                '업로드',
+                style: titleSmallStyle(color: Colors.blue),
               ),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   print("upload ok");
-                  // Get.to(() => todaycatch());
-                  //Get.to(() => account());
+
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) =>projectPage(),
+                      ));
                   Image_upload().then(create());
                 }
               },
