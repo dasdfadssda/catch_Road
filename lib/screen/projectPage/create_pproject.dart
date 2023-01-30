@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:catch2_0_1/screen/projectPage/progect_main.dart';
@@ -32,7 +33,7 @@ class _CreatePprojectState extends State<CreatePproject> {
   int tag = 3;
 
   // multiple choice value
-  List<String> tags = ['Education'];
+  List<String> tags = [''];
 
   // list of string options
   List<String> options = [
@@ -189,14 +190,17 @@ class _CreatePprojectState extends State<CreatePproject> {
         //"unitPrice": _unitPriceController.text,
         "content": _contextController.text,
         "cash": int.parse(result),
-        "category": _objects,
+        // "category": _objects,
+        // "category": options,
+        "category": tags,
         "final_day": 100,
         "id": 'userid',//user!.uid,
         "participate": 0,
         "percentage": 0,
         "creation_time": dateTime,
         "place": "포항시 북구 흥해읍",
-        "url": image_url,
+        //"url": image_url,
+        "url": imageFileList,
         "user": 'eunjin',//username,
         // "userprofile": user!.photoURL,
       });
@@ -276,49 +280,28 @@ class _CreatePprojectState extends State<CreatePproject> {
   String _EDate="";
   String _EDay="";
 
+/*
+  Widget _buildChip(String label) {
+    return Chip(
+      labelPadding: EdgeInsets.all(2.0),
+      label: Text(
+        label,
+        style: TextStyle(
+          color: Colors.white,
+        ),
+      ),
+      backgroundColor: const Color(0xFF3A94EE),
+      deleteIcon: Icon(Icons.close, color: Colors.white,),
+      onDeleted: (){},
+      padding: EdgeInsets.all(8.0),
+    );
+  }
+  */
+
 
 
   @override
   Widget build(BuildContext context) {
-    String _startDate = '', _endDate = '';
-
-    /*
-    void viewChanged(DateRangePickerViewChangedArgs args) {
-
-      if (args.visibleDateRange is PickerDateRange) {
-        _SYearMonth = DateFormat('yyyy년 MMMM', 'ko')
-            .format(args.visibleDateRange.startDate!)
-            .toString();
-        _SDate =
-            DateFormat('dd', 'ko').format(args.visibleDateRange.startDate!).toString();
-        _SDay = DateFormat('EEEE', 'ko')
-            .format(args.visibleDateRange.startDate!)
-            .toString();
-
-        _EYearMonth = args.visibleDateRange.endDate != null
-            ? DateFormat('yyyy년 MMMM', 'ko').format(args.visibleDateRange.endDate!).toString()
-            : _SYearMonth;
-        _EDate = args.visibleDateRange.endDate != null
-            ? DateFormat('dd', 'ko').format(args.visibleDateRange.endDate!).toString()
-            : _SDate;
-        _EDay = args.visibleDateRange.endDate != null
-            ? DateFormat('EEEE', 'ko').format(args.visibleDateRange.endDate!).toString()
-            : _SDay;
-      }
-
-      // _startDate = DateFormat('dd, MMMM yyyy')
-      //     .format(args.visibleDateRange.startDate!)
-      //     .toString();
-      // _endDate=DateFormat('dd, MMMM yyyy')
-      //     .format(args.visibleDateRange.endDate!)
-      //     .toString();
-      SchedulerBinding.instance!.addPostFrameCallback((duration) {
-        setState(() {});
-      });
-    }
-
-     */
-
     void selectionChanged(DateRangePickerSelectionChangedArgs args) {
       SchedulerBinding.instance!.addPostFrameCallback((duration) {
         setState(() {
@@ -351,65 +334,7 @@ class _CreatePprojectState extends State<CreatePproject> {
     final _formKey = GlobalKey<FormState>();
 
     final DateRangePickerController _controller = DateRangePickerController();
-    String _YearMonth ="";
-    String _Date = "";
-    String _Day = "";
 
-    String _Defaultyearmonth = DateFormat('yyyy년 MMMM','ko').format(DateTime.now()).toString();
-    String _Defaultdate = DateFormat('dd','ko').format(DateTime.now()).toString();
-    String _Defaultday = DateFormat('EEEE','ko').format(DateTime.now()).toString();
-
-    // var t1 = int.parse(_quantityController.text);
-    // var t2 = int.parse(_unitPriceController.text);
-
-    // ID: x['user'],
-    // title: x['title'],
-    // cash: x['cash'].toString(),
-    // percent: x['percentage'].toString(),
-    // daysdue: x['final_day'].toString(),
-    // category: x['category'],
-    // participate: x['participate'],
-
-    /*
-    void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
-      setState(() {
-        if (args.value is PickerDateRange) {
-          //List<int> days = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-          //_range1 = '${DateFormat('dd/MM/yyyy').format(args.value.Date)}';
-          //_range2 = '${DateFormat('dd/MM/yyyy').format(args.value.endDate ?? args.value.startDate)}';
-          // I tried to use whereIn(), but only 10 elements are available.
-          // for(int i = int.parse(_range1.substring(3,5)); i<= int.parse(_range2.substring(3,5)); i++){
-          //   if(i == int.parse(_range1.substring(3,5)))
-          //     for(int j = int.parse(_range1.substring(0,2)); j < days[i]; j++){
-          //       String temp = (j.toString()) + (i.toString()) + _range1.substring(5,8);
-          //       num_list.add(temp);
-          //     }
-          //   if(i == _range2.substring(3,5))
-          //     for(int j = 1; j <= int.parse(_range2.substring(0,2)); j++){
-          //       String temp = j.toString() + i.toString() + _range1.substring(5,8);
-          //       num_list.add(temp);
-          //     }
-          //   else
-          //     for(int j = 1; j <= days[i]; j++){
-          //       String temp = j.toString() + i.toString() + _range1.substring(4,8);
-          //       num_list.add(temp);
-          //     }
-          //   print(i);
-          // }
-          //print(num_list);
-          //print(args.value.startDate - args.value.endDate);
-        } else if (args.value is DateTime) {
-          _selectedDate = args.value.toString();
-          _range1 = '${DateFormat('dd/MM/yyyy').format(args.value)}';
-        } else if (args.value is List<DateTime>) {
-          _dateCount = args.value.length.toString();
-        } else {
-          _rangeCount = args.value.length.toString();
-        }
-      });
-    }
-
-     */
 
 
     return Scaffold(
@@ -485,6 +410,7 @@ class _CreatePprojectState extends State<CreatePproject> {
                 SizedBox(height: 12),
                 TextFormField(
                   controller: _titleController,
+
                   autocorrect: true,
                   style: textTheme.labelLarge!,
                   decoration: InputDecoration(
@@ -524,6 +450,29 @@ class _CreatePprojectState extends State<CreatePproject> {
                       style: textTheme.titleSmall!
                           .copyWith(color: Colors.black.withOpacity(0.5)),
                     ),
+
+/*
+                    Row(
+                      children: [
+                        for(int i=0;i<size(options))
+                    Chip(
+                    labelPadding: EdgeInsets.all(2.0),
+                      label: Text(
+                        'label',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      backgroundColor: const Color(0xFF3A94EE),
+                      deleteIcon: Icon(Icons.close, color: Colors.white,),
+                      onDeleted: (){},
+                      padding: EdgeInsets.all(8.0),
+                    ),
+
+                        SizedBox(width: 3,),
+                      ],
+                    ),
+*/
                     IconButton(
                         onPressed: () {
                           showModalBottomSheet(
@@ -575,8 +524,13 @@ class _CreatePprojectState extends State<CreatePproject> {
                                                 child: Row(
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [
-                                                    TextButton(child:Text("취소", style: buttonLargeStyle().copyWith(color:Color(0XFF9FA5B2)),),onPressed: (){},),
-                                                    TextButton(child:Text("확인", style: buttonLargeStyle().copyWith(color:primary[50]),),onPressed: (){},),
+                                                    TextButton(child:Text("취소", style: buttonLargeStyle().copyWith(color:Color(0XFF9FA5B2)),),
+                                                      onPressed: (){
+                                                       // options = [''];
+                                                      Navigator.pop(context);
+                                                      },),
+                                                    TextButton(child:Text("확인", style: buttonLargeStyle().copyWith(color:primary[50]),),
+                                                      onPressed: (){Navigator.pop(context);},),
                                                     //background: #9FA5B2;
                                                   ],
                                                 ),
@@ -946,8 +900,10 @@ class _CreatePprojectState extends State<CreatePproject> {
                                                 child: Row(
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [
-                                                    TextButton(child:Text("취소", style: buttonLargeStyle().copyWith(color:Color(0XFF9FA5B2)),),onPressed: (){},),
-                                                    TextButton(child:Text("확인", style: buttonLargeStyle().copyWith(color:primary[50]),),onPressed: (){},),
+                                                    TextButton(child:Text("취소", style: buttonLargeStyle().copyWith(color:Color(0XFF9FA5B2)),),
+                                                      onPressed: (){Navigator.pop(context);},),
+                                                    TextButton(child:Text("확인", style: buttonLargeStyle().copyWith(color:primary[50]),),
+                                                      onPressed: (){Navigator.pop(context);},),
                                                     //background: #9FA5B2;
                                                   ],
                                                 ),
@@ -1153,6 +1109,7 @@ class _CreatePprojectState extends State<CreatePproject> {
                 ),
                 SizedBox(height: 5),
                 TextFormField(
+                  autofocus: true,
                   controller: _contextController,
                   autocorrect: true,
                   style: textTheme.labelLarge!,
