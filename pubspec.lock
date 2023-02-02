@@ -15,6 +15,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.2+1"
+  animated_checkmark:
+    dependency: transitive
+    description:
+      name: animated_checkmark
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   archive:
     dependency: transitive
     description:
@@ -92,6 +99,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  chips_choice:
+    dependency: "direct main"
+    description:
+      name: chips_choice
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.0"
   cli_util:
     dependency: transitive
     description:
@@ -210,7 +224,7 @@ packages:
       name: firebase_auth
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.2.4"
+    version: "4.2.5"
   firebase_auth_platform_interface:
     dependency: transitive
     description:
@@ -267,6 +281,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.3.19"
+  flexi_chip:
+    dependency: transitive
+    description:
+      name: flexi_chip
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.8"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -534,6 +555,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.7.0"
+  kopo:
+    dependency: "direct main"
+    description:
+      name: kopo
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.3"
   kpostal:
     dependency: "direct main"
     description:
@@ -798,6 +826,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
+  webview_flutter:
+    dependency: transitive
+    description:
+      name: webview_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.7"
+  widget_event:
+    dependency: transitive
+    description:
+      name: widget_event
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.5"
   win32:
     dependency: transitive
     description:

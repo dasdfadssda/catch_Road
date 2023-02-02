@@ -132,6 +132,17 @@ TextStyle labelMediumStyle({Color? color}) {
     color: color
     );
 }
+TextStyle labelMediumStyle2({Color? color}) {
+  return TextStyle(
+      fontFamily: 'NotoSansKR',
+      fontWeight: FontWeight.w600,
+      fontSize: 12,
+      height: 14 / 12,
+      letterSpacing: 0,
+      color: color
+  );
+}
+
 
 TextStyle labelSmallStyle({Color? color}) {
   return TextStyle(
@@ -180,3 +191,13 @@ TextStyle bodySmallStyle({Color? color}) {
 
 
 
+TextStyle buttonLargeStyle({Color? color}) {
+  return TextStyle(
+      fontFamily: 'NotoSansKR',
+      fontWeight: FontWeight.w400,
+      fontSize: 16,
+      height: 22 / 16,
+      letterSpacing: 0,
+      color: color
+  );
+}

@@ -1,6 +1,7 @@
+import 'package:catch2_0_1/screen/mainHome.dart';
 import 'package:flutter/material.dart';
 
-import '../../Auth/auth_service.dart';
+
 import '../../utils/app_text_styles.dart';
 import 'MyCash.dart';
 import 'MyPage.dart';
@@ -58,7 +59,7 @@ class _makeAccountState extends State<makeAccount> {
               height: 6,
             ),
             _formBankNum(),
-            _textfieldLabel('수취인명'),
+            _textfieldLabel('예금주명'),
             SizedBox(
               height: 6,
             ),
@@ -82,7 +83,7 @@ class _makeAccountState extends State<makeAccount> {
                       _bankName = Bankcontroller.text;
                       _bankNum = BankNumcontroller.text;
                       _nameForBank = BankNumcontroller.text;
-                      UpdateUserBankFunction();
+                      //UpdateUserBankFunction();
                       //     }
                       //   }
                       // }
@@ -132,8 +133,10 @@ class _makeAccountState extends State<makeAccount> {
                                                 MaterialPageRoute(
                                                   builder:
                                                       (BuildContext context) =>
-                                                          MYPage(),
+                                                          MainHomePage(),
                                                 ));
+                                            // Navigator.pop(context);
+                                            // Navigator.pop(context);
                                             Bankcontroller.clear();
                                             BankNumcontroller.clear();
                                             BankNamecontroller.clear();
@@ -333,7 +336,7 @@ class _makeAccountState extends State<makeAccount> {
         key: _formBankNamehKeyk,
         validator: (val) {
           if (val?.length == 0) {
-            return '수취인명은 필수사항입니다.';
+            return '예금주명은 필수사항입니다.';
           }
           return null;
         },
@@ -371,7 +374,7 @@ class _makeAccountState extends State<makeAccount> {
             ),
             filled: true,
             fillColor: Colors.white),
-        keyboardType: TextInputType.number,
+        keyboardType: TextInputType.text,
       ),
     );
   }

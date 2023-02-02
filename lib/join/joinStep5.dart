@@ -112,7 +112,8 @@ class _joinStep5State extends State<joinStep5> {
 
   Widget _formPhone() {
     return Form(
-      child: TextField(
+      child: TextFormField(
+        keyboardType: TextInputType.phone,
         controller: PhoneNumcontroller,
         style: TextStyle(fontSize: 13),
         decoration: InputDecoration(

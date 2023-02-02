@@ -75,6 +75,30 @@ class _Catchbox2State extends State<Catchbox2> {
         preferredSize: Size.fromHeight(size.height*0.085),
         child: AppBar(
             centerTitle: true,
+            // leading: TextButton(
+            //     onPressed: () {
+            //
+            //       Navigator.pop(context);
+            //     },
+            //     child: Text(
+            //       "취소",//pressed ? "취소" : "선택",
+            //       style: TextStyle(fontSize: 12, color: Colors.grey),
+            //     )
+            //   // Container(
+            //   //   child: Center(
+            //   //       child: Text(
+            //   //         pressed ? "취소" : "선택",
+            //   //         style: TextStyle(fontSize: 12, color: Colors.white),
+            //   //       )),
+            //   //   width: 60,
+            //   //   height: 30,
+            //   //   decoration: BoxDecoration(
+            //   //       color: Color.fromRGBO(58, 148, 238, 1),
+            //   //       borderRadius: BorderRadius.circular(100.0)),
+            //   //   //padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+            //   //   //  child: Center(child: Text(_selectCheck, style: TextStyle(color: _selectCheckTextColor))),
+            //   // ),
+            // ),
             // actions: [
             //   IconButton(
             //     onPressed: () {
@@ -91,12 +115,195 @@ class _Catchbox2State extends State<Catchbox2> {
             automaticallyImplyLeading: false,
             backgroundColor: Colors.white,
             elevation: 0.3,
-            title: Center(
-              child: Text(
-                '캐치박스',
-                style: titleMediumStyle(color: Colors.black),
-              ),
-            )),
+            title: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.zero,
+                      width: (size.width-35)/3,
+                      child:Align(
+                        alignment: Alignment.centerLeft,
+                        child: TextButton(
+                            onPressed: () {
+                              check_num=0;
+                              Navigator.pop(context);
+                              // setState(() {
+                              //   if (_selectCheckIcon) {
+                              //     pressed = true;
+                              //     _selectCheck = '취소';
+                              //     _selectCheckColor = Colors.blue; // primary[40]!;
+                              //     _selectCheckTextColor = Color(0XFFF3F4F5);
+                              //     // _selectPlaceTextColor = Colors.red;
+                              //     _selectCheckIcon = false;
+                              //   } else {
+                              //     pressed = false;
+                              //     _selectCheckColor = Color(0XFFF3F4F5);
+                              //     _selectCheck = '선택';
+                              //     _selectCheckTextColor = Color(0xFF9FA5B2);
+                              //     _selectCheckIcon = true;
+                              //     check_num=0;
+                              //     _checks.fillRange(0, _checks.length-1,false);
+                              //     print(_checks.length);
+                              //     _checks_url.fillRange(0, _checks_url.length-1,'');
+                              //   }
+                              // });
+                            },
+                            child: Text(
+                              "취소",//pressed ? "취소" : "선택",
+                              style: SubTitleStyle(color: Colors.grey),
+                            )
+                        ),
+                      ),
+                    ),
+                    Container(
+                        width: (size.width-35)/3,
+                        child:Center(
+                          child: Text(
+                            '캐치박스',
+                            style: titleMediumStyle(color: Colors.black),
+                          ),
+                        )
+                    ),
+                    Container(
+                      margin: EdgeInsets.zero,
+                      width: (size.width-35)/3,
+                      // child:Align(
+                      //   alignment: Alignment.centerRight,
+                      //   child: TextButton(//pressed==true?
+                      //     onPressed: () async {
+                      //
+                      //       var urllist=query2['url'];
+                      //
+                      //
+                      //
+                      //       for(int i = 0; i < 1000; i++){
+                      //         if(_checks[i]){
+                      //           urllist.add(_checks_url[i]);}
+                      //       }
+                      //       print(urllist);
+                      //
+                      //       await FirebaseFirestore.instance
+                      //           .collection('project')
+                      //           .doc(query2['id'])
+                      //           .update({
+                      //         'participate':1,
+                      //         'url':urllist
+                      //       });
+                      //
+                      //
+                      //
+                      //       showModalBottomSheet<void>(
+                      //         enableDrag: true,
+                      //         isScrollControlled: true,
+                      //         shape: RoundedRectangleBorder(
+                      //             borderRadius: BorderRadius.only(
+                      //                 topLeft: Radius.circular(30.0),
+                      //                 topRight: Radius.circular(30.0))),
+                      //         context: context,
+                      //         builder: (BuildContext context) {
+                      //           return StatefulBuilder(
+                      //               builder: (BuildContext context, StateSetter setState) {
+                      //                 return Container(
+                      //                   height: size.height * 0.5,
+                      //                   padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                      //                   child: Column(
+                      //                     children: [
+                      //                       SizedBox(
+                      //                         height: size.height * 0.06,
+                      //                       ),
+                      //
+                      //                       SizedBox(
+                      //                           height:150,
+                      //                           child: Image.asset('assets/checkToFinish.gif')),
+                      //                       SizedBox(
+                      //                         height: size.height * 0.0475,
+                      //                       ),
+                      //                       Text('사진이 업로드 되었습니다. '),
+                      //
+                      //                       SizedBox(height: size.height * 0.025),
+                      //
+                      //                       SizedBox(
+                      //                         height: 20,
+                      //                       ),
+                      //                       ElevatedButton(
+                      //                           style:ButtonStyle(
+                      //                             fixedSize:
+                      //                             MaterialStateProperty.all(Size(307, 50)),
+                      //                             backgroundColor: MaterialStateProperty.all(
+                      //                               Color(0xff3A94EE),
+                      //                               //_onTap3? primary[40] : onSecondaryColor,
+                      //                             ),
+                      //                             shape: MaterialStateProperty.all<
+                      //                                 RoundedRectangleBorder>(
+                      //                                 RoundedRectangleBorder(
+                      //                                   borderRadius: BorderRadius.circular(30.0),
+                      //                                 )),
+                      //                           ),
+                      //
+                      //                           child: Text('확인',
+                      //                               style: titleMediumStyle(
+                      //                                   color: Color(0xffFAFBFB))),
+                      //                           onPressed: () {
+                      //
+                      //                             check_num=0;
+                      //                             print("here");
+                      //                             print(_checks_url);
+                      //
+                      //                             Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      //                               return MainHomePage();
+                      //                             }));
+                      //
+                      //
+                      //                             // Navigator.pop(context);
+                      //                             // Navigator.pop(context);
+                      //                             // Navigator.pop(context);
+                      //                             //
+                      //                           }
+                      //
+                      //                       )
+                      //                     ],
+                      //                   ),
+                      //                 );
+                      //               });
+                      //         },
+                      //       );
+                      //       // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      //       //   return uploadCheck();
+                      //       // }));
+                      //
+                      //       // await Future.delayed(Duration(seconds: 3));
+                      //       //
+                      //       // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      //       //   return MainHomePage();
+                      //       // }));
+                      //
+                      //     },
+                      //     child: Text('업로드', style: TextStyle(color: Colors.blue)),
+                      //   ),
+                      // ),
+
+                    ),
+
+
+
+
+
+
+
+
+
+                  ],
+
+                ),
+
+              ],
+            ),
+        ),
       ),
       body: Container(
 
@@ -110,7 +317,7 @@ class _Catchbox2State extends State<Catchbox2> {
                   child: StreamBuilder<QuerySnapshot>(
                       stream: FirebaseFirestore.instance
                           .collection('category')
-                          .doc('1234@handong.ac.kr')
+                          .doc('${FirebaseAuth.instance.currentUser!.email!}')
                           .collection('category')
                           .orderBy('order', descending: false)
                           .snapshots(),
@@ -135,13 +342,13 @@ class _Catchbox2State extends State<Catchbox2> {
 
                                           FirebaseFirestore.instance
                                               .collection('category')
-                                              .doc('1234@handong.ac.kr')
+                                              .doc('${FirebaseAuth.instance.currentUser!.email!}')
                                               .collection(x['category']).get().then((value) async {
                                                 len=value.size;
                                                 print('len $len');
                                                 await FirebaseFirestore.instance
                                                     .collection("category")
-                                                    .doc("1234@handong.ac.kr")//FirebaseAuth.instance.currentUser!.email
+                                                    .doc("${FirebaseAuth.instance.currentUser!.email!}")//FirebaseAuth.instance.currentUser!.email
                                                     .collection('category')
                                                     .doc(x['category'])
                                                     .update({

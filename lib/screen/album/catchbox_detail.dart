@@ -77,7 +77,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
     if (_selectPlace != '장소') {
       return FirebaseFirestore.instance
           .collection('category')
-          .doc('1234@handong.ac.kr')
+          .doc('${FirebaseAuth.instance.currentUser!.email!}')
           .collection(query['category'])
       // .doc('place')
       // .collection('place_url')
@@ -87,7 +87,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
     if (_range1 != '') {
       return FirebaseFirestore.instance
           .collection('category')
-          .doc('1234@handong.ac.kr')
+          .doc('${FirebaseAuth.instance.currentUser!.email!}')
           .collection(query['category'])
           .where('time', whereIn: num_list)
           .snapshots();
@@ -95,7 +95,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
 
     return FirebaseFirestore.instance
         .collection('category')
-        .doc('1234@handong.ac.kr')
+        .doc("${FirebaseAuth.instance.currentUser!.email!}")
         .collection(query['category'])
         .snapshots();
   }
@@ -228,40 +228,71 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
-              height: 30,
+              height: size.width*0.02,
             ),
             Row(
               children: [
-                Expanded(
-                  child: Container(
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            query['category'],
-                            style: titleMediumStyle(color: Colors.black),
-                          ),
-                        ]
+                Container(
+                  margin: EdgeInsets.zero,
+                  width: (size.width-35)/3,
+                  child:Align(
+                    alignment: Alignment.centerLeft,
+                    child: TextButton(
+                        onPressed: () {
+                          check_num=0;
+                          Navigator.pop(context);
+                          // setState(() {
+                          //   if (_selectCheckIcon) {
+                          //     pressed = true;
+                          //     _selectCheck = '취소';
+                          //     _selectCheckColor = Colors.blue; // primary[40]!;
+                          //     _selectCheckTextColor = Color(0XFFF3F4F5);
+                          //     // _selectPlaceTextColor = Colors.red;
+                          //     _selectCheckIcon = false;
+                          //   } else {
+                          //     pressed = false;
+                          //     _selectCheckColor = Color(0XFFF3F4F5);
+                          //     _selectCheck = '선택';
+                          //     _selectCheckTextColor = Color(0xFF9FA5B2);
+                          //     _selectCheckIcon = true;
+                          //     check_num=0;
+                          //     _checks.fillRange(0, _checks.length-1,false);
+                          //     print(_checks.length);
+                          //     _checks_url.fillRange(0, _checks_url.length-1,'');
+                          //   }
+                          // });
+                        },
+                        child: Text(
+                          "취소",//pressed ? "취소" : "선택",
+                          style: SubTitleStyle(color: Colors.grey),
+                        )
+                      // Container(
+                      //   child: Center(
+                      //       child: Text(
+                      //         pressed ? "취소" : "선택",
+                      //         style: TextStyle(fontSize: 12, color: Colors.white),
+                      //       )),
+                      //   width: 60,
+                      //   height: 30,
+                      //   decoration: BoxDecoration(
+                      //       color: Color.fromRGBO(58, 148, 238, 1),
+                      //       borderRadius: BorderRadius.circular(100.0)),
+                      //   //padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                      //   //  child: Center(child: Text(_selectCheck, style: TextStyle(color: _selectCheckTextColor))),
+                      // ),
                     ),
                   ),
                 ),
+                Container(
+                    width: (size.width-35)/3,
+                    child:Center(
+                      child: Text(
+                        query['category'],
+                        style: titleMediumStyle(color: Colors.black),
+                      ),
+                    )
+                ),
 
-                // Container(
-                //   width: (size.width - 35) / 3,
-                //   child: Align(
-                //     alignment: Alignment.centerRight,
-                //     child: TextButton(
-                //       onPressed: () async {
-                //         // await Future.delayed(Duration(seconds: 3));
-                //         //
-                //         // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                //         //   return MainHomePage();
-                //         // }));
-                //       },
-                //       child: Text('업로드', style: TextStyle(color: Colors.white)),
-                //     ),
-                //   ),
-                // ),
               ],
             ),
             SizedBox(height: 15),
@@ -804,7 +835,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                               check_num=0;
                                               for(int i = 0; i< 1000; i++){
                                                 if(_checks_docs[i] != ''){
-                                                  FirebaseFirestore.instance.collection('category').doc('1234@handong.ac.kr').collection(query['category']).doc(_checks_docs[i]).delete();
+                                                  FirebaseFirestore.instance.collection('category').doc("1234@handong.ac.kr").collection(query['category']).doc(_checks_docs[i]).delete();
                                                 }
                                               }
                                               setState(() {
@@ -1068,6 +1099,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                               Align(
                                                 alignment: Alignment.bottomRight,
                                                 child: Checkbox(
+                                                  fillColor: MaterialStateColor.resolveWith((states) => Colors.blue.withOpacity(0.8)),
                                                   value: _checks[index],
                                                   onChanged: (newValue) {
                                                     setState(() {
@@ -1084,8 +1116,12 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                                   shape: RoundedRectangleBorder(
                                                       borderRadius:
                                                       BorderRadius.circular(10)),
-                                                  checkColor: Colors.white,
-                                                  activeColor: Color(0XFF007AFF),
+                                                      checkColor: Colors.white,
+
+
+
+                                                  //   activeColor:Colors.blueAccent,
+                                                
                                                 ),
                                               ),
                                           ],
