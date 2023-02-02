@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:typed_data';
@@ -163,10 +164,34 @@ class _CameraViewerState extends State<CameraViewer> {
       final uploadTask = await storage.ref('/traffic-Image/$ob/$ob${DateTime.now()}.png').putData(Uint8List.fromList(png));//
       final url = await uploadTask.ref.getDownloadURL();
 
+
       try {
+
+        // await FirebaseFirestore.instance
+        //     .collection("category")
+        //     .doc("testmail2")//FirebaseAuth.instance.currentUser!.email
+        //     .collection("category").doc(ob)
+        //     .set({
+        //   "category": ob,
+        //   "new":url,
+        //   "num":1,
+        //   "order":1,
+        // });
         await FirebaseFirestore.instance
             .collection("category")
-            .doc("1234@handong.ac.kr")//FirebaseAuth.instance.currentUser!.email
+            .doc("${FirebaseAuth.instance.currentUser!.email!}")//FirebaseAuth.instance.currentUser!.email
+            .collection("category").doc('all')
+            .set({
+          "category": 'all',
+          "new":url,
+          "num":1,
+          "order":1,
+        });
+
+
+        await FirebaseFirestore.instance
+            .collection("category")
+            .doc("${FirebaseAuth.instance.currentUser!.email!}")//FirebaseAuth.instance.currentUser!.email
             .collection("category")
             .doc(ob).set({
           "category":ob,
@@ -177,22 +202,23 @@ class _CameraViewerState extends State<CameraViewer> {
 
         await FirebaseFirestore.instance
             .collection("category")
-            .doc("1234@handong.ac.kr")//FirebaseAuth.instance.currentUser!.email
+            .doc("${FirebaseAuth.instance.currentUser!.email!}")//FirebaseAuth.instance.currentUser!.email
             .collection(ob)
             .add({
           "url": url,
           "time":DateFormat('dd/MM/yyyy').format(DateTime.now()),
-          "location":"흥해읍"//first.thoroughfare,
+          "location":'흥해읍'//first.thoroughfare,
           //위치추가
         });
+
         await FirebaseFirestore.instance
             .collection("category")
-            .doc("1234@handong.ac.kr")//FirebaseAuth.instance.currentUser!.email
+            .doc("${FirebaseAuth.instance.currentUser!.email!}")//FirebaseAuth.instance.currentUser!.email
             .collection("all")
             .add({
           "url": url,
           "time":DateFormat('dd/MM/yyyy').format(DateTime.now()),
-          "location":"흥해읍"//first.thoroughfare,
+          "location":'흥해읍'////first.thoroughfare,
           //위치추가
         });
 

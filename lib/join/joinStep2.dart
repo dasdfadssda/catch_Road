@@ -17,9 +17,10 @@ class joinStep2 extends StatefulWidget {
 }
 
 bool isObscure = false;
-    final passwordcontroller = TextEditingController();
+
     final _formKey = GlobalKey<FormState>();
 class _joinStep2State extends State<joinStep2> {
+  final passwordcontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
 
@@ -30,6 +31,7 @@ class _joinStep2State extends State<joinStep2> {
         leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
+              passwordcontroller.clear();
             },
             icon: Icon(
               Icons.arrow_back_ios_new,

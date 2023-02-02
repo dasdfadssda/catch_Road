@@ -1,5 +1,5 @@
 import 'package:animated_button_bar/animated_button_bar.dart';
-import 'package:catch2_0_1/Auth/auth_service.dart';
+
 import 'package:catch2_0_1/screen/mainHome.dart';
 import 'package:catch2_0_1/utils/app_text_styles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,6 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'AddPAge.dart';
+
+String _docid = '';
+List _comment = [];
+
+class docID extends ChangeNotifier {
+  String docid = _docid;
+  List comment = _comment;
+  notifyListeners();
+}
 
 class HomePage extends StatefulWidget {
   @override
@@ -100,7 +109,9 @@ class _HomePageState extends State<HomePage> {
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () async {
-                      print('**');
+                      print("clicked");
+                      _comment = snapshot.data!.docs[index]['_comment'];
+                      _docid = snapshot.data!.docs[index]['id'];
                       Navigator.pushNamed(context, '/detail', arguments: index);
                       print(index);
                     },
@@ -547,7 +558,7 @@ class _HomePageState extends State<HomePage> {
                   imageList[0].toString(),
                   fit: BoxFit.fill,
                   height: 160,
-                  width: 145,
+                  width: 161,
                 )),
             SizedBox(width: 10),
             ClipRRect(

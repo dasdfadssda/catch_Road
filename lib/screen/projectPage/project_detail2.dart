@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:catch2_0_1/screen/projectPage/progect_main.dart';
 import 'package:catch2_0_1/utils/app_text_styles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:extended_image/extended_image.dart';
@@ -26,6 +27,7 @@ class todaycatchdetail3 extends StatefulWidget {
 
 class _todaycatchdetail3State extends State<todaycatchdetail3> {
   final QueryDocumentSnapshot query;
+
   _todaycatchdetail3State({required this.query});
 
   @override
@@ -58,44 +60,61 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
             children: [
               Row(
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('D-${query['final_day'].toString()}', style: labelLargeStyle(color:Color(0xff9FA5B2))),
-                    ],
-                  ),
-                  Expanded(
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                        IconButton(
-                          icon: Icon(Icons.more_vert),
-                          onPressed: () {
-                            _showActionSheet(context);
-                            FirebaseFirestore.instance
-                                .collection('project')
-                                .doc(query['id'])
-                                .update({'participate': 0});
-
-                            // Navigator.push(context,
-                            //     MaterialPageRoute(builder: (context) {
-                            //   return MainHomePage();
-                            // }));
-                          },
-                        )
-                      ]))
+                  Text(
+                      ddaycalc(query['final_day2']) > 0
+                          ? "D- ${ddaycalc(query['final_day2'])}"
+                          : ddaycalc(query['final_day2']) == 0
+                              ? "D-day"
+                              : "finished project",
+                      style: labelLargeStyle(color: Color(0xff9FA5B2))),
                 ],
               ),
               SizedBox(height: size.height * 0.015),
               Row(
                 children: [
-                  Text(query['title'],
-                      style: titleLargeStyle(color: Colors.black)),
-                  SizedBox(
-                    width: size.width * 0.02,
+                  Container(
+                    margin: EdgeInsets.zero,
+                    width: size.width * 0.795,
+                    child: Row(
+
+                      children: [
+                        Text(query['title'],
+                            style: titleLargeStyle(color: Colors.black)),
+                        SizedBox(
+                          width: size.width * 0.02,
+                        ),
+                        Image.asset('assets/icons/greenCheck.png',
+                            height: size.height * 0.03),
+                      ],
+                    ),
                   ),
-                  Image.asset('assets/icons/greenCheck.png',
-                      height: size.height * 0.03)
+                 Container(
+                  // margin: const EdgeInsets.only(left: 3),
+                   padding: const EdgeInsets.only(right: 0),
+                   width: size.width * 0.067,
+                   child:  IconButton(
+                     padding:const EdgeInsets.all(0.0),
+
+                     iconSize: size.width * 0.067,
+                     icon: Padding(
+                       padding: EdgeInsets.all(0),
+                       child: Icon(Icons.more_vert),
+                     ),
+                     onPressed: () {
+                       _showActionSheet(context);
+                       FirebaseFirestore.instance
+                           .collection('project')
+                           .doc(query['id'])
+                           .update({'participate': 0});
+
+                       // Navigator.push(context,
+                       //     MaterialPageRoute(builder: (context) {
+                       //   return MainHomePage();
+                       // }));
+                     },
+                   ),
+
+                 )
                 ],
               ),
               SizedBox(height: size.height * 0.015),
@@ -135,29 +154,29 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
                   children: <Widget>[
                     for (int i = 0; i < query['url'].length; i++)
                       Padding(
-                        padding: EdgeInsets.only(right: 10),
-                        //height: 25.h,
+                          padding: EdgeInsets.only(right: 10),
+                          //height: 25.h,
 
-                        child: Card(
-                          margin: EdgeInsets.all(0),
-                          clipBehavior: Clip.antiAlias,
-                          child: Container(
-                              height: 70,
-                              width: 70,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.all(Radius.circular(14)),
-                              ),
-                              child: Expanded(
-                                  child:Transform.rotate(
-                                      angle: 90 * math.pi / 180,
-                                      child: ExtendedImage.network(query['url'][i], fit: BoxFit.fill)
-                                  )
+                          child: Card(
+                            margin: EdgeInsets.all(0),
+                            clipBehavior: Clip.antiAlias,
+                            child: Container(
+                                height: 70,
+                                width: 70,
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(14)),
+                                ),
+                                child: Expanded(
+                                    child: Transform.rotate(
+                                        angle: 90 * math.pi / 180,
+                                        child: ExtendedImage.network(
+                                            query['url'][i],
+                                            fit: BoxFit.fill))
 
-                                //
-                              )
-                          ),
-                        )
-                      ),
+                                    //
+                                    )),
+                          )),
                   ],
                 ),
               ),
@@ -201,8 +220,7 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
               ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
                 child: LinearProgressIndicator(
-                  value: query['percentage'].toDouble() *
-                    0.01,//0.8,
+                  value: query['url'].length / query['size'],
                   minHeight: size.height * 0.015,
                   valueColor: AlwaysStoppedAnimation(Color(0xff00D796)),
                   backgroundColor: Color(0xFFF3F4F5),
@@ -215,8 +233,7 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text(
-                              '100장 중 ${query['url'].length}장이 수집되었어요 !',
+                          Text('${query['size']} 중 ${query['url'].length}장이 수집되었어요 !',
                               style: labelSmallStyle(color: Color(0xff1A1A1A)))
                         ]),
                   )
@@ -293,9 +310,9 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
             // isDefaultAction: true,
             onPressed: () {
               print(query['id']);
-              var userlist=query['part_user'];
+              var userlist = query['part_user'];
               print(userlist);
-              userlist.remove('1234@handong.ac.kr');
+              userlist.remove(FirebaseAuth.instance.currentUser!.email!);
               print(userlist);
               // if(!userlist.contains(FirebaseAuth.instance.currentUser!.email!))
               //   userlist.add(FirebaseAuth.instance.currentUser!.email!);
@@ -303,10 +320,7 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
               FirebaseFirestore.instance
                   .collection('project')
                   .doc(query['id'])
-                  .update({
-                'participate':1,
-                'part_user':userlist
-              });
+                  .update({'participate': 1, 'part_user': userlist});
               Navigator.push(context, MaterialPageRoute(builder: (context) {
                 return MainHomePage();
               }));

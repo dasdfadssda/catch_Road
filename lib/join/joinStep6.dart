@@ -2,7 +2,7 @@ import 'package:catch2_0_1/Auth/user_information.dart';
 import 'package:catch2_0_1/LoginPage.dart';
 import 'package:catch2_0_1/join/joinPage7.dart';
 import 'package:flutter/material.dart';
-import '../Auth/auth_service.dart';
+import '../Auth/auth_service .dart';
 import '../utils/app_text_styles.dart';
 
 
@@ -104,7 +104,7 @@ class _joinStep6State extends State<joinStep6> {
                   ),
                   Row(
                     children: [
-                      Text("수취인명",
+                      Text("예금주명",
                           style: titleSmallStyle(color: Color(0xff9FA5B2))),
                       Spacer()
                     ],
@@ -284,7 +284,7 @@ class _joinStep6State extends State<joinStep6> {
             ),
             filled: true,
             fillColor: Colors.white),
-        keyboardType: TextInputType.number,
+        keyboardType: TextInputType.text,
       ),
     );
   }

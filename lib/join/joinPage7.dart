@@ -1,11 +1,13 @@
-import 'package:catch2_0_1/Auth/auth_service.dart';
+
 import 'package:catch2_0_1/LoginPage.dart';
 import 'package:catch2_0_1/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import '../Auth/auth_service .dart';
 import '../Auth/user_information.dart';
 import '../utils/app_text_styles.dart';
 import 'joinPage.dart';
 import 'joinStep2.dart';
+import 'joinStep4.dart';
 
 
 class joinPage7 extends StatefulWidget {
@@ -57,8 +59,8 @@ class _joinPage7State extends State<joinPage7> {
                   )
                 )),
             SizedBox(height: size.height * 0.05),
-             Text("${emailCode().email}님,", style: titleLargeStyle(color: Colors.black)),
-             Text("Catch에 오신 걸 환영합니다.", style: titleLargeStyle(color: Colors.black)),
+             Text("${nicknameCode().nickname}님,", style: titleLargeStyle(color: Colors.black)),
+             Text("Catch Road 회원가입을 축하합니다!", style: titleLargeStyle(color: Colors.black)),
              SizedBox(height: size.height * 0.15),
             SizedBox(
                 width: size.width * 0.85,

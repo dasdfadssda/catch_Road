@@ -1,8 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'Auth/auth_service.dart';
+import 'Auth/auth_service .dart';
 import 'join/joinPage.dart';
-import 'join/joinStep6.dart';
 import 'screen/Camera/camera_load.dart';
 import 'screen/mainHome.dart';
 import 'utils/app_text_styles.dart';
@@ -15,13 +14,15 @@ class LoginPage extends StatefulWidget {
 }
 
 bool maintain = false;
-final _email = TextEditingController();
-final _password= TextEditingController();
 
 class _LoginPageState extends State<LoginPage> {
+  final TextEditingController emailController = new TextEditingController();
+  final TextEditingController passwordController = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    login=false;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -31,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               Padding(
                 padding: EdgeInsets.only(top: size.height * 0.25),
-                child: Image.asset('assets/logo.png', width: 144),
+                child: Image.asset('assets/catch_road_logo.png', width: 170),
               ),
               // 아이디 또는 이메일 textfield
               Padding(
@@ -41,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
                       right: size.width * 0.04),
                   child: SizedBox(
                     child: TextField(
-                      controller: _email,
+                      controller : emailController,
                       style: TextStyle(fontSize: 13),
                       decoration: InputDecoration(
                           focusColor: Color.fromARGB(6, 61, 50, 50),
@@ -51,21 +52,21 @@ class _LoginPageState extends State<LoginPage> {
                           hintStyle: bodyMediumStyle(color: Color(0xff9FA5B2)),
                           focusedBorder: OutlineInputBorder(
                             borderRadius:
-                            BorderRadius.all(Radius.circular(36.0)),
+                                BorderRadius.all(Radius.circular(36.0)),
                             borderSide: BorderSide(
                                 width: 0.5,
                                 color: Color.fromRGBO(0, 0, 0, 0.2)),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius:
-                            BorderRadius.all(Radius.circular(36.0)),
+                                BorderRadius.all(Radius.circular(36.0)),
                             borderSide: BorderSide(
                                 width: 0.5,
                                 color: Color.fromRGBO(0, 0, 0, 0.2)),
                           ),
                           border: OutlineInputBorder(
                             borderRadius:
-                            BorderRadius.all(Radius.circular(36.0)),
+                                BorderRadius.all(Radius.circular(36.0)),
                           ),
                           filled: true,
                           fillColor: Colors.white),
@@ -80,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                       right: size.width * 0.04),
                   child: SizedBox(
                     child: TextField(
-                      controller: _password,
+                      controller: passwordController,
                       style: TextStyle(fontSize: 13),
                       decoration: InputDecoration(
                           focusColor: Color.fromRGBO(0, 0, 0, 0.03),
@@ -90,58 +91,34 @@ class _LoginPageState extends State<LoginPage> {
                           // hintStyle: bodyLargeStyle(color: Color(0xff9FA5B2)),
                           focusedBorder: OutlineInputBorder(
                             borderRadius:
-                            BorderRadius.all(Radius.circular(36.0)),
+                                BorderRadius.all(Radius.circular(36.0)),
                             borderSide: BorderSide(
                                 width: 0.5,
                                 color: Color.fromRGBO(0, 0, 0, 0.2)),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius:
-                            BorderRadius.all(Radius.circular(36.0)),
+                                BorderRadius.all(Radius.circular(36.0)),
                             borderSide: BorderSide(
                                 width: 0.5,
                                 color: Color.fromRGBO(0, 0, 0, 0.2)),
                           ),
                           border: OutlineInputBorder(
                             borderRadius:
-                            BorderRadius.all(Radius.circular(36.0)),
+                                BorderRadius.all(Radius.circular(36.0)),
                           ),
                           filled: true,
                           fillColor: Colors.white),
                       keyboardType: TextInputType.emailAddress,
                     ),
                   )),
-              // Container(
-              //   width: size.width,
-              //   padding:
-              //       EdgeInsets.only(left: 20, right: 20, top: size.height * 0.1),
-              //   child: Column(
-              //     crossAxisAlignment: CrossAxisAlignment.center,
-              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //     children: [
-              //       ElevatedButton(
-              //         onPressed: () async {
-              //           signInWithGoogle();
-              //           await Future.delayed(Duration(seconds: 10));
-              //           userstart();
-              //         },
-              //         child: Wrap(
-              //           crossAxisAlignment: WrapCrossAlignment.center,
-              //           children: [
-              //             Text('Sign in with Google'),
-              //           ],
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
               Row(
                 children: [
                   Padding(
                     padding: EdgeInsets.only(
                         top: size.height * 0.0, left: size.width * 0.02
-                      // right: size.width * 0.8,
-                    ),
+                        // right: size.width * 0.8,
+                        ),
                     child: IconButton(
                         onPressed: () {
                           setState(() {
@@ -151,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                         icon: maintain
                             ? Image.asset('assets/checkbox_on.png', height: 23)
                             : Image.asset('assets/checkbox_un.png',
-                            height: 23)),
+                                height: 23)),
                   ),
                   ////text style 적용하기
                   Padding(
@@ -163,7 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                             fontWeight: FontWeight.w700)),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(left: size.width * 0.25),
+                    padding: EdgeInsets.only(left: size.width * 0.2),
                     child: TextButton(
                         onPressed: () {
                           Navigator.push(
@@ -195,25 +172,21 @@ class _LoginPageState extends State<LoginPage> {
                             borderRadius: BorderRadius.circular(20.0),
                           ),
                           backgroundColor: Color.fromRGBO(58, 148, 238, 1)),
-                      onPressed: () async {
-                        print('이메일 ${_email}');
-                        print('비번 ${_password}');
-                        loginWithIdandPassword(_email,_password);
-
-                        setState(() {
-                          //if(login){
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                                  return MainHomePage();
-                                }));
-                         // }
-                        });
+                      onPressed: () async{
+                       await loginWithIdandPassword(emailController.text, passwordController.text);
+                      if(login){
 
 
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                              return MainHomePage();
+                            }));
+                      }
 
 
                         main_colorList=[Color(0xff3A94EE),Color(0xffCFD2D9),Color(0xffCFD2D9),Color(0xffCFD2D9)];
                         selectedIndex0 = 0;
+
                       },
                       child: Text(
                         "로그인",
@@ -230,25 +203,30 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.white, elevation: 0),
-                        onPressed: () async{
+                    IconButton(
+                        onPressed: () async {
                           signInWithGoogle();
-                          await Future.delayed(Duration(seconds: 1));
+                          await Future.delayed(Duration(seconds: 10));
                           userstart();
                         },
-                        child: Image.asset(
+                        iconSize: 50,
+                        icon: Image.asset(
                           'assets/icons/google_icon.png',
                           width: 50,
                         )),
                     SizedBox(
                       width: size.width * 0.04,
                     ),
-                    Image.asset(
-                      'assets/icons/apple_icon.png',
-                      width: 50,
-                    ),
+                    IconButton(
+                        onPressed: () async {
+                          signInWithApple();
+                          print('apple login');
+                        },
+                        iconSize: 50,
+                        icon: Image.asset(
+                          'assets/icons/apple_icon.png',
+                          width: 50,
+                        )),
                   ],
                 ),
               ),
@@ -274,8 +252,8 @@ class _LoginPageState extends State<LoginPage> {
                       // joinPage
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                            return joinPage();
-                          }));
+                        return joinPage();
+                      }));
                     },
                     child: Text("회원가입",
                         style: TextStyle(
@@ -304,133 +282,135 @@ class _forgotLoginState extends State<forgotLogin> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.only(top: size.height * 0.1),
-            child: Center(child: Image.asset('assets/lock.png', width: 50)),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: size.height * 0.04),
-            child: Text("아이디를 잊으셨나요?"),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: size.height * 0.01),
-            child: Text("이메일을 입력하시면 잊어버리신\n아이디를 알려드립니다.",
-                textAlign: TextAlign.center),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-                top: size.height * 0.04,
-                left: size.width * 0.04,
-                right: size.width * 0.04),
-            child: Image.asset('assets/divider.png'),
-          ),
-          Padding(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: size.height * 0.1),
+              child: Center(child: Image.asset('assets/lock.png', width: 50)),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: size.height * 0.04),
+              child: Text("아이디를 잊으셨나요?"),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: size.height * 0.01),
+              child: Text("이메일을 입력하시면 잊어버리신\n아이디를 알려드립니다.",
+                  textAlign: TextAlign.center),
+            ),
+            Padding(
               padding: EdgeInsets.only(
-                  top: size.height * 0.019,
+                  top: size.height * 0.04,
                   left: size.width * 0.04,
                   right: size.width * 0.04),
+              child: Image.asset('assets/divider.png'),
+            ),
+            Padding(
+                padding: EdgeInsets.only(
+                    top: size.height * 0.019,
+                    left: size.width * 0.04,
+                    right: size.width * 0.04),
+                child: SizedBox(
+                  width: size.width * 2.2,
+                  child: TextField(
+                    style: TextStyle(fontSize: 13),
+                    decoration: InputDecoration(
+                        focusColor: Color.fromRGBO(0, 0, 0, 0.03),
+                        contentPadding: EdgeInsets.only(
+                            top: size.height * 0.01, left: size.width * 0.04),
+                        hintText: '이메일',
+                        hintStyle: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            color: Color.fromRGBO(0, 0, 0, 0.4)),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                          borderSide: BorderSide(
+                              width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.4)),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                          borderSide: BorderSide(
+                              width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.4)),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                        ),
+                        filled: true,
+                        fillColor: Color.fromRGBO(0, 0, 0, 0.03)),
+                    keyboardType: TextInputType.emailAddress,
+                  ),
+                )),
+            // 다음 버튼
+            Padding(
+              padding: EdgeInsets.only(top: size.height * 0.02),
               child: SizedBox(
-                width: size.width * 2.2,
-                child: TextField(
-                  style: TextStyle(fontSize: 13),
-                  decoration: InputDecoration(
-                      focusColor: Color.fromRGBO(0, 0, 0, 0.03),
-                      contentPadding: EdgeInsets.only(
-                          top: size.height * 0.01, left: size.width * 0.04),
-                      hintText: '이메일',
-                      hintStyle: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          color: Color.fromRGBO(0, 0, 0, 0.4)),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                        borderSide: BorderSide(
-                            width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.4)),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                        borderSide: BorderSide(
-                            width: 0.5, color: Color.fromRGBO(0, 0, 0, 0.4)),
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                      ),
-                      filled: true,
-                      fillColor: Color.fromRGBO(0, 0, 0, 0.03)),
-                  keyboardType: TextInputType.emailAddress,
-                ),
-              )),
-          // 다음 버튼
-          Padding(
-            padding: EdgeInsets.only(top: size.height * 0.02),
-            child: SizedBox(
-              width: size.width * 0.92,
-              height: size.height * 0.05,
-              child: OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(13.0),
-                      ),
-                      backgroundColor: Color(0xff2C63BB)),
+                width: size.width * 0.92,
+                height: size.height * 0.05,
+                child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(13.0),
+                        ),
+                        backgroundColor: Color(0xff2C63BB)),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                            pageBuilder: (_, __, ___) => findId(),
+                            transitionDuration: Duration(seconds: 0),
+                            transitionsBuilder: (_, a, __, c) =>
+                                FadeTransition(opacity: a, child: c)),
+                      );
+                    },
+                    child: Text(
+                      "다음",
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.w700),
+                    )),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: size.height * 0.01),
+              child: TextButton(
+                  onPressed: () {
+                    // signInWithGoogle();
+                  },
+                  child: Text("비밀번호를 잊으셨나요?",
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: Color(0xff2C63BB),
+                          fontWeight: FontWeight.w700))),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: size.height * 0.04),
+              child: Image.asset(
+                'assets/divider.png',
+                width: size.width * 0.9,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: size.height * 0.05),
+              child: TextButton(
                   onPressed: () {
                     Navigator.push(
                       context,
                       PageRouteBuilder(
-                          pageBuilder: (_, __, ___) => findId(),
+                          pageBuilder: (_, __, ___) => LoginPage(),
                           transitionDuration: Duration(seconds: 0),
                           transitionsBuilder: (_, a, __, c) =>
                               FadeTransition(opacity: a, child: c)),
                     );
                   },
-                  child: Text(
-                    "다음",
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.w700),
-                  )),
+                  child: Text("로그인으로 돌아가기",
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: Color(0xff2C63BB),
+                          fontWeight: FontWeight.w700))),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: size.height * 0.01),
-            child: TextButton(
-                onPressed: () {
-                  signInWithGoogle();
-                },
-                child: Text("비밀번호를 잊으셨나요?",
-                    style: TextStyle(
-                        fontSize: 12,
-                        color: Color(0xff2C63BB),
-                        fontWeight: FontWeight.w700))),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: size.height * 0.04),
-            child: Image.asset(
-              'assets/divider.png',
-              width: size.width * 0.9,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: size.height * 0.05),
-            child: TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    PageRouteBuilder(
-                        pageBuilder: (_, __, ___) => LoginPage(),
-                        transitionDuration: Duration(seconds: 0),
-                        transitionsBuilder: (_, a, __, c) =>
-                            FadeTransition(opacity: a, child: c)),
-                  );
-                },
-                child: Text("로그인으로 돌아가기",
-                    style: TextStyle(
-                        fontSize: 12,
-                        color: Color(0xff2C63BB),
-                        fontWeight: FontWeight.w700))),
-          ),
-        ],
-      ),
+          ],
+        ),
+
+      )
     );
   }
 }

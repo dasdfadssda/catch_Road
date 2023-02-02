@@ -1,18 +1,23 @@
-import 'package:catch2_0_1/Auth/auth_service.dart';
+
 import 'package:catch2_0_1/LoginPage.dart';
 import 'package:catch2_0_1/main.dart';
 import 'package:catch2_0_1/screen/MyPage/MyCash.dart';
 import 'package:catch2_0_1/screen/mainHome.dart';
 import 'package:catch2_0_1/utils/app_text_styles.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../../Auth/auth_service .dart';
 import '../../utils/app_text_styles.dart';
 import '../../utils/widget.dart';
 import '../notFound.dart';
 import '../projectPage/part_pro.dart';
 import 'editMyinfo.dart';
 import 'makeAccount.dart';
+
+dynamic userInform;
+String UserNickName='';
 
 class MYPage extends StatefulWidget {
   const MYPage({super.key});
@@ -22,9 +27,28 @@ class MYPage extends StatefulWidget {
 }
 
 class _MYPageState extends State<MYPage> {
+
+  @override
+  void initState(){
+    FirebaseFirestore.instance.collection("user").doc("${FirebaseAuth.instance.currentUser!.email}").get().then((DocumentSnapshot ds)async{
+      userInform=await ds.data();
+
+      print(userInform['name']);
+      print(userInform['birth'].toString().substring(0,4));
+      birthyear=userInform['birth'].toString().substring(0,4);
+      birthmonth=userInform['birth'].toString().substring(6,7);
+      birthday=userInform['birth'].toString().substring(9,10);
+      UserNickName=userInform['NickName']!;
+    }
+    );
+
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0.5,
@@ -55,7 +79,7 @@ class _MYPageState extends State<MYPage> {
                                   BorderRadius.circular(100), // Image border
                               child: SizedBox.fromSize(
                                 size: Size.fromRadius(35), // Image radius
-                                child: Image.asset('assets/icons/apple.png',
+                                child: Image.asset('assets/img.png',
                                     fit: BoxFit.cover),
                               )),
                         ),
@@ -70,7 +94,7 @@ class _MYPageState extends State<MYPage> {
                                   child: Row(
                                     children: [
                                       Text(
-                                        '${'1234@handong.ac.kr'}',//FirebaseAuth.instance.currentUser!.displayName!
+                                        '${UserNickName}',//FirebaseAuth.instance.currentUser!.displayName!
                                         style: titleMediumStyle(
                                             color: Colors.black),
                                       ),
@@ -87,7 +111,7 @@ class _MYPageState extends State<MYPage> {
                                   top: size.height * 0.035,
                                   left: size.width * 0.04),
                               child: Text(
-                                '${'1234@handong.ac.kr'}',//FirebaseAuth.instance.currentUser!.email!
+                                '${FirebaseAuth.instance.currentUser!.email!}',//FirebaseAuth.instance.currentUser!.email!
                                 style:
                                     labelSmallStyle(color: Color(0xff9FA5B2)),
                               ),
@@ -212,16 +236,15 @@ class _MYPageState extends State<MYPage> {
                   ]),
             ),
             SizedBox(height: size.height * 0.005),
-            _buildListTileButton(
-                '내가 올린 프로젝트', 'myUpLoadProject'), // 1.10일 mypage 회원 탈퇴 부분 밑으로 쭉
-            _buildListTileButton('내가 작성한 커뮤니티 글', 'myCommunity'),
+            //_buildListTileButton('내가 올린 프로젝트', 'myUpLoadProject'), // 1.10일 mypage 회원 탈퇴 부분 밑으로 쭉
+            //_buildListTileButton('내가 작성한 커뮤니티 글', 'myCommunity'),
             _buildListTileButton('참여한 프로젝트', 'myJoinProject'),
             MyWidget().DivderLine(),
-            _buildListTileButton('결제 정보 수정', 'myPayInformation'),
+            //_buildListTileButton('결제 정보 수정', 'myPayInformation'),
             _buildListTileButton('계좌 정보 수정', 'myBankInformation'),
-            MyWidget().DivderLine(),
-            _buildListTileButton('공지 사항', 'announcement'),
-            _buildListTileButton('약관 및 개인정보 처리', 'myInformation'),
+           // MyWidget().DivderLine(),
+            //_buildListTileButton('공지 사항', 'announcement'),
+            //_buildListTileButton('약관 및 개인정보 처리', 'myInformation'),
             MyWidget().DivderLine(),
             _buildListTileButton(
                 '로그아웃', 'logout'), // 1.10일 mypage 회원 탈퇴 부분 여기까지
@@ -396,7 +419,7 @@ class _MYPageState extends State<MYPage> {
                 Container(
                   margin: EdgeInsets.fromLTRB(20, 15, 20, 5),
                   child: Text(
-                    "${FirebaseAuth.instance.currentUser!.displayName!}님, 탈퇴시 삭제/유지되는 정보를 확인해주세요!\n한 번 삭제된 정보는 복구가 불가능합니다.",
+                    "${FirebaseAuth.instance.currentUser!.email!}님, 탈퇴시 삭제/유지되는 정보를 확인해주세요!\n한 번 삭제된 정보는 복구가 불가능합니다.",//FirebaseAuth.instance.currentUser!.displayName!
                     style: labelLargeStyle(color: Colors.grey),
                     textAlign: TextAlign.center,
                   ),
@@ -429,14 +452,14 @@ class _MYPageState extends State<MYPage> {
                         child: Text('취소',
                             style: labelMediumStyle(color: Color(0XFF9FA5B2))),
                       ),
-                      SizedBox(width: 255),
+                      SizedBox(width: 200),
                       TextButton(
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => MyApp()),
+                            MaterialPageRoute(builder: (context) => LoginPage()),
                           );
-                          deleteUserFromFirebase();
+                         // deleteUserFromFirebase();
                         },
                         child: Text('탈퇴하기',
                             style: labelMediumStyle(color: Color(0XFF3A94EE))),

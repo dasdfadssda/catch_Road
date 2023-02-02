@@ -31,10 +31,17 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
 
   @override
   Widget build(BuildContext context) {
+
     final Size size = MediaQuery.of(context).size;
     onTap = false;
     onTap2 = false;
     _onTap3 = false;
+    //D-day 계산
+    // Timestamp t=query['final_day2'] as Timestamp;
+    // DateTime date=t.toDate();
+    // var _toDay = DateTime.now();
+    // final difference=date.difference(_toDay);
+
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -55,8 +62,11 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // d- 몇인지 보여줘야 함.
-                      Text('D-${query['final_day'].toString()}',
+                      //
+                      Text(ddaycalc(query['final_day2']) > 0
+                          ? "D- ${ddaycalc(query['final_day2'])}"
+                          : ddaycalc(query['final_day2']) == 0
+                          ? "D-day" : "finished project",
                           style: labelLargeStyle(color: Color(0xff9FA5B2))),
                     ],
                   ),
@@ -92,9 +102,9 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                             style: labelMediumStyle(color: Color(0xff9FA5B2))),
                       )),
                   SizedBox(width: size.width * 0.016),
-                  Text(query['user'],//query['cash'].toString(),
+                  Text(query['user'], //query['cash'].toString(),
                       style: labelMediumStyle(color: Color(0xff9FA5B2))),
-                 // Text('캐시', style: labelMediumStyle(color: Color(0xff9FA5B2))),
+                  // Text('캐시', style: labelMediumStyle(color: Color(0xff9FA5B2))),
                 ],
               ),
               SizedBox(height: size.height * 0.04),
@@ -183,7 +193,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
               ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
                 child: LinearProgressIndicator(
-                  value: int.parse(query['percentage'].toString()) * 0.01,
+                  value: query['url'].length/query['size'], //int.parse(query['percentage'].toString()) * 0.01,
                   minHeight: size.height * 0.015,
                   valueColor: AlwaysStoppedAnimation(primary[50]),
                   backgroundColor: primary[0]!.withOpacity(0.05),
@@ -201,10 +211,10 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                              '100장 중 ${query['percentage'].toString()}장이 수집되었어요 !',
+                              '${query['size']}장 중 ${query['url'].length}장이 수집되었어요 !',
                               style: labelSmallStyle(color: Color(0xff1A1A1A)))
                         ]),
-                  )
+                  ),
                 ],
               ),
             ],
@@ -468,8 +478,8 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                               //   borderRadius: BorderRadius.all(Radius.circular(30.0))
                               // ),
                               style: ButtonStyle(
-                                fixedSize:
-                                    MaterialStateProperty.all(Size(size.width * 0.86, size.height * 0.075)),
+                                fixedSize: MaterialStateProperty.all(Size(
+                                    size.width * 0.86, size.height * 0.075)),
                                 backgroundColor: MaterialStateProperty.all(
                                   _onTap3 ? primary[40] : Color(0xFFCFD2D9),
                                   //_onTap3? primary[40] : onSecondaryColor,
@@ -493,16 +503,18 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                                   //     'cLxKtSGWwhUVJp972FCh').toString());
 
                                   print(query['id']);
-                                  var userlist=query['part_user'];
-                                  if(!userlist.contains('1234@handong.ac.kr'))
-                                    userlist.add('1234@handong.ac.kr');
+                                  var userlist = query['part_user'];
+                                  if (!userlist.contains(
+                                      '${FirebaseAuth.instance.currentUser!.email!}'))
+                                    userlist.add(
+                                        '${FirebaseAuth.instance.currentUser!.email!}');
 
                                   FirebaseFirestore.instance
                                       .collection('project')
                                       .doc(query['id'])
                                       .update({
-                                    'participate':1,
-                                    'part_user':userlist
+                                    'participate': 1,
+                                    'part_user': userlist
                                   });
                                   Navigator.pop(context);
                                   Navigator.pop(context);

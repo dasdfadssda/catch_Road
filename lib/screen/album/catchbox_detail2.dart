@@ -81,7 +81,7 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
     if (_selectPlace != '장소') {
       return FirebaseFirestore.instance
           .collection('category')
-          .doc('1234@handong.ac.kr')
+          .doc('${FirebaseAuth.instance.currentUser!.email}')
           .collection(query['category'])
           .doc('place')
           .collection('place_url')
@@ -97,7 +97,7 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
     // }
     return FirebaseFirestore.instance
         .collection('category')
-        .doc('1234@handong.ac.kr')
+        .doc('${FirebaseAuth.instance.currentUser!.email}')
         .collection(query['category'])
         // .doc('date')
         // .collection('date')
@@ -185,10 +185,10 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(30), topLeft: Radius.circular(30)),
           boxShadow: [
-            BoxShadow(color: Colors.black, spreadRadius: 0, blurRadius: 0.5),
+            BoxShadow(color: Colors.grey, spreadRadius: 0, blurRadius: 0.5),
           ],
         ),
-        height: 100,
+        height: size.height*0.14,
         child: ClipRRect(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(30.0),
@@ -200,10 +200,13 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
               : Column(
             children: [
               SizedBox(
-                height: size.height * 0.01,
+                height: size.height * 0.0225,
               ),
-              Row(children: [
-                SizedBox(width: size.width * 0.4),
+              Row(
+
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                //SizedBox(width: size.width * 0.4),
                 Text("$check_num 개의 사진이 선택됨",
                     style: labelMediumStyle(
                         color: Color.fromRGBO(26, 26, 26, 1))),
@@ -270,7 +273,7 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
-              height: 20,
+              height: size.width*0.02,
             ),
             Row(
               children: [
@@ -306,7 +309,7 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
                         },
                         child: Text(
                           "취소",//pressed ? "취소" : "선택",
-                          style: TextStyle(fontSize: 12, color: Colors.grey),
+                     style: SubTitleStyle(color: Colors.grey),
                         )
                       // Container(
                       //   child: Center(
@@ -374,27 +377,25 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
                             return StatefulBuilder(
                                 builder: (BuildContext context, StateSetter setState) {
                                   return Container(
-                                    height: size.height * 0.5,
+                                    height: size.height * 0.475,
+
                                     padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                                     child: Column(
                                       children: [
                                         SizedBox(
-                                          height: size.height * 0.06,
+                                          height: size.height * 0.05,
                                         ),
 
                                         SizedBox(
                                             height:150,
                                             child: Image.asset('assets/checkToFinish.gif')),
                                         SizedBox(
-                                          height: size.height * 0.0475,
+                                          height: size.height * 0.025,
                                         ),
                                         Text('사진이 업로드 되었습니다. '),
 
                                         SizedBox(height: size.height * 0.025),
 
-                                        SizedBox(
-                                          height: 20,
-                                        ),
                                         ElevatedButton(
                                             style:ButtonStyle(
                                               fixedSize:
@@ -453,15 +454,6 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
                   ),
 
                 ),
-
-
-
-
-
-
-
-
-
               ],
 
             ),
