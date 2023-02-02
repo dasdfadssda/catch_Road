@@ -189,6 +189,17 @@ TextStyle bodySmallStyle({Color? color}) {
     );
 }
 
+TextStyle buttonLargeStyle({Color? color}) {
+  return TextStyle(
+      fontFamily: 'NotoSansKR',
+      fontWeight: FontWeight.w400,
+      fontSize: 16,
+      height: 22 / 16,
+      letterSpacing: 0,
+      color: color
+  );
+}
+
 
 
 TextStyle buttonLargeStyle({Color? color}) {

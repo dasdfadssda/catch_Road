@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 
 import 'Auth/auth_service .dart';
@@ -10,10 +11,12 @@ import 'screen/mainHome.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
+
+   await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+   );
   await Firebase.initializeApp();
+
   runApp(MyApp());
 }
 
@@ -21,8 +24,16 @@ class MyApp extends StatelessWidget {
   //const MyApp({super.key});
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return MaterialApp(
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate
+        ],
+        supportedLocales: [
+          const Locale('ko'),
+          const Locale('en')
+        ],
+        locale: const Locale('ko'),
         debugShowCheckedModeBanner: false,
         initialRoute: '/',
         routes: {
@@ -36,12 +47,15 @@ class MyApp extends StatelessWidget {
         ),
         // home: test());
         // home: MainHomePage());
+
     home: AuthService().handleAuthState());
+
   }
 }
 
 class test extends StatefulWidget {
   const test({super.key});
+
   @override
   State<test> createState() => _testState();
 }
