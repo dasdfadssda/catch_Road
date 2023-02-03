@@ -11,6 +11,8 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:tflite/tflite.dart';
 import 'dart:math' as math;
+import '../../main.dart';
+import '../mainHome.dart';
 import 'camera_bndbox.dart';
 import 'package:image/image.dart' as imageLib;
 import 'camera_page.dart';
@@ -27,9 +29,12 @@ late String path;
 late CameraController controller;
 
 List<Uint8List> imageList = [];
-bool issaving=false;
-bool saved=false;
-String ob='';
+bool issaving = false;
+bool saved = false;
+String ob = '';
+// dynamic cameraUserInform = [];
+// List camera_objectList = [];
+//List eng_objectList = [];
 
 typedef void Callback(List<dynamic> list, int h, int w);
 
@@ -42,14 +47,13 @@ class CameraViewer extends StatefulWidget {
   CameraViewer(this.cameras, this.model, this.setRecognitions);
 
   @override
-  _CameraViewerState createState(){
-    issaving=false;
+  _CameraViewerState createState() {
+    issaving = false;
     return _CameraViewerState();
   }
 }
 
 class _CameraViewerState extends State<CameraViewer> {
-
   bool isDetecting = false;
   FirebaseStorage storage = FirebaseStorage.instance;
 
@@ -59,16 +63,21 @@ class _CameraViewerState extends State<CameraViewer> {
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
 
-    final cor=new Coordinates(position.latitude, position.longitude);
+    final cor = new Coordinates(position.latitude, position.longitude);
 
     return cor;
   }
 
-
-
   @override
   void initState() {
     super.initState();
+
+
+  setState(() {
+
+  });
+    // print("eng_objectList2");
+    // print(eng_objectList);
 
     if (widget.cameras == null || widget.cameras.length < 1) {
       print('No camera is found');
@@ -85,17 +94,53 @@ class _CameraViewerState extends State<CameraViewer> {
         }
         controller.startImageStream((CameraImage img) async {
           cameraImage2 = img;
+
+          if(object=='car'){
+            object='자동차';
+          }else if(object=='bicycle'){
+            object='자전거';
+          } else if(object=='bus'){
+            object='버스';
+          } else if(object=='motorcycle'){
+            object='오토바이';
+          } else if(object=='traffic sign'){
+            object='신호등';
+          } else if(object=='train'){
+            object='기차';
+          } else if(object=='truck'){
+            object='트럭';
+          } else if(object=='fire hydrant'){
+            object='소화전';
+          } else if(object=='stop sign'){
+            object='정지표시판';
+          } else if(object=='bench'){
+            object='벤치';
+          } else if(object=='cat'){
+            object='고양이';
+          } else if(object=='dog'){
+            object='개';
+          }else if(object=='keyboard'){
+            object='키보드';
+          }
+
+
           //*원하는 객체 입력
           // if (mode=="auto"&&((object=='car')||(object=='stop sign')||(object=='keyboard'))&&accuracy>40) {
-          if(mode=="auto"&&(object_list.contains(object)||object=='keyboard'||object=='person'||object=='car'||object=='stop sign')&&accuracy>65){
+         // print("감지가능 객체 ${eng_objectList}");
+
+
+          if (mode == "auto" &&
+              (user_object.contains(object)) && accuracy > 65) {
             //path = (await NativeScreenshot.takeScreenshot())!;
-            print('$object 저장중');
-            ob=object;
+            print('**************$object 저장중***********');
+            ob = object;
             setState(() {issaving = true;});
             takepicture();
-            print('$object 저장 완료 ');
+            print('$ob 저장 완료 ');
             object = '';
           }
+
+
           setState(() {});
           if (!isDetecting) {
             isDetecting = true;
@@ -104,7 +149,6 @@ class _CameraViewerState extends State<CameraViewer> {
               bytesList: img.planes.map((plane) {
                 return plane.bytes;
               }).toList(),
-
               model: widget.model == "YOLO" ? "YOLO" : "SSDMobileNet",
               imageHeight: img.height,
               imageWidth: img.width,
@@ -112,18 +156,13 @@ class _CameraViewerState extends State<CameraViewer> {
               imageStd: widget.model == "YOLO" ? 255.0 : 127.5,
               numResultsPerClass: 1,
               threshold: widget.model == "YOLO" ? 0.2 : 0.4,
-              rotation:90,
-
+              rotation: 90,
             ).then((recognitions) {
               // print("imgggg2 : ${img.width} / ${img.height}");
               int endTime = new DateTime.now().millisecondsSinceEpoch;
               print("Detection took ${endTime - startTime}");
               widget.setRecognitions(recognitions!, img.height, img.width);
               isDetecting = false;
-
-
-
-
             });
           }
         });
@@ -151,22 +190,30 @@ class _CameraViewerState extends State<CameraViewer> {
     CameraImage image = cameraImage2;
     try {
       await Future.delayed(Duration(seconds: 1));
-      setState(() {issaving = false;});
-      setState(() {saved = true;});
+      setState(() {
+        issaving = false;
+      });
+      setState(() {
+        saved = true;
+      });
       await Future.delayed(Duration(milliseconds: 300));
-      setState(() {saved = false;});
+      setState(() {
+        saved = false;
+      });
 
-      imageLib.Image img=convertYUV420ToImage(image);
-      imageLib.PngEncoder pngEncoder = new imageLib.PngEncoder(level: 0, filter: 0);
+      imageLib.Image img = convertYUV420ToImage(image);
+      imageLib.PngEncoder pngEncoder =
+          new imageLib.PngEncoder(level: 0, filter: 0);
       List<int> png = pngEncoder.encodeImage(img);
 
       //firebase에 저장
-      final uploadTask = await storage.ref('/traffic-Image/$ob/$ob${DateTime.now()}.png').putData(Uint8List.fromList(png));//
+      print("ob $ob");
+      final uploadTask = await storage
+          .ref('/traffic-Image/$ob/$ob${DateTime.now()}.png')
+          .putData(Uint8List.fromList(png)); //
       final url = await uploadTask.ref.getDownloadURL();
 
-
       try {
-
         // await FirebaseFirestore.instance
         //     .collection("category")
         //     .doc("testmail2")//FirebaseAuth.instance.currentUser!.email
@@ -179,65 +226,83 @@ class _CameraViewerState extends State<CameraViewer> {
         // });
         await FirebaseFirestore.instance
             .collection("category")
-            .doc("${FirebaseAuth.instance.currentUser!.email!}")//FirebaseAuth.instance.currentUser!.email
-            .collection("category").doc('all')
+            .doc(
+                "${FirebaseAuth.instance.currentUser!.email!}") //FirebaseAuth.instance.currentUser!.email
+            .collection("category")
+            .doc('all')
             .set({
           "category": 'all',
-          "new":url,
-          "num":1,
-          "order":1,
-        });
-
-
-        await FirebaseFirestore.instance
-            .collection("category")
-            .doc("${FirebaseAuth.instance.currentUser!.email!}")//FirebaseAuth.instance.currentUser!.email
-            .collection("category")
-            .doc(ob).set({
-          "category":ob,
           "new": url,
-          "order":1,
-          "num":0,
+          "num": 1,
+          "order": 1,
         });
 
+        //카테고리 볼더에 사진 저장
         await FirebaseFirestore.instance
             .collection("category")
-            .doc("${FirebaseAuth.instance.currentUser!.email!}")//FirebaseAuth.instance.currentUser!.email
+            .doc(
+            "${FirebaseAuth.instance.currentUser!.email!}") //FirebaseAuth.instance.currentUser!.email
             .collection(ob)
             .add({
           "url": url,
-          "time":DateFormat('dd/MM/yyyy').format(DateTime.now()),
-          "location":'흥해읍'//first.thoroughfare,
+          "time": Timestamp.fromDate(DateTime.now()),// DateFormat('dd/MM/yyyy').format(DateTime.now()),
+          "location": '흥해읍2' //first.thoroughfare,
           //위치추가
         });
 
         await FirebaseFirestore.instance
             .collection("category")
-            .doc("${FirebaseAuth.instance.currentUser!.email!}")//FirebaseAuth.instance.currentUser!.email
-            .collection("all")
-            .add({
-          "url": url,
-          "time":DateFormat('dd/MM/yyyy').format(DateTime.now()),
-          "location":'흥해읍'////first.thoroughfare,
-          //위치추가
+            .doc(
+                "${FirebaseAuth.instance.currentUser!.email!}") //FirebaseAuth.instance.currentUser!.email
+            .collection("category")
+            .doc(ob)
+            .set({
+          "category": ob,
+          "new": url,
+          "order": 1,
+          "num": 0,
         });
 
 
-
-
+        // 전체 폴더에 사진 저장
+        await FirebaseFirestore.instance
+            .collection("category")
+            .doc(
+                "${FirebaseAuth.instance.currentUser!.email!}") //FirebaseAuth.instance.currentUser!.email
+            .collection("all")
+            .add({
+          "url": url,
+          "time": Timestamp.fromDate(DateTime.now()),
+          "location": '흥해읍' ////first.thoroughfare,
+          //위치추가
+        });
       } catch (e) {
         print(e);
       }
-
     } catch (e) {
       print(">>>>>>>>>>>> ERROR:" + e.toString());
     }
-
-
   }
 
   @override
   Widget build(BuildContext context) {
+
+
+    // FirebaseFirestore.instance
+    //     .collection("user")
+    //     .doc("${FirebaseAuth.instance.currentUser!.email}")
+    //     .get()
+    //     .then((DocumentSnapshot ds) async {
+    //   cameraUserInform = await ds.data();
+    //   camera_objectList = cameraUserInform['object'];
+    // });
+     //eng_objectList=[];
+    //
+
+
+
+
+
     var tmp = MediaQuery.of(context).size;
     var screenH = math.max(tmp.height, tmp.width);
     var screenW = math.min(tmp.height, tmp.width);
@@ -246,39 +311,36 @@ class _CameraViewerState extends State<CameraViewer> {
     var previewW = math.min(tmp.height, tmp.width);
     var screenRatio = screenH / screenW;
     var previewRatio = previewH / previewW;
+
+
     if (!controller.value.isInitialized) {
       return Container(
-        color:Colors.black.withOpacity(0.5),
+        color: Colors.black.withOpacity(0.5),
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: Center(
-
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                width:100,
-                height:100,
-
+                width: 100,
+                height: 100,
                 child: CircularProgressIndicator(
                   color: Colors.white,
                 ),
               ),
               SizedBox(
-                height:20,
+                height: 20,
               ),
               Text('카메라가 켜지고 있습니다\n 잠시만 기다려주세요',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color:Colors.white,
-                  )
-              )
-
+                    color: Colors.white,
+                  ))
             ],
           ),
         ),
-
       );
     }
 
@@ -295,75 +357,76 @@ class _CameraViewerState extends State<CameraViewer> {
             SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
-              child:  !controller.value.isInitialized?Container(): CameraPreview(controller),
+              child: !controller.value.isInitialized
+                  ? Container()
+                  : CameraPreview(controller),
             ),
-            issaving?Container(
-              color:Colors.black.withOpacity(0.5),
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: Center(
-
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width:100,
-                      height:100,
-
-                      child: CircularProgressIndicator(
-                        color: Colors.white,
+            issaving
+                ? Container(
+                    color: Colors.black.withOpacity(0.5),
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 100,
+                            height: 100,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text('인식된 객체가 저장되고 있습니다\n 잠시만 기다려주세요',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                              ))
+                        ],
                       ),
                     ),
-
-                    SizedBox(
-                      height:20,
+                  )
+                : Container(),
+            saved
+                ? Container(
+                    color: Colors.black.withOpacity(0.5),
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 100,
+                            height: 100,
+                            child: Image.asset('assets/icons/save_check.png'),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text('저장되었습니다',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                              ))
+                        ],
+                      ),
                     ),
-                    Text('인식된 객체가 저장되고 있습니다\n 잠시만 기다려주세요',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color:Colors.white,
-                        )
-                    )
-
-                  ],
-                ),
-              ),
-
-            ):Container(),
-            saved?Container(
-              color:Colors.black.withOpacity(0.5),
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: Center(
-
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width:100,
-                      height:100,
-                      child:Image.asset('assets/icons/save_check.png'),
-                    ),
-
-                    SizedBox(
-                      height:20,
-                    ),
-                    Text('저장되었습니다',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color:Colors.white,
-                        )
-                    )
-
-                  ],
-                ),
-              ),
-
-            ):Container()
+                  )
+                : Container(),
+            Positioned(
+                top: 200,
+                left: 100,
+                child: Text(
+                  '감지객체 :${user_object} ',
+                  style: TextStyle(color: Colors.black),
+                ))
           ],
         ));
   }
 }
-

@@ -1,3 +1,5 @@
+import 'package:catch2_0_1/main.dart';
+import 'package:catch2_0_1/screen/Camera/camera_page.dart';
 import 'package:catch2_0_1/screen/projectPage/progect_main.dart';
 import 'package:catch2_0_1/screen/projectPage/project_detail2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -25,22 +27,30 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
 
   Color _color = Color(0xFFCFD2D9);
   bool onTap = false;
-
   bool onTap2 = false;
   bool _onTap3 = false;
 
   @override
   Widget build(BuildContext context) {
-
     final Size size = MediaQuery.of(context).size;
+    dynamic userInform2;
+    //List objectList = [];
+
+    // FirebaseFirestore.instance
+    //     .collection("user")
+    //     .doc("${FirebaseAuth.instance.currentUser!.email}")
+    //     .get()
+    //     .then((DocumentSnapshot ds) async {
+    //   userInform2 = await ds.data();
+    //   objectList = userInform2['object'];
+    //   print(objectList);
+    //   c_object_list=objectList;
+    //   print("c_object_list${c_object_list}");
+    // });
+
     onTap = false;
     onTap2 = false;
     _onTap3 = false;
-    //D-day 계산
-    // Timestamp t=query['final_day2'] as Timestamp;
-    // DateTime date=t.toDate();
-    // var _toDay = DateTime.now();
-    // final difference=date.difference(_toDay);
 
     return Scaffold(
         appBar: AppBar(
@@ -63,10 +73,12 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       //
-                      Text(ddaycalc(query['final_day2']) > 0
-                          ? "D- ${ddaycalc(query['final_day2'])}"
-                          : ddaycalc(query['final_day2']) == 0
-                          ? "D-day" : "finished project",
+                      Text(
+                          ddaycalc(query['final_day2']) > 0
+                              ? "D- ${ddaycalc(query['final_day2'])}"
+                              : ddaycalc(query['final_day2']) == 0
+                                  ? "D-day"
+                                  : "finished project",
                           style: labelLargeStyle(color: Color(0xff9FA5B2))),
                     ],
                   ),
@@ -150,7 +162,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                         "100",
                         style: labelLargeStyle(color: Color(0xff1A1A1A))),
                   ),
-                  for (int i = 0; i < query['category'].length; i++)
+                  for (int i = 0; i < query['object'].length; i++)
                     Padding(
                       padding: EdgeInsets.only(right: 10),
                       //height: 25.h,
@@ -170,22 +182,13 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                                 left: size.width * 0.02,
                                 right: size.width * 0.02),
                             child: Center(
-                              child: Text(query['category'][i],
+                              child: Text(query['object'][i],
                                   style: labelMediumStyle(
                                       color: Color(0xff1A1A1A))),
                               // Text('기업',
                               //     style: labelMediumStyle(color: Color(0xff9FA5B2))),
                             ),
                           )),
-                      // Chip(
-                      //   label: Text(query['category'][i],
-                      //       style: labelMediumStyle(color: Color(0xff1A1A1A))),
-                      //   backgroundColor: Color(0xFFF3F4F5),
-                      //   deleteIcon: Icon(
-                      //     Icons.close,
-                      //     size: 8,
-                      //   ),
-                      // ),
                     ),
                 ],
               ),
@@ -193,7 +196,8 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
               ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
                 child: LinearProgressIndicator(
-                  value: query['url'].length/query['size'], //int.parse(query['percentage'].toString()) * 0.01,
+                  value: query['url'].length / query['size'],
+                  //int.parse(query['percentage'].toString()) * 0.01,
                   minHeight: size.height * 0.015,
                   valueColor: AlwaysStoppedAnimation(primary[50]),
                   backgroundColor: primary[0]!.withOpacity(0.05),
@@ -504,6 +508,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
 
                                   print(query['id']);
                                   var userlist = query['part_user'];
+                                  print(userlist);
                                   if (!userlist.contains(
                                       '${FirebaseAuth.instance.currentUser!.email!}'))
                                     userlist.add(
@@ -516,8 +521,36 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                                     'participate': 1,
                                     'part_user': userlist
                                   });
+
+
+                                  for (int i = 0;
+                                      i < query['object'].length; i++) {
+                                    if (!user_object.contains(query['object'][i])) {
+                                      user_object.add(query['object'][i]);
+                                    }
+                                  }
+
+                                  print("user_object${user_object}");
+
+                                  // //감지 객체 저장
+                                  FirebaseFirestore.instance
+                                      .collection('user')
+                                      .doc(FirebaseAuth
+                                          .instance.currentUser!.email!)
+                                      .update({'object': user_object});
+
+                                  // Navigator.push(
+                                  //     context,
+                                  //     MaterialPageRoute(
+                                  //       builder: (BuildContext context) =>
+                                  //           MainHomePage(),
+                                  //     ));
+
+
                                   Navigator.pop(context);
                                   Navigator.pop(context);
+
+
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(

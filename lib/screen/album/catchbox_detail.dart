@@ -96,7 +96,8 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
     return FirebaseFirestore.instance
         .collection('category')
         .doc("${FirebaseAuth.instance.currentUser!.email!}")
-        .collection(query['category'])
+        .collection(query['category']).
+        orderBy('time', descending: true) //desencding ture : 최신순
         .snapshots();
   }
 
@@ -831,11 +832,12 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                         ),
                                         TextButton(
                                             onPressed: (){
-                                              print('1/12');
+                                              print('1/12 ${query['category']}');
+
                                               check_num=0;
                                               for(int i = 0; i< 1000; i++){
                                                 if(_checks_docs[i] != ''){
-                                                  FirebaseFirestore.instance.collection('category').doc("1234@handong.ac.kr").collection(query['category']).doc(_checks_docs[i]).delete();
+                                                  FirebaseFirestore.instance.collection('category').doc(FirebaseAuth.instance.currentUser!.email!).collection(query['category']).doc(_checks_docs[i]).delete();
                                                 }
                                               }
                                               setState(() {

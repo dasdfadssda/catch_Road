@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_switch/sliding_switch.dart';
@@ -16,6 +17,9 @@ import 'projectPage/progect_main.dart';
 
 List<CameraDescription> cameras = [];
 int selectedIndex0 = 0;
+List user_object=[];
+var user_Information;
+
 List<Color> main_colorList=[Color(0xff3A94EE),Color(0xffCFD2D9),Color(0xffCFD2D9),Color(0xffCFD2D9)];
 
 class MainHomePage extends StatefulWidget {
@@ -62,6 +66,19 @@ class _HomePageState extends State<MainHomePage> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+
+    FirebaseFirestore.instance
+        .collection("user")
+        .doc("${FirebaseAuth.instance.currentUser!.email}")
+        .get()
+        .then((DocumentSnapshot ds) async {
+      user_Information = await ds.data();
+      user_object = user_Information['object'];
+      print(user_object);
+      print("user_object${user_object}");
+    });
+
+
     return Scaffold(
       body: SafeArea(
         child: _widgetOptions.elementAt(selectedIndex0),

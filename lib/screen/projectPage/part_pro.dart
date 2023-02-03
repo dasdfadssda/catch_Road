@@ -80,10 +80,16 @@ class _partiprojectPageState extends State<partiprojectPage> {
                                           top: size.height * 0.03,
                                           left: size.width * 0.045),
                                       child: Text(
-                                        "D-" +
-                                            snapshot.data!
-                                                .docs[index]['final_day']
-                                                .toString(),
+                                        ddaycalc(snapshot.data!.docs[index]
+                                        ['final_day2']) >
+                                            0
+                                            ? "D- ${ddaycalc(snapshot.data!.docs[index]['final_day2'])}"
+                                            : ddaycalc(snapshot
+                                            .data!.docs[index]
+                                        ['final_day2']) ==
+                                            0
+                                            ? "D-day"
+                                            : "finished project",
                                         style: labelSmallStyle(
                                             color: Color(0xff9FA5B2)),
                                       ),
@@ -156,12 +162,7 @@ class _partiprojectPageState extends State<partiprojectPage> {
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(46)),
                                             child: LinearProgressIndicator(
-                                              value: snapshot
-                                                  .data!
-                                                  .docs[index]
-                                              ['percentage']
-                                                  .toDouble() *
-                                                  0.01,
+                                              value:  snapshot.data!.docs[index]['url'].length/snapshot.data!.docs[index]['size'],
                                               valueColor: !snapshot
                                                   .data!
                                                   .docs[index]

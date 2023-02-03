@@ -141,7 +141,7 @@ class _BndBoxState extends State<BndBox> {
               top: math.max(0, y),
               width: w,
               height: h,
-              child: object_list.contains(re["detectedClass"])||re["detectedClass"]=='keyboard'||re["detectedClass"]=='stop sign'||re["detectedClass"]=='person'||re["detectedClass"]=='car'? Container(
+              child: c_object_list.contains(re["detectedClass"])||re["detectedClass"]=='keyboard'||re["detectedClass"]=='stop sign'||re["detectedClass"]=='person'||re["detectedClass"]=='car'? Container(
                   padding: EdgeInsets.fromLTRB(10, 20, 30, 40),
                   decoration: BoxDecoration(
                     border: Border.all(

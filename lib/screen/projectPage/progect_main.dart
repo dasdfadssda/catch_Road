@@ -8,12 +8,17 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:sliding_switch/sliding_switch.dart';
+import '../../main.dart';
 import '../../utils/app_text_styles.dart';
+import '../mainHome.dart';
 import '../notFound.dart';
+import 'Create_Bproject2.dart';
 import 'create_bproject.dart';
 import 'create_pproject.dart';
 
 bool part = false;
+
+
 
 class projectPage extends StatefulWidget {
   const projectPage({super.key});
@@ -25,6 +30,8 @@ class projectPage extends StatefulWidget {
 class _projectPageState extends State<projectPage> {
   @override
   Widget build(BuildContext context) {
+    print("main_user_object${user_object}");
+
     final Size size = MediaQuery.of(context).size;
     String email = '1234@handong.ac.kr';
     return Scaffold(
@@ -593,7 +600,7 @@ class _projectPageState extends State<projectPage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) => CreateBproject(),
+                      builder: (BuildContext context) => CreateBproject2(),
                     ));
               }),
           SpeedDialChild(

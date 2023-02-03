@@ -123,8 +123,8 @@ class _MyHomePageState extends State<MyHomePage> {
     return Container(
       margin: EdgeInsets.fromLTRB(50, 0, 8, 3),
       padding: _road
-          ? EdgeInsets.fromLTRB(14, 8.5, 14, 7)
-          : EdgeInsets.fromLTRB(15, 8.5, 15, 7),
+          ? EdgeInsets.fromLTRB(14, 8.5, 0, 7)
+          : EdgeInsets.fromLTRB(15, 8.5, 0, 7),
       height: 30,
       child: _road
           ? Text('도로 위가 궁금해요',
@@ -234,7 +234,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: Text('취소',
                             style: labelSmallStyle(color: Color(0XFF9FA5B2))),
                       ),
-                      SizedBox(width: 210),
+                      SizedBox(width: 100),
                       TextButton(
                         onPressed: () {
                           setState(() {
