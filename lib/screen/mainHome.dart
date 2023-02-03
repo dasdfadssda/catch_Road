@@ -3,7 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_switch/sliding_switch.dart';
-
+import '../Auth/auth_service.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 import '../utils/app_text_styles.dart';
 import 'Camera/camera_load.dart';
@@ -164,6 +165,11 @@ class _HomePageState extends State<MainHomePage> {
       ),
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterDocked,
+
+
+      //floatingActionButton: floatingButtons(),
     );
+
   }
+
 }
