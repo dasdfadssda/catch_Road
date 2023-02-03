@@ -313,7 +313,7 @@ class _CreateBprojectState extends State<CreateBproject> {
                   TextFormField(
                     controller: _compNameController,
                     autocorrect: false,
-                    autofocus: true,
+                   // autofocus: true,
                     style: textTheme.labelLarge!,
                     decoration: InputDecoration(
                       filled: true,
@@ -346,7 +346,7 @@ class _CreateBprojectState extends State<CreateBproject> {
                   //대표자 성명
                   SizedBox(height: 12),
                   TextFormField(
-                    autofocus: true,
+                  // autofocus: true,
                     controller: _ceoNameController,
                     autocorrect: true,
                     style: textTheme.labelLarge!,
@@ -381,7 +381,7 @@ class _CreateBprojectState extends State<CreateBproject> {
                   //담당자 성명
                   SizedBox(height: 12),
                   TextFormField(
-                    autofocus: true,
+                   // autofocus: true,
                     controller: _managerNameController,
                     autocorrect: true,
                     style: textTheme.labelLarge!,
@@ -498,7 +498,7 @@ class _CreateBprojectState extends State<CreateBproject> {
                   //연락처
                   SizedBox(height: 12),
                   TextFormField(
-                    autofocus: true,
+                    //autofocus: true,
                     controller: _phoneNumberController,
                     autocorrect: true,
                     style: textTheme.labelLarge!,
@@ -533,7 +533,7 @@ class _CreateBprojectState extends State<CreateBproject> {
                   //이메일
                   SizedBox(height: 12),
                   TextFormField(
-                    autofocus: true,
+                    //autofocus: true,
                     controller: _emailController,
                     autocorrect: true,
                     style: textTheme.labelLarge!,
@@ -691,7 +691,7 @@ class _CreateBprojectState extends State<CreateBproject> {
                                   return StatefulBuilder(
                                       builder: (BuildContext context, StateSetter setState) {
                                         return SizedBox(
-                                            height: MediaQuery.of(context).size.height * 0.4,
+                                            height: MediaQuery.of(context).size.height * 0.6,
                                             child: Column(
                                                 children: [
                                                   Container(
@@ -728,7 +728,9 @@ class _CreateBprojectState extends State<CreateBproject> {
                                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                       children: [
                                                         TextButton(child:Text("취소", style: buttonLargeStyle().copyWith(color:Color(0XFF9FA5B2)),),onPressed: (){},),
-                                                        TextButton(child:Text("확인", style: buttonLargeStyle().copyWith(color:primary[50]),),onPressed: (){},),
+                                                        TextButton(child:Text("확인", style: buttonLargeStyle().copyWith(color:primary[50]),),onPressed: (){
+
+                                                        },),
                                                         //background: #9FA5B2;
                                                       ],
                                                     ),
@@ -758,7 +760,7 @@ class _CreateBprojectState extends State<CreateBproject> {
                           Container(
                             width: 70,
                             child: TextFormField(
-                              autofocus: true,
+                             // autofocus: true,
                               controller: _quantityController,
                               keyboardType: TextInputType.number,
                               autocorrect: true,
@@ -1310,7 +1312,7 @@ class _CreateBprojectState extends State<CreateBproject> {
                   //내용 설명
                   SizedBox(height: 5),
                   TextFormField(
-                    autofocus: true,
+                   // autofocus: true,
                     controller: _contextController,
                     autocorrect: true,
                     style: textTheme.labelLarge!,

@@ -1,21 +1,28 @@
 import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:intl/intl.dart';
 import 'dart:math' as math;
 import 'package:tflite/tflite.dart';
+import '../../main.dart';
+import '../mainHome.dart';
 import 'camera_bndbox.dart';
 import 'package:flutter/rendering.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'camera_viewer.dart';
 import 'image_convert.dart';
 import 'package:image/image.dart' as imageLib;
 
 var globalKey = new GlobalKey();
 String mode = "auto";
-var object_list = [];
+var c_object_list = [];
+List eng_objectList=[];
+
+String bike="자전거";
 
 class CameraPage extends StatefulWidget {
   final List<CameraDescription> cameras;
@@ -32,12 +39,63 @@ class _CameraPageState extends State<CameraPage> {
   int _imageWidth = 0;
   bool objectSelect = false;
 
+
+
+
+
   String _model = 'SSD MobileNet';
   FirebaseStorage storage = FirebaseStorage.instance;
 
   @override
   void initState() {
     super.initState();
+    // print("영어로 바꾸기");
+    for (int i = 0; i < user_object.length; i++) {
+      print(user_object[i]);
+      if (user_object[i] == "자전거") {
+        if(!eng_objectList.contains("bicycle")) eng_objectList.add("bicycle");
+      }
+      if (user_object[i] == "자동차") {
+        if(!eng_objectList.contains("car"))eng_objectList.add("car");
+      }
+      if (user_object[i] == "오토바이") {
+
+        if(!eng_objectList.contains("motorcycle")) eng_objectList.add("motorcycle");
+      }
+      if (user_object[i] == "버스") {
+        if(!eng_objectList.contains("bus"))eng_objectList.add("bus");
+      }
+      if (user_object[i] == "신호등") {
+        if(!eng_objectList.contains("traffic light")) eng_objectList.add("traffic light");
+      }
+      if (user_object[i] == "기차") {
+        if(!eng_objectList.contains("train")) eng_objectList.add("train");
+      }
+      if (user_object[i] == "트럭") {
+        if(!eng_objectList.contains("truck")) eng_objectList.add("truck");
+      }
+      if (user_object[i] == "소화전") {
+        if(!eng_objectList.contains("fire hydrant"))eng_objectList.add("fire hydrant");
+      }
+      if (user_object[i] == "정지표지판") {
+        if(!eng_objectList.contains("stop sign"))eng_objectList.add("stop sign");
+      }
+      if (user_object[i] == "벤치") {
+        if(!eng_objectList.contains("bench"))eng_objectList.add("bench");
+      }
+      if (user_object[i] == "고양이") {
+        if(!eng_objectList.contains("cat"))eng_objectList.add("cat");
+      }
+      if (user_object[i] == "개") {
+        if(!eng_objectList.contains("dog"))eng_objectList.add("dog");
+      }
+      if (user_object[i] == "키보드") {
+        if(!eng_objectList.contains("keyboard"))eng_objectList.add("keyboard");
+      }
+    }
+
+
+
     onSelect("SSDMobileNet");
   }
 
@@ -121,6 +179,10 @@ class _CameraPageState extends State<CameraPage> {
 
   @override
   Widget build(BuildContext context) {
+    dynamic userInform2;
+
+
+
     return Scaffold(
       body: Stack(
         children: [
@@ -172,7 +234,11 @@ class _CameraPageState extends State<CameraPage> {
                           GestureDetector(
                             onTap: () {
                               setState(() {
+
                                 objectSelect = false;
+
+
+
                               });
                             },
                             child: SizedBox(
@@ -192,142 +258,118 @@ class _CameraPageState extends State<CameraPage> {
                       Row(
                         children: [
                           SizedBox(
-                            width: 24,
+                            width: 10,
                           ),
-                          InkWell(
-                            child: Container(
-                              padding: EdgeInsets.only(top: 17),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(16.0)),
-                              width: 148,
-                              height: 80,
-                              //   color:Colors.white,
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 38,
-                                  ),
-                                  Column(
-                                    children: [
-                                      Icon(
-                                        size: 30,
-                                        Icons.person,
-                                        color: object_list.contains("person")
-                                            ? Colors.blue
-                                            : Colors.grey,
-                                      ),
-                                      SizedBox(
-                                        height: 4,
-                                      ),
-                                      Text('사람',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color:
-                                                object_list.contains("person")
-                                                    ? Colors.blue
-                                                    : Colors.grey,
-                                          )),
-                                    ],
-                                  ),
-                                  SizedBox(width: 30),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    // mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SizedBox(height: 9),
-                                      Icon(
-                                        size: 24,
-                                        Icons.check,
-                                        color: object_list.contains("person")
-                                            ? Colors.blue
-                                            : Colors.grey,
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
+                          Container(
+                            padding: EdgeInsets.only(top: 5),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10.0)),
+                            width: 100,
+                            height: 50,
+                            //   color:Colors.white,
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Icon(
+                                  size: 30,
+                                  Icons.directions_bike_outlined,
+                                  color: user_object.contains("자전거")
+                                      ? Colors.blue
+                                      : Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text('자전거',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color:
+                                      user_object.contains("자전거")
+                                          ? Colors.blue
+                                          : Colors.grey,
+                                    )),
+
+                              ],
                             ),
-                            onTap: () {
-                              setState(() {
-                                if (object_list.contains("person")) {
-                                  object_list.remove("person");
-                                } else {
-                                  object_list.add("person");
-                                }
-                                print(object_list);
-                              });
-                            },
                           ),
-                          SizedBox(
-                            width: 16,
-                          ),
-                          InkWell(
-                            child: Container(
-                              padding: EdgeInsets.only(top: 17),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(16.0)),
-                              width: 148,
-                              height: 80,
-                              //   color:Colors.white,
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 38,
-                                  ),
-                                  Column(
-                                    children: [
-                                      Icon(
-                                        size: 30,
-                                        Icons.car_crash_outlined,
-                                        color: object_list.contains("car")
-                                            ? Colors.blue
-                                            : Colors.grey,
-                                      ),
-                                      SizedBox(
-                                        height: 4,
-                                      ),
-                                      Text('자동차',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: object_list.contains("car")
-                                                ? Colors.blue
-                                                : Colors.grey,
-                                          )),
-                                    ],
-                                  ),
-                                  SizedBox(width: 30),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    // mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SizedBox(height: 9),
-                                      Icon(
-                                        size: 24,
-                                        Icons.check,
-                                        color: object_list.contains("car")
-                                            ? Colors.blue
-                                            : Colors.grey,
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
+                          SizedBox(width: 16,),
+                          Container(
+                            padding: EdgeInsets.only(top: 5),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10.0)),
+                            width: 100,
+                            height: 50,
+                            //   color:Colors.white,
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Icon(
+                                  size: 30,
+                                  Icons.car_crash_outlined,
+                                  color: user_object.contains("자동차")
+                                      ? Colors.blue
+                                      : Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Text('자동차',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color:
+                                      user_object.contains("자동차")
+                                          ? Colors.blue
+                                          : Colors.grey,
+                                    )),
+
+                              ],
                             ),
-                            onTap: () {
-                              setState(() {
-                                if (object_list.contains("car")) {
-                                  object_list.remove("car");
-                                } else {
-                                  object_list.add("car");
-                                }
-                                print(object_list);
-                              });
-                            },
                           ),
+                          SizedBox(width: 16,),
+                          Container(
+                            padding: EdgeInsets.only(top: 5),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10.0)),
+                            width: 100,
+                            height: 50,
+                            //   color:Colors.white,
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Icon(
+                                  size: 30,
+                                  Icons.directions_bus,
+                                  color: user_object.contains("버스")
+                                      ? Colors.blue
+                                      : Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Text('버스',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color:
+                                      user_object.contains("버스")
+                                          ? Colors.blue
+                                          : Colors.grey,
+                                    )),
+
+                              ],
+                            ),
+                          ),
+
+
+
                         ],
                       ),
                       SizedBox(
@@ -336,144 +378,236 @@ class _CameraPageState extends State<CameraPage> {
                       Row(
                         children: [
                           SizedBox(
-                            width: 24,
+                            width: 10,
                           ),
-                          InkWell(
-                            child: Container(
-                              padding: EdgeInsets.only(top: 17),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10.0)),
-                              width: 148,
-                              height: 80,
-                              //   color:Colors.white,
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 38,
-                                  ),
-                                  Column(
-                                    children: [
-                                      Icon(
-                                        size: 30,
-                                        Icons.motorcycle_sharp,
-                                        color:
-                                            object_list.contains("motorcycle")
-                                                ? Colors.blue
-                                                : Colors.grey,
-                                      ),
-                                      SizedBox(
-                                        height: 4,
-                                      ),
-                                      Text('오토바이',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: object_list
-                                                    .contains("motorcycle")
-                                                ? Colors.blue
-                                                : Colors.grey,
-                                          )),
-                                    ],
-                                  ),
-                                  SizedBox(width: 18),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    // mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SizedBox(height: 9),
-                                      Icon(
-                                        size: 24,
-                                        Icons.check,
-                                        color:
-                                            object_list.contains("motorcycle")
-                                                ? Colors.blue
-                                                : Colors.grey,
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
+                          Container(
+                            padding: EdgeInsets.only(top: 5),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10.0)),
+                            width: 100,
+                            height: 50,
+                            //   color:Colors.white,
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Icon(
+                                  size: 30,
+                                  Icons.motorcycle_sharp,
+                                  color: user_object.contains("오토바이")
+                                      ? Colors.blue
+                                      : Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text('오토바이',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color:
+                                      user_object.contains("오토바이")
+                                          ? Colors.blue
+                                          : Colors.grey,
+                                    )),
+
+                              ],
                             ),
-                            onTap: () {
-                              setState(() {
-                                if (object_list.contains("motorcycle")) {
-                                  object_list.remove("motorcycle");
-                                } else {
-                                  object_list.add("motorcycle");
-                                }
-                                print(object_list);
-                              });
-                            },
                           ),
+                          SizedBox(width: 16,),
+                          Container(
+                            padding: EdgeInsets.only(top: 5),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10.0)),
+                            width: 100,
+                            height: 50,
+                            //   color:Colors.white,
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Icon(
+                                  size: 30,
+                                  Icons.traffic_rounded,
+                                  color: user_object.contains("신호등")
+                                      ? Colors.blue
+                                      : Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Text('신호등',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color:
+                                      user_object.contains("신호등")
+                                          ? Colors.blue
+                                          : Colors.grey,
+                                    )),
+
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 16,),
+                          Container(
+                            padding: EdgeInsets.only(top: 5),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10.0)),
+                            width: 100,
+                            height: 50,
+                            //   color:Colors.white,
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Icon(
+                                  size: 30,
+                                  Icons.train,
+                                  color: user_object.contains("기차")
+                                      ? Colors.blue
+                                      : Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Text('기차',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color:
+                                      user_object.contains("기차")
+                                          ? Colors.blue
+                                          : Colors.grey,
+                                    )),
+
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      SizedBox(
+                        height: 16,
+                      ),
+                      Row(
+                        children: [
                           SizedBox(
-                            width: 16,
+                            width: 10,
                           ),
-                          InkWell(
-                            child: Container(
-                              padding: EdgeInsets.only(top: 17),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(16.0)),
-                              width: 148,
-                              height: 80,
-                              //   color:Colors.white,
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 38,
-                                  ),
-                                  Column(
-                                    children: [
-                                      Icon(
-                                        size: 30,
-                                        Icons.directions_bus_filled_sharp,
-                                        color: object_list.contains("bus")
-                                            ? Colors.blue
-                                            : Colors.grey,
-                                      ),
-                                      SizedBox(
-                                        height: 4,
-                                      ),
-                                      Text('버스',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: object_list.contains("bus")
-                                                ? Colors.blue
-                                                : Colors.grey,
-                                          )),
-                                    ],
-                                  ),
-                                  SizedBox(width: 30),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    // mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SizedBox(height: 9),
-                                      Icon(
-                                        size: 24,
-                                        Icons.check,
-                                        color: object_list.contains("bus")
-                                            ? Colors.blue
-                                            : Colors.grey,
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
+                          Container(
+                            padding: EdgeInsets.only(top: 5),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10.0)),
+                            width: 100,
+                            height: 50,
+                            //   color:Colors.white,
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Icon(
+                                  size: 30,
+                                  Icons.fire_truck,
+                                  color: user_object.contains("트럭")
+                                      ? Colors.blue
+                                      : Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text('트럭',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color:
+                                      user_object.contains("트럭")
+                                          ? Colors.blue
+                                          : Colors.grey,
+                                    )),
+
+                              ],
                             ),
-                            onTap: () {
-                              setState(() {
-                                if (object_list.contains("bus")) {
-                                  object_list.remove("bus");
-                                } else {
-                                  object_list.add("bus");
-                                }
-                                print(object_list);
-                              });
-                            },
                           ),
+                          SizedBox(width: 16,),
+                          Container(
+                            padding: EdgeInsets.only(top: 5),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10.0)),
+                            width: 100,
+                            height: 50,
+                            //   color:Colors.white,
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Icon(
+                                  size: 30,
+                                  Icons.fire_hydrant,
+                                  color: user_object.contains("소화전")
+                                      ? Colors.blue
+                                      : Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Text('소화전',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color:
+                                      user_object.contains("소화전")
+                                          ? Colors.blue
+                                          : Colors.grey,
+                                    )),
+
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 16,),
+                          Container(
+                            padding: EdgeInsets.only(top: 5),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10.0)),
+                            width: 100,
+                            height: 50,
+                            //   color:Colors.white,
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Icon(
+                                  size: 30,
+                                  Icons.stop_circle_rounded,
+                                  color: user_object.contains("정지표시판")
+                                      ? Colors.blue
+                                      : Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Text('표지판',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color:
+                                      user_object.contains("정지표시판")
+                                          ? Colors.blue
+                                          : Colors.grey,
+                                    )),
+
+                              ],
+                            ),
+                          ),
+
+
+
                         ],
                       ),
                       SizedBox(
@@ -482,147 +616,121 @@ class _CameraPageState extends State<CameraPage> {
                       Row(
                         children: [
                           SizedBox(
-                            width: 24,
+                            width: 10,
                           ),
-                          InkWell(
-                            child: Container(
-                              padding: EdgeInsets.only(top: 17),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(16.0)),
-                              width: 148,
-                              height: 80,
-                              //   color:Colors.white,
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 38,
-                                  ),
-                                  Column(
-                                    children: [
-                                      Icon(
-                                        size: 30,
-                                        Icons.pedal_bike_outlined,
-                                        color: object_list.contains("bicycle")
-                                            ? Colors.blue
-                                            : Colors.grey,
-                                      ),
-                                      SizedBox(
-                                        height: 4,
-                                      ),
-                                      Text('자전거',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color:
-                                                object_list.contains("bicycle")
-                                                    ? Colors.blue
-                                                    : Colors.grey,
-                                          )),
-                                    ],
-                                  ),
-                                  SizedBox(width: 30),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    // mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SizedBox(height: 9),
-                                      Icon(
-                                        size: 24,
-                                        Icons.check,
-                                        color: object_list.contains("bicycle")
-                                            ? Colors.blue
-                                            : Colors.grey,
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
+                          Container(
+                            padding: EdgeInsets.only(top: 5),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10.0)),
+                            width: 100,
+                            height: 50,
+                            //   color:Colors.white,
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Icon(
+                                  size: 30,
+                                  Icons.chair_alt,
+                                  color: user_object.contains("벤치")
+                                      ? Colors.blue
+                                      : Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text('벤치',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color:
+                                      user_object.contains("벤치")
+                                          ? Colors.blue
+                                          : Colors.grey,
+                                    )),
+
+                              ],
                             ),
-                            onTap: () {
-                              setState(() {
-                                if (object_list.contains("bicycle")) {
-                                  object_list.remove("bicycle");
-                                } else {
-                                  object_list.add("bicycle");
-                                }
-                                print(object_list);
-                              });
-                            },
                           ),
-                          SizedBox(
-                            width: 16,
-                          ),
-                          InkWell(
-                            child: Container(
-                              padding: EdgeInsets.only(top: 17),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(16.0)),
-                              width: 148,
-                              height: 80,
-                              //   color:Colors.white,
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 38,
-                                  ),
-                                  Column(
-                                    children: [
-                                      Icon(
-                                        size: 30,
-                                        Icons.traffic_rounded,
-                                        color: object_list
-                                                .contains("traffic light")
-                                            ? Colors.blue
-                                            : Colors.grey,
-                                      ),
-                                      SizedBox(
-                                        height: 4,
-                                      ),
-                                      Text('신호등',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: object_list
-                                                    .contains("traffic light")
-                                                ? Colors.blue
-                                                : Colors.grey,
-                                          )),
-                                    ],
-                                  ),
-                                  SizedBox(width: 30),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    // mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SizedBox(height: 9),
-                                      Icon(
-                                        size: 24,
-                                        Icons.check,
-                                        color: object_list
-                                                .contains("traffic light")
-                                            ? Colors.blue
-                                            : Colors.grey,
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
+                          SizedBox(width: 16,),
+                          Container(
+                            padding: EdgeInsets.only(top: 5),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10.0)),
+                            width: 100,
+                            height: 50,
+                            //   color:Colors.white,
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Icon(
+                                  size: 30,
+                                  Icons.adb_outlined,
+                                  color: user_object.contains("고양이")
+                                      ? Colors.blue
+                                      : Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Text('고양이',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color:
+                                      user_object.contains("고양이")
+                                          ? Colors.blue
+                                          : Colors.grey,
+                                    )),
+
+                              ],
                             ),
-                            onTap: () {
-                              setState(() {
-                                if (object_list.contains("traffic light")) {
-                                  object_list.remove("traffic light");
-                                } else {
-                                  object_list.add("traffic light");
-                                }
-                                print(object_list);
-                              });
-                            },
                           ),
+                          SizedBox(width: 16,),
+                          Container(
+                            padding: EdgeInsets.only(top: 5),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10.0)),
+                            width: 100,
+                            height: 50,
+                            //   color:Colors.white,
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Icon(
+                                  size: 30,
+                                  Icons.adb_outlined,
+                                  color: user_object.contains("개")
+                                      ? Colors.blue
+                                      : Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Text('개',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: user_object.contains("개")
+                                          ? Colors.blue
+                                          : Colors.grey,
+                                    )),
+
+                              ],
+                            ),
+                          ),
+
+
+
                         ],
                       ),
+
+
                     ],
                   ))
               : Container(
@@ -656,6 +764,7 @@ class _CameraPageState extends State<CameraPage> {
                             onTap: () {
                               setState(() {
                                 objectSelect = true;
+
                               });
                             },
                             child: SizedBox(

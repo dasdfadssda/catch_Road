@@ -1,4 +1,3 @@
-
 import 'package:catch2_0_1/LoginPage.dart';
 import 'package:catch2_0_1/main.dart';
 import 'package:catch2_0_1/screen/MyPage/MyCash.dart';
@@ -17,7 +16,7 @@ import 'editMyinfo.dart';
 import 'makeAccount.dart';
 
 dynamic userInform;
-String UserNickName='';
+String UserNickName = '';
 
 class MYPage extends StatefulWidget {
   const MYPage({super.key});
@@ -27,27 +26,30 @@ class MYPage extends StatefulWidget {
 }
 
 class _MYPageState extends State<MYPage> {
-
   @override
-  void initState(){
-    FirebaseFirestore.instance.collection("user").doc("${FirebaseAuth.instance.currentUser!.email}").get().then((DocumentSnapshot ds)async{
-      userInform=await ds.data();
+  void initState() {
+    FirebaseFirestore.instance
+        .collection("user")
+        .doc("${FirebaseAuth.instance.currentUser!.email}")
+        .get()
+        .then((DocumentSnapshot ds) async {
+      userInform = await ds.data();
 
       print(userInform['name']);
-      print(userInform['birth'].toString().substring(0,4));
-      birthyear=userInform['birth'].toString().substring(0,4);
-      birthmonth=userInform['birth'].toString().substring(6,7);
-      birthday=userInform['birth'].toString().substring(9,10);
-      UserNickName=userInform['NickName']!;
-    }
-    );
+      print(userInform['birth'].toString().substring(0, 4));
 
+      setState(() {
+        birthyear = userInform['birth'].toString().substring(0, 4);
+        birthmonth = userInform['birth'].toString().substring(6, 7);
+        birthday = userInform['birth'].toString().substring(9, 10);
+        UserNickName = userInform['NickName']!;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-
 
     return Scaffold(
       appBar: AppBar(
@@ -94,7 +96,8 @@ class _MYPageState extends State<MYPage> {
                                   child: Row(
                                     children: [
                                       Text(
-                                        '${UserNickName}',//FirebaseAuth.instance.currentUser!.displayName!
+                                        '${UserNickName}',
+                                        //FirebaseAuth.instance.currentUser!.displayName!
                                         style: titleMediumStyle(
                                             color: Colors.black),
                                       ),
@@ -111,7 +114,8 @@ class _MYPageState extends State<MYPage> {
                                   top: size.height * 0.035,
                                   left: size.width * 0.04),
                               child: Text(
-                                '${FirebaseAuth.instance.currentUser!.email!}',//FirebaseAuth.instance.currentUser!.email!
+                                '${FirebaseAuth.instance.currentUser!.email!}',
+                                //FirebaseAuth.instance.currentUser!.email!
                                 style:
                                     labelSmallStyle(color: Color(0xff9FA5B2)),
                               ),
@@ -242,12 +246,12 @@ class _MYPageState extends State<MYPage> {
             MyWidget().DivderLine(),
             //_buildListTileButton('결제 정보 수정', 'myPayInformation'),
             _buildListTileButton('계좌 정보 수정', 'myBankInformation'),
-           // MyWidget().DivderLine(),
+            // MyWidget().DivderLine(),
             //_buildListTileButton('공지 사항', 'announcement'),
             //_buildListTileButton('약관 및 개인정보 처리', 'myInformation'),
             MyWidget().DivderLine(),
-            _buildListTileButton(
-                '로그아웃', 'logout'), // 1.10일 mypage 회원 탈퇴 부분 여기까지
+            _buildListTileButton('로그아웃', 'logout'),
+            // 1.10일 mypage 회원 탈퇴 부분 여기까지
             Padding(
               padding: EdgeInsets.only(
                   left: size.width * 0.015, bottom: size.height * 0.05),
@@ -317,12 +321,12 @@ class _MYPageState extends State<MYPage> {
           if (route == 'logout') {
             print('logout');
             _showSnapBarForLogOut(context);
-          }  else if (route == 'myJoinProject') {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => partiprojectPage()),
-      );}
-          else if (route == 'myBankInformation') {
+          } else if (route == 'myJoinProject') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => partiprojectPage()),
+            );
+          } else if (route == 'myBankInformation') {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => makeAccount()),
@@ -371,15 +375,18 @@ class _MYPageState extends State<MYPage> {
                       ),
                       SizedBox(width: 150),
                       TextButton(
-                        onPressed: ()async {
+                        onPressed: () async {
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => MyApp()),
                           );
                           await signOut();
+                          user_object=[];
+                          print('초기화$user_object');
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => LoginPage()),
+                            MaterialPageRoute(
+                                builder: (context) => LoginPage()),
                           );
                         },
                         child: Text('확인',
@@ -419,7 +426,8 @@ class _MYPageState extends State<MYPage> {
                 Container(
                   margin: EdgeInsets.fromLTRB(20, 15, 20, 5),
                   child: Text(
-                    "${FirebaseAuth.instance.currentUser!.email!}님, 탈퇴시 삭제/유지되는 정보를 확인해주세요!\n한 번 삭제된 정보는 복구가 불가능합니다.",//FirebaseAuth.instance.currentUser!.displayName!
+                    "${FirebaseAuth.instance.currentUser!.email!}님, 탈퇴시 삭제/유지되는 정보를 확인해주세요!\n한 번 삭제된 정보는 복구가 불가능합니다.",
+                    //FirebaseAuth.instance.currentUser!.displayName!
                     style: labelLargeStyle(color: Colors.grey),
                     textAlign: TextAlign.center,
                   ),
@@ -457,9 +465,10 @@ class _MYPageState extends State<MYPage> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => LoginPage()),
+                            MaterialPageRoute(
+                                builder: (context) => LoginPage()),
                           );
-                         // deleteUserFromFirebase();
+                          // deleteUserFromFirebase();
                         },
                         child: Text('탈퇴하기',
                             style: labelMediumStyle(color: Color(0XFF3A94EE))),

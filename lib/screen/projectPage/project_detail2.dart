@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:catch2_0_1/screen/Camera/camera_page.dart';
 import 'package:catch2_0_1/screen/projectPage/progect_main.dart';
 import 'package:catch2_0_1/utils/app_text_styles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,11 +10,16 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../main.dart';
 import '../Camera/camera_load.dart';
+import '../Camera/camera_viewer.dart';
 import '../album/catchbox2.dart';
 import '../mainHome.dart';
 
 List<CameraDescription> cameras = [];
+
+dynamic userInform3;
+// List objectList=[];
 
 class todaycatchdetail3 extends StatefulWidget {
   final QueryDocumentSnapshot query;
@@ -28,7 +34,9 @@ class todaycatchdetail3 extends StatefulWidget {
 class _todaycatchdetail3State extends State<todaycatchdetail3> {
   final QueryDocumentSnapshot query;
 
+
   _todaycatchdetail3State({required this.query});
+
 
   @override
   void initState() {
@@ -36,13 +44,32 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
     initCamera();
   }
 
+
   void initCamera() async {
     cameras = await availableCameras();
   }
 
+  List user_object2=[];
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
+     user_object2=user_object;
+
+    final Size size = MediaQuery
+        .of(context)
+        .size;
+
+
+    // FirebaseFirestore.instance.collection("user").doc(
+    //     "${FirebaseAuth.instance.currentUser!.email}").get().then((
+    //     DocumentSnapshot ds) async {
+    //   userInform3 = await ds.data();
+    //   objectList = userInform3['object'];
+    //   print("here");
+    //   print(objectList);});
+
+
+
+
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -50,9 +77,9 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
           elevation: 1,
           title: Center(
               child: Text(
-            '오늘의 캐치',
-            style: titleMediumStyle(color: Colors.black),
-          )),
+                '오늘의 캐치',
+                style: titleMediumStyle(color: Colors.black),
+              )),
         ),
         body: ListView(padding: EdgeInsets.fromLTRB(24, 40, 24, 32), children: [
           Column(
@@ -64,8 +91,8 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
                       ddaycalc(query['final_day2']) > 0
                           ? "D- ${ddaycalc(query['final_day2'])}"
                           : ddaycalc(query['final_day2']) == 0
-                              ? "D-day"
-                              : "finished project",
+                          ? "D-day"
+                          : "finished project",
                       style: labelLargeStyle(color: Color(0xff9FA5B2))),
                 ],
               ),
@@ -88,33 +115,28 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
                       ],
                     ),
                   ),
-                 Container(
-                  // margin: const EdgeInsets.only(left: 3),
-                   padding: const EdgeInsets.only(right: 0),
-                   width: size.width * 0.067,
-                   child:  IconButton(
-                     padding:const EdgeInsets.all(0.0),
+                  Container(
+                    // margin: const EdgeInsets.only(left: 3),
+                    padding: const EdgeInsets.only(right: 0),
+                    width: size.width * 0.067,
+                    child: IconButton(
+                      padding: const EdgeInsets.all(0.0),
 
-                     iconSize: size.width * 0.067,
-                     icon: Padding(
-                       padding: EdgeInsets.all(0),
-                       child: Icon(Icons.more_vert),
-                     ),
-                     onPressed: () {
+                      iconSize: size.width * 0.067,
+                      icon: Padding(
+                        padding: EdgeInsets.all(0),
+                        child: Icon(Icons.more_vert),
+                      ),
+                      onPressed: () {
+                        print('취소');
+                        print('user_object${user_object}');
                        _showActionSheet(context);
-                       FirebaseFirestore.instance
-                           .collection('project')
-                           .doc(query['id'])
-                           .update({'participate': 0});
 
-                       // Navigator.push(context,
-                       //     MaterialPageRoute(builder: (context) {
-                       //   return MainHomePage();
-                       // }));
-                     },
-                   ),
 
-                 )
+                      },
+                    ),
+
+                  )
                 ],
               ),
               SizedBox(height: size.height * 0.015),
@@ -165,7 +187,7 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
                                 width: 70,
                                 decoration: BoxDecoration(
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(14)),
+                                  BorderRadius.all(Radius.circular(14)),
                                 ),
                                 child: Expanded(
                                     child: Transform.rotate(
@@ -174,8 +196,8 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
                                             query['url'][i],
                                             fit: BoxFit.fill))
 
-                                    //
-                                    )),
+                                  //
+                                )),
                           )),
                   ],
                 ),
@@ -191,7 +213,7 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
                   Text('${query['cash'].toString()}00',
                       style: labelLargeStyle(color: Colors.black)),
                   SizedBox(width: size.width * 0.03),
-                  for (int i = 0; i < query['category'].length; i++)
+                  for (int i = 0; i < query['object'].length; i++)
                     Padding(
                       padding: EdgeInsets.only(right: 10),
                       child: Container(
@@ -209,7 +231,7 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
                                 left: size.width * 0.03,
                                 right: size.width * 0.03),
                             child: Center(
-                              child: Text(query['category'][i],
+                              child: Text(query['object'][i],
                                   style: labelMediumStyle(color: Colors.black)),
                             ),
                           )),
@@ -233,7 +255,8 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text('${query['size']} 중 ${query['url'].length}장이 수집되었어요 !',
+                          Text('${query['size']} 중 ${query['url']
+                              .length}장이 수집되었어요 !',
                               style: labelSmallStyle(color: Color(0xff1A1A1A)))
                         ]),
                   )
@@ -267,8 +290,8 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
 
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return CamerLoad(cameras);
-                        }));
+                              return CamerLoad(cameras);
+                            }));
                         //
                         // Navigator.push(context, MaterialPageRoute(builder: (context) {
                         //   return CameraPage(cameras);
@@ -303,39 +326,61 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
   void _showActionSheet(BuildContext context) {
     showCupertinoModalPopup<void>(
       context: context,
-      builder: (BuildContext context) => CupertinoActionSheet(
-        actions: <CupertinoActionSheetAction>[
-          CupertinoActionSheetAction(
-            isDestructiveAction: true,
-            // isDefaultAction: true,
-            onPressed: () {
-              print(query['id']);
-              var userlist = query['part_user'];
-              print(userlist);
-              userlist.remove(FirebaseAuth.instance.currentUser!.email!);
-              print(userlist);
-              // if(!userlist.contains(FirebaseAuth.instance.currentUser!.email!))
-              //   userlist.add(FirebaseAuth.instance.currentUser!.email!);
+      builder: (BuildContext context) =>
+          CupertinoActionSheet(
+            actions: <CupertinoActionSheetAction>[
+              CupertinoActionSheetAction(
+                isDestructiveAction: true,
+                // isDefaultAction: true,
+                onPressed: () async {
+                  //사용자 지우기
+                  var userlist = query['part_user'];
+                  userlist.remove(FirebaseAuth.instance.currentUser!.email!);
+                  FirebaseFirestore.instance
+                      .collection('project')
+                      .doc(query['id'])
+                      .update({'participate': 1, 'part_user': userlist});
 
-              FirebaseFirestore.instance
-                  .collection('project')
-                  .doc(query['id'])
-                  .update({'participate': 1, 'part_user': userlist});
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return MainHomePage();
-              }));
-            },
-            child: const Text('프로젝트 참여 취소하기'),
+                  print('취소2');
+                  print('삭제전 user_object${user_object}');
+                  print("길이 ${user_object.length}");
+                  int length=user_object.length;
+
+                  for(int i=0;i<query['object'].length;i++){
+                    user_object.remove(query['object'][i]);
+                  }
+
+                  print('삭제후 user_object${user_object}');
+
+
+                  //감지 객체 삭제
+                  FirebaseFirestore.instance
+                      .collection('user')
+                      .doc(
+                      FirebaseAuth.instance.currentUser!.email!)
+                      .update({
+                    'object': user_object,
+                  });
+                  //
+                  //
+                  // eng_objectList = objectList;
+
+
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return MainHomePage();
+                  }));
+                },
+                child: const Text('프로젝트 참여 취소하기'),
+              ),
+            ],
+            cancelButton: CupertinoActionSheetAction(
+              // isDestructiveAction: true,
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('취소'),
+            ),
           ),
-        ],
-        cancelButton: CupertinoActionSheetAction(
-          // isDestructiveAction: true,
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text('취소'),
-        ),
-      ),
     );
   }
 }
