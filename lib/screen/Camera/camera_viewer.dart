@@ -419,13 +419,13 @@ class _CameraViewerState extends State<CameraViewer> {
                     ),
                   )
                 : Container(),
-            Positioned(
-                top: 200,
-                left: 100,
-                child: Text(
-                  '감지객체 :${user_object} ',
-                  style: TextStyle(color: Colors.black),
-                ))
+            // Positioned(
+            //     top: 200,
+            //     left: 100,
+            //     child: Text(
+            //       '감지객체 :${user_object} ',
+            //       style: TextStyle(color: Colors.black),
+            //     ))
           ],
         ));
   }

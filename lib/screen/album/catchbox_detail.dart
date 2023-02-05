@@ -97,7 +97,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
         .collection('category')
         .doc("${FirebaseAuth.instance.currentUser!.email!}")
         .collection(query['category']).
-        orderBy('time', descending: true) //desencding ture : 최신순
+         orderBy('time', descending: true) //desencding ture : 최신순
         .snapshots();
   }
 
@@ -1063,8 +1063,7 @@ class _Catchbox_detailState extends State<Catchbox_detail> {
                                     itemCount: snapshot.data!.docs.length,
                                     padding: EdgeInsets.all(2.0),
                                     itemBuilder: (BuildContext context, int index) {
-                                      QueryDocumentSnapshot x =
-                                      snapshot.data!.docs[index];
+                                      QueryDocumentSnapshot x = snapshot.data!.docs[index];
                                       return InkWell(
                                         onLongPress: () {
                                           setState(() {

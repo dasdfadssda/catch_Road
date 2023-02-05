@@ -304,8 +304,7 @@ class _projectPageState extends State<projectPage> {
                                               left: size.width * 0.01),
                                           child: Text(
                                             snapshot.data!.docs[index]['cash']
-                                                    .toString() +
-                                                "00",
+                                                    .toString(),
                                             style: ddaycalc(snapshot
                                                             .data!.docs[index]
                                                         ['final_day2']) <
@@ -515,8 +514,7 @@ class _projectPageState extends State<projectPage> {
                                               left: size.width * 0.01),
                                           child: Text(
                                             snapshot.data!.docs[index]['cash']
-                                                    .toString() +
-                                                "00",
+                                                    .toString(),
                                             style: ddaycalc(snapshot
                                                             .data!.docs[index]
                                                         ['final_day2']) <
@@ -631,7 +629,7 @@ class _projectPageState extends State<projectPage> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) => notFound(),
+                      builder: (BuildContext context) => CreatePProject(),
                     ));
               }),
         ],

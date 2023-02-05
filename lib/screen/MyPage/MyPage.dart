@@ -34,7 +34,6 @@ class _MYPageState extends State<MYPage> {
         .get()
         .then((DocumentSnapshot ds) async {
       userInform = await ds.data();
-
       print(userInform['name']);
       print(userInform['birth'].toString().substring(0, 4));
 
@@ -43,10 +42,26 @@ class _MYPageState extends State<MYPage> {
         birthmonth = userInform['birth'].toString().substring(6, 7);
         birthday = userInform['birth'].toString().substring(9, 10);
         UserNickName = userInform['NickName']!;
+
+
+
+
       });
     });
   }
 
+  Stream<QuerySnapshot> stream_ordering() {
+    return FirebaseFirestore.instance
+        .collection('user_cash')
+        .doc("${FirebaseAuth.instance.currentUser!.email!}")
+        .collection("${FirebaseAuth.instance.currentUser!.email!}")
+        .snapshots();
+    // return FirebaseFirestore.instance
+    //     .collection('category')
+    //     .doc("${FirebaseAuth.instance.currentUser!.email!}")
+    //     .collection("자동차")
+    //     .snapshots();
+  }
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -181,9 +196,31 @@ class _MYPageState extends State<MYPage> {
                                           labelSmallStyle(color: Colors.white),
                                     ),
                                   ),
-                                  subtitle: Text("10,000",
-                                      style:
-                                          titleLargeStyle(color: Colors.white)),
+                                  subtitle: StreamBuilder<QuerySnapshot>(
+                                      stream: stream_ordering(),
+                                      builder: (context, snapshot) {
+                                        if (snapshot.hasData) {
+                                          if (snapshot.data != null) {
+                                            int total_cash2=0;
+                                            for(int i=0;i< snapshot.data!.docs.length;i++){
+                                              QueryDocumentSnapshot x = snapshot.data!.docs[i];
+                                              int cash=x['cash']* x['image length'];
+                                              total_cash2=total_cash2+cash;
+                                            }
+                                            return Text("${f.format(total_cash2)}",
+                                                style: titleLargeStyle(color: Colors.white)
+                                            );
+
+                                          } else {
+                                            return Container(
+                                            );
+                                          }
+                                        } else {
+                                          return CircularProgressIndicator();
+                                        }
+                                      }),
+
+
                                   textColor: Colors.white,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.only(
@@ -197,7 +234,18 @@ class _MYPageState extends State<MYPage> {
                               SizedBox(
                                 height: size.height * 0.05,
                                 child: ListTile(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      PageRouteBuilder(
+                                          pageBuilder: (_, __, ___) => MyCash(),
+                                          transitionDuration:
+                                          Duration(seconds: 0),
+                                          transitionsBuilder: (_, a, __, c) =>
+                                              FadeTransition(
+                                                  opacity: a, child: c)),
+                                    );
+                                  },
                                   title: Padding(
                                     padding: EdgeInsets.only(
                                         bottom: size.height * 0.015),
@@ -240,15 +288,15 @@ class _MYPageState extends State<MYPage> {
                   ]),
             ),
             SizedBox(height: size.height * 0.005),
-            //_buildListTileButton('내가 올린 프로젝트', 'myUpLoadProject'), // 1.10일 mypage 회원 탈퇴 부분 밑으로 쭉
-            //_buildListTileButton('내가 작성한 커뮤니티 글', 'myCommunity'),
+            _buildListTileButton('내가 올린 프로젝트', 'myUpLoadProject'), // 1.10일 mypage 회원 탈퇴 부분 밑으로 쭉
+            _buildListTileButton('내가 작성한 커뮤니티 글', 'myCommunity'),
             _buildListTileButton('참여한 프로젝트', 'myJoinProject'),
             MyWidget().DivderLine(),
-            //_buildListTileButton('결제 정보 수정', 'myPayInformation'),
+            _buildListTileButton('결제 정보 수정', 'myPayInformation'),
             _buildListTileButton('계좌 정보 수정', 'myBankInformation'),
-            // MyWidget().DivderLine(),
-            //_buildListTileButton('공지 사항', 'announcement'),
-            //_buildListTileButton('약관 및 개인정보 처리', 'myInformation'),
+            MyWidget().DivderLine(),
+            _buildListTileButton('공지 사항', 'announcement'),
+            _buildListTileButton('약관 및 개인정보 처리', 'myInformation'),
             MyWidget().DivderLine(),
             _buildListTileButton('로그아웃', 'logout'),
             // 1.10일 mypage 회원 탈퇴 부분 여기까지
@@ -264,6 +312,8 @@ class _MYPageState extends State<MYPage> {
                   onPressed: () {
                     setState(() {
                       print('탈퇴하기');
+
+
                       _showSnapBarForwithdraw(context);
                     });
                   },
@@ -462,12 +512,14 @@ class _MYPageState extends State<MYPage> {
                       ),
                       SizedBox(width: 200),
                       TextButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          deleteUserFromFirebase();
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => LoginPage()),
                           );
+
                           // deleteUserFromFirebase();
                         },
                         child: Text('탈퇴하기',

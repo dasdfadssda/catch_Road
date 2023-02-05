@@ -327,12 +327,12 @@ class _Catchbox2State extends State<Catchbox2> {
                             child: Container(
                               padding:EdgeInsets.all(0),
                               margin: EdgeInsets.fromLTRB(size.width * 0.03,
-                                  size.height * 0.0375, size.width * 0.03, 0),
+                                  size.height * 0, size.width * 0.03, 0),
                               child: Center(
                                   child: GridView.count(
                                       shrinkWrap: true,
                                       crossAxisCount: 2,
-                                      childAspectRatio: 16 / 20,
+                                      childAspectRatio: 16 / 18,
                                       children: List.generate(
                                         snapshot.data!.docs.length,
                                         (index) {
@@ -368,87 +368,72 @@ class _Catchbox2State extends State<Catchbox2> {
                                               // 밑에꺼로 정보 넘겨줘야함.
                                               //Catchbox_detail(query: x),));
                                             },
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
+                                            child:Column(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+
                                               children: [
                                                 Padding(
-                                                  padding: EdgeInsets.only(left:8,right: 8),
-                                                  child: SizedBox(
-                                                    height: size.height * 0.21,
-                                                    width: size.width * 0.6,
-                                                    child: Card(
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      4.76),
-                                                        ),
-                                                        clipBehavior:
-                                                            Clip.antiAlias,
-                                                        child: Transform.rotate(
-                                                          angle: (x['category'] ==
-                                                                      'kickboard' ||
-                                                                  x['category'] ==
-                                                                      'traffic light')
-                                                              ? 0
-                                                              : 90 *
-                                                                  math.pi /
-                                                                  180,
-                                                          child: ExtendedImage.network(
-                                                            x['new'],
-                                                            fit: BoxFit.cover,
-                                                          ),
-                                                        )),
+                                                  padding: EdgeInsets.only(left:0,right: 0,top:0),
+                                                  child:  Container(
+                                                    height: size.height * 0.2,
+                                                    width: size.height * 0.2,
+                                                    child: SizedBox(
+                                                      height: 119.04,
+                                                      width: 118.08,
+                                                      child: Card(
+                                                          clipBehavior: Clip.antiAlias,
+                                                          child: Transform.rotate(
+                                                            angle: 90 * math.pi / 180,
+                                                            child: ExtendedImage.network(
+                                                              x['new'],
+                                                              fit: BoxFit.fill,
+                                                            ),
+                                                          )),
+                                                    ),
                                                   ),
+
                                                 ),
                                                 SizedBox(
-                                                    height:
-                                                        size.height * 0.005),
+                                                    height: size.height * 0.005),
                                                 Center(
                                                   child: Container(
                                                       child: Row(
-                                                    children: [
-                                                      SizedBox(
-                                                          width: size.width *
-                                                              0.02),
-                                                      Container(
-                                                          child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
                                                         children: [
-                                                          Text(
-                                                            '${x['category']} ',
-                                                            style: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .labelLarge,
-                                                            maxLines: 1,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                          ),
-
-
-                                                          Text(
-                                                            '${x['num']}',
-                                                            style: bodySmallStyle(
-                                                                color: Color(
-                                                                    0xff9FA5B2)),
-                                                          ),
-                                                          SizedBox(height: size.height*0.0019),
-                                                          //const SizedBox(height: 8.0),
-                                                          // Text(
-                                                          //   "${snapshot.data!.docs[index]['count']}",
-                                                          //   //FirebaseFirestore.instance.collection('category').doc('user1').collection(snapshot.data!.docs[index]['category']).doc('date').collection('date').snapshots().length.toString(),
-                                                          //   style: Theme.of(context).textTheme.labelSmall,
-                                                          // ),
+                                                          SizedBox(width: size.width * 0.05),
+                                                          Container(
+                                                              child: Column(
+                                                                crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                                children: [
+                                                                  Text(
+                                                                    '${x['category']} ',
+                                                                    style: Theme.of(
+                                                                        context)
+                                                                        .textTheme
+                                                                        .labelLarge,
+                                                                    maxLines: 1,
+                                                                    overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                                  ),
+                                                                  Text(
+                                                                    '${x['num']}',
+                                                                    style: bodySmallStyle(
+                                                                        color: Color(
+                                                                            0xff9FA5B2)),
+                                                                  ),
+                                                                  // SizedBox(height: size.height*0.5),
+                                                                  //const SizedBox(height: 8.0),
+                                                                  // Text(
+                                                                  //   "${snapshot.data!.docs[index]['count']}",
+                                                                  //   //FirebaseFirestore.instance.collection('category').doc('user1').collection(snapshot.data!.docs[index]['category']).doc('date').collection('date').snapshots().length.toString(),
+                                                                  //   style: Theme.of(context).textTheme.labelSmall,
+                                                                  // ),
+                                                                ],
+                                                              ))
                                                         ],
-                                                      ))
-                                                    ],
-                                                  )),
+                                                      )),
                                                 ),
 
                                               ],

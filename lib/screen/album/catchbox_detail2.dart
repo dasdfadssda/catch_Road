@@ -104,6 +104,7 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
         .collection('category')
         .doc('${FirebaseAuth.instance.currentUser!.email}')
         .collection(query['category'])
+        .orderBy('time', descending: true)
         // .doc('date')
         // .collection('date')
         .snapshots();
@@ -362,12 +363,12 @@ class _Catchbox_detail2State extends State<Catchbox_detail2> {
                             .doc(query2['id'])
                             .update({'participate': 1, 'url': urllist});
 
-
-
                         //캐시 정보저장
                         await FirebaseFirestore.instance
                             .collection("user_cash")
-                            .doc("${FirebaseAuth.instance.currentUser!.email!}") //FirebaseAuth.instance.currentUser!.email
+                            .doc("${FirebaseAuth.instance.currentUser!.email!}").
+                            collection("${FirebaseAuth.instance.currentUser!.email!}").
+                        doc(Timestamp.fromDate(DateTime.now()).toString())
                             .set({
                           "project_title": query2['title'],
                           "image length":image_length,

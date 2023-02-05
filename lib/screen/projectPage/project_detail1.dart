@@ -159,7 +159,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                     child: Text(
                         //snapshot.data!.docs[index]['cash']
                         //   .toString() +
-                        "100",
+                        query['cash'].toString(),
                         style: labelLargeStyle(color: Color(0xff1A1A1A))),
                   ),
                   for (int i = 0; i < query['object'].length; i++)
