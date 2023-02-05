@@ -159,6 +159,7 @@ class _CreateBproject2State extends State<CreateBproject2> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+
             companyNameText(),
             MyWidget().DivderLine(),
             CeoNameText(),
