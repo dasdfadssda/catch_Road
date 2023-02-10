@@ -16,7 +16,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'camera_viewer.dart';
 import 'image_convert.dart';
 import 'package:image/image.dart' as imageLib;
-
+//2/10
 var globalKey = new GlobalKey();
 String mode = "auto";
 var c_object_list = [];
@@ -233,7 +233,7 @@ class _CameraPageState extends State<CameraPage> {
                                 ),
                               ),
                             ),
-                            SizedBox(width: 310),
+                            SizedBox(width: 270),
                             GestureDetector(
                               onTap: () {
                                 setState(() {
@@ -773,7 +773,7 @@ class _CameraPageState extends State<CameraPage> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 310),
+                        SizedBox(width: 270),
                         GestureDetector(
                           onTap: () {
                             setState(() {

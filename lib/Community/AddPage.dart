@@ -9,9 +9,9 @@ import 'package:kpostal/kpostal.dart';
 // import 'package:geocoding/geocoding.dart';
 
 
-import '../../Auth/auth_service .dart';
 import '../../utils/widget.dart';
-import '../mainHome.dart';
+
+import '../Auth/auth_service .dart';
 import 'HomePage.dart';
 
 class AddPage extends StatelessWidget {
@@ -46,16 +46,17 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
         key: _scaffoldKey,
         backgroundColor: Colors.white,
-        appBar: AppBar(
+
+      appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.white,
           leading: TextButton(
-            child: Text('취소', style: SubTitleStyle(color: Color(0XFF9FA5B2))),
+            child: Text('취소2', style: SubTitleStyle(color: Color(0XFF9FA5B2))),
             onPressed: () {
               _showcategoryCancel(context);
             },
           ),
-          title: Text('질문하고 싶어요', style: titleMediumStyle()),
+          title: Text('커뮤니티 글 작성', style: titleMediumStyle(color: Colors.black)),
           actions: [
             TextButton(
                 onPressed: () async {
@@ -63,20 +64,18 @@ class _MyHomePageState extends State<MyHomePage> {
                   _showcategoryUPload(context);
                 },
                 child:
-                    Text('업로드', style: SubTitleStyle(color: Color(0XFF3A94EE))))
+                    Text('업로드2', style: SubTitleStyle(color: Color(0XFF3A94EE))))
           ],
         ),
         body: Column(
           children: [
-            TitleText(),
-
             ShowCategory(),
             MyWidget().DivderLine(),
             ShowTakePicture(),
             MyWidget().DivderLine(),
             Addlocation(),
             MyWidget().DivderLine(),
-
+            TitleText(),
           ],
         ));
   }
@@ -123,8 +122,8 @@ class _MyHomePageState extends State<MyHomePage> {
     return Container(
       margin: EdgeInsets.fromLTRB(50, 0, 8, 3),
       padding: _road
-          ? EdgeInsets.fromLTRB(14, 8.5, 0, 7)
-          : EdgeInsets.fromLTRB(15, 8.5, 0, 7),
+          ? EdgeInsets.fromLTRB(14, 8.5, 14, 7)
+          : EdgeInsets.fromLTRB(15, 8.5, 15, 7),
       height: 30,
       child: _road
           ? Text('도로 위가 궁금해요',
@@ -160,7 +159,7 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 Container(
                     margin: EdgeInsets.fromLTRB(22, 40, 244, 0),
-                    child: Text('카테고리 설정하기', style: labelMediumStyle())),
+                    child: Text('카테고리 설정하기2', style: labelMediumStyle())),
                 Container(
                   margin: EdgeInsets.fromLTRB(42, 12, 26, 0),
                   child: Row(children: [
@@ -234,7 +233,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: Text('취소',
                             style: labelSmallStyle(color: Color(0XFF9FA5B2))),
                       ),
-                      SizedBox(width: 100),
+                      SizedBox(width: 210),
                       TextButton(
                         onPressed: () {
                           setState(() {
@@ -398,11 +397,11 @@ class _MyHomePageState extends State<MyHomePage> {
             context,
             MaterialPageRoute(
               builder: (_) => KpostalView(
-                useLocalServer: true,
+                useLocalServer: false,
                 localPort: 1024,
-                // kakaoKey: '{3a0cc0c68dbebf5acfb1116770603d72}',
+                kakaoKey: '3a0cc0c68dbebf5acfb1116770603d72',
                 callback: (Kpostal result) {
-                  setState(() {
+                  setState(() {  
                     this.postCode = result.postCode;
                     this.roadAddress = result.address;
                     this.jibunAddress = result.jibunAddress;
@@ -418,7 +417,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           );
         },
-        leading: Text('도로 위치 추가 ', style: bodyMediumStyle()),
+        leading: Text('도로 위치 추가2', style: bodyMediumStyle()),
         trailing: Icon(
           Icons.arrow_forward_ios,
           color: Color(0XFFCFD2D9),
@@ -432,7 +431,7 @@ class _MyHomePageState extends State<MyHomePage> {
             padding: EdgeInsets.fromLTRB(24, 13, 32, 0),
             child: Row(
               children: [
-                Text('도로 위치 추가', style: bodyMediumStyle()),
+                Text('도로 위치 추가2', style: bodyMediumStyle()),
                 SizedBox(
                   width: 228,
                 ),
@@ -445,9 +444,9 @@ class _MyHomePageState extends State<MyHomePage> {
               Container(
                 child: Row(
                   children: [
-                    Container(
-                      child: Image.asset('assets/map.png'),
-                    ),
+                    // Container(
+                    //   child: Image.asset('assets/map.png'),
+                    // ),
                     Container(
                       margin: EdgeInsets.only(left: 20),
                       child: Text(
@@ -540,7 +539,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => MainHomePage()),
+                                  builder: (context) => HomePage()),
                             );
                           });
                         },

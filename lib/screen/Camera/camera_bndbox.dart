@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 import 'package:image/image.dart' as imglib;
+import '../mainHome.dart';
 import 'camera_page.dart';
 import 'camera_viewer.dart';
 
@@ -75,7 +76,9 @@ class _BndBoxState extends State<BndBox> {
 
   @override
   Widget build(BuildContext context) {
+    print("바운딩박스 ${user_object}");
     List<Widget> _renderBoxes() {
+
       return widget.results
           .map((re) {
             var _x = re["rect"]["x"];
@@ -84,19 +87,41 @@ class _BndBoxState extends State<BndBox> {
             var _h = re["rect"]["h"];
             var scaleW, scaleH, x, y, w, h;
 
-            if (re["detectedClass"] == "cup") {
-              print("xywh:  $_x , $_y , $_w, $_h");
-              //rotate 0일때,
-              // xywh:  0.4655734598636627 , 0.3568609356880188 , 0.18484428524971008, 0.4939216375350952
-              // xywh:  0.4344528913497925 , 0.4057769775390625 , 0.18160510063171387, 0.4448428153991699
-              //rotate 90일때,
-              //xywh:  0.28624457120895386 , 0.40480688214302063 , 0.4448428153991699, 0.46644386649131775
-              // xywh:  0.30155280232429504 , 0.40459805727005005 , 0.4063970744609833, 0.4611738920211792
 
+            if(re["detectedClass"]=='car'){
+              re["detectedClass"]='자동차';
+            }else if(re["detectedClass"]=='bicycle'){
+              re["detectedClass"]='자전거';
+            } else if(re["detectedClass"]=='bus'){
+              re["detectedClass"]='버스';
+            } else if(re["detectedClass"]=='motorcycle'){
+              re["detectedClass"]='오토바이';
+            } else if(re["detectedClass"]=='traffic sign'){
+              re["detectedClass"]='신호등';
+            } else if(re["detectedClass"]=='train'){
+              re["detectedClass"]='기차';
+            } else if(re["detectedClass"]=='truck'){
+              re["detectedClass"]='트럭';
+            } else if(re["detectedClass"]=='fire hydrant'){
+              re["detectedClass"]='소화전';
+            } else if(re["detectedClass"]=='stop sign'){
+              re["detectedClass"]='정지표시판';
+            } else if(re["detectedClass"]=='bench'){
+              re["detectedClass"]='벤치';
+            } else if(re["detectedClass"]=='cat'){
+              re["detectedClass"]='고양이';
+            } else if(re["detectedClass"]=='dog'){
+              re["detectedClass"]='개';
+            }else if(re["detectedClass"]=='keyboard'){
+              re["detectedClass"]='키보드';
             }
+
 
             object = re["detectedClass"];
             accuracy = re["confidenceInClass"] * 100;
+
+            print("객체 ${re["detectedClass"]})");
+            print("키보드 포함 ? ${user_object.contains(re["detectedClass"])}");
 
             print('**정확도 : $object / $accuracy **');
 
@@ -137,34 +162,41 @@ class _BndBoxState extends State<BndBox> {
               //xywh2:  119.81381207108498 , 299.96974347432456 , 160.93601502776147, 300.001536432902
             }
             return Positioned(
-              left: math.max(0, x),
-              top: math.max(0, y),
-              width: w,
-              height: h,
-              child: c_object_list.contains(re["detectedClass"])||re["detectedClass"]=='keyboard'||re["detectedClass"]=='stop sign'||re["detectedClass"]=='person'||re["detectedClass"]=='car'? Container(
-                  padding: EdgeInsets.fromLTRB(10, 20, 30, 40),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.greenAccent,
-                      width: 5,
-                    ),
-                  ),
-                  child: Transform.rotate(
-                    angle: 0 * math.pi / 180,
-                    child: Text(
-                     // "${re["detectedClass"]}",
-                      "${re["detectedClass"]} ${(re["confidenceInClass"] * 100).toStringAsFixed(0)}%",
-                      style: TextStyle(
-                        color: Colors.greenAccent,
-                        fontSize:20.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  )
-
-              ):Container()
-
-            );
+                left: math.max(0, x),
+                top: math.max(0, y),
+                width: w,
+                height: h,
+                // child: c_object_list.contains(re["detectedClass"]) ||
+                //         re["detectedClass"] == 'keyboard' ||
+                //         re["detectedClass"] == 'stop sign' ||
+                //         re["detectedClass"] == 'person' ||
+                //         re["detectedClass"] == 'car' ||
+                //         re["detectedClass"] == 'bus' ||
+                //         re["detectedClass"] == 'motocycle'
+                child: user_object.contains(re["detectedClass"]) ?Container(
+                        padding: EdgeInsets.fromLTRB(10, 20, 30, 40),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.greenAccent,
+                            width: 5,
+                          ),
+                        ),
+                        child: Transform.rotate(
+                          angle: 0 * math.pi / 180,
+                          child: Text(
+                            // "${re["detectedClass"]}",
+                            "${re["detectedClass"]} ",
+                            //${(re["confidenceInClass"] * 100).toStringAsFixed(0)}%
+                            style: TextStyle(
+                              color: Colors.greenAccent,
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        )):
+                Container(
+                    )
+                   );
           })
           .toList()
           .sublist(0, 1);
@@ -177,8 +209,7 @@ class _BndBoxState extends State<BndBox> {
       return Stack(
         children: [
           Stack(
-            children: _renderBoxes(),
-          ),
+            children: _renderBoxes(), ),
         ],
       );
     }

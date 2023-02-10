@@ -32,6 +32,8 @@ bool toggle3 = false;
 class _HomePageState extends State<HomePage> {
   var _listTextTabToggle = ["전체", "도로 위가 궁금해요", "캐치가 궁금해요"];
   var _tabTextIndexSelected = 0;
+  String _category='category';
+  bool _FullCategory = false;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   var _toDay = DateTime.now(); // 시간 비교 하기
   int _mylike = 0;
@@ -39,7 +41,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return Scaffold(
+    return WillPopScope(child: Scaffold(
       backgroundColor: Color(0XFFF3F4F5),
       appBar: AppBar(
           centerTitle: true,
@@ -48,7 +50,7 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.white,
           elevation: 0,
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
           leading: IconButton(
             onPressed: () {
               Navigator.push(
@@ -61,9 +63,9 @@ class _HomePageState extends State<HomePage> {
           title: TextButton(
             child: Center(
                 child: Text(
-              '양덕동 외 1곳',
-              style: SubTitleStyle(color: Colors.black),
-            )),
+                  '양덕동 외 1곳',
+                  style: SubTitleStyle(color: Colors.black),
+                )),
             onPressed: () {},
           ),
           // Row(
@@ -84,7 +86,7 @@ class _HomePageState extends State<HomePage> {
             Row(
               children: [
                 IconButton(
-                    // 추후 검색 버튼
+                  // 추후 검색 버튼
                     onPressed: () {},
                     icon: Icon(
                       Icons.search,
@@ -96,20 +98,20 @@ class _HomePageState extends State<HomePage> {
           ],
           bottom: buildAppBarBottom()),
       body: StreamBuilder<QuerySnapshot>(
+        // stream: FirebaseFirestore.instance.collection('Product').orderBy('price', descending: _ASC).snapshots(),
           stream: FirebaseFirestore.instance.collection('Contents').snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData)
               return Center(
                   child: Text(
-                '  업로드 된\n글이 없어요 :(',
-                style: labelLargeStyle(color: Color(0XFF9FA5B2)),
-              ));
+                    '  업로드 된\n글이 없어요 :(',
+                    style: labelLargeStyle(color: Color(0XFF9FA5B2)),
+                  ));
             return ListView.builder(
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () async {
-                      print("clicked");
                       _comment = snapshot.data!.docs[index]['_comment'];
                       _docid = snapshot.data!.docs[index]['id'];
                       Navigator.pushNamed(context, '/detail', arguments: index);
@@ -127,9 +129,9 @@ class _HomePageState extends State<HomePage> {
                                 height: 20,
                                 decoration: BoxDecoration(
                                     border:
-                                        Border.all(color: Color(0XFFCFD2D9)),
+                                    Border.all(color: Color(0XFFCFD2D9)),
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(20))),
+                                    BorderRadius.all(Radius.circular(20))),
                                 child: Padding(
                                   padding: EdgeInsets.only(
                                       left: size.width * 0.01,
@@ -197,7 +199,7 @@ class _HomePageState extends State<HomePage> {
                                       child: IconButton(
                                         color: Color(0XFF878E9F),
                                         constraints:
-                                            BoxConstraints(maxHeight: 15),
+                                        BoxConstraints(maxHeight: 15),
                                         //alignment: Alignment.topLeft,
                                         padding: EdgeInsets.all(0.0),
                                         iconSize: 20,
@@ -220,8 +222,8 @@ class _HomePageState extends State<HomePage> {
                                       padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                                       child: Text(
                                           snapshot.data!.docs[index]['_comment']
-                                                      .length ==
-                                                  0
+                                              .length ==
+                                              0
                                               ? ' 댓글'
                                               : ' 댓글 ${snapshot.data!.docs[index]['_comment'].length.toString()}',
                                           style: labelMediumStyle(
@@ -230,67 +232,6 @@ class _HomePageState extends State<HomePage> {
                                     SizedBox(
                                       width: 16,
                                     ),
-                                    // IconButton(
-                                    //   color: Colors.grey,
-                                    //   constraints:
-                                    //       BoxConstraints(maxHeight: 15),
-                                    //   padding: EdgeInsets.all(0.0),
-                                    //   iconSize: 20,
-                                    //   icon: Icon(snapshot
-                                    //               .data!
-                                    //               .docs[index]['_like']
-                                    //               .length ==
-                                    //           0
-                                    //       ? Icons.favorite_border
-                                    //       : Icons.favorite),
-                                    //   onPressed: () {
-                                    //     setState(() {
-                                    //       if (snapshot
-                                    //               .data!
-                                    //               .docs[index]['_like']
-                                    //               .length !=
-                                    //           0) {
-                                    //         for (int i = 0;
-                                    //             i <
-                                    //                 snapshot
-                                    //                     .data!
-                                    //                     .docs[index]['_like']
-                                    //                     .length;
-                                    //             i++) {
-                                    //           if (snapshot.data!.docs[index]
-                                    //                   ['_like'][i] ==
-                                    //               "바ㄱ정규") {
-                                    //             print('좋아요 취소');
-                                    //             LikeCancelFunction(
-                                    //                 snapshot.data!.docs[index]
-                                    //                     ['_like'],
-                                    //                 snapshot.data!.docs[index]
-                                    //                     ['id'],
-                                    //                 "바ㄱ정규");
-                                    //             break;
-                                    //           } else {
-                                    //             print('좋아요');
-                                    //             LikeFunction(
-                                    //                 snapshot.data!.docs[index]
-                                    //                     ['_like'],
-                                    //                 snapshot.data!.docs[index]
-                                    //                     ['id'],
-                                    //                 '바ㄱ정규');
-                                    //           }
-                                    //         }
-                                    //       } else {
-                                    //         print('좋아요');
-                                    //         LikeFunction(
-                                    //             snapshot.data!.docs[index]
-                                    //                 ['_like'],
-                                    //             snapshot.data!.docs[index]
-                                    //                 ['id'],
-                                    //             "바ㄱ정규");
-                                    //       }
-                                    //     });
-                                    //   },
-                                    // ),
-
                                     SizedBox(width: 6),
                                     Image.asset(
                                       'assets/icons/likeicon.png',
@@ -342,6 +283,8 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.blueAccent,
         ),
       ),
+    ),
+      onWillPop:() async => false,
     );
   }
 

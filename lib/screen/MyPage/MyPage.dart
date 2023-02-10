@@ -4,8 +4,10 @@ import 'package:catch2_0_1/screen/MyPage/MyCash.dart';
 import 'package:catch2_0_1/screen/mainHome.dart';
 import 'package:catch2_0_1/utils/app_text_styles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../Auth/auth_service .dart';
 import '../../utils/app_text_styles.dart';
@@ -18,6 +20,8 @@ import 'makeAccount.dart';
 dynamic userInform;
 String UserNickName = '';
 
+String loginplatform="";
+//2/10
 class MYPage extends StatefulWidget {
   const MYPage({super.key});
 
@@ -66,7 +70,8 @@ class _MYPageState extends State<MYPage> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
 
-    return Scaffold(
+    return WillPopScope(child:
+      Scaffold(
       appBar: AppBar(
         elevation: 0.5,
         centerTitle: true,
@@ -82,83 +87,101 @@ class _MYPageState extends State<MYPage> {
           padding: EdgeInsets.only(
               left: size.width * 0.06, right: size.width * 0.06),
           child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Container(
               margin: EdgeInsets.fromLTRB(0, 30, 0, 20),
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Row(
-                      children: [
-                        Center(
-                          child: ClipRRect(
-                              borderRadius:
-                                  BorderRadius.circular(100), // Image border
-                              child: SizedBox.fromSize(
-                                size: Size.fromRadius(35), // Image radius
-                                child: Image.asset('assets/img.png',
-                                    fit: BoxFit.cover),
-                              )),
-                        ),
-                        Stack(
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding:
-                                      EdgeInsets.only(left: size.width * 0.04),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        '${UserNickName}',
-                                        //FirebaseAuth.instance.currentUser!.displayName!
-                                        style: titleMediumStyle(
-                                            color: Colors.black),
-                                      ),
-                                      Text(" 님",
-                                          style: labelMediumStyle(
-                                              color: Colors.black)),
-                                    ],
+                    InkWell(
+                      child: Row(
+                        children: [
+                          Center(
+                            child: ClipRRect(
+                                borderRadius:
+                                BorderRadius.circular(100), // Image border
+                                child: SizedBox.fromSize(
+                                  size: Size.fromRadius(35), // Image radius
+                                  child:loginplatform=="google"?
+                                  ExtendedImage.network(
+                                    FirebaseAuth.instance.currentUser!.photoURL!,
+                                    fit: BoxFit.fill,
+                                  ):Image.asset('assets/img.png',
+                                      fit: BoxFit.cover),
+                                  //Text(''),
+                                )
+                            ),
+                          ),
+                          Stack(
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding:
+                                    EdgeInsets.only(left: size.width * 0.04),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          '${UserNickName}',
+                                          //FirebaseAuth.instance.currentUser!.displayName!
+                                          style: titleMediumStyle(
+                                              color: Colors.black),
+                                        ),
+                                        Text(" 님",
+                                            style: labelMediumStyle(
+                                                color: Colors.black)),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  top: size.height * 0.035,
-                                  left: size.width * 0.04),
-                              child: Text(
-                                '${FirebaseAuth.instance.currentUser!.email!}',
-                                //FirebaseAuth.instance.currentUser!.email!
-                                style:
-                                    labelSmallStyle(color: Color(0xff9FA5B2)),
+                                ],
                               ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(left: size.width * 0.55),
-                              child: IconButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      PageRouteBuilder(
-                                          pageBuilder: (_, __, ___) =>
-                                              editinfo(),
-                                          transitionDuration:
-                                              Duration(seconds: 0),
-                                          transitionsBuilder: (_, a, __, c) =>
-                                              FadeTransition(
-                                                  opacity: a, child: c)),
-                                    );
-                                  },
-                                  icon: Icon(
-                                    Icons.arrow_forward_ios_rounded,
-                                    color: Color(0xffCFD2D9),
-                                  )),
-                            ),
-                          ],
-                        )
-                      ],
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    top: size.height * 0.035,
+                                    left: size.width * 0.04),
+                                child: Text(
+                                  '${FirebaseAuth.instance.currentUser!.email!}',
+                                  //FirebaseAuth.instance.currentUser!.email!
+                                  style:
+                                  labelSmallStyle(color: Color(0xff9FA5B2)),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(left: size.width * 0.55),
+                                child: IconButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        PageRouteBuilder(
+                                            pageBuilder: (_, __, ___) =>
+                                                editinfo(),
+                                            transitionDuration:
+                                            Duration(seconds: 0),
+                                            transitionsBuilder: (_, a, __, c) =>
+                                                FadeTransition(
+                                                    opacity: a, child: c)),
+                                      );
+                                    },
+                                    icon: Icon(
+                                      Icons.arrow_forward_ios_rounded,
+                                      color: Color(0xffCFD2D9),
+                                    )),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                      onTap: (){
+
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) => editinfo(),
+                            ));
+
+                      },
+
                     ),
                     SizedBox(
                       height: size.height * 0.03,
@@ -181,7 +204,7 @@ class _MYPageState extends State<MYPage> {
                                       PageRouteBuilder(
                                           pageBuilder: (_, __, ___) => MyCash(),
                                           transitionDuration:
-                                              Duration(seconds: 0),
+                                          Duration(seconds: 0),
                                           transitionsBuilder: (_, a, __, c) =>
                                               FadeTransition(
                                                   opacity: a, child: c)),
@@ -193,7 +216,7 @@ class _MYPageState extends State<MYPage> {
                                     child: Text(
                                       "나의 캐시",
                                       style:
-                                          labelSmallStyle(color: Colors.white),
+                                      labelSmallStyle(color: Colors.white),
                                     ),
                                   ),
                                   subtitle: StreamBuilder<QuerySnapshot>(
@@ -288,11 +311,11 @@ class _MYPageState extends State<MYPage> {
                   ]),
             ),
             SizedBox(height: size.height * 0.005),
-            _buildListTileButton('내가 올린 프로젝트', 'myUpLoadProject'), // 1.10일 mypage 회원 탈퇴 부분 밑으로 쭉
+            // _buildListTileButton('내가 올린 프로젝트', 'myUpLoadProject'), // 1.10일 mypage 회원 탈퇴 부분 밑으로 쭉
             _buildListTileButton('내가 작성한 커뮤니티 글', 'myCommunity'),
             _buildListTileButton('참여한 프로젝트', 'myJoinProject'),
             MyWidget().DivderLine(),
-            _buildListTileButton('결제 정보 수정', 'myPayInformation'),
+            // _buildListTileButton('결제 정보 수정', 'myPayInformation'),
             _buildListTileButton('계좌 정보 수정', 'myBankInformation'),
             MyWidget().DivderLine(),
             _buildListTileButton('공지 사항', 'announcement'),
@@ -325,7 +348,13 @@ class _MYPageState extends State<MYPage> {
           ]),
         ),
       ),
+    ),
+      onWillPop:() async => false,
     );
+
+
+
+
   }
 
   Container _buildButtonColumn(String image, String label, Color color) {
@@ -369,6 +398,9 @@ class _MYPageState extends State<MYPage> {
         onTap: () {
           print('onTap');
           if (route == 'logout') {
+            selectedIndex0=0;
+            main_colorList=[Color(0xffCFD2D9),Color(0xffCFD2D9),Color(0xffCFD2D9),Color(0xffCFD2D9)];
+            main_colorList[0]=Color(0xff3A94EE);
             print('logout');
             _showSnapBarForLogOut(context);
           } else if (route == 'myJoinProject') {
@@ -426,6 +458,13 @@ class _MYPageState extends State<MYPage> {
                       SizedBox(width: 150),
                       TextButton(
                         onPressed: () async {
+                          print("로그인 플랫폼");
+                          print(loginplatform);
+                          if(loginplatform=="google"){
+                            await GoogleSignIn().signOut();
+                          }
+
+
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => MyApp()),
@@ -461,29 +500,32 @@ class _MYPageState extends State<MYPage> {
           ),
         ),
         builder: (BuildContext context) {
+          final Size size = MediaQuery.of(context).size;
           return StatefulBuilder(
               builder: (BuildContext context, StateSetter bottomState) {
             return Container(
-              height: 310,
+              height: size.height*0.45,
               child: Column(children: [
                 Container(
-                  margin: EdgeInsets.fromLTRB(14, 30, 14, 20),
+                  margin: EdgeInsets.fromLTRB(size.width*0.03, size.height*0.05, size.width*0.03, size.height*0.01),
+                  padding: EdgeInsets.fromLTRB(size.width*0.025,  size.height*0.01, size.width*0.025,  size.height*0),
                   child: Text(
                     "정말 탈퇴하시겠습니까?",
                     style: titleLargeStyle(),
                   ),
                 ),
+
                 Container(
-                  margin: EdgeInsets.fromLTRB(20, 15, 20, 5),
+                  margin: EdgeInsets.fromLTRB(size.width*0.04, size.height*0.003, size.width*0.04, size.height*0.01),
                   child: Text(
-                    "${FirebaseAuth.instance.currentUser!.email!}님, 탈퇴시 삭제/유지되는 정보를 확인해주세요!\n한 번 삭제된 정보는 복구가 불가능합니다.",
+                    "${FirebaseAuth.instance.currentUser!.email!}님, 탈퇴시 삭제/유지되는 정보를 확인해주세요. 한 번 삭제된 정보는 복구가 불가능합니다.",
                     //FirebaseAuth.instance.currentUser!.displayName!
                     style: labelLargeStyle(color: Colors.grey),
-                    textAlign: TextAlign.center,
+                    textAlign: TextAlign.start,
                   ),
                 ),
                 Container(
-                  height: 95,
+                  height:size.height*0.165,
                   width: 400,
                   decoration: BoxDecoration(
                     border: Border.all(
@@ -491,8 +533,8 @@ class _MYPageState extends State<MYPage> {
                       width: 1,
                     ),
                   ),
-                  margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
-                  padding: EdgeInsets.fromLTRB(9, 10, 10, 5),
+                  margin: EdgeInsets.fromLTRB(size.width*0.04, 0, size.width*0.04, 15),
+                  padding: EdgeInsets.fromLTRB(size.width*0.025,  size.height*0.01, size.width*0.025,  size.height*0.01),
                   child: Text(
                     "계정을 삭제하면 회원님의 모든 콘텐츠와 활동 기록, 포인트 적립·사용 내역이 삭제됩니다. 프로젝트 참여를 통해 적립한 포인트는 계정 삭제 시 환불이 불가합니다. 또한 삭제된 정보는 복구할 수 없으니 신중하게 결정해주세요.\n\n회원님이 참여한 프로젝트 데이터셋과 커뮤니티 관련 컨텐츠와 댓글은 정보가 유지됩니다.",
                     style: labelMediumStyle(color: Color(0XFF3A94EE)),

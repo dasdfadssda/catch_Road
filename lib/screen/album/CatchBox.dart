@@ -56,7 +56,8 @@ class _CatchboxState extends State<Catchbox> {
     final Size size = MediaQuery.of(context).size;
     TextTheme textTheme = Theme.of(context).textTheme;
     int len=0;
-    return Scaffold(
+    return WillPopScope(child:
+    Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
@@ -130,20 +131,20 @@ class _CatchboxState extends State<Catchbox> {
 
                                           children: [
                                             Padding(
-                                                padding: EdgeInsets.only(left:0,top:0,right: 0),
-                                                child:  Container(
-                                                  height: size.height * 0.2,
-                                                  width: size.height * 0.2,
-                                                  child: Card(
-                                                      clipBehavior: Clip.antiAlias,
-                                                      child: Transform.rotate(
-                                                        angle: 90 * math.pi / 180,
-                                                        child: ExtendedImage.network(
-                                                          x['new'],
-                                                          fit: BoxFit.fill,
-                                                        ),
-                                                      )),
-                                                ),
+                                              padding: EdgeInsets.only(left:0,top:0,right: 0),
+                                              child:  Container(
+                                                height: size.height * 0.2,
+                                                width: size.height * 0.2,
+                                                child: Card(
+                                                    clipBehavior: Clip.antiAlias,
+                                                    child: Transform.rotate(
+                                                      angle: 0 * math.pi / 180,
+                                                      child: ExtendedImage.network(
+                                                        x['new'],
+                                                        fit: BoxFit.fill,
+                                                      ),
+                                                    )),
+                                              ),
 
                                             ),
                                             SizedBox(height: size.height * 0.005),
@@ -223,6 +224,12 @@ class _CatchboxState extends State<Catchbox> {
           ),
         ),
       ),
+    ),
+      onWillPop:() async => false,
     );
+
+
+
+
   }
 }

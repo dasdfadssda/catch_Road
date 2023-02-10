@@ -246,7 +246,7 @@ class _CameraViewerState extends State<CameraViewer> {
             .add({
           "url": url,
           "time": Timestamp.fromDate(DateTime.now()),// DateFormat('dd/MM/yyyy').format(DateTime.now()),
-          "location": '흥해읍2' //first.thoroughfare,
+          "location": '포항시' //first.thoroughfare,
           //위치추가
         });
 
@@ -273,7 +273,7 @@ class _CameraViewerState extends State<CameraViewer> {
             .add({
           "url": url,
           "time": Timestamp.fromDate(DateTime.now()),
-          "location": '흥해읍' ////first.thoroughfare,
+          "location": '포항시' ////first.thoroughfare,
           //위치추가
         });
       } catch (e) {

@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 
 
 import 'Auth/auth_service .dart';
-import 'firebase_options.dart';
-import 'screen/Community/DetailPage.dart';
-import 'screen/mainHome.dart';
+import 'Community/DetailPage.dart';
+
+
+
 
 
 
@@ -24,8 +25,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context){
-
-
 
 
 

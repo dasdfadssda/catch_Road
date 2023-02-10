@@ -305,165 +305,157 @@ class _Catchbox2State extends State<Catchbox2> {
             ),
         ),
       ),
-      body: Container(
+      body:  Container(
 
         child: Center(
 
           child: Column(
 
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
                   child: StreamBuilder<QuerySnapshot>(
                       stream: FirebaseFirestore.instance
                           .collection('category')
-                          .doc('${FirebaseAuth.instance.currentUser!.email!}')
+                          .doc("${FirebaseAuth.instance.currentUser!.email!}")
                           .collection('category')
                           .orderBy('order', descending: false)
                           .snapshots(),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
-                          return Center(
-                            child: Container(
+                          return Container(
                               padding:EdgeInsets.all(0),
                               margin: EdgeInsets.fromLTRB(size.width * 0.03,
-                                  size.height * 0, size.width * 0.03, 0),
-                              child: Center(
-                                  child: GridView.count(
-                                      shrinkWrap: true,
-                                      crossAxisCount: 2,
-                                      childAspectRatio: 16 / 18,
-                                      children: List.generate(
-                                        snapshot.data!.docs.length,
+                                  size.height * 0.0375, size.width * 0.0, 0),
+                              child: GridView.count(
+                                  shrinkWrap: true,
+                                  crossAxisCount: 2,
+                                  childAspectRatio: 16 / 18,
+                                  children: List.generate(
+                                    snapshot.data!.docs.length,
                                         (index) {
-
-                                          QueryDocumentSnapshot x =
-                                              snapshot.data!.docs[index];
-
-                                          FirebaseFirestore.instance
-                                              .collection('category')
-                                              .doc('${FirebaseAuth.instance.currentUser!.email!}')
-                                              .collection(x['category']).get().then((value) async {
-                                                len=value.size;
-                                                print('len $len');
-                                                await FirebaseFirestore.instance
-                                                    .collection("category")
-                                                    .doc("${FirebaseAuth.instance.currentUser!.email!}")//FirebaseAuth.instance.currentUser!.email
-                                                    .collection('category')
-                                                    .doc(x['category'])
-                                                    .update({
-                                                  "num": value.size,
-                                                });
-                                          });
-                                          return InkWell(
-                                            onTap: () {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (BuildContext
-                                                            context) =>
-                                                        Catchbox_detail2(query: x, query2: query),
-                                                  ));
-                                              //
-                                              // 밑에꺼로 정보 넘겨줘야함.
-                                              //Catchbox_detail(query: x),));
-                                            },
-                                            child:Column(
-                                              crossAxisAlignment: CrossAxisAlignment.center,
-
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsets.only(left:0,right: 0,top:0),
-                                                  child:  Container(
-                                                    height: size.height * 0.2,
-                                                    width: size.height * 0.2,
-                                                    child: SizedBox(
-                                                      height: 119.04,
-                                                      width: 118.08,
-                                                      child: Card(
-                                                          clipBehavior: Clip.antiAlias,
-                                                          child: Transform.rotate(
-                                                            angle: 90 * math.pi / 180,
-                                                            child: ExtendedImage.network(
-                                                              x['new'],
-                                                              fit: BoxFit.fill,
-                                                            ),
-                                                          )),
+                                      QueryDocumentSnapshot x = snapshot.data!.docs[index];
+                                      FirebaseFirestore.instance
+                                          .collection('category')
+                                          .doc("${FirebaseAuth.instance.currentUser!.email!}")//
+                                          .collection(x['category']).get().then((value) async {
+                                        len=value.size;
+                                        print('len $len');
+                                        await FirebaseFirestore.instance
+                                            .collection("category")
+                                            .doc("${FirebaseAuth.instance.currentUser!.email!}")//FirebaseAuth.instance.currentUser!.email
+                                            .collection('category')
+                                            .doc(x['category'])
+                                            .update({
+                                          "num": value.size,
+                                        });
+                                      });
+                                      return InkWell(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (BuildContext
+                                                context) =>
+                                                    Catchbox_detail2(
+                                                      query: x,query2: query
+                                                      //  query2: query
                                                     ),
-                                                  ),
+                                              ));
+                                          //
+                                          // 밑에꺼로 정보 넘겨줘야함.
+                                          //Catchbox_detail(query: x),));
+                                        },
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
 
-                                                ),
-                                                SizedBox(
-                                                    height: size.height * 0.005),
-                                                Center(
-                                                  child: Container(
-                                                      child: Row(
-                                                        children: [
-                                                          SizedBox(width: size.width * 0.05),
-                                                          Container(
-                                                              child: Column(
-                                                                crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                                children: [
-                                                                  Text(
-                                                                    '${x['category']} ',
-                                                                    style: Theme.of(
-                                                                        context)
-                                                                        .textTheme
-                                                                        .labelLarge,
-                                                                    maxLines: 1,
-                                                                    overflow:
-                                                                    TextOverflow
-                                                                        .ellipsis,
-                                                                  ),
-                                                                  Text(
-                                                                    '${x['num']}',
-                                                                    style: bodySmallStyle(
-                                                                        color: Color(
-                                                                            0xff9FA5B2)),
-                                                                  ),
-                                                                  // SizedBox(height: size.height*0.5),
-                                                                  //const SizedBox(height: 8.0),
-                                                                  // Text(
-                                                                  //   "${snapshot.data!.docs[index]['count']}",
-                                                                  //   //FirebaseFirestore.instance.collection('category').doc('user1').collection(snapshot.data!.docs[index]['category']).doc('date').collection('date').snapshots().length.toString(),
-                                                                  //   style: Theme.of(context).textTheme.labelSmall,
-                                                                  // ),
-                                                                ],
-                                                              ))
-                                                        ],
-                                                      )),
-                                                ),
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsets.only(left:0,top:0,right: 0),
+                                              child:  Container(
+                                                height: size.height * 0.2,
+                                                width: size.height * 0.2,
+                                                child: Card(
+                                                    clipBehavior: Clip.antiAlias,
+                                                    child: Transform.rotate(
+                                                      angle: 0 * math.pi / 180,
+                                                      child: ExtendedImage.network(
+                                                        x['new'],
+                                                        fit: BoxFit.fill,
+                                                      ),
+                                                    )),
+                                              ),
 
-                                              ],
+                                            ),
+                                            SizedBox(height: size.height * 0.005),
+                                            Center(
+                                              child: Container(
+                                                  child: Row(
+                                                    children: [
+                                                      SizedBox(width: size.width * 0.05),
+                                                      Container(
+                                                          child: Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            children: [
+                                                              Text(
+                                                                '${x['category']} ',
+                                                                style: Theme.of(
+                                                                    context)
+                                                                    .textTheme
+                                                                    .labelLarge,
+                                                                maxLines: 1,
+                                                                overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                              ),
+
+                                                              Text(
+                                                                '${x['num']}',
+                                                                style: bodySmallStyle(
+                                                                    color: Color(
+                                                                        0xff9FA5B2)),
+                                                              ),
+
+                                                              //const SizedBox(height: 8.0),
+                                                              // Text(
+                                                              //   "${snapshot.data!.docs[index]['count']}",
+                                                              //   //FirebaseFirestore.instance.collection('category').doc('user1').collection(snapshot.data!.docs[index]['category']).doc('date').collection('date').snapshots().length.toString(),
+                                                              //   style: Theme.of(context).textTheme.labelSmall,
+                                                              // ),
+                                                            ],
+                                                          ))
+                                                    ],
+                                                  )),
                                             ),
 
-                                            // Padding(
-                                            //   padding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 5.0),
-                                            //   child: Column(
-                                            //     crossAxisAlignment: CrossAxisAlignment.start,
-                                            //     children: <Widget>[
-                                            //       Text(
-                                            //         x['category'],
-                                            //         style: Theme.of(context).textTheme.headline6,
-                                            //         maxLines:1,
-                                            //         overflow: TextOverflow.ellipsis,
-                                            //       ),
-                                            //       const SizedBox(height: 8.0),
-                                            //       Text(
-                                            //         //"${x['price'].toString()}원",
-                                            //         '몇개인지',
-                                            //         style: Theme.of(context).textTheme.subtitle2,
-                                            //       ),
-                                            //     ],
-                                            //   ),
-                                            // ),
-                                          );
+                                          ],
+                                        ),
 
-                                        },
-                                      ))),
-                            ),
+                                        // Padding(
+                                        //   padding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 5.0),
+                                        //   child: Column(
+                                        //     crossAxisAlignment: CrossAxisAlignment.start,
+                                        //     children: <Widget>[
+                                        //       Text(
+                                        //         x['category'],
+                                        //         style: Theme.of(context).textTheme.headline6,
+                                        //         maxLines:1,
+                                        //         overflow: TextOverflow.ellipsis,
+                                        //       ),
+                                        //       const SizedBox(height: 8.0),
+                                        //       Text(
+                                        //         //"${x['price'].toString()}원",
+                                        //         '몇개인지',
+                                        //         style: Theme.of(context).textTheme.subtitle2,
+                                        //       ),
+                                        //     ],
+                                        //   ),
+                                        // ),
+                                      );
+
+                                    },
+                                  ))
                           );
                         } else {
                           return Center(child: CircularProgressIndicator());

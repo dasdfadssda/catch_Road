@@ -108,7 +108,13 @@ class _partiprojectPageState extends State<partiprojectPage> {
                                         child: Text(
                                           snapshot.data!.docs[index]['title']
                                               .toString(),
-                                          style: titleMediumStyle(),
+                                          style: ddaycalc(
+                                              snapshot.data!.docs[index]
+                                              ['final_day2']) <
+                                              0
+                                              ? titleMediumStyle(
+                                              color: Colors.grey)
+                                              : titleMediumStyle(),
                                         ),
                                       ),
                                       subtitle: Row(
@@ -170,18 +176,24 @@ class _partiprojectPageState extends State<partiprojectPage> {
                                                 Radius.circular(46)),
                                             child: LinearProgressIndicator(
                                               value:  snapshot.data!.docs[index]['url'].length/snapshot.data!.docs[index]['size'],
-                                              valueColor: !snapshot
+                                              valueColor:ddaycalc(snapshot
+                                                  .data!.docs[index]
+                                              ['final_day2']) <
+                                                  0
+                                                  ? AlwaysStoppedAnimation<Color>(
+                                                  Color(0xffCFD2D9))
+                                                  : !snapshot
                                                   .data!
                                                   .docs[index]
                                               ['part_user']
-                                                  .contains(
-                                                 FirebaseAuth.instance.currentUser!.email!)
-                                                  ? AlwaysStoppedAnimation<
-                                                  Color>(
+                                                  .contains(FirebaseAuth
+                                                  .instance
+                                                  .currentUser!
+                                                  .email!)
+                                                  ? AlwaysStoppedAnimation<Color>(
                                                   Color(0xff3A94EE))
                                                   : AlwaysStoppedAnimation<
-                                                  Color>(
-                                                  Color(0xff00D796)),
+                                                  Color>(Color(0xff00D796)),
                                               backgroundColor:
                                               Color(0xffE7E8EC),
                                             ),
@@ -192,10 +204,20 @@ class _partiprojectPageState extends State<partiprojectPage> {
                                               top: size.height * 0.02,
                                               bottom: size.height * 0.02,
                                               left: size.width * 0.03),
-                                          child: !snapshot.data!
+                                          child: ddaycalc(
+                                              snapshot.data!.docs[index]
+                                              ['final_day2']) <
+                                              0
+                                              ? Image.asset(
+                                            'assets/grey_coin.png',
+                                            width: 20,
+                                          )
+                                              : !snapshot.data!
                                               .docs[index]['part_user']
-                                              .contains(
-                                            FirebaseAuth.instance.currentUser!.email!)
+                                              .contains(FirebaseAuth
+                                              .instance
+                                              .currentUser!
+                                              .email!)
                                               ? Image.asset(
                                             'assets/coin.png',
                                             width: 20,
@@ -213,7 +235,13 @@ class _partiprojectPageState extends State<partiprojectPage> {
                                           child: Text(
                                             snapshot.data!.docs[index]['cash']
                                                 .toString(),
-                                            style: labelMediumStyle(
+                                            style: ddaycalc(snapshot
+                                                .data!.docs[index]
+                                            ['final_day2']) <
+                                                0
+                                                ? labelMediumStyle(
+                                                color: Colors.grey)
+                                                : labelMediumStyle(
                                                 color: Color(0xff1A1A1A)),
                                           ),
                                         )

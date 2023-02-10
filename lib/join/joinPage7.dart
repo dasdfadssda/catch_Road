@@ -9,7 +9,7 @@ import 'joinPage.dart';
 import 'joinStep2.dart';
 import 'joinStep4.dart';
 
-
+//2/10
 class joinPage7 extends StatefulWidget {
   const joinPage7({super.key});
 
@@ -73,13 +73,7 @@ class _joinPage7State extends State<joinPage7> {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(30)))),
                     onPressed: () async {
-
-
                       signUpWithEmailAndPassword();
-
-
-
-
                         Navigator.push(
                           context,
                           PageRouteBuilder(

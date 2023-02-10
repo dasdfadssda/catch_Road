@@ -3,7 +3,7 @@ import '../Auth/user_information.dart';
 import '../utils/app_text_styles.dart';
 import 'joinStep4.dart';
 
-
+//2/10
 String _displayName = '';
 String _id = '';
 String _year = '';
@@ -25,17 +25,19 @@ class joinStep3 extends StatefulWidget {
 }
 
 bool isObscure = false;
-  final Namecontroller = TextEditingController();
-    final Yearcontroller = TextEditingController();
-    final Monthcontroller = TextEditingController();
-    final Daycontroller = TextEditingController();
-    final _formNameKey = GlobalKey<FormState>();
-    final _formyearKey = GlobalKey<FormState>();
-    final _formmonthKey = GlobalKey<FormState>();
-    final _formdatKey = GlobalKey<FormState>();
+
 
 
 class _joinStep3State extends State<joinStep3> {
+  final Namecontroller = TextEditingController();
+  final Yearcontroller = TextEditingController();
+  final Monthcontroller = TextEditingController();
+  final Daycontroller = TextEditingController();
+  final _formNameKey = GlobalKey<FormState>();
+  final _formyearKey = GlobalKey<FormState>();
+  final _formmonthKey = GlobalKey<FormState>();
+  final _formdatKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
 

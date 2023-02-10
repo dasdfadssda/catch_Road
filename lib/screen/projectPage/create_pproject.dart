@@ -1,12 +1,15 @@
 import 'dart:io';
+import 'package:catch2_0_1/screen/MyPage/MyPage.dart';
 import 'package:chips_choice/chips_choice.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/app_text_styles.dart';
 import '../../utils/widget.dart';
+import '../mainHome.dart';
 
 String start_date = "";
 String end_date = "";
@@ -60,6 +63,7 @@ class _CreatePProjectState extends State<CreatePProject> {
   String naming = "";
   final ImagePicker _picker = ImagePicker();
   List<XFile>? imageFileList = [];
+  List<String> image_url_list=[];
 
   String calculateIncome() {
     int quantity;
@@ -94,35 +98,37 @@ class _CreatePProjectState extends State<CreatePProject> {
       print(e);
     }
   }
+  void selectImages() async {
+    final List<XFile> selectedImages = await _picker.pickMultiImage();
+    if (selectedImages!.isNotEmpty) {
+      setState(() {
+        imageFileList!.addAll(selectedImages);
+      });
+      FirebaseStorage storage = FirebaseStorage.instance;
+      image_url_list=[];
+
+      for(int i=0;i<imageFileList!.length;i++){
+
+        File? file = File(imageFileList![i].path);
+        final uploadTask = await storage.ref('/default-image/default_${DateTime.now()}.png').putFile(file);
+        final url = await uploadTask.ref.getDownloadURL();
+        print("url : $url");
+        setState(() {
+          if(!image_url_list.contains(url)){
+            image_url_list.add(url);
+            print("image_url_list1 $image_url_list");
+          }
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final DateRangePickerController _datecontroller = DateRangePickerController();
-    void selectImages() async {
-      final List<XFile> selectedImages = await _picker.pickMultiImage();
-      if (selectedImages!.isNotEmpty) {
-        imageFileList!.addAll(selectedImages);
-      }
-      setState(() {
-      });
 
-      // if (_image != null) {
-      //   var snapshot = await FirebaseStorage.instance
-      //       .ref()
-      //       .child('$dateTime.png')
-      //       .putFile(_image!!); // 파일 업로드
-      //
-      //   String url = await snapshot.ref.getDownloadURL();
-      //   //print(url);
-      //   image_url = url;
-      //   await update(url);
-      // } else {
-      //   String url =
-      //   await FirebaseStorage.instance.ref('default.png').getDownloadURL();
-      //   await update(url);
-      // }
-    }
+
 
     return Scaffold(
         resizeToAvoidBottomInset : false,
@@ -144,6 +150,87 @@ class _CreatePProjectState extends State<CreatePProject> {
               ),
               onPressed: (){
                 //데이터베이스 연결
+
+                print('image_url_list2 $image_url_list');
+
+                FirebaseFirestore.instance
+                    .collection("project")
+                    .doc(projectNameController.text)
+                    .set({
+                  "title":projectNameController.text,
+                  "content":_contextController.text,
+                  "cash":int.parse(_unitPriceController.text),
+                  "id": projectNameController.text,
+                  "final_day2":Timestamp.fromDate(DateTime.parse(end_date.substring(0, 19))),
+                  "object":tags,
+                  "size":int.parse( _quantityController.text),
+                  "type":"개인",
+                  "user": UserNickName,
+                  "url":image_url_list,
+                  "part_user":[],
+                });
+
+                showModalBottomSheet<void>(
+                  enableDrag: true,
+                  isScrollControlled: true,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30.0),
+                          topRight: Radius.circular(30.0))),
+                  context: context,
+                  builder: (BuildContext context) {
+                    return StatefulBuilder(builder:
+                        (BuildContext context, StateSetter setState) {
+                      return Container(
+                        height: size.height * 0.475,
+                        padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: size.height * 0.05,
+                            ),
+                            SizedBox(
+                                height: 150,
+                                child: Image.asset(
+                                    'assets/checkToFinish.gif')),
+                            SizedBox(
+                              height: size.height * 0.025,
+                            ),
+                            Text('프로젝트가  업로드 되었습니다. '),
+                            SizedBox(height: size.height * 0.025),
+                            ElevatedButton(
+                                style: ButtonStyle(
+                                  fixedSize: MaterialStateProperty.all(
+                                      Size(307, 50)),
+                                  backgroundColor:
+                                  MaterialStateProperty.all(
+                                    Color(0xff3A94EE),
+                                    //_onTap3? primary[40] : onSecondaryColor,
+                                  ),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(30.0),
+                                      )),
+                                ),
+                                child: Text('확인',
+                                    style: titleMediumStyle(
+                                        color: Color(0xffFAFBFB))),
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) => MainHomePage(),
+                                      ));
+                                })
+                          ],
+                        ),
+                      );
+                    });
+                  },
+                );
+
 
               },
 
@@ -569,8 +656,12 @@ class _CreatePProjectState extends State<CreatePProject> {
 
 
               ),
-              (imageFileList?.isEmpty == true)?
-              SizedBox(height: 0)
+              (imageFileList?.isEmpty == true)?SizedBox(height: 300):
+              image_url_list.isEmpty==true?
+              SizedBox(
+                width: 30,
+                child: CircularProgressIndicator(),
+              )
                   :SizedBox(
                 height: 70,
                 child: Expanded(
