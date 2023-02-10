@@ -176,7 +176,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           backgroundColor: Color.fromRGBO(58, 148, 238, 1)),
                       onPressed: () async {
-                        print(login);
+                         print(login);
                         print(FirebaseAuth.instance.currentUser?.emailVerified);
                         await loginWithIdandPassword(
                             emailController.text, passwordController.text);
