@@ -1182,7 +1182,7 @@ class _CreateBprojectState extends State<CreateBproject> {
                                                                 tapTargetSize:
                                                                 MaterialTapTargetSize
                                                                     .shrinkWrap,
-                                                                alignment: Alignment
+                                                                al일ignment: Alignment
                                                                     .centerLeft))
                                                       ],
                                                     ))

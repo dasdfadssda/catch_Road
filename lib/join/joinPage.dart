@@ -1,7 +1,10 @@
+import 'package:catch2_0_1/join/emailVerify.dart';
 import 'package:flutter/material.dart';
+import '../Auth/auth_service .dart';
 import '../Auth/user_information.dart';
 import '../utils/app_text_styles.dart';
 import 'joinStep2.dart';
+import 'joinStep3.dart';
 
 
 String _email = '';
@@ -19,7 +22,7 @@ class joinPage extends StatefulWidget {
 
 
 class _joinPageState extends State<joinPage> {
-     final Emailcontroller = TextEditingController();
+  final Emailcontroller = TextEditingController();
     final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -30,6 +33,7 @@ class _joinPageState extends State<joinPage> {
         leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
+
             },
             icon: Icon(
               Icons.arrow_back_ios_new,
@@ -57,7 +61,7 @@ class _joinPageState extends State<joinPage> {
             SizedBox(height: size.height * 0.07),
             Text("이메일", style: titleLargeStyle(color: Color(0xff3174CD))),
             SizedBox(height: size.height * 0.02),
-            Text("계정에 사용하실 이메일을 입력해주세요.\n이메일은 마에페이지에서 수정 가능합니다.",
+            Text("계정에 사용하실 이메일을 입력해주세요.\n",
                 textAlign: TextAlign.center,
                 style: labelMediumStyle(color: Color(0xff9FA5B2))),
             Padding(
@@ -82,10 +86,13 @@ class _joinPageState extends State<joinPage> {
                     onPressed: () async {
                       _email = Emailcontroller.text;
                       if (_formKey.currentState!.validate()) {
+
+
+
                         Navigator.push(
                           context,
                           PageRouteBuilder(
-                              pageBuilder: (_, __, ___) => joinStep2(),
+                              pageBuilder: (_, __, ___) =>joinStep2(),
                               transitionDuration: Duration(seconds: 0),
                               transitionsBuilder: (_, a, __, c) =>
                                   FadeTransition(opacity: a, child: c)),

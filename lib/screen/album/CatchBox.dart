@@ -56,7 +56,8 @@ class _CatchboxState extends State<Catchbox> {
     final Size size = MediaQuery.of(context).size;
     TextTheme textTheme = Theme.of(context).textTheme;
     int len=0;
-    return Scaffold(
+    return WillPopScope(child:
+    Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
@@ -85,11 +86,11 @@ class _CatchboxState extends State<Catchbox> {
                           return Container(
                               padding:EdgeInsets.all(0),
                               margin: EdgeInsets.fromLTRB(size.width * 0.03,
-                                  size.height * 0.0375, size.width * 0.03, 0),
+                                  size.height * 0.0375, size.width * 0.0, 0),
                               child: GridView.count(
                                   shrinkWrap: true,
                                   crossAxisCount: 2,
-                                  childAspectRatio: 16 / 20,
+                                  childAspectRatio: 16 / 18,
                                   children: List.generate(
                                     snapshot.data!.docs.length,
                                         (index) {
@@ -126,49 +127,35 @@ class _CatchboxState extends State<Catchbox> {
                                           //Catchbox_detail(query: x),));
                                         },
                                         child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+
                                           children: [
-
                                             Padding(
-                                                padding: EdgeInsets.only(left:8,right: 8),
-                                                child: Container(
-                                                  height: size.height * 0.21,
-                                                  width: size.width * 0.6,
-                                                  child: SizedBox(
-                                                    height: 119.04,
-                                                    width: 118.08,
-                                                    child: Card(
-                                                      // shape: RoundedRectangleBorder(
-                                                      //   borderRadius: BorderRadius.circular(15.0),
-                                                      // ),
-                                                        margin: EdgeInsets.fromLTRB(5, 7, 5, 7),
-                                                        clipBehavior: Clip.antiAlias,
-                                                        child: Transform.rotate(
-                                                          angle: 90 * math.pi / 180,
-                                                          child: ExtendedImage.network(
-                                                            x['new'],
-                                                            fit: BoxFit.fill,
-                                                          ),
-                                                        )),
-                                                  ),
-                                                )
-                                            ),
+                                              padding: EdgeInsets.only(left:0,top:0,right: 0),
+                                              child:  Container(
+                                                height: size.height * 0.2,
+                                                width: size.height * 0.2,
+                                                child: Card(
+                                                    clipBehavior: Clip.antiAlias,
+                                                    child: Transform.rotate(
+                                                      angle: 0 * math.pi / 180,
+                                                      child: ExtendedImage.network(
+                                                        x['new'],
+                                                        fit: BoxFit.fill,
+                                                      ),
+                                                    )),
+                                              ),
 
-                                            SizedBox(
-                                                height:
-                                                size.height * 0.005),
+                                            ),
+                                            SizedBox(height: size.height * 0.005),
                                             Center(
                                               child: Container(
                                                   child: Row(
                                                     children: [
-                                                      SizedBox(
-                                                          width: size.width *
-                                                              0.02),
+                                                      SizedBox(width: size.width * 0.05),
                                                       Container(
                                                           child: Column(
-                                                            crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
                                                             children: [
                                                               Text(
                                                                 '${x['category']} ',
@@ -182,14 +169,13 @@ class _CatchboxState extends State<Catchbox> {
                                                                     .ellipsis,
                                                               ),
 
-
                                                               Text(
                                                                 '${x['num']}',
                                                                 style: bodySmallStyle(
                                                                     color: Color(
                                                                         0xff9FA5B2)),
                                                               ),
-                                                              SizedBox(height: size.height*0.0019),
+
                                                               //const SizedBox(height: 8.0),
                                                               // Text(
                                                               //   "${snapshot.data!.docs[index]['count']}",
@@ -238,6 +224,12 @@ class _CatchboxState extends State<Catchbox> {
           ),
         ),
       ),
+    ),
+      onWillPop:() async => false,
     );
+
+
+
+
   }
 }

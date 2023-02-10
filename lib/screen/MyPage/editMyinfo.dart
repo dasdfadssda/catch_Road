@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import '../../Auth/auth_service .dart';
 import '../../Auth/user_information.dart' as user;
 import 'package:flutter/material.dart';
 
@@ -8,7 +9,7 @@ import '../../utils/app_text_styles.dart';
 import '../../LoginPage.dart';
 import 'MyPage.dart';
 
-
+//2/10
 String birthyear='2000';
 String birthmonth='01';
 String birthday='01';
@@ -28,26 +29,9 @@ class _editinfoState extends State<editinfo> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-
-
-
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              PageRouteBuilder(
-                  pageBuilder: (_, __, ___) => MYPage(),
-                  transitionDuration: Duration(seconds: 0),
-                  transitionsBuilder: (_, a, __, c) =>
-                      FadeTransition(opacity: a, child: c)),
-            );
-          },
-          iconSize: 22,
-          color: Color(0xffCFD2D9),
-          icon: Icon(Icons.arrow_back_ios),
-        ),
+        leading: Container(),
         centerTitle: true,
         title: Text(
           "내 정보",
@@ -67,7 +51,9 @@ class _editinfoState extends State<editinfo> {
                 _dataStyle(userInform['name']),
                 _smalltitle('닉네임'),
                 _dataStyle(userInform['NickName']),
+                if(loginplatform!="google")
                 _smalltitle('생년월일'),
+                if(loginplatform!="google")
                 _dataStyle('${birthyear}년 ${birthmonth}월 ${birthday}일'),
                 //_smalltitle('전화번호'),
                 //_dataStyle('010-0000-0000'),
@@ -78,6 +64,24 @@ class _editinfoState extends State<editinfo> {
                     child: Divider(thickness: 1)),
                 _smalltitle('아이디'),
                 _dataStyle("${FirebaseAuth.instance.currentUser!.email!}"),
+                Padding(
+                  padding: const EdgeInsets.all(0.0),
+
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                       padding: EdgeInsets.all(0),
+                    ),
+
+
+                      onPressed:(){
+                    resetPassword(FirebaseAuth.instance.currentUser!.email!.toString());
+                  }
+                      , child: Text('비밀번호 재설정')),
+                ),
+           //      TextButton(onPressed: ()async{
+           // //   FirebaseAuth.instance.currentUser?.emailVerified=true;
+           //      }, child: Text('이메일 인증'))
+
                 // Padding(
                 //   padding: EdgeInsets.only(
                 //       top: size.height * 0.02, right: size.width * 0.01),
@@ -156,6 +160,7 @@ class _changePwdState extends State<changePwd> {
       key : _formKey,
       child: Scaffold(
         appBar: AppBar(
+
             backgroundColor: Colors.white,
             elevation: 0.2,
             centerTitle: true,

@@ -1,6 +1,9 @@
+import 'package:catch2_0_1/screen/MyPage/cashCahnge.dart';
 import 'package:catch2_0_1/screen/mainHome.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+//2/10
 
 import '../../utils/app_text_styles.dart';
 import 'MyCash.dart';
@@ -9,6 +12,7 @@ import 'MyPage.dart';
 String _bankName = '';
 String _bankNum = '';
 String _nameForBank = '';
+var mk_userInform;
 
 class bankInformationUpdateCode extends ChangeNotifier {
   String bankName = _bankName;
@@ -32,8 +36,32 @@ class makeAccount extends StatefulWidget {
 }
 
 class _makeAccountState extends State<makeAccount> {
+
+  void initState() {
+    FirebaseFirestore.instance
+        .collection("user")
+        .doc("${FirebaseAuth.instance.currentUser!.email}")
+        .get()
+        .then((DocumentSnapshot ds) async {
+      mk_userInform = await ds.data();
+      setState(() {
+        _bankName=mk_userInform['Bank'];
+        _bankNum=mk_userInform['Bank - Num'];
+        _nameForBank=mk_userInform['예금주'];
+
+      });
+    });
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
+
+    Bankcontroller.text=_bankName;
+    BankNumcontroller.text=_bankNum;
+    BankNamecontroller.text=_nameForBank;
+
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Colors.white,
@@ -80,9 +108,11 @@ class _makeAccountState extends State<makeAccount> {
                       // if (_formBankKeyK.currentState!.validate()) {
                       //   if (_formBankNumcKeyk.currentState!.validate()) {
                       //     if (_formBankNamehKeyk.currentState!.validate()) {
+
                       _bankName = Bankcontroller.text;
                       _bankNum = BankNumcontroller.text;
                       _nameForBank = BankNumcontroller.text;
+
                       //UpdateUserBankFunction();
                       //     }
                       //   }
@@ -128,15 +158,42 @@ class _makeAccountState extends State<makeAccount> {
                                           EdgeInsets.fromLTRB(46, 0, 46, 50),
                                       child: TextButton(
                                           onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder:
-                                                      (BuildContext context) =>
-                                                          MainHomePage(),
-                                                ));
+
+                                            FirebaseFirestore.instance
+                                                .collection('user')
+                                                .doc(FirebaseAuth.instance.currentUser!.email!)
+                                                .update({
+                                              'Bank': Bankcontroller.text,
+                                              'Bank - Num': BankNumcontroller.text,
+                                              '예금주': BankNamecontroller.text,
+                                            });
+
+                                            print("no account${no_account}");
+
+                                            // if(no_account){
+                                            //   // Navigator.pop(context);
+                                            //   // Navigator.pop(context);
+                                            //   Navigator.push(
+                                            //       context,
+                                            //       MaterialPageRoute(
+                                            //         builder:
+                                            //             (BuildContext context) =>
+                                            //             cashChange(),
+                                            //       ));
+                                            // }else{
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder:
+                                                        (BuildContext context) =>
+                                                        MainHomePage(),
+                                                  ));
+                                            // }
                                             // Navigator.pop(context);
                                             // Navigator.pop(context);
+
+
+
                                             Bankcontroller.clear();
                                             BankNumcontroller.clear();
                                             BankNamecontroller.clear();
@@ -515,7 +572,7 @@ class send_grid extends StatelessWidget {
                     margin: EdgeInsets.fromLTRB(46, 0, 46, 50),
                     child: TextButton(
                         onPressed: () {
-                   
+
                         },
                         child: Text('확인',
                             style: labelSmallStyle(color: Colors.white))))

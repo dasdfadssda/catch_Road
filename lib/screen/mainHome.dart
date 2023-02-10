@@ -6,9 +6,9 @@ import 'package:sliding_switch/sliding_switch.dart';
 import '../Auth/auth_service.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
+import '../Community/HomePage.dart';
 import '../utils/app_text_styles.dart';
 import 'Camera/camera_load.dart';
-import 'Community/HomePage.dart';
 
 import 'MyPage/MyPage.dart';
 import 'album/catchbox.dart';
@@ -47,7 +47,7 @@ class _HomePageState extends State<MainHomePage> {
   void _onItemTapped(int index) {
     setState(() {
       selectedIndex0 = index;
-      print(selectedIndex0);
+      //print(selectedIndex0);
       main_colorList=[Color(0xffCFD2D9),Color(0xffCFD2D9),Color(0xffCFD2D9),Color(0xffCFD2D9)];
       main_colorList[index]=Color(0xff3A94EE);
 
@@ -67,6 +67,8 @@ class _HomePageState extends State<MainHomePage> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    print("이메일 인증여부 : ${FirebaseAuth.instance.currentUser?.emailVerified}");
+   // print(user_Information['object']);
 
     FirebaseFirestore.instance
         .collection("user")
@@ -75,8 +77,8 @@ class _HomePageState extends State<MainHomePage> {
         .then((DocumentSnapshot ds) async {
       user_Information = await ds.data();
       user_object = user_Information['object'];
-      print(user_object);
-      print("user_object${user_object}");
+      // print(user_object);
+      // print("user_object${user_object}");
     });
 
 
@@ -158,7 +160,8 @@ class _HomePageState extends State<MainHomePage> {
           child: Image.asset('assets/camera.png'),
         ),
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) {
             return CamerLoad(cameras);
           }));
         },

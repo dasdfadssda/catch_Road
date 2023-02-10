@@ -6,9 +6,10 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 
 import 'Auth/auth_service .dart';
-import 'firebase_options.dart';
-import 'screen/Community/DetailPage.dart';
-import 'screen/mainHome.dart';
+import 'Community/DetailPage.dart';
+
+
+
 
 
 
@@ -26,8 +27,7 @@ void main() async {
 class MyApp extends StatelessWidget {
 
   @override
-  Widget build(BuildContext context) {
-
+  Widget build(BuildContext context){
     return MaterialApp(
         localizationsDelegates: [
           GlobalMaterialLocalizations.delegate

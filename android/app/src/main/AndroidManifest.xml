@@ -1,10 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.catchroad.catch2_0_1">
+    package="com.catchroad.catch2_1">
         <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
    <application
         android:label="CATCH ROAD"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
+       android:usesCleartextTraffic="true"
 
         >
         <activity

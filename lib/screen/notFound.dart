@@ -2,7 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
+//2/10
 import '../utils/app_colors.dart';
 import '../utils/app_text_styles.dart';
 

@@ -191,7 +191,7 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
                                 ),
                                 child: Expanded(
                                     child: Transform.rotate(
-                                        angle: 90 * math.pi / 180,
+                                        angle: 0 * math.pi / 180,
                                         child: ExtendedImage.network(
                                             query['url'][i],
                                             fit: BoxFit.fill))
@@ -210,7 +210,7 @@ class _todaycatchdetail3State extends State<todaycatchdetail3> {
                     width: 20,
                   ),
                   SizedBox(width: size.width * 0.01),
-                  Text('${query['cash'].toString()}00',
+                  Text('${query['cash'].toString()}',
                       style: labelLargeStyle(color: Colors.black)),
                   SizedBox(width: size.width * 0.03),
                   for (int i = 0; i < query['object'].length; i++)

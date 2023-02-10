@@ -1,5 +1,6 @@
 import 'package:catch2_0_1/main.dart';
 import 'package:catch2_0_1/screen/Camera/camera_page.dart';
+import 'package:catch2_0_1/screen/projectPage/agree1.dart';
 import 'package:catch2_0_1/screen/projectPage/progect_main.dart';
 import 'package:catch2_0_1/screen/projectPage/project_detail2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -26,9 +27,12 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
   _todaycatchdetailState({required this.query});
 
   Color _color = Color(0xFFCFD2D9);
-  bool onTap = false;
-  bool onTap2 = false;
-  bool _onTap3 = false;
+  bool Tap1 = false;
+  bool Tap2 = false;
+  bool Tap3 = false;
+  bool Tap4 = false;
+
+  bool _allTap = false;
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +52,11 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
     //   print("c_object_list${c_object_list}");
     // });
 
-    onTap = false;
-    onTap2 = false;
-    _onTap3 = false;
+    Tap1 = false;
+    Tap2 = false;
+    Tap3 = false;
+    Tap4 = false;
+    _allTap = false;
 
     return Scaffold(
         appBar: AppBar(
@@ -89,10 +95,6 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                 children: [
                   Text(query['title'],
                       style: titleLargeStyle(color: Color(0xff1A1A1A))),
-                  // Expanded(
-                  //     child: Column(
-                  //         crossAxisAlignment: CrossAxisAlignment.end,
-                  //         children: [Icon(Icons.more_vert)]))
                 ],
               ),
               SizedBox(height: size.height * 0.02),
@@ -159,7 +161,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                     child: Text(
                         //snapshot.data!.docs[index]['cash']
                         //   .toString() +
-                        "100",
+                        query['cash'].toString(),
                         style: labelLargeStyle(color: Color(0xff1A1A1A))),
                   ),
                   for (int i = 0; i < query['object'].length; i++)
@@ -241,241 +243,518 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                   return StatefulBuilder(
                       builder: (BuildContext context, StateSetter setState) {
                     return Container(
-                      height: size.height * 0.57,
+                      height: size.height * 0.85,
                       padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                       child: Column(
                         children: [
                           SizedBox(
-                            height: 20,
+                            height: size.height * 0.0175,
                           ),
-                          InkWell(
-                            child: Container(
-                                padding: EdgeInsets.fromLTRB(18, 17, 19, 20),
-                                decoration: BoxDecoration(
-                                  border: onTap
-                                      ? Border.all(
-                                          width: 2.0,
-                                          color: Color(0xFF3A94EE),
-                                        )
-                                      : Border.all(
-                                          color: Color(0xffCFD2D9),
-                                        ),
-                                  color:
-                                      onTap ? Color(0xFFF2F8FE) : Colors.white,
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      topRight: Radius.circular(20),
-                                      bottomLeft: Radius.circular(20),
-                                      bottomRight: Radius.circular(20)),
-                                  // boxShadow: [
-                                  //   BoxShadow(
-                                  //     color: Color(0xFFCFD2D9),
-                                  //     spreadRadius: 1,
-                                  //     blurRadius: 50,
-                                  //     //offset: Offset(0, 3), // changes position of shadow
-                                  //   ),
-                                  // ],
-                                ),
-                                width: size.width * 0.9,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          right: size.width * 0.02,
-                                          top: size.height * 0.022),
-                                      child: IconButton(
-                                        color: onTap
-                                            ? Colors.blueAccent
-                                            : Color(0xFFCFD2D9),
-                                        onPressed: () {
-                                          setState(() {
-                                            onTap = !onTap;
-                                            print(onTap);
-                                          });
-                                          if (onTap == true &&
-                                              onTap2 == true) //
-                                            _onTap3 = true;
-                                          else
-                                            _onTap3 = false;
-                                        },
-                                        icon: Icon(Icons.check),
+                          Container(
+                              height: size.height * 0.16,
+                              padding: EdgeInsets.fromLTRB(
+                                  size.width * 0.055,
+                                  size.height * 0.02,
+                                  size.width * 0.055,
+                                  size.height * 0.02),
+                              decoration: BoxDecoration(
+                                border: Tap1
+                                    ? Border.all(
+                                        width: 2.0,
+                                        color: Color(0xFF3A94EE),
+                                      )
+                                    : Border.all(
+                                        color: Color(0xffCFD2D9),
                                       ),
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text('개인정보 및 데이터 수집 및 이용 동의\n',
-                                            style: titleSmallStyle(
-                                                color: Color(0xff1A1A1A))),
-                                        //SizedBox(height: 16.h),
-                                        Row(
+                                color: Tap1 ? Color(0xFFF2F8FE) : Colors.white,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(20),
+                                    topRight: Radius.circular(20),
+                                    bottomLeft: Radius.circular(20),
+                                    bottomRight: Radius.circular(20)),
+                              ),
+                              width: size.width * 0.9,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      InkWell(
+                                        child: Row(
                                           children: [
-                                            Text('개인정보 통합 관리 및 조회',
-                                                style: labelLargeStyle(
-                                                    color: Color(0xff9FA5B2))),
-                                            //SizedBox(width: 81.w),
-                                            IconButton(
-                                              padding: EdgeInsets.zero,
-                                              constraints: BoxConstraints(),
-                                              color: Color(0xFFCFD2D9),
-                                              onPressed: () {},
-                                              icon: Icon(Icons.navigate_next),
+                                            SizedBox(
+                                              width: size.width * 0.57,
+                                              child: Text('이용 약관 동의',
+                                                  style: titleSmallStyle(
+                                                      color:
+                                                          Color(0xff1A1A1A))),
+                                            ),
+                                            SizedBox(
+                                              width: size.width * 0.15,
+                                            ),
+                                            SizedBox(
+                                              width: size.height * 0.025,
+                                              child: IconButton(
+                                                padding: EdgeInsets.zero,
+                                                constraints: BoxConstraints(),
+                                                color: Tap1
+                                                    ? Colors.blueAccent
+                                                    : Color(0xFFCFD2D9),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    Tap1 = !Tap1;
+                                                    print(Tap1);
+                                                  });
+                                                  if (Tap1 == true &&
+                                                      Tap2 == true &&
+                                                      Tap3 == true &&
+                                                      Tap4 == true)
+                                                    _allTap = true;
+                                                  else
+                                                    _allTap = false;
+                                                },
+                                                icon: Icon(Icons.check_circle),
+                                              ),
                                             ),
                                           ],
                                         ),
-                                        //SizedBox(height: 10.h),
-                                        Row(
-                                          children: [
-                                            Text('응답내용',
-                                                style: labelLargeStyle(
-                                                    color: Color(0xff9FA5B2))),
-                                            //SizedBox(width: 174.w),
-                                            IconButton(
-                                              color: Color(0xFFCFD2D9),
-                                              constraints: BoxConstraints(),
-                                              padding: EdgeInsets.zero,
-                                              onPressed: () {},
-                                              icon: Icon(Icons.navigate_next),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                )),
-                            onTap: () {
-                              setState(() {
-                                onTap = !onTap;
-                                print(onTap);
-                              });
-                              if (onTap == true && onTap2 == true)
-                                _onTap3 = true;
-                              if (onTap2 == true && onTap == true)
-                                _onTap3 = true;
-                              else
-                                _onTap3 = false;
-                            },
-                          ),
-                          SizedBox(height: 20),
-                          InkWell(
-                            child: Container(
-                                padding: EdgeInsets.fromLTRB(18, 20, 19, 20),
-                                decoration: BoxDecoration(
-                                  border: onTap2
-                                      ? Border.all(
-                                          width: 2.0,
-                                          color: Color(0xFF3A94EE),
-                                        )
-                                      : Border.all(
-                                          color: Color(0xffCFD2D9),
-                                        ),
-                                  color:
-                                      onTap2 ? Color(0xFFF2F8FE) : Colors.white,
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      topRight: Radius.circular(20),
-                                      bottomLeft: Radius.circular(20),
-                                      bottomRight: Radius.circular(20)),
-                                  // boxShadow: [
-                                  //   BoxShadow(
-                                  //     color: Color(0xFFCFD2D9),
-                                  //     spreadRadius: 1,
-                                  //     blurRadius: 50,
-                                  //     //offset: Offset(0, 3), // changes position of shadow
-                                  //   ),
-                                  // ],
-                                ),
-                                width: size.width * 0.9,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          right: size.width * 0.02,
-                                          top: size.height * 0.022),
-                                      child: IconButton(
-                                        color: onTap2
-                                            ? Colors.blueAccent
-                                            : Color(0xFFCFD2D9),
-                                        onPressed: () {
+                                        onTap: () {
                                           setState(() {
-                                            onTap2 = !onTap2;
-                                            print(onTap);
+                                            Tap1 = !Tap1;
+                                            print(Tap1);
                                           });
-                                          if (onTap == true &&
-                                              onTap2 == true) //
-                                            _onTap3 = true;
+                                          if (Tap1 == true &&
+                                              Tap2 == true &&
+                                              Tap3 == true &&
+                                              Tap4 == true)
+                                            _allTap = true;
                                           else
-                                            _onTap3 = false;
+                                            _allTap = false;
                                         },
-                                        icon: Icon(Icons.check),
                                       ),
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text('개인정보 및 데이터 수집 및 이용 동의\n',
-                                            style: titleSmallStyle(
-                                                color: Color(0xff1A1A1A))),
-                                        //SizedBox(height: 16.h),
-                                        Row(
-                                          children: [
-                                            Text('개인정보 통합 관리 및 조회',
-                                                style: labelLargeStyle(
-                                                    color: Color(0xff9FA5B2))),
-                                            //SizedBox(width: 81.w),
-                                            IconButton(
-                                              padding: EdgeInsets.zero,
-                                              constraints: BoxConstraints(),
-                                              color: Color(0xFFCFD2D9),
-                                              onPressed: () {},
-                                              icon: Icon(Icons.navigate_next),
-                                            ),
-                                          ],
-                                        ),
-                                        //SizedBox(height: 10.h),
-                                        Row(
-                                          children: [
-                                            Text('응답내용',
-                                                style: labelLargeStyle(
-                                                    color: Color(0xff9FA5B2))),
-                                            //SizedBox(width: 174.w),
-                                            IconButton(
-                                              color: Color(0xFFCFD2D9),
-                                              constraints: BoxConstraints(),
-                                              padding: EdgeInsets.zero,
-                                              onPressed: () {},
-                                              icon: Icon(Icons.navigate_next),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                )),
-                            onTap: () {
-                              setState(() {
-                                onTap2 = !onTap2;
-                                print(onTap);
-                              });
-                              if (onTap == true && onTap2 == true)
-                                _onTap3 = true;
-                              if (onTap2 == true && onTap == true)
-                                _onTap3 = true;
-                              else
-                                _onTap3 = false;
-                            },
-                          ),
+
+                                      //SizedBox(height: 16.h),
+                                      Row(
+                                        children: [
+                                          Text('개인정보 통합 관리 및 조회',
+                                              style: SubTitleStyle(
+                                                  color: Color(0xff9FA5B2))),
+                                          //SizedBox(width: 81.w),
+                                          IconButton(
+                                            padding: EdgeInsets.zero,
+                                            constraints: BoxConstraints(),
+                                            color: Color(0xFFCFD2D9),
+                                            onPressed: () {
+                                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                                return Agree1();
+                                              }));
+
+                                            },
+                                            icon: Icon(Icons.navigate_next),
+                                          ),
+                                        ],
+                                      ),
+                                      //SizedBox(height: 10.h),
+                                      Row(
+                                        children: [
+                                          Text('응답내용',
+                                              style: SubTitleStyle(
+                                                  color: Color(0xff9FA5B2))),
+                                          //SizedBox(width: 174.w),
+                                          IconButton(
+                                            color: Color(0xFFCFD2D9),
+                                            constraints: BoxConstraints(),
+                                            padding: EdgeInsets.zero,
+                                            onPressed: () {},
+                                            icon: Icon(Icons.navigate_next),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )),
+                          SizedBox(height: size.height * 0.015),
+                          Container(
+                              height: size.height * 0.16,
+                              padding: EdgeInsets.fromLTRB(
+                                  size.width * 0.055,
+                                  size.height * 0.02,
+                                  size.width * 0.055,
+                                  size.height * 0.02),
+                              decoration: BoxDecoration(
+                                border: Tap2
+                                    ? Border.all(
+                                        width: 2.0,
+                                        color: Color(0xFF3A94EE),
+                                      )
+                                    : Border.all(
+                                        color: Color(0xffCFD2D9),
+                                      ),
+                                color: Tap2 ? Color(0xFFF2F8FE) : Colors.white,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(20),
+                                    topRight: Radius.circular(20),
+                                    bottomLeft: Radius.circular(20),
+                                    bottomRight: Radius.circular(20)),
+                              ),
+                              width: size.width * 0.9,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      InkWell(
+                                          child: Row(
+                                            children: [
+                                              SizedBox(
+                                                width: size.width * 0.57,
+                                                child: Text('개인 정보 수집 및 이용 동의',
+                                                    style: titleSmallStyle(
+                                                        color:
+                                                            Color(0xff1A1A1A))),
+                                              ),
+                                              SizedBox(
+                                                width: size.width * 0.15,
+                                              ),
+                                              SizedBox(
+                                                width: size.height * 0.025,
+                                                child: IconButton(
+                                                  padding: EdgeInsets.zero,
+                                                  constraints: BoxConstraints(),
+                                                  color: Tap2
+                                                      ? Colors.blueAccent
+                                                      : Color(0xFFCFD2D9),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      Tap2 = !Tap2;
+                                                      print(Tap2);
+                                                    });
+                                                    if (Tap1 == true &&
+                                                        Tap2 == true &&
+                                                        Tap3 == true &&
+                                                        Tap4 == true)
+                                                      _allTap = true;
+                                                    else
+                                                      _allTap = false;
+                                                  },
+                                                  icon:
+                                                      Icon(Icons.check_circle),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          onTap: () {
+                                            setState(() {
+                                              Tap2 = !Tap2;
+                                              print(Tap2);
+                                            });
+                                            if (Tap1 == true &&
+                                                Tap2 == true &&
+                                                Tap3 == true &&
+                                                Tap4 == true)
+                                              _allTap = true;
+                                            else
+                                              _allTap = false;
+                                          }),
+
+                                      //SizedBox(height: 16.h),
+                                      Row(
+                                        children: [
+                                          Text('개인정보 통합 관리 및 조회',
+                                              style: SubTitleStyle(
+                                                  color: Color(0xff9FA5B2))),
+                                          //SizedBox(width: 81.w),
+                                          IconButton(
+                                            padding: EdgeInsets.zero,
+                                            constraints: BoxConstraints(),
+                                            color: Color(0xFFCFD2D9),
+                                            onPressed: () {},
+                                            icon: Icon(Icons.navigate_next),
+                                          ),
+                                        ],
+                                      ),
+                                      //SizedBox(height: 10.h),
+                                      Row(
+                                        children: [
+                                          Text('응답내용',
+                                              style: SubTitleStyle(
+                                                  color: Color(0xff9FA5B2))),
+                                          //SizedBox(width: 174.w),
+                                          IconButton(
+                                            color: Color(0xFFCFD2D9),
+                                            constraints: BoxConstraints(),
+                                            padding: EdgeInsets.zero,
+                                            onPressed: () {},
+                                            icon: Icon(Icons.navigate_next),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )),
                           SizedBox(
-                            height: size.height * 0.04,
+                            height: size.height * 0.015,
                           ),
+                          Container(
+                              height: size.height * 0.16,
+                              padding: EdgeInsets.fromLTRB(
+                                  size.width * 0.055,
+                                  size.height * 0.02,
+                                  size.width * 0.055,
+                                  size.height * 0.02),
+                              decoration: BoxDecoration(
+                                border: Tap3
+                                    ? Border.all(
+                                        width: 2.0,
+                                        color: Color(0xFF3A94EE),
+                                      )
+                                    : Border.all(
+                                        color: Color(0xffCFD2D9),
+                                      ),
+                                color: Tap3 ? Color(0xFFF2F8FE) : Colors.white,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(20),
+                                    topRight: Radius.circular(20),
+                                    bottomLeft: Radius.circular(20),
+                                    bottomRight: Radius.circular(20)),
+                              ),
+                              width: size.width * 0.9,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      InkWell(
+                                          child: Row(
+                                            children: [
+                                              SizedBox(
+                                                width: size.width * 0.57,
+                                                child: Text('위치 기반 서비스 이용약관 동의',
+                                                    style: titleSmallStyle(
+                                                        color:
+                                                            Color(0xff1A1A1A))),
+                                              ),
+                                              SizedBox(
+                                                width: size.width * 0.15,
+                                              ),
+                                              SizedBox(
+                                                width: size.height * 0.025,
+                                                child: IconButton(
+                                                  padding: EdgeInsets.zero,
+                                                  constraints: BoxConstraints(),
+                                                  color: Tap3
+                                                      ? Colors.blueAccent
+                                                      : Color(0xFFCFD2D9),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      Tap3 = !Tap3;
+                                                      print(Tap3);
+                                                    });
+                                                    if (Tap1 == true &&
+                                                        Tap2 == true &&
+                                                        Tap3 == true &&
+                                                        Tap4 == true)
+                                                      _allTap = true;
+                                                    else
+                                                      _allTap = false;
+                                                  },
+                                                  icon:
+                                                      Icon(Icons.check_circle),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          onTap: () {
+                                            setState(() {
+                                              Tap3 = !Tap3;
+                                              print(Tap3);
+                                            });
+                                            if (Tap1 == true &&
+                                                Tap2 == true &&
+                                                Tap3 == true &&
+                                                Tap4 == true)
+                                              _allTap = true;
+                                            else
+                                              _allTap = false;
+                                          }),
+
+                                      //SizedBox(height: 16.h),
+                                      Row(
+                                        children: [
+                                          Text('개인정보 통합 관리 및 조회',
+                                              style: SubTitleStyle(
+                                                  color: Color(0xff9FA5B2))),
+                                          //SizedBox(width: 81.w),
+                                          IconButton(
+                                            padding: EdgeInsets.zero,
+                                            constraints: BoxConstraints(),
+                                            color: Color(0xFFCFD2D9),
+                                            onPressed: () {},
+                                            icon: Icon(Icons.navigate_next),
+                                          ),
+                                        ],
+                                      ),
+                                      //SizedBox(height: 10.h),
+                                      Row(
+                                        children: [
+                                          Text('응답내용',
+                                              style: SubTitleStyle(
+                                                  color: Color(0xff9FA5B2))),
+                                          //SizedBox(width: 174.w),
+                                          IconButton(
+                                            color: Color(0xFFCFD2D9),
+                                            constraints: BoxConstraints(),
+                                            padding: EdgeInsets.zero,
+                                            onPressed: () {},
+                                            icon: Icon(Icons.navigate_next),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )),
+                          SizedBox(height: size.height * 0.015),
+                          Container(
+                              height: size.height * 0.16,
+                              padding: EdgeInsets.fromLTRB(
+                                  size.width * 0.055,
+                                  size.height * 0.02,
+                                  size.width * 0.055,
+                                  size.height * 0.02),
+                              decoration: BoxDecoration(
+                                border: Tap4
+                                    ? Border.all(
+                                  width: 2.0,
+                                  color: Color(0xFF3A94EE),
+                                )
+                                    : Border.all(
+                                  color: Color(0xffCFD2D9),
+                                ),
+                                color:
+                                Tap4 ? Color(0xFFF2F8FE) : Colors.white,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(20),
+                                    topRight: Radius.circular(20),
+                                    bottomLeft: Radius.circular(20),
+                                    bottomRight: Radius.circular(20)),
+                              ),
+                              width: size.width * 0.9,
+                              child: Row(
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.start,
+                                    children: [
+                                      InkWell(
+                                          child: Row(
+                                            children: [
+                                              SizedBox(
+                                                width: size.width * 0.57,
+                                                child: Text('프로모션 정보 수신 동의',
+                                                    style: titleSmallStyle(
+                                                        color: Color(
+                                                            0xff1A1A1A))),
+                                              ),
+                                              SizedBox(
+                                                width: size.width * 0.15,
+                                              ),
+                                              SizedBox(
+                                                width: size.height * 0.025,
+                                                child: IconButton(
+                                                  padding: EdgeInsets.zero,
+                                                  constraints:
+                                                  BoxConstraints(),
+                                                  color: Tap4
+                                                      ? Colors.blueAccent
+                                                      : Color(0xFFCFD2D9),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      Tap4 = !Tap4;
+                                                      print(Tap4);
+                                                    });
+                                                    if (Tap1 == true &&
+                                                        Tap2 == true &&
+                                                        Tap3 == true &&
+                                                        Tap4 == true)
+                                                      _allTap = true;
+                                                    else
+                                                      _allTap = false;
+                                                  },
+                                                  icon: Icon(
+                                                      Icons.check_circle),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          onTap: () {
+                                            setState(() {
+                                              Tap4 = !Tap4;
+                                              print(Tap3);
+                                            });
+                                            if (Tap1 == true &&
+                                                Tap2 == true &&
+                                                Tap3 == true &&
+                                                Tap4 == true)
+                                              _allTap = true;
+                                            else
+                                              _allTap = false;
+                                          }),
+
+                                      //SizedBox(height: 16.h),
+                                      Row(
+                                        children: [
+                                          Text('개인정보 통합 관리 및 조회',
+                                              style: SubTitleStyle(
+                                                  color:
+                                                  Color(0xff9FA5B2))),
+                                          //SizedBox(width: 81.w),
+                                          IconButton(
+                                            padding: EdgeInsets.zero,
+                                            constraints: BoxConstraints(),
+                                            color: Color(0xFFCFD2D9),
+                                            onPressed: () {},
+                                            icon: Icon(Icons.navigate_next),
+                                          ),
+                                        ],
+                                      ),
+                                      //SizedBox(height: 10.h),
+                                      Row(
+                                        children: [
+                                          Text('응답내용',
+                                              style: SubTitleStyle(
+                                                  color:
+                                                  Color(0xff9FA5B2))),
+                                          //SizedBox(width: 174.w),
+                                          IconButton(
+                                            color: Color(0xFFCFD2D9),
+                                            constraints: BoxConstraints(),
+                                            padding: EdgeInsets.zero,
+                                            onPressed: () {},
+                                            icon: Icon(Icons.navigate_next),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )),
+                          SizedBox(height: size.height * 0.015),
                           ElevatedButton(
                               // backgroundColor: _onTap3? primary[40] : Color(0xFFCFD2D9),
                               // shape: RoundedRectangleBorder(
@@ -485,7 +764,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                                 fixedSize: MaterialStateProperty.all(Size(
                                     size.width * 0.86, size.height * 0.075)),
                                 backgroundColor: MaterialStateProperty.all(
-                                  _onTap3 ? primary[40] : Color(0xFFCFD2D9),
+                                  _allTap ? primary[40] : Color(0xFFCFD2D9),
                                   //_onTap3? primary[40] : onSecondaryColor,
                                 ),
                                 shape: MaterialStateProperty.all<
@@ -500,7 +779,7 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                               onPressed: () {
                                 print("here");
 
-                                if (_onTap3 == true) {
+                                if (_allTap == true) {
                                   // print(FirebaseFirestore.instance
                                   //     .collection('project')
                                   //     .doc(
@@ -517,15 +796,13 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                                   FirebaseFirestore.instance
                                       .collection('project')
                                       .doc(query['id'])
-                                      .update({
-                                    'participate': 1,
-                                    'part_user': userlist
-                                  });
-
+                                      .update({'part_user': userlist});
 
                                   for (int i = 0;
-                                      i < query['object'].length; i++) {
-                                    if (!user_object.contains(query['object'][i])) {
+                                      i < query['object'].length;
+                                      i++) {
+                                    if (!user_object
+                                        .contains(query['object'][i])) {
                                       user_object.add(query['object'][i]);
                                     }
                                   }
@@ -546,10 +823,8 @@ class _todaycatchdetailState extends State<todaycatchdetail> {
                                   //           MainHomePage(),
                                   //     ));
 
-
                                   Navigator.pop(context);
                                   Navigator.pop(context);
-
 
                                   Navigator.push(
                                       context,

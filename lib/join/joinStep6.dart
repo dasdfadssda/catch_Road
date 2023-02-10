@@ -1,9 +1,11 @@
 import 'package:catch2_0_1/Auth/user_information.dart';
 import 'package:catch2_0_1/LoginPage.dart';
+import 'package:catch2_0_1/join/emailVerify.dart';
 import 'package:catch2_0_1/join/joinPage7.dart';
 import 'package:flutter/material.dart';
 import '../Auth/auth_service .dart';
 import '../utils/app_text_styles.dart';
+import 'joinStep3.dart';
 
 
 
@@ -24,10 +26,14 @@ class joinStep6 extends StatefulWidget {
   State<joinStep6> createState() => _joinStep6State();
 }
 
+
+class _joinStep6State extends State<joinStep6> {
+
   final BankNamecontroller = TextEditingController();
   final BankNumcontroller = TextEditingController();
   final nameforBankcontroller = TextEditingController();
-class _joinStep6State extends State<joinStep6> {
+
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -128,22 +134,25 @@ class _joinStep6State extends State<joinStep6> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(30)))),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      PageRouteBuilder(
-                          pageBuilder: (_, __, ___) => joinPage7(),
-                          transitionDuration: Duration(seconds: 0),
-                          transitionsBuilder: (_, a, __, c) =>
-                              FadeTransition(opacity: a, child: c)),
+
+                    Navigator.push(context,
+                      MaterialPageRoute(builder: (context){
+                        return joinPage7();
+
+                      })
                     );
+
                     _bankName = BankNamecontroller.text;
                     _bankNum = BankNumcontroller.text;
                     _nameForBank = nameforBankcontroller.text;
 
+                    userInformUpdate();
 
 
 
-                    signUpWithEmailAndPassword();
+
+
+
 
 
 

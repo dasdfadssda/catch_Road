@@ -1,10 +1,15 @@
+import 'dart:io';
+
+import 'package:camera/camera.dart';
 import 'package:catch2_0_1/utils/app_text_styles.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 
-import '../../Auth/auth_service .dart';
+import '../Auth/auth_service .dart';
 import 'HomePage.dart';
 
 class DetailScreen extends StatefulWidget {
@@ -91,7 +96,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                   ),
                                 ),
                               ),
-                              SizedBox(width: size.width * 0.4),
+                              SizedBox(width: size.width * 0.46),
                               TextButton(
                                   onPressed: () {
                                     setState(() {
@@ -278,10 +283,14 @@ class _DetailScreenState extends State<DetailScreen> {
                                   Padding(
                                     padding:
                                         EdgeInsets.only(left: size.width * 0.1),
-                                    child: Text(
+                                      //   child: Text(
+                                      // snapshot.data!.docs[_index]['contents'],
+                                      // style: labelLargeStyle()),
+                                    child: snapshot.data!.docs[_index]['contents'] != '' ?
+                                    Text(
                                       snapshot.data!.docs[_index]['contents'],
-                                      style: labelLargeStyle(),
-                                    ),
+                                      style: labelLargeStyle()
+                                    ) :Image.network(snapshot.data!.docs[_index]['contents_url'])
                                   ),
                                 ],
                               )),
@@ -312,7 +321,10 @@ class _DetailScreenState extends State<DetailScreen> {
             padding: EdgeInsets.only(
                 bottom: size.height * 0.05, right: size.width * 0.01),
             child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  print('사진 고르기');
+                  imgFromGallery();
+                },
                 icon: Image.asset('assets/icons/chat_photo.png')),
           ),
           Expanded(
@@ -332,7 +344,6 @@ class _DetailScreenState extends State<DetailScreen> {
                               primary: Colors.transparent, elevation: 0.0),
                           child: Image.asset('assets/icons/chat_send.png'),
                           onPressed: () {
-                            print("doc id ${docID().docid}");
                             uplaodChat(docID().docid, Chatcontroller.text,
                                 docID().comment);
                             print(Chatcontroller.text);
@@ -452,7 +463,7 @@ class _DetailScreenState extends State<DetailScreen> {
                         child: Text('취소',
                             style: labelMediumStyle(color: Color(0XFF9FA5B2))),
                       ),
-                      SizedBox(width: 150),
+                      SizedBox(width: 200),
                       TextButton(
                         onPressed: () {
                           ReportFunction(id, user);
@@ -468,5 +479,27 @@ class _DetailScreenState extends State<DetailScreen> {
             );
           });
         });
+  }
+
+File? _photo;
+   final ImagePicker _picker = ImagePicker();
+// 사진 가져오기
+  Future imgFromGallery() async {
+    final image = await _picker.pickImage(
+        source: ImageSource.gallery);
+        if(image == null) return;
+        final imagePhoto = File(image.path);
+    setState(() {
+     this._photo = imagePhoto;
+     print('사진 고름');
+    });
+      final firebaseStorageRef = FirebaseStorage.instance; 
+       TaskSnapshot task = await firebaseStorageRef
+  .ref('Community') // 시작점
+  .child('${_photo} + ${FirebaseAuth.instance.currentUser!.displayName!}') // 업로드한 파일의 최종이름
+  .putFile(_photo!); 
+ var downloadUrl = await task.ref.getDownloadURL().whenComplete(() => print('사진 만들기 성공'));  
+
+uplaodPicture(docID().docid, downloadUrl, docID().comment);
   }
 }
